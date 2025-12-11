@@ -1,0 +1,2840 @@
+[
+  {
+    "symbol": "A1CAP",
+    "price": 12.06,
+    "prev": 11.97,
+    "chgPct": 0.75
+  },
+  {
+    "symbol": "A1YEN",
+    "price": 30.54,
+    "prev": 30.26,
+    "chgPct": 0.93
+  },
+  {
+    "symbol": "ACSEL",
+    "price": 105.5,
+    "prev": 104.5,
+    "chgPct": 0.96
+  },
+  {
+    "symbol": "ADESE",
+    "price": 1.68,
+    "prev": 1.69,
+    "chgPct": -0.59
+  },
+  {
+    "symbol": "ADGYO",
+    "price": 46.88,
+    "prev": 44.94,
+    "chgPct": 4.32
+  },
+  {
+    "symbol": "AEFES",
+    "price": 16.02,
+    "prev": 15.9,
+    "chgPct": 0.75
+  },
+  {
+    "symbol": "AFYON",
+    "price": 13.57,
+    "prev": 13.56,
+    "chgPct": 0.07
+  },
+  {
+    "symbol": "AGESA",
+    "price": 201.0,
+    "prev": 207.1,
+    "chgPct": -2.95
+  },
+  {
+    "symbol": "AGHOL",
+    "price": 29.6,
+    "prev": 28.76,
+    "chgPct": 2.92
+  },
+  {
+    "symbol": "AGROT",
+    "price": 6.97,
+    "prev": 6.96,
+    "chgPct": 0.14
+  },
+  {
+    "symbol": "AKBNK",
+    "price": 69.0,
+    "prev": 68.75,
+    "chgPct": 0.36
+  },
+  {
+    "symbol": "AKCNS",
+    "price": 148.8,
+    "prev": 146.8,
+    "chgPct": 1.36
+  },
+  {
+    "symbol": "AKENR",
+    "price": 11.2,
+    "prev": 10.58,
+    "chgPct": 5.86
+  },
+  {
+    "symbol": "AKFGY",
+    "price": 2.76,
+    "prev": 2.76,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "AKFYE",
+    "price": 17.43,
+    "prev": 17.32,
+    "chgPct": 0.64
+  },
+  {
+    "symbol": "AKGRT",
+    "price": 6.87,
+    "prev": 6.93,
+    "chgPct": -0.87
+  },
+  {
+    "symbol": "AKMGY",
+    "price": 196.9,
+    "prev": 197.0,
+    "chgPct": -0.05
+  },
+  {
+    "symbol": "AKSA",
+    "price": 10.07,
+    "prev": 10.07,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "AKSEN",
+    "price": 62.25,
+    "prev": 61.5,
+    "chgPct": 1.22
+  },
+  {
+    "symbol": "AKSGY",
+    "price": 7.5,
+    "prev": 7.52,
+    "chgPct": -0.27
+  },
+  {
+    "symbol": "AKSUE",
+    "price": 17.78,
+    "prev": 16.18,
+    "chgPct": 9.89
+  },
+  {
+    "symbol": "ALARK",
+    "price": 95.7,
+    "prev": 95.45,
+    "chgPct": 0.26
+  },
+  {
+    "symbol": "ALBRK",
+    "price": 8.2,
+    "prev": 8.25,
+    "chgPct": -0.61
+  },
+  {
+    "symbol": "ALCTL",
+    "price": 106.6,
+    "prev": 106.7,
+    "chgPct": -0.09
+  },
+  {
+    "symbol": "ALFAS",
+    "price": 43.72,
+    "prev": 43.4,
+    "chgPct": 0.74
+  },
+  {
+    "symbol": "ALGYO",
+    "price": 28.8,
+    "prev": 30.12,
+    "chgPct": -4.38
+  },
+  {
+    "symbol": "ALKA",
+    "price": 9.51,
+    "prev": 9.93,
+    "chgPct": -4.23
+  },
+  {
+    "symbol": "ALKIM",
+    "price": 16.94,
+    "prev": 17.08,
+    "chgPct": -0.82
+  },
+  {
+    "symbol": "ALKLC",
+    "price": 157.2,
+    "prev": 141.1,
+    "chgPct": 11.41
+  },
+  {
+    "symbol": "ALTNY",
+    "price": 63.4,
+    "prev": 64.2,
+    "chgPct": -1.25
+  },
+  {
+    "symbol": "ALVES",
+    "price": 24.1,
+    "prev": 24.08,
+    "chgPct": 0.08
+  },
+  {
+    "symbol": "ANELE",
+    "price": 16.18,
+    "prev": 16.29,
+    "chgPct": -0.68
+  },
+  {
+    "symbol": "ANGEN",
+    "price": 11.64,
+    "prev": 11.6,
+    "chgPct": 0.34
+  },
+  {
+    "symbol": "ANHYT",
+    "price": 100.5,
+    "prev": 100.8,
+    "chgPct": -0.3
+  },
+  {
+    "symbol": "ANSGR",
+    "price": 23.64,
+    "prev": 23.74,
+    "chgPct": -0.42
+  },
+  {
+    "symbol": "ARASE",
+    "price": 62.7,
+    "prev": 62.95,
+    "chgPct": -0.4
+  },
+  {
+    "symbol": "ARCLK",
+    "price": 108.4,
+    "prev": 106.9,
+    "chgPct": 1.4
+  },
+  {
+    "symbol": "ARDYZ",
+    "price": 37.3,
+    "prev": 36.74,
+    "chgPct": 1.52
+  },
+  {
+    "symbol": "ARENA",
+    "price": 28.0,
+    "prev": 28.46,
+    "chgPct": -1.62
+  },
+  {
+    "symbol": "ARSAN",
+    "price": 3.23,
+    "prev": 3.33,
+    "chgPct": -3.0
+  },
+  {
+    "symbol": "ARTMS",
+    "price": 41.5,
+    "prev": 42.44,
+    "chgPct": -2.21
+  },
+  {
+    "symbol": "ASELS",
+    "price": 204.9,
+    "prev": 206.1,
+    "chgPct": -0.58
+  },
+  {
+    "symbol": "ASGYO",
+    "price": 10.7,
+    "prev": 10.8,
+    "chgPct": -0.93
+  },
+  {
+    "symbol": "ASTOR",
+    "price": 103.0,
+    "prev": 100.8,
+    "chgPct": 2.18
+  },
+  {
+    "symbol": "ASUZU",
+    "price": 55.2,
+    "prev": 54.65,
+    "chgPct": 1.01
+  },
+  {
+    "symbol": "ATAGY",
+    "price": 13.79,
+    "prev": 13.74,
+    "chgPct": 0.36
+  },
+  {
+    "symbol": "ATAKP",
+    "price": 53.75,
+    "prev": 53.7,
+    "chgPct": 0.09
+  },
+  {
+    "symbol": "ATATP",
+    "price": 142.5,
+    "prev": 146.2,
+    "chgPct": -2.53
+  },
+  {
+    "symbol": "ATEKS",
+    "price": 75.2,
+    "prev": 74.5,
+    "chgPct": 0.94
+  },
+  {
+    "symbol": "ATLAS",
+    "price": 5.79,
+    "prev": 5.81,
+    "chgPct": -0.34
+  },
+  {
+    "symbol": "AVGYO",
+    "price": 10.94,
+    "prev": 10.65,
+    "chgPct": 2.72
+  },
+  {
+    "symbol": "AVHOL",
+    "price": 38.8,
+    "prev": 38.46,
+    "chgPct": 0.88
+  },
+  {
+    "symbol": "AVOD",
+    "price": 3.52,
+    "prev": 3.48,
+    "chgPct": 1.15
+  },
+  {
+    "symbol": "AVPGY",
+    "price": 53.25,
+    "prev": 53.6,
+    "chgPct": -0.65
+  },
+  {
+    "symbol": "AVTUR",
+    "price": 16.13,
+    "prev": 15.68,
+    "chgPct": 2.87
+  },
+  {
+    "symbol": "AYCES",
+    "price": 433.0,
+    "prev": 451.75,
+    "chgPct": -4.15
+  },
+  {
+    "symbol": "AYDEM",
+    "price": 19.56,
+    "prev": 19.79,
+    "chgPct": -1.16
+  },
+  {
+    "symbol": "AYEN",
+    "price": 25.74,
+    "prev": 25.3,
+    "chgPct": 1.74
+  },
+  {
+    "symbol": "AYES",
+    "price": 17.52,
+    "prev": 17.6,
+    "chgPct": -0.45
+  },
+  {
+    "symbol": "AYGAZ",
+    "price": 212.5,
+    "prev": 214.3,
+    "chgPct": -0.84
+  },
+  {
+    "symbol": "AZTEK",
+    "price": 4.37,
+    "prev": 4.4,
+    "chgPct": -0.68
+  },
+  {
+    "symbol": "BAGFS",
+    "price": 27.34,
+    "prev": 27.3,
+    "chgPct": 0.15
+  },
+  {
+    "symbol": "BAKAB",
+    "price": 38.58,
+    "prev": 38.68,
+    "chgPct": -0.26
+  },
+  {
+    "symbol": "BALAT",
+    "price": 76.05,
+    "prev": 81.0,
+    "chgPct": -6.11
+  },
+  {
+    "symbol": "BANVT",
+    "price": 161.1,
+    "prev": 161.2,
+    "chgPct": -0.06
+  },
+  {
+    "symbol": "BASCM",
+    "price": 14.0,
+    "prev": 14.0,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "BASGZ",
+    "price": 42.1,
+    "prev": 41.84,
+    "chgPct": 0.62
+  },
+  {
+    "symbol": "BEGYO",
+    "price": 5.3,
+    "prev": 5.16,
+    "chgPct": 2.71
+  },
+  {
+    "symbol": "BERA",
+    "price": 17.01,
+    "prev": 16.86,
+    "chgPct": 0.89
+  },
+  {
+    "symbol": "BESLR",
+    "price": 12.61,
+    "prev": 12.7,
+    "chgPct": -0.71
+  },
+  {
+    "symbol": "BEYAZ",
+    "price": 28.5,
+    "prev": 28.4,
+    "chgPct": 0.35
+  },
+  {
+    "symbol": "BFREN",
+    "price": 159.7,
+    "prev": 159.3,
+    "chgPct": 0.25
+  },
+  {
+    "symbol": "BIENY",
+    "price": 28.0,
+    "prev": 28.22,
+    "chgPct": -0.78
+  },
+  {
+    "symbol": "BIGCH",
+    "price": 61.75,
+    "prev": 70.0,
+    "chgPct": -11.79
+  },
+  {
+    "symbol": "BIMAS",
+    "price": 554.0,
+    "prev": 534.0,
+    "chgPct": 3.75
+  },
+  {
+    "symbol": "BINHO",
+    "price": 10.07,
+    "prev": 9.91,
+    "chgPct": 1.61
+  },
+  {
+    "symbol": "BIOEN",
+    "price": 20.0,
+    "prev": 20.28,
+    "chgPct": -1.38
+  },
+  {
+    "symbol": "BIZIM",
+    "price": 27.4,
+    "prev": 27.0,
+    "chgPct": 1.48
+  },
+  {
+    "symbol": "BJKAS",
+    "price": 1.76,
+    "prev": 1.74,
+    "chgPct": 1.15
+  },
+  {
+    "symbol": "BLCYT",
+    "price": 33.7,
+    "prev": 33.64,
+    "chgPct": 0.18
+  },
+  {
+    "symbol": "BOBET",
+    "price": 19.0,
+    "prev": 18.97,
+    "chgPct": 0.16
+  },
+  {
+    "symbol": "BORSK",
+    "price": 6.05,
+    "prev": 6.15,
+    "chgPct": -1.63
+  },
+  {
+    "symbol": "BOSSA",
+    "price": 6.73,
+    "prev": 6.7,
+    "chgPct": 0.45
+  },
+  {
+    "symbol": "BRISA",
+    "price": 81.45,
+    "prev": 81.3,
+    "chgPct": 0.18
+  },
+  {
+    "symbol": "BRKO",
+    "price": 8.5,
+    "prev": 8.0,
+    "chgPct": 6.25
+  },
+  {
+    "symbol": "BRKSN",
+    "price": 7.54,
+    "prev": 7.52,
+    "chgPct": 0.27
+  },
+  {
+    "symbol": "BRKVY",
+    "price": 110.0,
+    "prev": 103.6,
+    "chgPct": 6.18
+  },
+  {
+    "symbol": "BRLSM",
+    "price": 14.3,
+    "prev": 13.86,
+    "chgPct": 3.17
+  },
+  {
+    "symbol": "BRMEN",
+    "price": 19.0,
+    "prev": 18.5,
+    "chgPct": 2.7
+  },
+  {
+    "symbol": "BRSAN",
+    "price": 495.75,
+    "prev": 492.25,
+    "chgPct": 0.71
+  },
+  {
+    "symbol": "BRYAT",
+    "price": 2248.0,
+    "prev": 2250.0,
+    "chgPct": -0.09
+  },
+  {
+    "symbol": "BSOKE",
+    "price": 16.5,
+    "prev": 15.78,
+    "chgPct": 4.56
+  },
+  {
+    "symbol": "BTCIM",
+    "price": 3.71,
+    "prev": 3.68,
+    "chgPct": 0.82
+  },
+  {
+    "symbol": "BUCIM",
+    "price": 6.75,
+    "prev": 6.73,
+    "chgPct": 0.3
+  },
+  {
+    "symbol": "BYDNR",
+    "price": 26.66,
+    "prev": 27.54,
+    "chgPct": -3.2
+  },
+  {
+    "symbol": "CANTE",
+    "price": 2.21,
+    "prev": 2.15,
+    "chgPct": 2.79
+  },
+  {
+    "symbol": "CASA",
+    "price": 103.1,
+    "prev": 97.95,
+    "chgPct": 5.26
+  },
+  {
+    "symbol": "CCOLA",
+    "price": 56.5,
+    "prev": 55.2,
+    "chgPct": 2.36
+  },
+  {
+    "symbol": "CELHA",
+    "price": 10.57,
+    "prev": 9.58,
+    "chgPct": 10.33
+  },
+  {
+    "symbol": "CEMAS",
+    "price": 4.77,
+    "prev": 4.82,
+    "chgPct": -1.04
+  },
+  {
+    "symbol": "CEMTS",
+    "price": 11.85,
+    "prev": 11.91,
+    "chgPct": -0.5
+  },
+  {
+    "symbol": "CEOEM",
+    "price": 25.3,
+    "prev": 25.7,
+    "chgPct": -1.56
+  },
+  {
+    "symbol": "CIMSA",
+    "price": 48.1,
+    "prev": 47.92,
+    "chgPct": 0.38
+  },
+  {
+    "symbol": "CLEBI",
+    "price": 1592.0,
+    "prev": 1595.0,
+    "chgPct": -0.19
+  },
+  {
+    "symbol": "CMBTN",
+    "price": 2018.0,
+    "prev": 2018.0,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "CMENT",
+    "price": 328.5,
+    "prev": 331.0,
+    "chgPct": -0.76
+  },
+  {
+    "symbol": "CONSE",
+    "price": 3.2,
+    "prev": 3.08,
+    "chgPct": 3.9
+  },
+  {
+    "symbol": "COSMO",
+    "price": 184.5,
+    "prev": 185.9,
+    "chgPct": -0.75
+  },
+  {
+    "symbol": "CRDFA",
+    "price": 54.1,
+    "prev": 55.4,
+    "chgPct": -2.35
+  },
+  {
+    "symbol": "CRFSA",
+    "price": 121.0,
+    "prev": 119.0,
+    "chgPct": 1.68
+  },
+  {
+    "symbol": "CUSAN",
+    "price": 22.04,
+    "prev": 22.06,
+    "chgPct": -0.09
+  },
+  {
+    "symbol": "CVKMD",
+    "price": 20.86,
+    "prev": 20.56,
+    "chgPct": 1.46
+  },
+  {
+    "symbol": "DAPGM",
+    "price": 12.69,
+    "prev": 13.0,
+    "chgPct": -2.38
+  },
+  {
+    "symbol": "DARDL",
+    "price": 2.32,
+    "prev": 2.25,
+    "chgPct": 3.11
+  },
+  {
+    "symbol": "DENGE",
+    "price": 3.67,
+    "prev": 3.73,
+    "chgPct": -1.61
+  },
+  {
+    "symbol": "DERIM",
+    "price": 35.02,
+    "prev": 35.28,
+    "chgPct": -0.74
+  },
+  {
+    "symbol": "DESA",
+    "price": 11.17,
+    "prev": 11.2,
+    "chgPct": -0.27
+  },
+  {
+    "symbol": "DESPC",
+    "price": 46.5,
+    "prev": 46.86,
+    "chgPct": -0.77
+  },
+  {
+    "symbol": "DEVA",
+    "price": 62.3,
+    "prev": 60.35,
+    "chgPct": 3.23
+  },
+  {
+    "symbol": "DGATE",
+    "price": 60.3,
+    "prev": 62.2,
+    "chgPct": -3.05
+  },
+  {
+    "symbol": "DITAS",
+    "price": 40.6,
+    "prev": 40.5,
+    "chgPct": 0.25
+  },
+  {
+    "symbol": "DMRGD",
+    "price": 3.44,
+    "prev": 25.02,
+    "chgPct": -86.25
+  },
+  {
+    "symbol": "DMSAS",
+    "price": 11.83,
+    "prev": 11.44,
+    "chgPct": 3.41
+  },
+  {
+    "symbol": "DOAS",
+    "price": 190.8,
+    "prev": 187.6,
+    "chgPct": 1.71
+  },
+  {
+    "symbol": "DOCO",
+    "price": 9732.5,
+    "prev": 9467.5,
+    "chgPct": 2.8
+  },
+  {
+    "symbol": "DOFER",
+    "price": 53.05,
+    "prev": 53.95,
+    "chgPct": -1.67
+  },
+  {
+    "symbol": "DOHOL",
+    "price": 17.65,
+    "prev": 17.71,
+    "chgPct": -0.34
+  },
+  {
+    "symbol": "DOKTA",
+    "price": 21.54,
+    "prev": 22.06,
+    "chgPct": -2.36
+  },
+  {
+    "symbol": "DURDO",
+    "price": 3.76,
+    "prev": 3.67,
+    "chgPct": 2.45
+  },
+  {
+    "symbol": "DYOBY",
+    "price": 13.51,
+    "prev": 14.21,
+    "chgPct": -4.93
+  },
+  {
+    "symbol": "DZGYO",
+    "price": 8.01,
+    "prev": 8.11,
+    "chgPct": -1.23
+  },
+  {
+    "symbol": "EBEBK",
+    "price": 58.5,
+    "prev": 57.5,
+    "chgPct": 1.74
+  },
+  {
+    "symbol": "ECILC",
+    "price": 86.7,
+    "prev": 87.05,
+    "chgPct": -0.4
+  },
+  {
+    "symbol": "ECZYT",
+    "price": 318.0,
+    "prev": 323.0,
+    "chgPct": -1.55
+  },
+  {
+    "symbol": "EDATA",
+    "price": 5.33,
+    "prev": 5.52,
+    "chgPct": -3.44
+  },
+  {
+    "symbol": "EDIP",
+    "price": 36.74,
+    "prev": 35.42,
+    "chgPct": 3.73
+  },
+  {
+    "symbol": "EFOR",
+    "price": 31.42,
+    "prev": 30.86,
+    "chgPct": 1.81
+  },
+  {
+    "symbol": "EGEEN",
+    "price": 7365.0,
+    "prev": 7475.0,
+    "chgPct": -1.47
+  },
+  {
+    "symbol": "EGEPO",
+    "price": 7.19,
+    "prev": 7.26,
+    "chgPct": -0.96
+  },
+  {
+    "symbol": "EGGUB",
+    "price": 98.5,
+    "prev": 97.4,
+    "chgPct": 1.13
+  },
+  {
+    "symbol": "EGPRO",
+    "price": 25.46,
+    "prev": 25.02,
+    "chgPct": 1.76
+  },
+  {
+    "symbol": "EGSER",
+    "price": 3.08,
+    "prev": 3.05,
+    "chgPct": 0.98
+  },
+  {
+    "symbol": "EKGYO",
+    "price": 20.42,
+    "prev": 20.62,
+    "chgPct": -0.97
+  },
+  {
+    "symbol": "EKSUN",
+    "price": 5.82,
+    "prev": 5.61,
+    "chgPct": 3.74
+  },
+  {
+    "symbol": "ELITE",
+    "price": 30.58,
+    "prev": 30.7,
+    "chgPct": -0.39
+  },
+  {
+    "symbol": "EMKEL",
+    "price": 74.0,
+    "prev": 71.9,
+    "chgPct": 2.92
+  },
+  {
+    "symbol": "EMNIS",
+    "price": 168.0,
+    "prev": 169.0,
+    "chgPct": -0.59
+  },
+  {
+    "symbol": "ENERY",
+    "price": 10.08,
+    "prev": 10.31,
+    "chgPct": -2.23
+  },
+  {
+    "symbol": "ENJSA",
+    "price": 84.45,
+    "prev": 83.85,
+    "chgPct": 0.72
+  },
+  {
+    "symbol": "ENKAI",
+    "price": 80.05,
+    "prev": 81.0,
+    "chgPct": -1.17
+  },
+  {
+    "symbol": "ENSRI",
+    "price": 13.58,
+    "prev": 14.8,
+    "chgPct": -8.24
+  },
+  {
+    "symbol": "ENTRA",
+    "price": 10.63,
+    "prev": 10.54,
+    "chgPct": 0.85
+  },
+  {
+    "symbol": "ERBOS",
+    "price": 183.0,
+    "prev": 182.0,
+    "chgPct": 0.55
+  },
+  {
+    "symbol": "EREGL",
+    "price": 24.38,
+    "prev": 24.16,
+    "chgPct": 0.91
+  },
+  {
+    "symbol": "ERSU",
+    "price": 17.68,
+    "prev": 17.69,
+    "chgPct": -0.06
+  },
+  {
+    "symbol": "ESCOM",
+    "price": 3.12,
+    "prev": 3.03,
+    "chgPct": 2.97
+  },
+  {
+    "symbol": "ESEN",
+    "price": 5.58,
+    "prev": 6.15,
+    "chgPct": -9.27
+  },
+  {
+    "symbol": "ETILR",
+    "price": 4.52,
+    "prev": 4.11,
+    "chgPct": 9.98
+  },
+  {
+    "symbol": "EUPWR",
+    "price": 30.24,
+    "prev": 30.14,
+    "chgPct": 0.33
+  },
+  {
+    "symbol": "EUREN",
+    "price": 6.5,
+    "prev": 6.37,
+    "chgPct": 2.04
+  },
+  {
+    "symbol": "FADE",
+    "price": 13.56,
+    "prev": 13.46,
+    "chgPct": 0.74
+  },
+  {
+    "symbol": "FENER",
+    "price": 9.93,
+    "prev": 9.89,
+    "chgPct": 0.4
+  },
+  {
+    "symbol": "FLAP",
+    "price": 9.0,
+    "prev": 9.03,
+    "chgPct": -0.33
+  },
+  {
+    "symbol": "FMIZP",
+    "price": 337.25,
+    "prev": 336.0,
+    "chgPct": 0.37
+  },
+  {
+    "symbol": "FONET",
+    "price": 2.88,
+    "prev": 2.79,
+    "chgPct": 3.23
+  },
+  {
+    "symbol": "FORMT",
+    "price": 3.56,
+    "prev": 3.49,
+    "chgPct": 2.01
+  },
+  {
+    "symbol": "FORTE",
+    "price": 80.4,
+    "prev": 81.9,
+    "chgPct": -1.83
+  },
+  {
+    "symbol": "FRIGO",
+    "price": 10.03,
+    "prev": 9.95,
+    "chgPct": 0.8
+  },
+  {
+    "symbol": "FROTO",
+    "price": 93.65,
+    "prev": 90.55,
+    "chgPct": 3.42
+  },
+  {
+    "symbol": "FZLGY",
+    "price": 12.36,
+    "prev": 12.6,
+    "chgPct": -1.9
+  },
+  {
+    "symbol": "GARAN",
+    "price": 139.2,
+    "prev": 140.1,
+    "chgPct": -0.64
+  },
+  {
+    "symbol": "GARFA",
+    "price": 25.58,
+    "prev": 25.52,
+    "chgPct": 0.24
+  },
+  {
+    "symbol": "GEDIK",
+    "price": 6.1,
+    "prev": 6.05,
+    "chgPct": 0.83
+  },
+  {
+    "symbol": "GEDZA",
+    "price": 25.84,
+    "prev": 25.7,
+    "chgPct": 0.54
+  },
+  {
+    "symbol": "GENIL",
+    "price": 192.6,
+    "prev": 195.0,
+    "chgPct": -1.23
+  },
+  {
+    "symbol": "GENTS",
+    "price": 10.36,
+    "prev": 10.44,
+    "chgPct": -0.77
+  },
+  {
+    "symbol": "GEREL",
+    "price": 18.85,
+    "prev": 19.33,
+    "chgPct": -2.48
+  },
+  {
+    "symbol": "GESAN",
+    "price": 43.82,
+    "prev": 43.66,
+    "chgPct": 0.37
+  },
+  {
+    "symbol": "GIPTA",
+    "price": 64.55,
+    "prev": 65.6,
+    "chgPct": -1.6
+  },
+  {
+    "symbol": "GLBMD",
+    "price": 11.9,
+    "prev": 12.44,
+    "chgPct": -4.34
+  },
+  {
+    "symbol": "GLRYH",
+    "price": 4.1,
+    "prev": 4.12,
+    "chgPct": -0.49
+  },
+  {
+    "symbol": "GLYHO",
+    "price": 12.62,
+    "prev": 12.61,
+    "chgPct": 0.08
+  },
+  {
+    "symbol": "GMTAS",
+    "price": 45.14,
+    "prev": 45.04,
+    "chgPct": 0.22
+  },
+  {
+    "symbol": "GOKNR",
+    "price": 20.68,
+    "prev": 20.6,
+    "chgPct": 0.39
+  },
+  {
+    "symbol": "GOLTS",
+    "price": 315.25,
+    "prev": 314.5,
+    "chgPct": 0.24
+  },
+  {
+    "symbol": "GOODY",
+    "price": 15.0,
+    "prev": 14.98,
+    "chgPct": 0.13
+  },
+  {
+    "symbol": "GOZDE",
+    "price": 22.08,
+    "prev": 22.04,
+    "chgPct": 0.18
+  },
+  {
+    "symbol": "GRNYO",
+    "price": 17.36,
+    "prev": 15.79,
+    "chgPct": 9.94
+  },
+  {
+    "symbol": "GSDDE",
+    "price": 10.26,
+    "prev": 9.73,
+    "chgPct": 5.45
+  },
+  {
+    "symbol": "GSDHO",
+    "price": 4.75,
+    "prev": 4.75,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "GSRAY",
+    "price": 1.27,
+    "prev": 1.27,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "GUBRF",
+    "price": 331.75,
+    "prev": 326.75,
+    "chgPct": 1.53
+  },
+  {
+    "symbol": "GUNDG",
+    "price": 216.2,
+    "prev": 196.6,
+    "chgPct": 9.97
+  },
+  {
+    "symbol": "GWIND",
+    "price": 23.66,
+    "prev": 23.2,
+    "chgPct": 1.98
+  },
+  {
+    "symbol": "GZNMI",
+    "price": 90.4,
+    "prev": 100.4,
+    "chgPct": -9.96
+  },
+  {
+    "symbol": "HALKB",
+    "price": 36.18,
+    "prev": 36.72,
+    "chgPct": -1.47
+  },
+  {
+    "symbol": "HATEK",
+    "price": 16.77,
+    "prev": 17.67,
+    "chgPct": -5.09
+  },
+  {
+    "symbol": "HDFGS",
+    "price": 2.81,
+    "prev": 2.83,
+    "chgPct": -0.71
+  },
+  {
+    "symbol": "HEKTS",
+    "price": 3.18,
+    "prev": 3.2,
+    "chgPct": -0.62
+  },
+  {
+    "symbol": "HKTM",
+    "price": 11.9,
+    "prev": 12.03,
+    "chgPct": -1.08
+  },
+  {
+    "symbol": "HLGYO",
+    "price": 3.82,
+    "prev": 3.88,
+    "chgPct": -1.55
+  },
+  {
+    "symbol": "HOROZ",
+    "price": 64.9,
+    "prev": 61.25,
+    "chgPct": 5.96
+  },
+  {
+    "symbol": "HRKET",
+    "price": 68.7,
+    "prev": 68.0,
+    "chgPct": 1.03
+  },
+  {
+    "symbol": "HTTBT",
+    "price": 43.84,
+    "prev": 44.52,
+    "chgPct": -1.53
+  },
+  {
+    "symbol": "HUBVC",
+    "price": 2.87,
+    "prev": 2.87,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "HUNER",
+    "price": 3.27,
+    "prev": 3.4,
+    "chgPct": -3.82
+  },
+  {
+    "symbol": "HURGZ",
+    "price": 6.2,
+    "prev": 5.96,
+    "chgPct": 4.03
+  },
+  {
+    "symbol": "ICBCT",
+    "price": 13.73,
+    "prev": 13.76,
+    "chgPct": -0.22
+  },
+  {
+    "symbol": "IDGYO",
+    "price": 2.98,
+    "prev": 3.04,
+    "chgPct": -1.97
+  },
+  {
+    "symbol": "IEYHO",
+    "price": 61.2,
+    "prev": 60.7,
+    "chgPct": 0.82
+  },
+  {
+    "symbol": "IHAAS",
+    "price": 40.0,
+    "prev": 39.5,
+    "chgPct": 1.27
+  },
+  {
+    "symbol": "IHEVA",
+    "price": 2.23,
+    "prev": 2.25,
+    "chgPct": -0.89
+  },
+  {
+    "symbol": "IHGZT",
+    "price": 1.72,
+    "prev": 1.74,
+    "chgPct": -1.15
+  },
+  {
+    "symbol": "IHLAS",
+    "price": 2.57,
+    "prev": 2.61,
+    "chgPct": -1.53
+  },
+  {
+    "symbol": "IHLGM",
+    "price": 2.24,
+    "prev": 2.27,
+    "chgPct": -1.32
+  },
+  {
+    "symbol": "IHYAY",
+    "price": 2.16,
+    "prev": 2.16,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "IMASM",
+    "price": 5.52,
+    "prev": 5.02,
+    "chgPct": 9.96
+  },
+  {
+    "symbol": "INDES",
+    "price": 7.2,
+    "prev": 7.2,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "INFO",
+    "price": 3.82,
+    "prev": 3.75,
+    "chgPct": 1.87
+  },
+  {
+    "symbol": "INGRM",
+    "price": 419.5,
+    "prev": 418.0,
+    "chgPct": 0.36
+  },
+  {
+    "symbol": "INTEK",
+    "price": 264.0,
+    "prev": 259.25,
+    "chgPct": 1.83
+  },
+  {
+    "symbol": "INTEM",
+    "price": 277.75,
+    "prev": 278.5,
+    "chgPct": -0.27
+  },
+  {
+    "symbol": "INVEO",
+    "price": 9.37,
+    "prev": 9.33,
+    "chgPct": 0.43
+  },
+  {
+    "symbol": "IPEKE",
+    "price": 84.65,
+    "prev": 84.65,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "ISATR",
+    "price": 4950000.0,
+    "prev": 4950000.0,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "ISBTR",
+    "price": 488027.5,
+    "prev": 488030.0,
+    "chgPct": -0.0
+  },
+  {
+    "symbol": "ISCTR",
+    "price": 13.89,
+    "prev": 14.02,
+    "chgPct": -0.93
+  },
+  {
+    "symbol": "ISDMR",
+    "price": 35.94,
+    "prev": 35.82,
+    "chgPct": 0.34
+  },
+  {
+    "symbol": "ISFIN",
+    "price": 19.1,
+    "prev": 18.94,
+    "chgPct": 0.84
+  },
+  {
+    "symbol": "ISGYO",
+    "price": 20.42,
+    "prev": 20.18,
+    "chgPct": 1.19
+  },
+  {
+    "symbol": "ISMEN",
+    "price": 40.62,
+    "prev": 40.86,
+    "chgPct": -0.59
+  },
+  {
+    "symbol": "ISSEN",
+    "price": 7.6,
+    "prev": 7.61,
+    "chgPct": -0.13
+  },
+  {
+    "symbol": "ISYAT",
+    "price": 9.36,
+    "prev": 9.81,
+    "chgPct": -4.59
+  },
+  {
+    "symbol": "IZENR",
+    "price": 11.17,
+    "prev": 10.48,
+    "chgPct": 6.58
+  },
+  {
+    "symbol": "IZMDC",
+    "price": 7.13,
+    "prev": 6.86,
+    "chgPct": 3.94
+  },
+  {
+    "symbol": "JANTS",
+    "price": 19.71,
+    "prev": 19.4,
+    "chgPct": 1.6
+  },
+  {
+    "symbol": "KAPLM",
+    "price": 295.75,
+    "prev": 298.75,
+    "chgPct": -1.0
+  },
+  {
+    "symbol": "KAREL",
+    "price": 8.96,
+    "prev": 8.93,
+    "chgPct": 0.34
+  },
+  {
+    "symbol": "KARSN",
+    "price": 9.58,
+    "prev": 9.41,
+    "chgPct": 1.81
+  },
+  {
+    "symbol": "KARTN",
+    "price": 81.95,
+    "prev": 82.45,
+    "chgPct": -0.61
+  },
+  {
+    "symbol": "KATMR",
+    "price": 3.1,
+    "prev": 3.11,
+    "chgPct": -0.32
+  },
+  {
+    "symbol": "KAYSE",
+    "price": 17.67,
+    "prev": 17.54,
+    "chgPct": 0.74
+  },
+  {
+    "symbol": "KBORU",
+    "price": 15.78,
+    "prev": 15.78,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "KCAER",
+    "price": 10.61,
+    "prev": 10.92,
+    "chgPct": -2.84
+  },
+  {
+    "symbol": "KCHOL",
+    "price": 172.2,
+    "prev": 173.0,
+    "chgPct": -0.46
+  },
+  {
+    "symbol": "KERVN",
+    "price": 2.08,
+    "prev": 2.06,
+    "chgPct": 0.97
+  },
+  {
+    "symbol": "KFEIN",
+    "price": 9.06,
+    "prev": 9.0,
+    "chgPct": 0.67
+  },
+  {
+    "symbol": "KGYO",
+    "price": 4.73,
+    "prev": 4.94,
+    "chgPct": -4.25
+  },
+  {
+    "symbol": "KLGYO",
+    "price": 6.38,
+    "prev": 6.44,
+    "chgPct": -0.93
+  },
+  {
+    "symbol": "KLKIM",
+    "price": 32.68,
+    "prev": 31.28,
+    "chgPct": 4.48
+  },
+  {
+    "symbol": "KLMSN",
+    "price": 31.32,
+    "prev": 30.22,
+    "chgPct": 3.64
+  },
+  {
+    "symbol": "KLNMA",
+    "price": 11.02,
+    "prev": 11.3,
+    "chgPct": -2.48
+  },
+  {
+    "symbol": "KLSER",
+    "price": 28.06,
+    "prev": 27.92,
+    "chgPct": 0.5
+  },
+  {
+    "symbol": "KMPUR",
+    "price": 16.58,
+    "prev": 16.5,
+    "chgPct": 0.48
+  },
+  {
+    "symbol": "KNFRT",
+    "price": 10.9,
+    "prev": 11.18,
+    "chgPct": -2.5
+  },
+  {
+    "symbol": "KOCMT",
+    "price": 2.91,
+    "prev": 2.92,
+    "chgPct": -0.34
+  },
+  {
+    "symbol": "KONTR",
+    "price": 14.12,
+    "prev": 14.36,
+    "chgPct": -1.67
+  },
+  {
+    "symbol": "KONYA",
+    "price": 4675.0,
+    "prev": 4710.0,
+    "chgPct": -0.74
+  },
+  {
+    "symbol": "KOPOL",
+    "price": 5.67,
+    "prev": 5.7,
+    "chgPct": -0.53
+  },
+  {
+    "symbol": "KORDS",
+    "price": 50.3,
+    "prev": 50.05,
+    "chgPct": 0.5
+  },
+  {
+    "symbol": "KOTON",
+    "price": 15.61,
+    "prev": 15.5,
+    "chgPct": 0.71
+  },
+  {
+    "symbol": "KOZAA",
+    "price": 101.4,
+    "prev": 101.4,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "KOZAL",
+    "price": 39.02,
+    "prev": 39.02,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "KRDMA",
+    "price": 25.9,
+    "prev": 25.7,
+    "chgPct": 0.78
+  },
+  {
+    "symbol": "KRDMB",
+    "price": 23.16,
+    "prev": 23.3,
+    "chgPct": -0.6
+  },
+  {
+    "symbol": "KRDMD",
+    "price": 26.22,
+    "prev": 26.16,
+    "chgPct": 0.23
+  },
+  {
+    "symbol": "KRGYO",
+    "price": 3.05,
+    "prev": 3.02,
+    "chgPct": 0.99
+  },
+  {
+    "symbol": "KRONT",
+    "price": 13.52,
+    "prev": 13.25,
+    "chgPct": 2.04
+  },
+  {
+    "symbol": "KRSTL",
+    "price": 10.45,
+    "prev": 10.4,
+    "chgPct": 0.48
+  },
+  {
+    "symbol": "KRTEK",
+    "price": 25.86,
+    "prev": 26.0,
+    "chgPct": -0.54
+  },
+  {
+    "symbol": "KRVGD",
+    "price": 2.57,
+    "prev": 2.56,
+    "chgPct": 0.39
+  },
+  {
+    "symbol": "KSTUR",
+    "price": 3000.0,
+    "prev": 2965.0,
+    "chgPct": 1.18
+  },
+  {
+    "symbol": "KTSKR",
+    "price": 80.65,
+    "prev": 77.65,
+    "chgPct": 3.86
+  },
+  {
+    "symbol": "KUTPO",
+    "price": 97.0,
+    "prev": 95.55,
+    "chgPct": 1.52
+  },
+  {
+    "symbol": "KUVVA",
+    "price": 145.1,
+    "prev": 150.0,
+    "chgPct": -3.27
+  },
+  {
+    "symbol": "KUYAS",
+    "price": 52.6,
+    "prev": 52.75,
+    "chgPct": -0.28
+  },
+  {
+    "symbol": "KZBGY",
+    "price": 11.17,
+    "prev": 11.26,
+    "chgPct": -0.8
+  },
+  {
+    "symbol": "LIDER",
+    "price": 54.0,
+    "prev": 56.0,
+    "chgPct": -3.57
+  },
+  {
+    "symbol": "LIDFA",
+    "price": 4.25,
+    "prev": 4.35,
+    "chgPct": -2.3
+  },
+  {
+    "symbol": "LINK",
+    "price": 243.3,
+    "prev": 250.25,
+    "chgPct": -2.78
+  },
+  {
+    "symbol": "LKMNH",
+    "price": 16.14,
+    "prev": 15.88,
+    "chgPct": 1.64
+  },
+  {
+    "symbol": "LMKDC",
+    "price": 28.56,
+    "prev": 28.22,
+    "chgPct": 1.2
+  },
+  {
+    "symbol": "LOGO",
+    "price": 160.2,
+    "prev": 159.5,
+    "chgPct": 0.44
+  },
+  {
+    "symbol": "LUKSK",
+    "price": 106.4,
+    "prev": 106.2,
+    "chgPct": 0.19
+  },
+  {
+    "symbol": "LYDYE",
+    "price": 13500.0,
+    "prev": 13650.0,
+    "chgPct": -1.1
+  },
+  {
+    "symbol": "MAALT",
+    "price": 997.0,
+    "prev": 1031.0,
+    "chgPct": -3.3
+  },
+  {
+    "symbol": "MACKO",
+    "price": 45.62,
+    "prev": 46.26,
+    "chgPct": -1.38
+  },
+  {
+    "symbol": "MAGEN",
+    "price": 35.66,
+    "prev": 35.62,
+    "chgPct": 0.11
+  },
+  {
+    "symbol": "MAKIM",
+    "price": 17.2,
+    "prev": 17.12,
+    "chgPct": 0.47
+  },
+  {
+    "symbol": "MAKTK",
+    "price": 13.51,
+    "prev": 13.57,
+    "chgPct": -0.44
+  },
+  {
+    "symbol": "MANAS",
+    "price": 14.78,
+    "prev": 13.44,
+    "chgPct": 9.97
+  },
+  {
+    "symbol": "MAVI",
+    "price": 38.48,
+    "prev": 36.98,
+    "chgPct": 4.06
+  },
+  {
+    "symbol": "MEDTR",
+    "price": 28.26,
+    "prev": 28.04,
+    "chgPct": 0.78
+  },
+  {
+    "symbol": "MEGAP",
+    "price": 3.45,
+    "prev": 3.45,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "MEKAG",
+    "price": 3.84,
+    "prev": 3.89,
+    "chgPct": -1.29
+  },
+  {
+    "symbol": "MEPET",
+    "price": 15.53,
+    "prev": 15.89,
+    "chgPct": -2.27
+  },
+  {
+    "symbol": "MERCN",
+    "price": 18.04,
+    "prev": 18.82,
+    "chgPct": -4.14
+  },
+  {
+    "symbol": "MERIT",
+    "price": 17.52,
+    "prev": 17.4,
+    "chgPct": 0.69
+  },
+  {
+    "symbol": "MERKO",
+    "price": 12.76,
+    "prev": 12.82,
+    "chgPct": -0.47
+  },
+  {
+    "symbol": "MGROS",
+    "price": 527.5,
+    "prev": 519.5,
+    "chgPct": 1.54
+  },
+  {
+    "symbol": "MHRGY",
+    "price": 3.64,
+    "prev": 3.49,
+    "chgPct": 4.3
+  },
+  {
+    "symbol": "MIATK",
+    "price": 38.56,
+    "prev": 38.56,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "MMCAS",
+    "price": 147.0,
+    "prev": 130.5,
+    "chgPct": 12.64
+  },
+  {
+    "symbol": "MNDRS",
+    "price": 13.8,
+    "prev": 14.05,
+    "chgPct": -1.78
+  },
+  {
+    "symbol": "MOBTL",
+    "price": 8.42,
+    "prev": 8.45,
+    "chgPct": -0.36
+  },
+  {
+    "symbol": "MOGAN",
+    "price": 8.19,
+    "prev": 8.27,
+    "chgPct": -0.97
+  },
+  {
+    "symbol": "MPARK",
+    "price": 350.0,
+    "prev": 339.25,
+    "chgPct": 3.17
+  },
+  {
+    "symbol": "MRGYO",
+    "price": 2.67,
+    "prev": 2.61,
+    "chgPct": 2.3
+  },
+  {
+    "symbol": "MRSHL",
+    "price": 1575.0,
+    "prev": 1579.0,
+    "chgPct": -0.25
+  },
+  {
+    "symbol": "MSGYO",
+    "price": 5.3,
+    "prev": 5.25,
+    "chgPct": 0.95
+  },
+  {
+    "symbol": "MTRKS",
+    "price": 24.0,
+    "prev": 24.2,
+    "chgPct": -0.83
+  },
+  {
+    "symbol": "MTRYO",
+    "price": 8.21,
+    "prev": 8.32,
+    "chgPct": -1.32
+  },
+  {
+    "symbol": "NATEN",
+    "price": 8.3,
+    "prev": 8.37,
+    "chgPct": -0.84
+  },
+  {
+    "symbol": "NETAS",
+    "price": 62.1,
+    "prev": 62.35,
+    "chgPct": -0.4
+  },
+  {
+    "symbol": "NIBAS",
+    "price": 25.26,
+    "prev": 22.6,
+    "chgPct": 11.77
+  },
+  {
+    "symbol": "NTGAZ",
+    "price": 10.33,
+    "prev": 10.29,
+    "chgPct": 0.39
+  },
+  {
+    "symbol": "NTHOL",
+    "price": 47.58,
+    "prev": 47.78,
+    "chgPct": -0.42
+  },
+  {
+    "symbol": "NUGYO",
+    "price": 9.18,
+    "prev": 9.08,
+    "chgPct": 1.1
+  },
+  {
+    "symbol": "NUHCM",
+    "price": 230.6,
+    "prev": 229.1,
+    "chgPct": 0.65
+  },
+  {
+    "symbol": "OBAMS",
+    "price": 7.14,
+    "prev": 7.42,
+    "chgPct": -3.77
+  },
+  {
+    "symbol": "OBASE",
+    "price": 33.22,
+    "prev": 33.56,
+    "chgPct": -1.01
+  },
+  {
+    "symbol": "ODAS",
+    "price": 5.39,
+    "prev": 5.37,
+    "chgPct": 0.37
+  },
+  {
+    "symbol": "ODINE",
+    "price": 277.5,
+    "prev": 274.75,
+    "chgPct": 1.0
+  },
+  {
+    "symbol": "OFSYM",
+    "price": 60.95,
+    "prev": 58.45,
+    "chgPct": 4.28
+  },
+  {
+    "symbol": "ONCSM",
+    "price": 276.25,
+    "prev": 277.0,
+    "chgPct": -0.27
+  },
+  {
+    "symbol": "ONRYT",
+    "price": 64.0,
+    "prev": 63.75,
+    "chgPct": 0.39
+  },
+  {
+    "symbol": "ORCAY",
+    "price": 3.84,
+    "prev": 3.85,
+    "chgPct": -0.26
+  },
+  {
+    "symbol": "ORGE",
+    "price": 66.6,
+    "prev": 66.85,
+    "chgPct": -0.37
+  },
+  {
+    "symbol": "ORMA",
+    "price": 170.7,
+    "prev": 162.0,
+    "chgPct": 5.37
+  },
+  {
+    "symbol": "OSMEN",
+    "price": 8.52,
+    "prev": 8.46,
+    "chgPct": 0.71
+  },
+  {
+    "symbol": "OSTIM",
+    "price": 2.95,
+    "prev": 3.01,
+    "chgPct": -1.99
+  },
+  {
+    "symbol": "OTKAR",
+    "price": 492.5,
+    "prev": 510.0,
+    "chgPct": -3.43
+  },
+  {
+    "symbol": "OYAKC",
+    "price": 24.92,
+    "prev": 25.22,
+    "chgPct": -1.19
+  },
+  {
+    "symbol": "OYAYO",
+    "price": 59.25,
+    "prev": 56.6,
+    "chgPct": 4.68
+  },
+  {
+    "symbol": "OYLUM",
+    "price": 10.55,
+    "prev": 10.11,
+    "chgPct": 4.35
+  },
+  {
+    "symbol": "OYYAT",
+    "price": 42.26,
+    "prev": 43.5,
+    "chgPct": -2.85
+  },
+  {
+    "symbol": "OZGYO",
+    "price": 3.09,
+    "prev": 3.33,
+    "chgPct": -7.21
+  },
+  {
+    "symbol": "OZKGY",
+    "price": 14.73,
+    "prev": 14.63,
+    "chgPct": 0.68
+  },
+  {
+    "symbol": "PAGYO",
+    "price": 84.75,
+    "prev": 84.4,
+    "chgPct": 0.41
+  },
+  {
+    "symbol": "PAMEL",
+    "price": 87.45,
+    "prev": 86.55,
+    "chgPct": 1.04
+  },
+  {
+    "symbol": "PAPIL",
+    "price": 17.01,
+    "prev": 16.15,
+    "chgPct": 5.33
+  },
+  {
+    "symbol": "PARSN",
+    "price": 85.6,
+    "prev": 84.75,
+    "chgPct": 1.0
+  },
+  {
+    "symbol": "PASEU",
+    "price": 150.4,
+    "prev": 149.7,
+    "chgPct": 0.47
+  },
+  {
+    "symbol": "PATEK",
+    "price": 26.24,
+    "prev": 26.72,
+    "chgPct": -1.8
+  },
+  {
+    "symbol": "PCILT",
+    "price": 22.84,
+    "prev": 23.3,
+    "chgPct": -1.97
+  },
+  {
+    "symbol": "PEKGY",
+    "price": 10.84,
+    "prev": 11.02,
+    "chgPct": -1.63
+  },
+  {
+    "symbol": "PENGD",
+    "price": 8.44,
+    "prev": 8.26,
+    "chgPct": 2.18
+  },
+  {
+    "symbol": "PENTA",
+    "price": 13.83,
+    "prev": 13.91,
+    "chgPct": -0.58
+  },
+  {
+    "symbol": "PETKM",
+    "price": 17.36,
+    "prev": 17.21,
+    "chgPct": 0.87
+  },
+  {
+    "symbol": "PETUN",
+    "price": 11.36,
+    "prev": 11.29,
+    "chgPct": 0.62
+  },
+  {
+    "symbol": "PGSUS",
+    "price": 202.7,
+    "prev": 203.4,
+    "chgPct": -0.34
+  },
+  {
+    "symbol": "PINSU",
+    "price": 12.86,
+    "prev": 12.87,
+    "chgPct": -0.08
+  },
+  {
+    "symbol": "PKART",
+    "price": 71.6,
+    "prev": 70.85,
+    "chgPct": 1.06
+  },
+  {
+    "symbol": "PKENT",
+    "price": 201.2,
+    "prev": 209.2,
+    "chgPct": -3.82
+  },
+  {
+    "symbol": "PLTUR",
+    "price": 21.52,
+    "prev": 21.92,
+    "chgPct": -1.82
+  },
+  {
+    "symbol": "PNLSN",
+    "price": 39.04,
+    "prev": 38.98,
+    "chgPct": 0.15
+  },
+  {
+    "symbol": "PNSUT",
+    "price": 11.76,
+    "prev": 11.77,
+    "chgPct": -0.08
+  },
+  {
+    "symbol": "POLHO",
+    "price": 18.28,
+    "prev": 17.9,
+    "chgPct": 2.12
+  },
+  {
+    "symbol": "POLTK",
+    "price": 8350.0,
+    "prev": 8290.0,
+    "chgPct": 0.72
+  },
+  {
+    "symbol": "PRDGS",
+    "price": 6.19,
+    "prev": 6.13,
+    "chgPct": 0.98
+  },
+  {
+    "symbol": "PRKAB",
+    "price": 33.0,
+    "prev": 32.7,
+    "chgPct": 0.92
+  },
+  {
+    "symbol": "PRKME",
+    "price": 17.28,
+    "prev": 17.17,
+    "chgPct": 0.64
+  },
+  {
+    "symbol": "PRZMA",
+    "price": 12.07,
+    "prev": 11.94,
+    "chgPct": 1.09
+  },
+  {
+    "symbol": "PSDTC",
+    "price": 141.5,
+    "prev": 143.3,
+    "chgPct": -1.26
+  },
+  {
+    "symbol": "PSGYO",
+    "price": 2.61,
+    "prev": 2.62,
+    "chgPct": -0.38
+  },
+  {
+    "symbol": "QNBTR",
+    "price": 478.25,
+    "prev": 475.0,
+    "chgPct": 0.68
+  },
+  {
+    "symbol": "QUAGR",
+    "price": 3.27,
+    "prev": 3.34,
+    "chgPct": -2.1
+  },
+  {
+    "symbol": "RALYH",
+    "price": 205.2,
+    "prev": 211.0,
+    "chgPct": -2.75
+  },
+  {
+    "symbol": "REEDR",
+    "price": 7.28,
+    "prev": 7.28,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "RGYAS",
+    "price": 140.0,
+    "prev": 138.4,
+    "chgPct": 1.16
+  },
+  {
+    "symbol": "RODRG",
+    "price": 21.34,
+    "prev": 21.62,
+    "chgPct": -1.3
+  },
+  {
+    "symbol": "RTALB",
+    "price": 3.69,
+    "prev": 3.75,
+    "chgPct": -1.6
+  },
+  {
+    "symbol": "RUBNS",
+    "price": 19.77,
+    "prev": 19.5,
+    "chgPct": 1.38
+  },
+  {
+    "symbol": "RUZYE",
+    "price": 12.73,
+    "prev": 12.86,
+    "chgPct": -1.01
+  },
+  {
+    "symbol": "RYGYO",
+    "price": 21.48,
+    "prev": 21.2,
+    "chgPct": 1.32
+  },
+  {
+    "symbol": "RYSAS",
+    "price": 13.95,
+    "prev": 13.97,
+    "chgPct": -0.14
+  },
+  {
+    "symbol": "SAFKR",
+    "price": 25.4,
+    "prev": 26.16,
+    "chgPct": -2.91
+  },
+  {
+    "symbol": "SAHOL",
+    "price": 84.5,
+    "prev": 85.3,
+    "chgPct": -0.94
+  },
+  {
+    "symbol": "SAMAT",
+    "price": 6.25,
+    "prev": 6.15,
+    "chgPct": 1.63
+  },
+  {
+    "symbol": "SANFM",
+    "price": 6.95,
+    "prev": 6.33,
+    "chgPct": 9.79
+  },
+  {
+    "symbol": "SANKO",
+    "price": 20.86,
+    "prev": 20.96,
+    "chgPct": -0.48
+  },
+  {
+    "symbol": "SASA",
+    "price": 2.89,
+    "prev": 2.88,
+    "chgPct": 0.35
+  },
+  {
+    "symbol": "SAYAS",
+    "price": 41.4,
+    "prev": 41.6,
+    "chgPct": -0.48
+  },
+  {
+    "symbol": "SDTTR",
+    "price": 183.0,
+    "prev": 183.2,
+    "chgPct": -0.11
+  },
+  {
+    "symbol": "SEGYO",
+    "price": 5.39,
+    "prev": 5.4,
+    "chgPct": -0.19
+  },
+  {
+    "symbol": "SEKFK",
+    "price": 8.35,
+    "prev": 8.38,
+    "chgPct": -0.36
+  },
+  {
+    "symbol": "SEKUR",
+    "price": 4.0,
+    "prev": 4.06,
+    "chgPct": -1.48
+  },
+  {
+    "symbol": "SELEC",
+    "price": 71.8,
+    "prev": 68.95,
+    "chgPct": 4.13
+  },
+  {
+    "symbol": "SELVA",
+    "price": 2.82,
+    "prev": 2.57,
+    "chgPct": 9.73
+  },
+  {
+    "symbol": "SEYKM",
+    "price": 6.3,
+    "prev": 6.35,
+    "chgPct": -0.79
+  },
+  {
+    "symbol": "SILVR",
+    "price": 2.75,
+    "prev": 2.77,
+    "chgPct": -0.72
+  },
+  {
+    "symbol": "SISE",
+    "price": 39.68,
+    "prev": 40.76,
+    "chgPct": -2.65
+  },
+  {
+    "symbol": "SKBNK",
+    "price": 7.7,
+    "prev": 7.74,
+    "chgPct": -0.52
+  },
+  {
+    "symbol": "SKTAS",
+    "price": 4.17,
+    "prev": 4.22,
+    "chgPct": -1.18
+  },
+  {
+    "symbol": "SKYLP",
+    "price": 240.6,
+    "prev": 257.0,
+    "chgPct": -6.38
+  },
+  {
+    "symbol": "SKYMD",
+    "price": 12.47,
+    "prev": 12.11,
+    "chgPct": 2.97
+  },
+  {
+    "symbol": "SMART",
+    "price": 23.54,
+    "prev": 23.6,
+    "chgPct": -0.25
+  },
+  {
+    "symbol": "SMRTG",
+    "price": 28.28,
+    "prev": 28.4,
+    "chgPct": -0.42
+  },
+  {
+    "symbol": "SNKRN",
+    "price": 284.0,
+    "prev": 285.0,
+    "chgPct": -0.35
+  },
+  {
+    "symbol": "SNPAM",
+    "price": 21.5,
+    "prev": 20.86,
+    "chgPct": 3.07
+  },
+  {
+    "symbol": "SODSN",
+    "price": 110.5,
+    "prev": 110.0,
+    "chgPct": 0.45
+  },
+  {
+    "symbol": "SOKM",
+    "price": 50.45,
+    "prev": 49.58,
+    "chgPct": 1.75
+  },
+  {
+    "symbol": "SONME",
+    "price": 150.0,
+    "prev": 142.9,
+    "chgPct": 4.97
+  },
+  {
+    "symbol": "SRVGY",
+    "price": 3.61,
+    "prev": 3.59,
+    "chgPct": 0.56
+  },
+  {
+    "symbol": "SUMAS",
+    "price": 308.0,
+    "prev": 307.75,
+    "chgPct": 0.08
+  },
+  {
+    "symbol": "SUNTK",
+    "price": 39.88,
+    "prev": 42.28,
+    "chgPct": -5.68
+  },
+  {
+    "symbol": "SUWEN",
+    "price": 9.97,
+    "prev": 9.76,
+    "chgPct": 2.15
+  },
+  {
+    "symbol": "TABGD",
+    "price": 222.4,
+    "prev": 220.4,
+    "chgPct": 0.91
+  },
+  {
+    "symbol": "TATEN",
+    "price": 16.32,
+    "prev": 16.22,
+    "chgPct": 0.62
+  },
+  {
+    "symbol": "TATGD",
+    "price": 12.67,
+    "prev": 12.63,
+    "chgPct": 0.32
+  },
+  {
+    "symbol": "TAVHL",
+    "price": 298.5,
+    "prev": 296.0,
+    "chgPct": 0.84
+  },
+  {
+    "symbol": "TBORG",
+    "price": 162.3,
+    "prev": 162.0,
+    "chgPct": 0.19
+  },
+  {
+    "symbol": "TCELL",
+    "price": 100.5,
+    "prev": 101.4,
+    "chgPct": -0.89
+  },
+  {
+    "symbol": "TDGYO",
+    "price": 35.46,
+    "prev": 33.06,
+    "chgPct": 7.26
+  },
+  {
+    "symbol": "TEKTU",
+    "price": 13.54,
+    "prev": 13.91,
+    "chgPct": -2.66
+  },
+  {
+    "symbol": "TERA",
+    "price": 312.0,
+    "prev": 312.5,
+    "chgPct": -0.16
+  },
+  {
+    "symbol": "TEZOL",
+    "price": 12.24,
+    "prev": 12.39,
+    "chgPct": -1.21
+  },
+  {
+    "symbol": "TGSAS",
+    "price": 167.6,
+    "prev": 171.0,
+    "chgPct": -1.99
+  },
+  {
+    "symbol": "THYAO",
+    "price": 269.5,
+    "prev": 270.75,
+    "chgPct": -0.46
+  },
+  {
+    "symbol": "TKFEN",
+    "price": 67.65,
+    "prev": 67.45,
+    "chgPct": 0.3
+  },
+  {
+    "symbol": "TKNSA",
+    "price": 23.5,
+    "prev": 23.4,
+    "chgPct": 0.43
+  },
+  {
+    "symbol": "TLMAN",
+    "price": 101.6,
+    "prev": 105.4,
+    "chgPct": -3.61
+  },
+  {
+    "symbol": "TMPOL",
+    "price": 349.0,
+    "prev": 380.0,
+    "chgPct": -8.16
+  },
+  {
+    "symbol": "TMSN",
+    "price": 104.1,
+    "prev": 103.2,
+    "chgPct": 0.87
+  },
+  {
+    "symbol": "TNZTP",
+    "price": 21.8,
+    "prev": 21.26,
+    "chgPct": 2.54
+  },
+  {
+    "symbol": "TOASO",
+    "price": 234.2,
+    "prev": 233.8,
+    "chgPct": 0.17
+  },
+  {
+    "symbol": "TRALT",
+    "price": 41.64,
+    "prev": 39.2,
+    "chgPct": 6.22
+  },
+  {
+    "symbol": "TRCAS",
+    "price": 43.04,
+    "prev": 43.36,
+    "chgPct": -0.74
+  },
+  {
+    "symbol": "TRENJ",
+    "price": 86.5,
+    "prev": 84.85,
+    "chgPct": 1.94
+  },
+  {
+    "symbol": "TRILC",
+    "price": 16.93,
+    "prev": 16.8,
+    "chgPct": 0.77
+  },
+  {
+    "symbol": "TRMET",
+    "price": 103.8,
+    "prev": 101.5,
+    "chgPct": 2.27
+  },
+  {
+    "symbol": "TSGYO",
+    "price": 7.28,
+    "prev": 7.28,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "TSKB",
+    "price": 12.6,
+    "prev": 12.76,
+    "chgPct": -1.25
+  },
+  {
+    "symbol": "TSPOR",
+    "price": 1.21,
+    "prev": 1.2,
+    "chgPct": 0.83
+  },
+  {
+    "symbol": "TTKOM",
+    "price": 56.75,
+    "prev": 56.85,
+    "chgPct": -0.18
+  },
+  {
+    "symbol": "TTRAK",
+    "price": 521.5,
+    "prev": 521.0,
+    "chgPct": 0.1
+  },
+  {
+    "symbol": "TUCLK",
+    "price": 4.95,
+    "prev": 9.11,
+    "chgPct": -45.66
+  },
+  {
+    "symbol": "TUKAS",
+    "price": 2.61,
+    "prev": 2.59,
+    "chgPct": 0.77
+  },
+  {
+    "symbol": "TUPRS",
+    "price": 197.4,
+    "prev": 197.9,
+    "chgPct": -0.25
+  },
+  {
+    "symbol": "TUREX",
+    "price": 7.65,
+    "prev": 7.64,
+    "chgPct": 0.13
+  },
+  {
+    "symbol": "TURGG",
+    "price": 30.5,
+    "prev": 30.8,
+    "chgPct": -0.97
+  },
+  {
+    "symbol": "TURSG",
+    "price": 11.82,
+    "prev": 12.01,
+    "chgPct": -1.58
+  },
+  {
+    "symbol": "UFUK",
+    "price": 1710.0,
+    "prev": 1761.0,
+    "chgPct": -2.9
+  },
+  {
+    "symbol": "ULKER",
+    "price": 113.8,
+    "prev": 114.9,
+    "chgPct": -0.96
+  },
+  {
+    "symbol": "ULUSE",
+    "price": 157.7,
+    "prev": 160.1,
+    "chgPct": -1.5
+  },
+  {
+    "symbol": "ULUUN",
+    "price": 6.87,
+    "prev": 6.81,
+    "chgPct": 0.88
+  },
+  {
+    "symbol": "UNLU",
+    "price": 15.29,
+    "prev": 15.0,
+    "chgPct": 1.93
+  },
+  {
+    "symbol": "USAK",
+    "price": 2.79,
+    "prev": 2.77,
+    "chgPct": 0.72
+  },
+  {
+    "symbol": "VAKBN",
+    "price": 29.48,
+    "prev": 30.12,
+    "chgPct": -2.12
+  },
+  {
+    "symbol": "VAKFA",
+    "price": 13.33,
+    "prev": 13.52,
+    "chgPct": -1.41
+  },
+  {
+    "symbol": "VAKKO",
+    "price": 56.75,
+    "prev": 56.8,
+    "chgPct": -0.09
+  },
+  {
+    "symbol": "VBTYZ",
+    "price": 15.74,
+    "prev": 15.72,
+    "chgPct": 0.13
+  },
+  {
+    "symbol": "VERTU",
+    "price": 40.8,
+    "prev": 41.02,
+    "chgPct": -0.54
+  },
+  {
+    "symbol": "VERUS",
+    "price": 258.5,
+    "prev": 265.5,
+    "chgPct": -2.64
+  },
+  {
+    "symbol": "VESBE",
+    "price": 8.42,
+    "prev": 8.38,
+    "chgPct": 0.48
+  },
+  {
+    "symbol": "VESTL",
+    "price": 32.6,
+    "prev": 32.48,
+    "chgPct": 0.37
+  },
+  {
+    "symbol": "VKFYO",
+    "price": 38.02,
+    "prev": 38.98,
+    "chgPct": -2.46
+  },
+  {
+    "symbol": "VKGYO",
+    "price": 2.63,
+    "prev": 2.66,
+    "chgPct": -1.13
+  },
+  {
+    "symbol": "VKING",
+    "price": 38.3,
+    "prev": 37.0,
+    "chgPct": 3.51
+  },
+  {
+    "symbol": "VRGYO",
+    "price": 2.74,
+    "prev": 2.68,
+    "chgPct": 2.24
+  },
+  {
+    "symbol": "YAPRK",
+    "price": 291.0,
+    "prev": 282.75,
+    "chgPct": 2.92
+  },
+  {
+    "symbol": "YATAS",
+    "price": 36.18,
+    "prev": 35.76,
+    "chgPct": 1.17
+  },
+  {
+    "symbol": "YEOTK",
+    "price": 38.12,
+    "prev": 38.8,
+    "chgPct": -1.75
+  },
+  {
+    "symbol": "YESIL",
+    "price": 2.12,
+    "prev": 2.14,
+    "chgPct": -0.93
+  },
+  {
+    "symbol": "YGYO",
+    "price": 1.43,
+    "prev": 1.47,
+    "chgPct": -2.72
+  },
+  {
+    "symbol": "YIGIT",
+    "price": 24.14,
+    "prev": 23.9,
+    "chgPct": 1.0
+  },
+  {
+    "symbol": "YKBNK",
+    "price": 35.76,
+    "prev": 35.88,
+    "chgPct": -0.33
+  },
+  {
+    "symbol": "YKSLN",
+    "price": 3.5,
+    "prev": 3.43,
+    "chgPct": 2.04
+  },
+  {
+    "symbol": "YUNSA",
+    "price": 8.13,
+    "prev": 8.12,
+    "chgPct": 0.12
+  },
+  {
+    "symbol": "YYAPI",
+    "price": 2.01,
+    "prev": 2.02,
+    "chgPct": -0.5
+  },
+  {
+    "symbol": "YYLGD",
+    "price": 10.12,
+    "prev": 10.08,
+    "chgPct": 0.4
+  },
+  {
+    "symbol": "ZOREN",
+    "price": 3.17,
+    "prev": 3.17,
+    "chgPct": 0.0
+  },
+  {
+    "symbol": "ZRGYO",
+    "price": 22.94,
+    "prev": 22.82,
+    "chgPct": 0.53
+  }
+]
