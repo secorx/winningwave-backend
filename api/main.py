@@ -149,3 +149,45 @@ def api_all_symbols():
 @app.get("/indexes")
 def api_indexes():
     return get_indexes()
+
+# ============================================================
+# ARKA PLANDA 03:00'DA TARAMAYI OTOMATİK ÇALIŞTIRAN SCHEDULER
+# ============================================================
+
+import threading
+import datetime
+import time
+from .services import update_database, SCAN_STATE
+
+# Sunucunun bir önceki taramayı ne zaman yaptığını tutalım
+LAST_AUTO_SCAN_DAY = None
+
+def auto_daily_scan_loop():
+    global LAST_AUTO_SCAN_DAY
+
+    while True:
+        now = datetime.datetime.now()
+
+        # Eğer gün değişmişse LAST_AUTO_SCAN_DAY resetlensin
+        today = now.strftime("%Y-%m-%d")
+
+        # Saat 03:00 oldu mu?
+        if now.hour == 3 and now.minute == 0:
+            if LAST_AUTO_SCAN_DAY != today:
+                print("AUTO-SCAN: Saat 03:00 — otomatik tarama başlatılıyor.")
+                update_database()  # gerçek tarama başlatılır
+                LAST_AUTO_SCAN_DAY = today
+
+        # Eğer tarama kaçırıldıysa (Render uykudaydı), ilk uyanmada telafi et:
+        if LAST_AUTO_SCAN_DAY != today and now.hour > 3:
+            print("AUTO-SCAN: Sistem 03:00 taramasını kaçırmış — telafi başlatılıyor.")
+            update_database()
+            LAST_AUTO_SCAN_DAY = today
+
+        time.sleep(30)  # Her 30 saniyede bir kontrol
+
+
+# Thread başlatılır
+t = threading.Thread(target=auto_daily_scan_loop)
+t.daemon = True
+t.start()

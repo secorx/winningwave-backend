@@ -661,13 +661,16 @@ def _scan_thread() -> None:
 # ============================================================
 
 def update_database() -> Dict[str, Any]:
-    if SCAN_STATE["running"]:
-        return {"status": "running", "message": "Zaten tarama devam ediyor"}
+    """
+    Mobil uygulama taramayı başlatamayacak.
+    Tarama sadece otomatik (03:00) yapılacak.
+    Mobil bu endpoint'e bastığında hazır JSON'u kullansın.
+    """
+    return {
+        "status": "success",
+        "message": "Otomatik günlük tarama kullanılacak. Son sonuçlar hazır."
+    }
 
-    th = threading.Thread(target=_scan_thread)
-    th.daemon = True
-    th.start()
-    return {"status": "started", "message": "Tarama başlatıldı"}
 
 
 def get_scan_status() -> Dict[str, Any]:
