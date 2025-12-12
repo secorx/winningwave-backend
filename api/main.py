@@ -32,7 +32,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # ============================================================
 # ROUTES
 # ============================================================
@@ -41,7 +40,6 @@ app.add_middleware(
 def home():
     return {"status": "ok", "message": "API çalışıyor"}
 
-
 # -----------------------------------------------------------
 # TEKLİ ANALİZ
 # -----------------------------------------------------------
@@ -49,14 +47,12 @@ def home():
 def api_analyze(symbol: str):
     return analyze_single(symbol)
 
-
 # -----------------------------------------------------------
 # TARAMA (scanner)
 # -----------------------------------------------------------
 @app.get("/scanner")
 def api_scanner():
     return get_scanner()
-
 
 # -----------------------------------------------------------
 # HEDEF FİYAT RADARI
@@ -66,15 +62,12 @@ def api_scanner():
 def api_radar():
     return get_radar()
 
-
 # -----------------------------------------------------------
-# TARAMA BAŞLAT
+# TARAMA BAŞLAT  ✅ CRON UYUMLU
 # -----------------------------------------------------------
-@app.get("/update_database")
-@app.post("/update_database")
+@app.api_route("/update_database", methods=["GET", "POST"])
 def api_update_database():
     return update_database()
-
 
 # -----------------------------------------------------------
 # TARAYICI DURUMU
@@ -83,14 +76,12 @@ def api_update_database():
 def api_scan_status():
     return get_scan_status()
 
-
 # -----------------------------------------------------------
-# TARAYICI SONUCU (piyasa_verisi.json içeriği)
+# TARAYICI SONUCU
 # -----------------------------------------------------------
 @app.get("/scan_result")
 def api_scan_result():
     return get_scan_result()
-
 
 # -----------------------------------------------------------
 # CANLI FİYATLAR
@@ -102,22 +93,18 @@ def api_live_prices(
         description="Virgülle ayrılmış BIST sembolleri (GARAN,ASELS,THYAO gibi; .IS EKLEME)."
     )
 ):
-    # "GARAN, ASELS" → ["GARAN", "ASELS"]
     arr = [x.strip().upper() for x in symbols.split(",") if x.strip()]
     return get_live_prices(arr)
 
-
 # -----------------------------------------------------------
-# SON KAYITLI CANLI FİYATLAR (program açılışında)
+# SON KAYITLI CANLI FİYATLAR
 # -----------------------------------------------------------
 @app.get("/load_live_prices")
 def api_load_live_prices():
     return get_saved_live_prices()
 
-
 # -----------------------------------------------------------
-# /save_live_prices → Flutter tarafı 404 görmesin
-# (gerçek kayıt zaten get_live_prices içinde yapılıyor)
+# DUMMY SAVE ENDPOINT (Flutter 404 görmesin)
 # -----------------------------------------------------------
 @app.get("/save_live_prices")
 def api_save_live_prices():
@@ -126,14 +113,10 @@ def api_save_live_prices():
         "message": "Canlı fiyatlar /live_prices çağrılırken otomatik kaydediliyor.",
     }
 
-
 # ============================================================
 # PC İLE AYNI OLSUN DİYE EK ENDPOINTLER
 # ============================================================
 
-# -----------------------------------------------------------
-# TÜM SEMBOLLER – load_all_symbols()
-# -----------------------------------------------------------
 @app.get("/all_symbols")
 def api_all_symbols():
     try:
@@ -142,24 +125,18 @@ def api_all_symbols():
     except Exception as e:
         return {"status": "error", "error": str(e)}
 
-
-# -----------------------------------------------------------
-# ENDEKS VERİLERİ – XU100 / XU030 (PC mantığı)
-# -----------------------------------------------------------
 @app.get("/indexes")
 def api_indexes():
     return get_indexes()
 
 # ============================================================
-# ARKA PLANDA 03:00'DA TARAMAYI OTOMATİK ÇALIŞTIRAN SCHEDULER
+# 03:00 OTOMATİK TARAMA THREAD
 # ============================================================
 
 import threading
 import datetime
 import time
-from .services import update_database, SCAN_STATE
 
-# Sunucunun bir önceki taramayı ne zaman yaptığını tutalım
 LAST_AUTO_SCAN_DAY = None
 
 def auto_daily_scan_loop():
@@ -167,27 +144,22 @@ def auto_daily_scan_loop():
 
     while True:
         now = datetime.datetime.now()
-
-        # Eğer gün değişmişse LAST_AUTO_SCAN_DAY resetlensin
         today = now.strftime("%Y-%m-%d")
 
-        # Saat 03:00 oldu mu?
         if now.hour == 3 and now.minute == 0:
             if LAST_AUTO_SCAN_DAY != today:
-                print("AUTO-SCAN: Saat 03:00 — otomatik tarama başlatılıyor.")
-                update_database()  # gerçek tarama başlatılır
+                print("AUTO-SCAN: 03:00 otomatik tarama başlatılıyor.")
+                update_database()
                 LAST_AUTO_SCAN_DAY = today
 
-        # Eğer tarama kaçırıldıysa (Render uykudaydı), ilk uyanmada telafi et:
         if LAST_AUTO_SCAN_DAY != today and now.hour > 3:
-            print("AUTO-SCAN: Sistem 03:00 taramasını kaçırmış — telafi başlatılıyor.")
+            print("AUTO-SCAN: 03:00 kaçırıldı, telafi başlatılıyor.")
             update_database()
             LAST_AUTO_SCAN_DAY = today
 
-        time.sleep(30)  # Her 30 saniyede bir kontrol
+        time.sleep(30)
 
-
-# Thread başlatılır
 t = threading.Thread(target=auto_daily_scan_loop)
 t.daemon = True
 t.start()
+
