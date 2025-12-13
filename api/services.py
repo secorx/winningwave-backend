@@ -196,7 +196,7 @@ def analyze_single(symbol: str) -> Dict[str, Any]:
 
 
 # ============================================================
-# SCANNER
+# SCANNER (SADECE OKUMA)
 # ============================================================
 
 def get_scanner() -> Dict[str, Any]:
@@ -295,7 +295,6 @@ def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
     except Exception:
         pass
 
-    # Hiçbir yerden güvenilir fiyat alamadı
     return None
 
 
@@ -307,19 +306,15 @@ def fetch_live_prices(symbols: List[str]) -> List[Dict[str, Any]]:
     """
     out: List[Dict[str, Any]] = []
 
-    # Aynı sembol birden fazla geldiyse temizle
     uniq_syms = sorted(set(symbols))
 
-    for i, s in enumerate(uniq_syms):
+    for s in uniq_syms:
         d = fetch_live_price_single(s)
         if d:
             out.append(d)
 
-        # PC radarındaki gibi hafif throttle
-        # (Yfinance / borsa.com hız sınırına girmesin diye)
         time.sleep(random.uniform(0.08, 0.16))
 
-    # Canlı piyasa sayfası için alfabetik
     out.sort(key=lambda x: x["symbol"])
     return out
 
@@ -329,17 +324,13 @@ def get_live_prices(symbols: List[str]) -> Dict[str, Any]:
     /live_prices endpoint'i → MarketPricesPage burayı kullanıyor.
     """
     data = fetch_live_prices(symbols)
-
-    # Son sonucu JSON'a kaydet → program kapansa bile kalsın
     save_live_price_json(data)
-
     return {"status": "success", "data": data}
 
 
 def get_saved_live_prices() -> Dict[str, Any]:
     """
     Daha önce kaydedilmiş canlı fiyat listesini döner.
-    Mobil taraf sayfa açılır açılmaz bunu kullanabilir.
     """
     return {"status": "success", "data": load_live_price_json()}
 
@@ -348,7 +339,6 @@ def get_saved_live_prices() -> Dict[str, Any]:
 # HEDEF FİYAT RADARI (PC tarzı + cache)
 # ============================================================
 
-# Radar arka plan thread state
 RADAR_STATE: Dict[str, Any] = {
     "refresh_running": False,
     "last_refresh_ts": 0.0,
@@ -356,11 +346,6 @@ RADAR_STATE: Dict[str, Any] = {
 
 
 def _build_radar_from_local_only() -> List[Dict[str, Any]]:
-    """
-    Sadece piyasa_verisi.json'daki statik fiyatları kullanarak
-    radar listesi oluşturur. PC'de ilk açılıştaki davranışa benzer.
-    Çok hızlıdır, dış API çağırmaz.
-    """
     data = load_json()
     radar: List[Dict[str, Any]] = []
 
@@ -412,13 +397,6 @@ def _build_radar_from_local_only() -> List[Dict[str, Any]]:
 
 
 def _radar_refresh_thread() -> None:
-    """
-    PC'deki Hedef Fiyat Radarı'na benzer şekilde:
-    - Tüm hisseleri sırayla gezer
-    - Canlı fiyatı çekmeye çalışır
-    - Başarılı olanları radar_cache.json'a yazar
-    Bu işlem arka planda yapılır, HTTP cevabını bekletmez.
-    """
     global RADAR_STATE
 
     RADAR_STATE["refresh_running"] = True
@@ -426,7 +404,7 @@ def _radar_refresh_thread() -> None:
         data = load_json()
         radar: List[Dict[str, Any]] = []
 
-        for i, x in enumerate(data):
+        for x in data:
             if x.get("status") != "success":
                 continue
 
@@ -442,7 +420,6 @@ def _radar_refresh_thread() -> None:
             if not symbol:
                 continue
 
-            # Canlı fiyat (PC radarındaki gibi tek tek)
             live = fetch_live_price_single(symbol)
             if live:
                 price_f = live["price"]
@@ -482,7 +459,6 @@ def _radar_refresh_thread() -> None:
                 "band_max": bmax,
             })
 
-            # Hız sınırı dostu
             time.sleep(random.uniform(0.08, 0.16))
 
         radar.sort(key=lambda x: x["potential"], reverse=True)
@@ -494,15 +470,6 @@ def _radar_refresh_thread() -> None:
 
 
 def get_radar() -> Dict[str, Any]:
-    """
-    /hedef_fiyat_radar endpoint'i.
-
-    Mantık:
-    1) Eğer radar_cache.json doluysa → onu anında döner (çok hızlı).
-    2) Cache boşsa → sadece yerel piyasa_verisi.json kullanarak
-       hızlı bir liste üretir (PC ilk açılış davranışı).
-    3) Arkada thread ile canlı fiyatlarla cache'i günceller.
-    """
     cached = load_radar_cache()
     if cached:
         data = cached
@@ -510,7 +477,6 @@ def get_radar() -> Dict[str, Any]:
         data = _build_radar_from_local_only()
         save_radar_cache(data)
 
-    # Arka planda yenileme (zaten çalışmıyorsa)
     if not RADAR_STATE.get("refresh_running", False):
         th = threading.Thread(target=_radar_refresh_thread)
         th.daemon = True
@@ -520,8 +486,7 @@ def get_radar() -> Dict[str, Any]:
 
 
 # ============================================================
-# ENDEKS VERİLERİ (XU100 / XU030) – PC ile aynı Yahoo mantığı
-# + Basit RAM cache
+# ENDEKS VERİLERİ (XU100 / XU030)
 # ============================================================
 
 INDEX_CACHE: Dict[str, Dict[str, Optional[float]]] = {
@@ -531,16 +496,6 @@ INDEX_CACHE: Dict[str, Dict[str, Optional[float]]] = {
 
 
 def get_indexes() -> Dict[str, Any]:
-    """
-    XU100 / XU030 endekslerini Yahoo'dan çeker.
-    PC tarafındaki XU100.IS / XU030.IS mantığı ile aynıdır.
-
-    Ek olarak:
-    - Başarılı gelen son değeri INDEX_CACHE'de tutar.
-    - Eğer yeni istek başarısız olursa cache'deki son değeri döner.
-    Böylece Mobil tarafta XU100 / XU030'un 0.00 görünme ihtimali
-    minimuma iner.
-    """
     global INDEX_CACHE
 
     out = {
@@ -557,7 +512,6 @@ def get_indexes() -> Dict[str, Any]:
         price, prev, daily = _yahoo_price(ysym)
 
         if price is None:
-            # Yahoo cevap veremediyse son cache değerini kullan
             cached = INDEX_CACHE.get(key) or {}
             if cached.get("value") is not None:
                 out[key]["value"] = cached["value"]
@@ -641,7 +595,6 @@ def _scan_thread() -> None:
             }
 
         except Exception:
-            # Hata olsa bile taramayı durdurma
             pass
 
         if (i + 1) % 10 == 0:
@@ -657,14 +610,14 @@ def _scan_thread() -> None:
 
 
 # ============================================================
-# ENDPOINT SARAN FONKSİYONLAR
+# TARAMA BAŞLATMA (SADECE SERVER İÇİ)
 # ============================================================
 
-def update_database() -> Dict[str, Any]:
+def start_scan_internal() -> Dict[str, Any]:
     """
-    Mobil uygulama taramayı başlatamayacak.
-    Tarama sadece otomatik (03:00) yapılacak.
-    Mobil bu endpoint'e bastığında hazır JSON'u kullansın.
+    ⚠️ SADECE SERVER İÇİN:
+    - main.py içindeki 03:00 scheduler bunu çağıracak.
+    - Mobil / HTTP üzerinden tarama başlatma YOK.
     """
     if SCAN_STATE.get("running"):
         return {
@@ -679,6 +632,23 @@ def update_database() -> Dict[str, Any]:
     return {
         "status": "success",
         "message": "Otomatik günlük tarama başlatıldı. Sonuçlar tarama bitince güncellenecek.",
+    }
+
+
+# ============================================================
+# ENDPOINT SARAN FONKSİYONLAR
+# ============================================================
+
+def update_database() -> Dict[str, Any]:
+    """
+    ❌ MOBİL / HTTP TARAFI TARAMAYI ASLA BAŞLATMAZ.
+
+    Bu endpoint sadece bilgi mesajı döner.
+    Gerçek tarama sadece start_scan_internal() ile (server scheduler 03:00) başlar.
+    """
+    return {
+        "status": "success",
+        "message": "Tarama yalnızca her gece 03:00'te otomatik başlar. Mobil tetikleyemez.",
     }
 
 
