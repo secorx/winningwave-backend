@@ -666,11 +666,20 @@ def update_database() -> Dict[str, Any]:
     Tarama sadece otomatik (03:00) yapılacak.
     Mobil bu endpoint'e bastığında hazır JSON'u kullansın.
     """
+    if SCAN_STATE.get("running"):
+        return {
+            "status": "success",
+            "message": "Tarama zaten çalışıyor.",
+        }
+
+    th = threading.Thread(target=_scan_thread)
+    th.daemon = True
+    th.start()
+
     return {
         "status": "success",
-        "message": "Otomatik günlük tarama kullanılacak. Son sonuçlar hazır."
+        "message": "Otomatik günlük tarama başlatıldı. Sonuçlar tarama bitince güncellenecek.",
     }
-
 
 
 def get_scan_status() -> Dict[str, Any]:
