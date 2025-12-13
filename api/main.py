@@ -12,6 +12,7 @@ from .services import (
     get_saved_live_prices,
     get_indexes,
 )
+
 from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
 
 
@@ -128,14 +129,14 @@ def api_all_symbols():
 def api_indexes():
     return get_indexes()
 
+
 # ============================================================
 # GÜNLÜK OTOMATİK TARAMA SCHEDULER
 #
-# ✔ Günde SADECE 1 kez
-# ✔ 03:00 öncelikli
-# ✔ Server 03:00’te uykudaysa → ilk uyanışta 1 kez
-# ✘ Aynı gün ikinci tarama YOK
-# ✘ Mobil / HTTP tetiklemesi YOK
+# Hedef: Günde SADECE 1 tarama
+# - Öncelik: 03:00 (Europe/Istanbul)
+# - 03:00 kaçırıldıysa: Server 03:00 sonrası ilk açıldığında 1 kez
+# - Aynı gün ikinci tarama: ASLA
 # ============================================================
 
 import os
@@ -145,12 +146,15 @@ import threading
 import datetime
 from zoneinfo import ZoneInfo
 
+# services.py içinde BU fonksiyon olmalı (sende var):
+# def start_scan_internal(): ... (thread başlatıyor)
 try:
     from .services import start_scan_internal
 except Exception:
-    start_scan_internal = None
+    start_scan_internal = None  # çok kritik: yoksa tarama başlatamayız
 
 _SCHED_STARTED = False
+_SCHED_LOCK = threading.Lock()
 
 STATE_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -179,7 +183,61 @@ def _save_state(st: dict) -> None:
         pass
 
 
+def _today_str(tz: ZoneInfo) -> str:
+    return datetime.datetime.now(tz).strftime("%Y-%m-%d")
+
+
+def _build_03_target(now: datetime.datetime) -> datetime.datetime:
+    # Aynı gün 03:00 hedefi
+    return now.replace(hour=3, minute=0, second=0, microsecond=0)
+
+
+def _seconds_until(dt: datetime.datetime, now: datetime.datetime) -> float:
+    return max(0.0, (dt - now).total_seconds())
+
+
+def _run_daily_scan_once(tz: ZoneInfo) -> None:
+    """
+    Bugün için taramayı 1 kez çalıştırır (state yazıp başlatır).
+    Aynı anda iki thread tetiklemesin diye lock var.
+    """
+    with _SCHED_LOCK:
+        now = datetime.datetime.now(tz)
+        today = now.strftime("%Y-%m-%d")
+
+        st = _load_state()
+        last_day = st.get("last_scan_day")
+
+        # Bugün zaten yapıldıysa çık
+        if last_day == today:
+            return
+
+        # Önce state yaz (double trigger'ı engelle)
+        st["last_scan_day"] = today
+        st["last_scan_ts"] = now.isoformat()
+        _save_state(st)
+
+        print(f"AUTO-SCAN: {today} için günlük tarama başlatılıyor (now={now.isoformat()}).")
+
+        try:
+            if start_scan_internal is not None:
+                start_scan_internal()
+            else:
+                # start_scan_internal yoksa: burada tarama başlatamayız.
+                # update_database zaten mobil tetiklemeyi engelliyor ve sadece mesaj döndürüyor.
+                print("AUTO-SCAN WARNING: start_scan_internal bulunamadı. Tarama başlatılamadı.")
+        except Exception as e:
+            print(f"AUTO-SCAN ERROR: {e}")
+
+
 def auto_daily_scan_loop():
+    """
+    Strateji:
+    - Eğer saat 03:00'tan ÖNCE ise: 03:00'ı bekle, o an taramayı başlat.
+    - Eğer saat 03:00'tan SONRA ise ve bugün tarama yapılmadıysa:
+        server ilk açıldığı anda (startup sonrası) hemen 1 kez tarama başlat.
+    - Bugün yapıldıysa: yarın 03:00'ı bekle.
+    """
     tz = ZoneInfo("Europe/Istanbul")
 
     while True:
@@ -189,34 +247,27 @@ def auto_daily_scan_loop():
         st = _load_state()
         last_day = st.get("last_scan_day")
 
-        # BUGÜN ZATEN TARAMA YAPILDIYSA → ASLA TEKRARLAMA
+        # Bugün zaten tarandıysa → yarın 03:00'ı bekle
         if last_day == today:
-            time.sleep(30)
+            tomorrow = (now + datetime.timedelta(days=1)).replace(hour=3, minute=0, second=0, microsecond=0)
+            sleep_s = _seconds_until(tomorrow, now)
+            time.sleep(min(sleep_s, 3600))  # max 1 saatlik uyku parçaları (log/robust)
             continue
 
-        # 03:00–03:05 ideal pencere
-        in_ideal_window = (now.hour == 3 and now.minute <= 5)
+        # Bugün taranmadı:
+        target_today_03 = _build_03_target(now)
 
-        # 03:00 kaçırıldı ama server şimdi ayakta → telafi
-        missed_but_awake = (now.hour > 3)
+        if now < target_today_03:
+            # 03:00 gelmedi → 03:00'ı bekle
+            sleep_s = _seconds_until(target_today_03, now)
+            time.sleep(min(sleep_s, 3600))
+            continue
 
-        if in_ideal_window or missed_but_awake:
-            print("AUTO-SCAN: Günlük tek tarama başlatılıyor.")
+        # now >= 03:00 ve bugün taranmadı → catch-up: ilk uyanışta 1 kez
+        _run_daily_scan_once(tz)
 
-            # Önce state yaz → double trigger önlenir
-            st["last_scan_day"] = today
-            st["last_scan_ts"] = now.isoformat()
-            _save_state(st)
-
-            try:
-                if start_scan_internal is not None:
-                    start_scan_internal()
-                else:
-                    update_database()
-            except Exception as e:
-                print(f"AUTO-SCAN ERROR: {e}")
-
-        time.sleep(30)
+        # Tarama başlatıldıktan sonra kısa uyku (loop gereksiz dönmesin)
+        time.sleep(60)
 
 
 @app.on_event("startup")
@@ -233,4 +284,4 @@ def _start_scheduler_once():
     _SCHED_STARTED = True
     t = threading.Thread(target=auto_daily_scan_loop, daemon=True)
     t.start()
-    print("AUTO-SCAN: Scheduler başlatıldı (günde 1 kez, 03:00 öncelikli).")
+    print("AUTO-SCAN: Scheduler başlatıldı (günde 1 kez, 03:00 öncelikli, kaçırılırsa ilk uyanışta).")
