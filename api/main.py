@@ -16,15 +16,42 @@ from .services import (
 from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
 
 import os
-import json
 import datetime
 from zoneinfo import ZoneInfo
+
+# ============================================================
+# REDIS (GÜNLÜK TEK TARAMA GARANTİSİ)
+# ============================================================
+
+import redis
+
+REDIS_URL = os.getenv("REDIS_URL")
+redis_client = None
+
+if REDIS_URL:
+    try:
+        redis_client = redis.Redis.from_url(
+            REDIS_URL,
+            decode_responses=True,
+            socket_timeout=3,
+            socket_connect_timeout=3,
+        )
+        redis_client.ping()
+        print("REDIS: Connected")
+    except Exception as e:
+        print(f"REDIS: Connection failed -> {e}")
+        redis_client = None
+else:
+    print("REDIS: REDIS_URL env yok!")
+
+# ============================================================
+# SCAN INTERNAL IMPORT
+# ============================================================
 
 try:
     from .services import start_scan_internal
 except Exception:
     start_scan_internal = None
-
 
 # ============================================================
 # APP
@@ -109,46 +136,51 @@ def api_all_symbols():
 def api_indexes():
     return get_indexes()
 
-
 # ============================================================
-# 🔒 BOOT-TIME DAILY SCAN (LOCK FILE GUARANTEE)
+# 🔒 BOOT-TIME DAILY SCAN (REDIS GUARANTEED)
 # ============================================================
 
-def _boot_time_daily_scan_with_lock():
+def _boot_time_daily_scan_with_redis() -> None:
     """
-    🔐 GERÇEK GÜNLÜK TEK TARAMA GARANTİSİ
+    ✅ GÜNDE SADECE 1 KEZ (REDIS GARANTİLİ)
+    - Server kaç kere uyursa uyansın
+    - Kaç process olursa olsun
+    - Aynı gün 2. tarama ASLA olmaz
+    """
 
-    - Render kaç kere uyandırırsa uyandırsın
-    - Aynı gün ikinci tarama ASLA olmaz
-    - OS-level atomic lock kullanır
-    """
+    if redis_client is None:
+        print("AUTO-SCAN: Redis yok → tarama iptal")
+        return
 
     if start_scan_internal is None:
-        print("AUTO-SCAN: start_scan_internal bulunamadı.")
+        print("AUTO-SCAN: start_scan_internal yok → tarama iptal")
         return
 
     tz = ZoneInfo("Europe/Istanbul")
     today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
 
-    # OS-level lock (process-safe)
-    lock_path = f"/tmp/auto_scan_{today}.lock"
+    redis_key = "ww:last_scan_day"
 
     try:
-        # Atomic create (O_EXCL)
-        fd = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-        with os.fdopen(fd, "w") as f:
-            f.write(datetime.datetime.now(tz).isoformat())
+        last_day = redis_client.get(redis_key)
+
+        if last_day == today:
+            print(f"AUTO-SCAN: Skip ({today}) - bugün zaten taranmış")
+            return
+
+        # 🔐 ATOMIC SET (ÖNCE YAZ → SONRA TARAMA)
+        redis_client.set(redis_key, today)
 
         print(f"AUTO-SCAN: 🔥 Günlük tarama başlatılıyor ({today})")
         start_scan_internal()
 
-    except FileExistsError:
-        print(f"AUTO-SCAN: ⏭ Skip ({today}) – lock mevcut, bugün zaten taranmış.")
-
     except Exception as e:
-        print(f"AUTO-SCAN: ❌ Hata: {e}")
+        print(f"AUTO-SCAN ERROR: {e}")
 
+# ============================================================
+# STARTUP
+# ============================================================
 
 @app.on_event("startup")
 def _on_startup():
-    _boot_time_daily_scan_with_lock()
+    _boot_time_daily_scan_with_redis()
