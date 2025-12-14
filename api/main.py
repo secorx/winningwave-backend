@@ -22,14 +22,7 @@ import datetime
 from zoneinfo import ZoneInfo
 
 
-# ============================================================
-# APP
-# ============================================================
-
-app = FastAPI(
-    title="WinningWave SENTEZ AI API",
-    version="1.0",
-)
+app = FastAPI(title="WinningWave SENTEZ AI API", version="1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -39,38 +32,30 @@ app.add_middleware(
 )
 
 # ============================================================
-# ADMIN DAILY STATE (GÜNLÜK KİLİT)
+# STATE (GÜNLÜK KORUMA)
 # ============================================================
 
-ADMIN_STATE_PATH = os.path.join(
-    os.path.dirname(__file__),
-    "..",
-    "data",
-    "admin_daily_scan_state.json",
-)
-os.makedirs(os.path.dirname(ADMIN_STATE_PATH), exist_ok=True)
+STATE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "auto_scan_state.json")
+os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
 
 
-def _load_admin_state() -> dict:
-    if not os.path.exists(ADMIN_STATE_PATH):
+def load_state() -> dict:
+    if not os.path.exists(STATE_PATH):
         return {}
     try:
-        with open(ADMIN_STATE_PATH, "r", encoding="utf-8") as f:
+        with open(STATE_PATH, "r", encoding="utf-8") as f:
             return json.load(f) or {}
     except Exception:
         return {}
 
 
-def _save_admin_state(st: dict) -> None:
-    try:
-        with open(ADMIN_STATE_PATH, "w", encoding="utf-8") as f:
-            json.dump(st, f, ensure_ascii=False, indent=2)
-    except Exception:
-        pass
+def save_state(st: dict) -> None:
+    with open(STATE_PATH, "w", encoding="utf-8") as f:
+        json.dump(st, f, ensure_ascii=False, indent=2)
 
 
 # ============================================================
-# ROUTES (NORMAL)
+# NORMAL ROUTES
 # ============================================================
 
 @app.get("/")
@@ -85,15 +70,9 @@ def api_analyze(symbol: str):
 def api_scanner():
     return get_scanner()
 
-@app.get("/hedef_fiyat_radar")
 @app.get("/radar")
 def api_radar():
     return get_radar()
-
-@app.get("/update_database")
-@app.post("/update_database")
-def api_update_database():
-    return update_database()
 
 @app.get("/scan_status")
 def api_scan_status():
@@ -102,17 +81,6 @@ def api_scan_status():
 @app.get("/scan_result")
 def api_scan_result():
     return get_scan_result()
-
-@app.get("/live_prices")
-def api_live_prices(
-    symbols: str = Query(..., description="GARAN,ASELS gibi")
-):
-    arr = [x.strip().upper() for x in symbols.split(",") if x.strip()]
-    return get_live_prices(arr)
-
-@app.get("/load_live_prices")
-def api_load_live_prices():
-    return get_saved_live_prices()
 
 @app.get("/all_symbols")
 def api_all_symbols():
@@ -124,19 +92,11 @@ def api_indexes():
 
 
 # ============================================================
-# 🔒 ADMIN – GÜNLÜK TEK TARAMA (GET – BROWSER UYUMLU)
+# 🔒 ADMIN – GÜNLÜK TEK TARAMA (GET + POST)
 # ============================================================
 
-@app.get("/admin/run_daily_scan")
-def admin_run_daily_scan(token: str):
-    """
-    🔐 SADECE ADMIN
-    - Günde 1 defa
-    - Uzun süren tarama (15 dk)
-    - Sekme kapatılsa bile devam eder
-    - Server uyumaz
-    """
-
+@app.api_route("/__admin/run_daily_scan", methods=["GET", "POST"])
+def admin_run_daily_scan(token: str = Query(...)):
     ADMIN_TOKEN = os.getenv("ADMIN_SCAN_TOKEN")
     if not ADMIN_TOKEN or token != ADMIN_TOKEN:
         raise HTTPException(status_code=403, detail="Yetkisiz")
@@ -144,19 +104,19 @@ def admin_run_daily_scan(token: str):
     tz = ZoneInfo("Europe/Istanbul")
     today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
 
-    state = _load_admin_state()
+    state = load_state()
     if state.get("last_scan_day") == today:
         return {
             "status": "skip",
-            "message": f"{today} için tarama zaten yapılmış",
+            "message": f"{today} için tarama zaten yapıldı",
         }
 
-    # 🔒 ÖNCE KİLİT KOY
+    # önce state yaz → sonra başlat (double run yok)
     state["last_scan_day"] = today
-    state["started_at"] = datetime.datetime.now(tz).isoformat()
-    _save_admin_state(state)
+    state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
+    save_state(state)
 
-    # 🚀 THREAD BAŞLAT (BLOCKING DEĞİL)
+    # BLOCKING (Render uyumaz, yarım kalmaz)
     start_scan_internal()
 
     return {
