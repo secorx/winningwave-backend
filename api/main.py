@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from .services import (
@@ -11,47 +11,16 @@ from .services import (
     get_live_prices,
     get_saved_live_prices,
     get_indexes,
+    start_scan_internal,
 )
 
 from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
 
 import os
+import json
 import datetime
 from zoneinfo import ZoneInfo
 
-# ============================================================
-# REDIS (GÜNLÜK TEK TARAMA GARANTİSİ)
-# ============================================================
-
-import redis
-
-REDIS_URL = os.getenv("REDIS_URL")
-redis_client = None
-
-if REDIS_URL:
-    try:
-        redis_client = redis.Redis.from_url(
-            REDIS_URL,
-            decode_responses=True,
-            socket_timeout=3,
-            socket_connect_timeout=3,
-        )
-        redis_client.ping()
-        print("REDIS: Connected")
-    except Exception as e:
-        print(f"REDIS: Connection failed -> {e}")
-        redis_client = None
-else:
-    print("REDIS: REDIS_URL env yok!")
-
-# ============================================================
-# SCAN INTERNAL IMPORT
-# ============================================================
-
-try:
-    from .services import start_scan_internal
-except Exception:
-    start_scan_internal = None
 
 # ============================================================
 # APP
@@ -70,7 +39,35 @@ app.add_middleware(
 )
 
 # ============================================================
-# ROUTES
+# STATE (GÜNLÜK KORUMA)
+# ============================================================
+
+STATE_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "data",
+    "auto_scan_state.json",
+)
+os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+
+
+def load_state() -> dict:
+    if not os.path.exists(STATE_PATH):
+        return {}
+    try:
+        with open(STATE_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def save_state(st: dict) -> None:
+    with open(STATE_PATH, "w", encoding="utf-8") as f:
+        json.dump(st, f, ensure_ascii=False, indent=2)
+
+
+# ============================================================
+# ROUTES (NORMAL)
 # ============================================================
 
 @app.get("/")
@@ -105,10 +102,7 @@ def api_scan_result():
 
 @app.get("/live_prices")
 def api_live_prices(
-    symbols: str = Query(
-        ...,
-        description="Virgülle ayrılmış BIST sembolleri (GARAN,ASELS,THYAO gibi)"
-    )
+    symbols: str = Query(..., description="GARAN,ASELS gibi")
 ):
     arr = [x.strip().upper() for x in symbols.split(",") if x.strip()]
     return get_live_prices(arr)
@@ -117,70 +111,53 @@ def api_live_prices(
 def api_load_live_prices():
     return get_saved_live_prices()
 
-@app.get("/save_live_prices")
-def api_save_live_prices():
-    return {
-        "status": "success",
-        "message": "Canlı fiyatlar otomatik kaydedilir.",
-    }
-
 @app.get("/all_symbols")
 def api_all_symbols():
-    try:
-        symbols = load_all_symbols()
-        return {"status": "success", "data": symbols}
-    except Exception as e:
-        return {"status": "error", "error": str(e)}
+    return {"status": "success", "data": load_all_symbols()}
 
 @app.get("/indexes")
 def api_indexes():
     return get_indexes()
 
+
 # ============================================================
-# 🔒 BOOT-TIME DAILY SCAN (REDIS GUARANTEED)
+# 🔒 ADMIN – GÜNLÜK TEK TARAMA (MANUEL)
 # ============================================================
 
-def _boot_time_daily_scan_with_redis() -> None:
+@app.post("/__admin/run_daily_scan")
+def admin_run_daily_scan(token: str):
     """
-    ✅ GÜNDE SADECE 1 KEZ (REDIS GARANTİLİ)
-    - Server kaç kere uyursa uyansın
-    - Kaç process olursa olsun
-    - Aynı gün 2. tarama ASLA olmaz
+    🔐 SADECE ADMIN
+    - Günde 1 defa
+    - Uzun süren tarama
+    - Server uyumaz
     """
 
-    if redis_client is None:
-        print("AUTO-SCAN: Redis yok → tarama iptal")
-        return
-
-    if start_scan_internal is None:
-        print("AUTO-SCAN: start_scan_internal yok → tarama iptal")
-        return
+    ADMIN_TOKEN = os.getenv("ADMIN_SCAN_TOKEN")
+    if not ADMIN_TOKEN or token != ADMIN_TOKEN:
+        raise HTTPException(status_code=403, detail="Yetkisiz")
 
     tz = ZoneInfo("Europe/Istanbul")
     today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
 
-    redis_key = "ww:last_scan_day"
+    state = load_state()
+    last_day = state.get("last_scan_day")
 
-    try:
-        last_day = redis_client.get(redis_key)
+    if last_day == today:
+        return {
+            "status": "skip",
+            "message": f"{today} için tarama zaten yapıldı",
+        }
 
-        if last_day == today:
-            print(f"AUTO-SCAN: Skip ({today}) - bugün zaten taranmış")
-            return
+    # 🔒 ÖNCE YAZ → SONRA ÇALIŞTIR (DOUBLE RUN YOK)
+    state["last_scan_day"] = today
+    state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
+    save_state(state)
 
-        # 🔐 ATOMIC SET (ÖNCE YAZ → SONRA TARAMA)
-        redis_client.set(redis_key, today)
+    # ⚠️ BLOCKING ÇAĞRI
+    start_scan_internal()
 
-        print(f"AUTO-SCAN: 🔥 Günlük tarama başlatılıyor ({today})")
-        start_scan_internal()
-
-    except Exception as e:
-        print(f"AUTO-SCAN ERROR: {e}")
-
-# ============================================================
-# STARTUP
-# ============================================================
-
-@app.on_event("startup")
-def _on_startup():
-    _boot_time_daily_scan_with_redis()
+    return {
+        "status": "success",
+        "message": f"{today} günlük tarama tamamlandı",
+    }
