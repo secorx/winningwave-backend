@@ -111,7 +111,10 @@ def api_indexes():
 
 
 # ============================================================
-# GÜNLÜK TEK TARAMA – TARİH BAZLI (GARANTİLİ)
+# BOOT-TIME DAILY CHECK (SCHEDULER YOK)
+# - Her process ayağa kalktığında çalışır
+# - Aynı gün ikinci tarama ASLA başlatmaz
+# - Kullanıcı tetiklemesi yok (route yok)
 # ============================================================
 
 STATE_PATH = os.path.join(
@@ -141,41 +144,43 @@ def _save_state(st: dict) -> None:
         pass
 
 
-@app.get("/__internal_daily_scan_check")
-def internal_daily_scan_check():
+def _boot_time_daily_check_and_maybe_start_scan() -> None:
     """
-    🔒 GÜNDE SADECE 1 TARAMA
-
-    - Saat önemli değil
-    - Server her uyandığında çalışsa bile
-      aynı gün ikinci tarama ASLA olmaz
+    ✅ BOOT-TIME DAILY CHECK:
+    - Server her restart/uyanışında burası çalışır.
+    - Aynı gün tarama yaptıysa SKIP
+    - Yeni günse: state'i ÖNCE yazar, sonra taramayı başlatır
     """
-
     tz = ZoneInfo("Europe/Istanbul")
-    today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
+    now = datetime.datetime.now(tz)
+    today = now.strftime("%Y-%m-%d")
 
     st = _load_state()
     last_day = st.get("last_scan_day")
 
     if last_day == today:
-        return {
-            "status": "skip",
-            "message": f"{today} için tarama zaten yapılmış",
-        }
+        print(f"AUTO-SCAN: Skip ({today}) - bugün zaten taranmış.")
+        return
 
-    # Önce state yaz (double trigger engeli)
+    # Double-trigger engeli: önce state yaz
     st["last_scan_day"] = today
-    st["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
+    st["last_scan_ts"] = now.isoformat()
     _save_state(st)
 
-    if start_scan_internal is not None:
-        start_scan_internal()
-        return {
-            "status": "started",
-            "message": f"{today} için günlük tarama başlatıldı",
-        }
+    if start_scan_internal is None:
+        print("AUTO-SCAN: start_scan_internal bulunamadı (services import hatası).")
+        return
 
-    return {
-        "status": "error",
-        "message": "start_scan_internal bulunamadı",
-    }
+    try:
+        print("AUTO-SCAN: Boot-time günlük tek tarama başlatılıyor.")
+        start_scan_internal()
+    except Exception as e:
+        # Eğer start_scan_internal patlarsa, aynı gün tekrar denemesin diye
+        # state'i geri almıyoruz (senin istediğin 'tek sefer' garantisi).
+        print(f"AUTO-SCAN: Tarama başlatılamadı: {e}")
+
+
+@app.on_event("startup")
+def _on_startup():
+    # Scheduler yok; yalnızca boot-time check
+    _boot_time_daily_check_and_maybe_start_scan()
