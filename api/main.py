@@ -111,76 +111,59 @@ def api_indexes():
 
 
 # ============================================================
-# BOOT-TIME DAILY CHECK (SCHEDULER YOK)
-# - Her process ayağa kalktığında çalışır
-# - Aynı gün ikinci tarama ASLA başlatmaz
-# - Kullanıcı tetiklemesi yok (route yok)
+# BOOT-TIME DAILY SCAN CHECK (TEK VE GARANTİLİ)
 # ============================================================
 
-STATE_PATH = os.path.join(
-    os.path.dirname(__file__),
-    "..",
-    "data",
-    "auto_scan_state.json",
-)
-os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
-
-
-def _load_state() -> dict:
-    if not os.path.exists(STATE_PATH):
-        return {}
-    try:
-        with open(STATE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f) or {}
-    except Exception:
-        return {}
-
-
-def _save_state(st: dict) -> None:
-    try:
-        with open(STATE_PATH, "w", encoding="utf-8") as f:
-            json.dump(st, f, ensure_ascii=False, indent=2)
-    except Exception:
-        pass
-
-
-def _boot_time_daily_check_and_maybe_start_scan() -> None:
+def _load_piyasa_data() -> list:
     """
-    ✅ BOOT-TIME DAILY CHECK:
-    - Server her restart/uyanışında burası çalışır.
-    - Aynı gün tarama yaptıysa SKIP
-    - Yeni günse: state'i ÖNCE yazar, sonra taramayı başlatır
+    services.py içindeki piyasa_verisi.json'u okur.
+    Dosya yoksa veya boşsa [] döner.
     """
-    tz = ZoneInfo("Europe/Istanbul")
-    now = datetime.datetime.now(tz)
-    today = now.strftime("%Y-%m-%d")
+    try:
+        from .services import load_json
+        return load_json() or []
+    except Exception:
+        return []
 
-    st = _load_state()
-    last_day = st.get("last_scan_day")
 
-    if last_day == today:
-        print(f"AUTO-SCAN: Skip ({today}) - bugün zaten taranmış.")
-        return
+def _already_scanned_today(today: str) -> bool:
+    """
+    Bugün tarama yapıldı mı?
+    → piyasa_verisi.json içindeki herhangi bir kayıtta
+      last_check_time == today ise EVET.
+    """
+    data = _load_piyasa_data()
+    for x in data:
+        if x.get("last_check_time") == today:
+            return True
+    return False
 
-    # Double-trigger engeli: önce state yaz
-    st["last_scan_day"] = today
-    st["last_scan_ts"] = now.isoformat()
-    _save_state(st)
 
+def _boot_time_daily_check_and_start_if_needed() -> None:
+    """
+    🔒 GARANTİLİ MODEL:
+    - Server her ayağa kalktığında çalışır
+    - Bugün tarama varsa → ASLA tekrar başlatmaz
+    - Yoksa → 1 kez başlatır
+    """
     if start_scan_internal is None:
-        print("AUTO-SCAN: start_scan_internal bulunamadı (services import hatası).")
+        print("AUTO-SCAN: start_scan_internal bulunamadı.")
         return
 
+    tz = ZoneInfo("Europe/Istanbul")
+    today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
+
+    if _already_scanned_today(today):
+        print(f"AUTO-SCAN: Skip ({today}) – bugün tarama zaten yapılmış.")
+        return
+
+    print("AUTO-SCAN: Boot-time günlük TEK tarama başlatılıyor.")
     try:
-        print("AUTO-SCAN: Boot-time günlük tek tarama başlatılıyor.")
         start_scan_internal()
     except Exception as e:
-        # Eğer start_scan_internal patlarsa, aynı gün tekrar denemesin diye
-        # state'i geri almıyoruz (senin istediğin 'tek sefer' garantisi).
-        print(f"AUTO-SCAN: Tarama başlatılamadı: {e}")
+        print(f"AUTO-SCAN ERROR: {e}")
 
 
 @app.on_event("startup")
 def _on_startup():
-    # Scheduler yok; yalnızca boot-time check
-    _boot_time_daily_check_and_maybe_start_scan()
+    _boot_time_daily_check_and_start_if_needed()
