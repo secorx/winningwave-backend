@@ -111,41 +111,18 @@ def api_indexes():
 
 
 # ============================================================
-# BOOT-TIME DAILY SCAN CHECK (TEK VE GARANTİLİ)
+# 🔒 BOOT-TIME DAILY SCAN (LOCK FILE GUARANTEE)
 # ============================================================
 
-def _load_piyasa_data() -> list:
+def _boot_time_daily_scan_with_lock():
     """
-    services.py içindeki piyasa_verisi.json'u okur.
-    Dosya yoksa veya boşsa [] döner.
-    """
-    try:
-        from .services import load_json
-        return load_json() or []
-    except Exception:
-        return []
+    🔐 GERÇEK GÜNLÜK TEK TARAMA GARANTİSİ
 
+    - Render kaç kere uyandırırsa uyandırsın
+    - Aynı gün ikinci tarama ASLA olmaz
+    - OS-level atomic lock kullanır
+    """
 
-def _already_scanned_today(today: str) -> bool:
-    """
-    Bugün tarama yapıldı mı?
-    → piyasa_verisi.json içindeki herhangi bir kayıtta
-      last_check_time == today ise EVET.
-    """
-    data = _load_piyasa_data()
-    for x in data:
-        if x.get("last_check_time") == today:
-            return True
-    return False
-
-
-def _boot_time_daily_check_and_start_if_needed() -> None:
-    """
-    🔒 GARANTİLİ MODEL:
-    - Server her ayağa kalktığında çalışır
-    - Bugün tarama varsa → ASLA tekrar başlatmaz
-    - Yoksa → 1 kez başlatır
-    """
     if start_scan_internal is None:
         print("AUTO-SCAN: start_scan_internal bulunamadı.")
         return
@@ -153,17 +130,25 @@ def _boot_time_daily_check_and_start_if_needed() -> None:
     tz = ZoneInfo("Europe/Istanbul")
     today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
 
-    if _already_scanned_today(today):
-        print(f"AUTO-SCAN: Skip ({today}) – bugün tarama zaten yapılmış.")
-        return
+    # OS-level lock (process-safe)
+    lock_path = f"/tmp/auto_scan_{today}.lock"
 
-    print("AUTO-SCAN: Boot-time günlük TEK tarama başlatılıyor.")
     try:
+        # Atomic create (O_EXCL)
+        fd = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        with os.fdopen(fd, "w") as f:
+            f.write(datetime.datetime.now(tz).isoformat())
+
+        print(f"AUTO-SCAN: 🔥 Günlük tarama başlatılıyor ({today})")
         start_scan_internal()
+
+    except FileExistsError:
+        print(f"AUTO-SCAN: ⏭ Skip ({today}) – lock mevcut, bugün zaten taranmış.")
+
     except Exception as e:
-        print(f"AUTO-SCAN ERROR: {e}")
+        print(f"AUTO-SCAN: ❌ Hata: {e}")
 
 
 @app.on_event("startup")
 def _on_startup():
-    _boot_time_daily_check_and_start_if_needed()
+    _boot_time_daily_scan_with_lock()
