@@ -39,31 +39,34 @@ app.add_middleware(
 )
 
 # ============================================================
-# STATE (GÜNLÜK KORUMA)
+# ADMIN DAILY STATE (GÜNLÜK KİLİT)
 # ============================================================
 
-STATE_PATH = os.path.join(
+ADMIN_STATE_PATH = os.path.join(
     os.path.dirname(__file__),
     "..",
     "data",
-    "auto_scan_state.json",
+    "admin_daily_scan_state.json",
 )
-os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+os.makedirs(os.path.dirname(ADMIN_STATE_PATH), exist_ok=True)
 
 
-def load_state() -> dict:
-    if not os.path.exists(STATE_PATH):
+def _load_admin_state() -> dict:
+    if not os.path.exists(ADMIN_STATE_PATH):
         return {}
     try:
-        with open(STATE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+        with open(ADMIN_STATE_PATH, "r", encoding="utf-8") as f:
+            return json.load(f) or {}
     except Exception:
         return {}
 
 
-def save_state(st: dict) -> None:
-    with open(STATE_PATH, "w", encoding="utf-8") as f:
-        json.dump(st, f, ensure_ascii=False, indent=2)
+def _save_admin_state(st: dict) -> None:
+    try:
+        with open(ADMIN_STATE_PATH, "w", encoding="utf-8") as f:
+            json.dump(st, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
 
 
 # ============================================================
@@ -121,15 +124,16 @@ def api_indexes():
 
 
 # ============================================================
-# 🔒 ADMIN – GÜNLÜK TEK TARAMA (MANUEL)
+# 🔒 ADMIN – GÜNLÜK TEK TARAMA (GET – BROWSER UYUMLU)
 # ============================================================
 
-@app.post("/__admin/run_daily_scan")
+@app.get("/admin/run_daily_scan")
 def admin_run_daily_scan(token: str):
     """
     🔐 SADECE ADMIN
     - Günde 1 defa
-    - Uzun süren tarama
+    - Uzun süren tarama (15 dk)
+    - Sekme kapatılsa bile devam eder
     - Server uyumaz
     """
 
@@ -140,24 +144,22 @@ def admin_run_daily_scan(token: str):
     tz = ZoneInfo("Europe/Istanbul")
     today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
 
-    state = load_state()
-    last_day = state.get("last_scan_day")
-
-    if last_day == today:
+    state = _load_admin_state()
+    if state.get("last_scan_day") == today:
         return {
             "status": "skip",
-            "message": f"{today} için tarama zaten yapıldı",
+            "message": f"{today} için tarama zaten yapılmış",
         }
 
-    # 🔒 ÖNCE YAZ → SONRA ÇALIŞTIR (DOUBLE RUN YOK)
+    # 🔒 ÖNCE KİLİT KOY
     state["last_scan_day"] = today
-    state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
-    save_state(state)
+    state["started_at"] = datetime.datetime.now(tz).isoformat()
+    _save_admin_state(state)
 
-    # ⚠️ BLOCKING ÇAĞRI
+    # 🚀 THREAD BAŞLAT (BLOCKING DEĞİL)
     start_scan_internal()
 
     return {
         "status": "success",
-        "message": f"{today} günlük tarama tamamlandı",
+        "message": f"{today} günlük tarama başlatıldı",
     }
