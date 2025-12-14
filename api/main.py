@@ -19,10 +19,17 @@ from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
 import os
 import json
 import datetime
+import threading
 from zoneinfo import ZoneInfo
 
+# ============================================================
+# APP
+# ============================================================
 
-app = FastAPI(title="WinningWave SENTEZ AI API", version="1.0")
+app = FastAPI(
+    title="WinningWave SENTEZ AI API",
+    version="1.0",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -32,10 +39,15 @@ app.add_middleware(
 )
 
 # ============================================================
-# STATE (GÜNLÜK KORUMA)
+# STATE (GÜNLÜK ADMIN KORUMASI)
 # ============================================================
 
-STATE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "auto_scan_state.json")
+STATE_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "data",
+    "auto_scan_state.json",
+)
 os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
 
 
@@ -55,7 +67,7 @@ def save_state(st: dict) -> None:
 
 
 # ============================================================
-# NORMAL ROUTES
+# NORMAL ROUTES (HİÇBİRİ DEĞİŞMEDİ)
 # ============================================================
 
 @app.get("/")
@@ -70,9 +82,15 @@ def api_analyze(symbol: str):
 def api_scanner():
     return get_scanner()
 
+@app.get("/hedef_fiyat_radar")
 @app.get("/radar")
 def api_radar():
     return get_radar()
+
+@app.get("/update_database")
+@app.post("/update_database")
+def api_update_database():
+    return update_database()
 
 @app.get("/scan_status")
 def api_scan_status():
@@ -81,6 +99,17 @@ def api_scan_status():
 @app.get("/scan_result")
 def api_scan_result():
     return get_scan_result()
+
+@app.get("/live_prices")
+def api_live_prices(
+    symbols: str = Query(..., description="GARAN,ASELS gibi")
+):
+    arr = [x.strip().upper() for x in symbols.split(",") if x.strip()]
+    return get_live_prices(arr)
+
+@app.get("/load_live_prices")
+def api_load_live_prices():
+    return get_saved_live_prices()
 
 @app.get("/all_symbols")
 def api_all_symbols():
@@ -92,7 +121,7 @@ def api_indexes():
 
 
 # ============================================================
-# 🔒 ADMIN – GÜNLÜK TEK TARAMA (GET + POST)
+# 🔒 ADMIN – GÜNLÜK TEK TARAMA (RADAR SAFE)
 # ============================================================
 
 @app.api_route("/__admin/run_daily_scan", methods=["GET", "POST"])
@@ -111,15 +140,17 @@ def admin_run_daily_scan(token: str = Query(...)):
             "message": f"{today} için tarama zaten yapıldı",
         }
 
-    # önce state yaz → sonra başlat (double run yok)
+    # önce state yaz → double run yok
     state["last_scan_day"] = today
     state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
     save_state(state)
 
-    # BLOCKING (Render uyumaz, yarım kalmaz)
-    start_scan_internal()
+    # 🔥 ASLA BLOCKING DEĞİL
+    th = threading.Thread(target=start_scan_internal)
+    th.daemon = True
+    th.start()
 
     return {
         "status": "success",
-        "message": f"{today} günlük tarama başlatıldı",
+        "message": f"{today} günlük tarama başlatıldı (arka planda)",
     }
