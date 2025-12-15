@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from .services import (
@@ -11,7 +11,6 @@ from .services import (
     get_live_prices,
     get_saved_live_prices,
     get_indexes,
-    start_scan_internal,
 )
 
 from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
@@ -19,8 +18,13 @@ from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
 import os
 import json
 import datetime
-import threading
 from zoneinfo import ZoneInfo
+
+try:
+    from .services import start_scan_internal
+except Exception:
+    start_scan_internal = None
+
 
 # ============================================================
 # APP
@@ -39,35 +43,7 @@ app.add_middleware(
 )
 
 # ============================================================
-# STATE (GÜNLÜK ADMIN KORUMASI)
-# ============================================================
-
-STATE_PATH = os.path.join(
-    os.path.dirname(__file__),
-    "..",
-    "data",
-    "auto_scan_state.json",
-)
-os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
-
-
-def load_state() -> dict:
-    if not os.path.exists(STATE_PATH):
-        return {}
-    try:
-        with open(STATE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f) or {}
-    except Exception:
-        return {}
-
-
-def save_state(st: dict) -> None:
-    with open(STATE_PATH, "w", encoding="utf-8") as f:
-        json.dump(st, f, ensure_ascii=False, indent=2)
-
-
-# ============================================================
-# NORMAL ROUTES (HİÇBİRİ DEĞİŞMEDİ)
+# ROUTES
 # ============================================================
 
 @app.get("/")
@@ -102,7 +78,10 @@ def api_scan_result():
 
 @app.get("/live_prices")
 def api_live_prices(
-    symbols: str = Query(..., description="GARAN,ASELS gibi")
+    symbols: str = Query(
+        ...,
+        description="Virgülle ayrılmış BIST sembolleri (GARAN,ASELS,THYAO gibi)"
+    )
 ):
     arr = [x.strip().upper() for x in symbols.split(",") if x.strip()]
     return get_live_prices(arr)
@@ -111,9 +90,20 @@ def api_live_prices(
 def api_load_live_prices():
     return get_saved_live_prices()
 
+@app.get("/save_live_prices")
+def api_save_live_prices():
+    return {
+        "status": "success",
+        "message": "Canlı fiyatlar otomatik kaydedilir.",
+    }
+
 @app.get("/all_symbols")
 def api_all_symbols():
-    return {"status": "success", "data": load_all_symbols()}
+    try:
+        symbols = load_all_symbols()
+        return {"status": "success", "data": symbols}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 @app.get("/indexes")
 def api_indexes():
@@ -121,36 +111,76 @@ def api_indexes():
 
 
 # ============================================================
-# 🔒 ADMIN – GÜNLÜK TEK TARAMA (RADAR SAFE)
+# BOOT-TIME DAILY CHECK (SCHEDULER YOK)
+# - Her process ayağa kalktığında çalışır
+# - Aynı gün ikinci tarama ASLA başlatmaz
+# - Kullanıcı tetiklemesi yok (route yok)
 # ============================================================
 
-@app.api_route("/__admin/run_daily_scan", methods=["GET", "POST"])
-def admin_run_daily_scan(token: str = Query(...)):
-    ADMIN_TOKEN = os.getenv("ADMIN_SCAN_TOKEN")
-    if not ADMIN_TOKEN or token != ADMIN_TOKEN:
-        raise HTTPException(status_code=403, detail="Yetkisiz")
+STATE_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "data",
+    "auto_scan_state.json",
+)
+os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
 
+
+def _load_state() -> dict:
+    if not os.path.exists(STATE_PATH):
+        return {}
+    try:
+        with open(STATE_PATH, "r", encoding="utf-8") as f:
+            return json.load(f) or {}
+    except Exception:
+        return {}
+
+
+def _save_state(st: dict) -> None:
+    try:
+        with open(STATE_PATH, "w", encoding="utf-8") as f:
+            json.dump(st, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
+def _boot_time_daily_check_and_maybe_start_scan() -> None:
+    """
+    ✅ BOOT-TIME DAILY CHECK:
+    - Server her restart/uyanışında burası çalışır.
+    - Aynı gün tarama yaptıysa SKIP
+    - Yeni günse: state'i ÖNCE yazar, sonra taramayı başlatır
+    """
     tz = ZoneInfo("Europe/Istanbul")
-    today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
+    now = datetime.datetime.now(tz)
+    today = now.strftime("%Y-%m-%d")
 
-    state = load_state()
-    if state.get("last_scan_day") == today:
-        return {
-            "status": "skip",
-            "message": f"{today} için tarama zaten yapıldı",
-        }
+    st = _load_state()
+    last_day = st.get("last_scan_day")
 
-    # önce state yaz → double run yok
-    state["last_scan_day"] = today
-    state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
-    save_state(state)
+    if last_day == today:
+        print(f"AUTO-SCAN: Skip ({today}) - bugün zaten taranmış.")
+        return
 
-    # 🔥 ASLA BLOCKING DEĞİL
-    th = threading.Thread(target=start_scan_internal)
-    th.daemon = True
-    th.start()
+    # Double-trigger engeli: önce state yaz
+    st["last_scan_day"] = today
+    st["last_scan_ts"] = now.isoformat()
+    _save_state(st)
 
-    return {
-        "status": "success",
-        "message": f"{today} günlük tarama başlatıldı (arka planda)",
-    }
+    if start_scan_internal is None:
+        print("AUTO-SCAN: start_scan_internal bulunamadı (services import hatası).")
+        return
+
+    try:
+        print("AUTO-SCAN: Boot-time günlük tek tarama başlatılıyor.")
+        start_scan_internal()
+    except Exception as e:
+        # Eğer start_scan_internal patlarsa, aynı gün tekrar denemesin diye
+        # state'i geri almıyoruz (senin istediğin 'tek sefer' garantisi).
+        print(f"AUTO-SCAN: Tarama başlatılamadı: {e}")
+
+
+@app.on_event("startup")
+def _on_startup():
+    # Scheduler yok; yalnızca boot-time check
+    _boot_time_daily_check_and_maybe_start_scan()
