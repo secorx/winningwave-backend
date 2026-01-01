@@ -49,11 +49,20 @@ app.add_middleware(
 )
 
 # ============================================================
-# ROUTER REGISTER
+# ROUTER REGISTER (KRİTİK)
 # ============================================================
 
-app.include_router(funds_router, prefix="/funds", tags=["funds"])
-app.include_router(technical_router, prefix="/technical", tags=["technical"])
+app.include_router(
+    funds_router,
+    prefix="/funds",
+    tags=["funds"],
+)
+
+app.include_router(
+    technical_router,
+    prefix="/technical",
+    tags=["technical"],
+)
 
 # ============================================================
 # STATE (GÜNLÜK TARAMA)
@@ -64,6 +73,7 @@ STATE_DIR = os.path.join(BASE_DIR, "state")
 STATE_PATH = os.path.join(STATE_DIR, "scan_state.json")
 os.makedirs(STATE_DIR, exist_ok=True)
 
+
 def load_state() -> dict:
     try:
         if os.path.exists(STATE_PATH):
@@ -72,6 +82,7 @@ def load_state() -> dict:
         return {}
     except Exception:
         return {}
+
 
 def save_state(state: dict):
     try:
@@ -90,38 +101,47 @@ def save_state(state: dict):
 def root():
     return {"status": "ok", "service": "WinningWave SENTEZ AI API"}
 
+
 @app.get("/analyze")
 def api_analyze(symbol: str = Query(...)):
     return analyze_single(symbol)
+
 
 @app.get("/scanner")
 def api_scanner():
     return get_scanner()
 
+
 @app.get("/radar")
 def api_radar():
     return get_radar()
+
 
 @app.get("/update_db")
 def api_update_db():
     return update_database()
 
+
 @app.get("/scan/status")
 def api_scan_status():
     return get_scan_status()
 
+
 @app.get("/scan/result")
 def api_scan_result():
     return get_scan_result()
+
 
 @app.get("/live_prices")
 def api_live_prices(symbols: str = Query(...)):
     arr = [s.strip().upper() for s in symbols.split(",") if s.strip()]
     return get_live_prices(arr)
 
+
 @app.get("/live_prices/saved")
 def api_live_prices_saved():
     return get_saved_live_prices()
+
 
 @app.get("/indexes")
 def api_indexes():
