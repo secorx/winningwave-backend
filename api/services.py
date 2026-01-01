@@ -1,4 +1,4 @@
-# api/services.py
+# SENTEZ_AI_TEMEL_ANALIZ_M/api/services.py
 
 import os
 import json
@@ -10,78 +10,60 @@ from typing import Dict, Any, List, Optional, Tuple
 import requests
 import yfinance as yf
 
+from pathlib import Path
+
+# ============================================================
+# PATHS (TEK KAYNAK: api/data)
+# ============================================================
+
+BASE_DIR = Path(__file__).resolve().parent              # .../api
+DATA_DIR = BASE_DIR / "data"                            # .../api/data
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+# Temel analiz JSON'ları (eski app / temel menüler bunu kullanıyor)
+PIYASA_PATH       = DATA_DIR / "piyasa_verisi.json"
+LIVE_PRICES_PATH  = DATA_DIR / "live_prices.json"
+RADAR_PATH        = DATA_DIR / "radar_cache.json"
+
+# (Yeni modüller için de burada dursun; bu dosya sadece temel servisleri yönetir)
+FUNDS_MASTER_PATH = DATA_DIR / "funds_master.json"
+TECH_SYMBOLS_PATH = DATA_DIR / "technical_symbols.json"
+TEFAS_PATH        = DATA_DIR / "tefas_dump.json"
+TEFAS_EME_PATH    = DATA_DIR / "tefas_dump_EME.json"
+
+
+# ============================================================
+# CORE IMPORTS (DOKUNULMADI - mevcut sistemin)
+# ============================================================
+
 from temel_analiz.hesaplayicilar.puan_karti import analyze_symbols, build_payload
 from temel_analiz.veri_saglayicilar.veri_saglayici import fetch_company
 from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
 
 
 # ============================================================
-# JSON YOLLARI
+# SAFE JSON IO (ATOMİK YAZMA)
 # ============================================================
 
-def _find_piyasa_json() -> str:
+def _atomic_write_json(path: Path, obj: Any) -> None:
     """
-    PC versiyonundaki piyasa_verisi.json ile %100 aynı dosyayı
-    bulmaya çalışır.
-
-    DİKKAT:
-    Mobil projede asıl dosyamız:
-      SENTEZ_AI_TEMEL_ANALIZ_M/data/piyasa_verisi.json
-
-    Bu yüzden önce data/ altını, sonra kökü deniyoruz.
-    """
-    here = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(here, ".."))
-
-    candidates = [
-        # ÖNCE data/ klasörü (PC ile birebir aynı yer)
-        os.path.join(project_root, "data", "piyasa_verisi.json"),
-        os.path.join(here, "data", "piyasa_verisi.json"),
-
-        # Sonra kök (eğer sadece oraya koyduysan)
-        os.path.join(project_root, "piyasa_verisi.json"),
-        os.path.join(here, "piyasa_verisi.json"),
-    ]
-
-    for p in candidates:
-        if os.path.exists(p):
-            return os.path.abspath(p)
-
-    # Hiçbiri yoksa data/ altında oluştur
-    default_path = os.path.join(project_root, "data", "piyasa_verisi.json")
-    os.makedirs(os.path.dirname(default_path), exist_ok=True)
-    return os.path.abspath(default_path)
-
-
-DATA_PATH = _find_piyasa_json()
-DATA_DIR = os.path.dirname(DATA_PATH)
-
-LIVE_PRICE_PATH = os.path.join(DATA_DIR, "live_prices.json")
-RADAR_CACHE_PATH = os.path.join(DATA_DIR, "radar_cache.json")
-
-
-# ============================================================
-# ATOMİK JSON YAZ
-# ============================================================
-
-def _atomic_write_json(path: str, obj: Any) -> None:
-    """
-    Dosya yazımı sırasında yarım/bozuk JSON oluşmasını engeller.
-    (tmp yaz -> replace)
+    Yarım/bozuk JSON oluşmasını engeller:
+    tmp -> replace
     """
     try:
-        tmp = path + ".tmp"
+        tmp = Path(str(path) + ".tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)
         with open(tmp, "w", encoding="utf-8") as f:
             json.dump(obj, f, indent=2, ensure_ascii=False)
         os.replace(tmp, path)
     except Exception:
-        # Disk hatası vs. olursa API çökmesin
+        # API çökmesin
         pass
 
 
-def _safe_read_json(path: str, default: Any) -> Any:
+def _safe_read_json(path: Path, default: Any) -> Any:
     try:
-        if not os.path.exists(path):
+        if not path.exists():
             return default
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -90,55 +72,50 @@ def _safe_read_json(path: str, default: Any) -> Any:
 
 
 # ============================================================
-# JSON OKU / YAZ
+# PIYASA (SCANNER DATA) OKU / YAZ
 # ============================================================
 
 def load_json() -> List[Dict[str, Any]]:
-    data = _safe_read_json(DATA_PATH, [])
+    data = _safe_read_json(PIYASA_PATH, [])
     return data if isinstance(data, list) else []
 
 
 def save_json(data: List[Dict[str, Any]]) -> None:
-    _atomic_write_json(DATA_PATH, data)
+    _atomic_write_json(PIYASA_PATH, data)
 
 
 # ============================================================
-# CANLI FİYAT CACHE
+# LIVE PRICES CACHE
 # ============================================================
 
 def save_live_price_json(data: List[Dict[str, Any]]) -> None:
-    _atomic_write_json(LIVE_PRICE_PATH, data)
+    _atomic_write_json(LIVE_PRICES_PATH, data)
 
 
 def load_live_price_json() -> List[Dict[str, Any]]:
-    data = _safe_read_json(LIVE_PRICE_PATH, [])
+    data = _safe_read_json(LIVE_PRICES_PATH, [])
     return data if isinstance(data, list) else []
 
 
 # ============================================================
-# HEDEF FİYAT RADAR CACHE  (PC’de yok, mobil için ek)
+# RADAR CACHE
 # ============================================================
 
 def save_radar_cache(data: List[Dict[str, Any]]) -> None:
-    _atomic_write_json(RADAR_CACHE_PATH, data)
+    _atomic_write_json(RADAR_PATH, data)
 
 
 def load_radar_cache() -> List[Dict[str, Any]]:
-    data = _safe_read_json(RADAR_CACHE_PATH, [])
+    data = _safe_read_json(RADAR_PATH, [])
     return data if isinstance(data, list) else []
 
 
 # ============================================================
-# YAHOO FİYAT HELPER (Hisse + Endeks için ortak)
+# YAHOO PRICE HELPER (Hisse + Endeks)
 # ============================================================
 
-def _yahoo_price(
-    yahoo_symbol: str,
-) -> Tuple[Optional[float], Optional[float], Optional[float]]:
+def _yahoo_price(yahoo_symbol: str) -> Tuple[Optional[float], Optional[float], Optional[float]]:
     """
-    PC tarafındaki Hedef Fiyat Radar widget'ında kullanılan mantığa
-    uygun şekilde Yahoo'dan fiyat çeker.
-
     Dönüş: (last_price, prev_close, daily_pct)
     """
     try:
@@ -151,7 +128,7 @@ def _yahoo_price(
 
         prev_close = getattr(fi, "previous_close", None) if fi else None
 
-        # fast_info çalışmazsa / eksikse → history fallback
+        # fast_info eksikse -> history fallback
         if last is None or prev_close is None:
             try:
                 hist = ticker.history(period="2d")
@@ -185,11 +162,13 @@ def _yahoo_price(
 # ============================================================
 
 def analyze_single(symbol: str) -> Dict[str, Any]:
-    symbol = symbol.upper()
+    symbol = (symbol or "").upper().strip()
+    if not symbol:
+        return {"status": "error", "error": "symbol boş"}
+
     if not symbol.endswith(".IS"):
         symbol += ".IS"
 
-    # PC tarafında da analyze_symbols bu şekilde kullanılıyor
     result, errors = analyze_symbols([symbol], save=False, sleep_sec=0.05)
     if errors and not result:
         return {"status": "error", "error": errors[0][1]}
@@ -198,7 +177,7 @@ def analyze_single(symbol: str) -> Dict[str, Any]:
 
 
 # ============================================================
-# SCANNER (SADECE OKUMA)
+# SCANNER (OKUMA)
 # ============================================================
 
 def get_scanner() -> Dict[str, Any]:
@@ -221,28 +200,23 @@ def get_scanner() -> Dict[str, Any]:
 
 
 # ============================================================
-# CANLI FİYAT (BIST HİSSE)
+# LIVE PRICE (BIST)
 # ============================================================
 
 def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
     """
-    BIST hissesi için canlı fiyat.
-
-    1) borsa.doviz.com (PC mantığına yakın, gerçek zamanlı)
-    2) Yahoo Finance (X.IS)
-    3) Yerel scanner datası (piyasa_verisi.json)
-
-    Dönüşte:
-      - price her zaman float
-      - prev her zaman float
-      - chgPct her zaman float
-    Böylece Flutter tarafında toStringAsFixed() NULL üzerinde patlamaz.
+    1) borsa.doviz.com
+    2) Yahoo
+    3) piyasa_verisi.json fallback
     """
-    sym = symbol.upper()
+    sym = (symbol or "").upper().strip()
+    if not sym:
+        return None
+
     short = sym.replace(".IS", "")
     yahoo_symbol = short + ".IS"
 
-    # 1) Borsa.com gerçek zamanlı fiyat
+    # 1) borsa.doviz.com
     try:
         r = requests.get(
             f"https://borsa.doviz.com/api/v1/stocks/{short}",
@@ -254,7 +228,6 @@ def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
                 price = float(js["last"])
                 prev = float(js.get("previousClose", price) or price)
                 pct = (price - prev) / prev * 100 if prev else 0.0
-
                 return {
                     "symbol": short,
                     "price": round(price, 2),
@@ -264,14 +237,13 @@ def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
     except Exception:
         pass
 
-    # 2) Yahoo fallback
+    # 2) Yahoo
     price, prev, daily = _yahoo_price(yahoo_symbol)
     if price is not None:
         if prev is None:
             prev = price
         if daily is None:
             daily = 0.0
-
         return {
             "symbol": short,
             "price": round(float(price), 2),
@@ -279,19 +251,18 @@ def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
             "chgPct": round(float(daily), 2),
         }
 
-    # 3) Yerel data fallback (scanner JSON)
+    # 3) Local piyasa JSON fallback
     try:
         all_data = load_json()
         for x in all_data:
-            if x.get("symbol", "").upper() == short:
+            if (x.get("symbol", "") or "").upper() == short:
                 price_f = float(x.get("price") or 0)
                 if price_f <= 0:
                     break
-                prev_f = price_f
                 return {
                     "symbol": short,
                     "price": round(price_f, 2),
-                    "prev": round(prev_f, 2),
+                    "prev": round(price_f, 2),
                     "chgPct": 0.0,
                 }
     except Exception:
@@ -301,20 +272,13 @@ def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
 
 
 def fetch_live_prices(symbols: List[str]) -> List[Dict[str, Any]]:
-    """
-    PC'deki radar mantığına benzer şekilde:
-    - Sembolleri tek tek, sıralı şekilde çeker
-    - Aralarda küçük sleep ile hız limiti dostu çalışır
-    """
     out: List[Dict[str, Any]] = []
-
-    uniq_syms = sorted(set(symbols))
+    uniq_syms = sorted(set([s for s in symbols if s]))
 
     for s in uniq_syms:
         d = fetch_live_price_single(s)
         if d:
             out.append(d)
-
         time.sleep(random.uniform(0.08, 0.16))
 
     out.sort(key=lambda x: x["symbol"])
@@ -322,23 +286,17 @@ def fetch_live_prices(symbols: List[str]) -> List[Dict[str, Any]]:
 
 
 def get_live_prices(symbols: List[str]) -> Dict[str, Any]:
-    """
-    /live_prices endpoint'i → MarketPricesPage burayı kullanıyor.
-    """
     data = fetch_live_prices(symbols)
     save_live_price_json(data)
     return {"status": "success", "data": data}
 
 
 def get_saved_live_prices() -> Dict[str, Any]:
-    """
-    Daha önce kaydedilmiş canlı fiyat listesini döner.
-    """
     return {"status": "success", "data": load_live_price_json()}
 
 
 # ============================================================
-# HEDEF FİYAT RADARI (PC tarzı + cache)
+# RADAR (cache + background refresh)
 # ============================================================
 
 RADAR_STATE: Dict[str, Any] = {
@@ -383,7 +341,7 @@ def _build_radar_from_local_only() -> List[Dict[str, Any]]:
             bmax = 0.0
 
         radar.append({
-            "symbol": x["symbol"],
+            "symbol": x.get("symbol", ""),
             "date": x.get("date_str", ""),
             "price": round(price_f, 2),
             "target": round(target_f, 2),
@@ -418,7 +376,7 @@ def _radar_refresh_thread() -> None:
             if target is None:
                 continue
 
-            symbol = x.get("symbol", "")
+            symbol = (x.get("symbol") or "").strip()
             if not symbol:
                 continue
 
@@ -480,15 +438,14 @@ def get_radar() -> Dict[str, Any]:
         save_radar_cache(data)
 
     if not RADAR_STATE.get("refresh_running", False):
-        th = threading.Thread(target=_radar_refresh_thread)
-        th.daemon = True
+        th = threading.Thread(target=_radar_refresh_thread, daemon=True)
         th.start()
 
     return {"status": "success", "data": data}
 
 
 # ============================================================
-# ENDEKS VERİLERİ (XU100 / XU030)
+# INDEXES (XU100 / XU030)
 # ============================================================
 
 INDEX_CACHE: Dict[str, Dict[str, Optional[float]]] = {
@@ -534,7 +491,7 @@ def get_indexes() -> Dict[str, Any]:
 
 
 # ============================================================
-# TARAMA MOTORU
+# SCAN ENGINE (server internal)
 # ============================================================
 
 SCAN_STATE: Dict[str, Any] = {
@@ -550,6 +507,7 @@ SCAN_STATE: Dict[str, Any] = {
 
 def _scan_thread() -> None:
     global SCAN_STATE
+
     symbols = load_all_symbols()
     total = len(symbols)
 
@@ -611,26 +569,15 @@ def _scan_thread() -> None:
     })
 
 
-# ============================================================
-# TARAMA BAŞLATMA (SADECE SERVER İÇİ)
-# ============================================================
-
 def start_scan_internal() -> Dict[str, Any]:
     """
-    ⚠️ SADECE SERVER İÇİN:
-    - main.py içindeki 03:00 scheduler bunu çağıracak.
-    - Mobil / HTTP üzerinden tarama başlatma YOK.
+    Sadece server içi tetikleme.
     """
     if SCAN_STATE.get("running"):
-        return {
-            "status": "success",
-            "message": "Tarama zaten çalışıyor.",
-        }
+        return {"status": "success", "message": "Tarama zaten çalışıyor."}
 
-    th = threading.Thread(target=_scan_thread)
-    th.daemon = True
+    th = threading.Thread(target=_scan_thread, daemon=True)
     th.start()
-
     return {
         "status": "success",
         "message": "Otomatik günlük tarama başlatıldı. Sonuçlar tarama bitince güncellenecek.",
@@ -638,19 +585,16 @@ def start_scan_internal() -> Dict[str, Any]:
 
 
 # ============================================================
-# ENDPOINT SARAN FONKSİYONLAR
+# ENDPOINT WRAPPERS
 # ============================================================
 
 def update_database() -> Dict[str, Any]:
     """
-    ❌ MOBİL / HTTP TARAFI TARAMAYI ASLA BAŞLATMAZ.
-
-    Bu endpoint sadece bilgi mesajı döner.
-    Gerçek tarama sadece start_scan_internal() ile (server scheduler 03:00) başlar.
+    Mobil tetiklemesin diye sadece mesaj.
     """
     return {
         "status": "success",
-        "message": "Tarama yalnızca her gece 03:00'te otomatik başlar. Mobil tetikleyemez.",
+        "message": "Tarama yalnızca otomatik (server) çalışır. Mobil tetikleyemez.",
     }
 
 
