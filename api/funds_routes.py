@@ -26,7 +26,8 @@ from api.premium_ai import (
     market_change_pct,
 )
 
-from scripts.tefas_batch_scrape import run_batch_scrape
+from .tefas_batch_scrape import run_batch_scrape
+
 
 # SSL Uyarılarını Kapat
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
