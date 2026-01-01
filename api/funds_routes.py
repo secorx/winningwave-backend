@@ -1,4 +1,4 @@
-# Düzeltilmiş funds.py kodu
+# Fon Otomatik Güncelleme Sistemi
 # Bu kodu mevcut funds.py dosyanızın yerine koyun
 
 from __future__ import annotations
@@ -14,6 +14,7 @@ import urllib3
 import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
+from zoneinfo import ZoneInfo  # ✅ EKLENDİ: Haftasonu ve saat düzeltmesi için
 
 from fastapi import APIRouter
 
@@ -25,16 +26,35 @@ from api.premium_ai import (
     market_change_pct,
 )
 
+from scripts.tefas_batch_scrape import run_batch_scrape
+
 # SSL Uyarılarını Kapat
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 router = APIRouter(tags=["funds"])
 
 # ============================================================
-# 1. AYARLAR & GLOBAL HAFIZA
+# 1. AYARLAR & GLOBAL HAFIZA (OTOMATİK ROOT TESPİTİ)
 # ============================================================
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+def _detect_project_root() -> str:
+    """
+    funds.py hangi klasörde olursa olsun proje root'unu bulmaya çalışır.
+    Öncelik: içinde funds_cache veya data klasörü olan üst dizin.
+    """
+    here = os.path.abspath(os.path.dirname(__file__))
+    candidates = [
+        os.path.abspath(os.path.join(here, "..")),        # 1 üst
+        os.path.abspath(os.path.join(here, "..", "..")),  # 2 üst
+        os.path.abspath(os.path.join(here, "..", "..", "..")),  # 3 üst
+    ]
+    for c in candidates:
+        if os.path.isdir(os.path.join(c, "funds_cache")) or os.path.isdir(os.path.join(c, "data")):
+            return c
+    # fallback
+    return candidates[0]
+
+BASE_DIR = _detect_project_root()
 CACHE_DIR = os.path.join(BASE_DIR, "funds_cache")
 DATA_DIR = os.path.join(BASE_DIR, "data")
 FUNDS_MASTER_PATH = os.path.join(DATA_DIR, "funds_master.json")
@@ -42,6 +62,17 @@ LIVE_PRICES_PATH = os.path.join(CACHE_DIR, "live_prices.json")
 PORTFOLIO_PATH = os.path.join(CACHE_DIR, "portfolio.json")
 MARKET_CACHE_PATH = os.path.join(CACHE_DIR, "market_cache.json")
 PREDICTION_CACHE_PATH = os.path.join(CACHE_DIR, "prediction_cache.json")
+
+# ✅ YENİ: Canlı liste dosyası
+LIVE_LIST_PATH = os.path.join(CACHE_DIR, "live_list.json")
+
+# ✅ YENİ: Portföy güncelleme durumu için dosya yolu
+PORTFOLIO_UPDATE_STATE_PATH = os.path.join(CACHE_DIR, "portfolio_update_state.json")
+# ✅ YENİ: Canlı liste güncelleme durumu için dosya yolu
+LIVE_LIST_UPDATE_STATE_PATH = os.path.join(CACHE_DIR, "live_list_update_state.json")
+
+# ✅ YENİ: Fetch Tracking Path (Tekrar çekimi önlemek için - Artık logic içinde kullanılmıyor ama dosya tanımı kalsın)
+FETCH_TRACKING_PATH = os.path.join(CACHE_DIR, "fetch_tracking.json")
 
 os.makedirs(CACHE_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -65,27 +96,213 @@ _MASTER_TTL_SEC = 3600  # 1 saat
 
 # ✅ EKLENDİ: Predictions Summary cache (çok hızlı UI için)
 _PRED_SUMMARY_CACHE: Dict[str, Any] = {}
-_PRED_SUMMARY_TS: float = 0.0
+# ✅ PATCH 3.1 & 3.2: Timestamp artık dict (scope bazlı)
+_PRED_SUMMARY_TS: Dict[str, float] = {}
 _PRED_SUMMARY_LOCK = threading.Lock()
 _PRED_SUMMARY_TTL_SEC = 15  # 15 sn cache (UI refresh için yeterli)
+
+# ================================
+# 🔒 Background jobs start guard (uvicorn --reload safe)
+# ================================
+# ✅ PATCH 0.1: Tek seferlik başlatma kilidi
+_BG_STARTED = False
+_BG_LOCK = threading.Lock()
+
+# ================================
+# GÜNLİK PORTFÖY & CANLI LİSTE UPDATE KİLİDİ
+# ================================
+# Not: Artık global değişken yerine diskten okuyoruz, sadece Lock kaldı.
+_PORTFOLIO_UPDATE_LOCK = threading.Lock()
+_LIVE_LIST_UPDATE_LOCK = threading.Lock()
 
 # ============================================================
 # 2. YARDIMCI FONKSİYONLAR
 # ============================================================
 
+# ✅ GÜNCELLENDİ: now_str() Istanbul saatine göre
 def now_str() -> str:
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        return datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%Y-%m-%d %H:%M:%S")
+    except:
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+# ✅ GÜNCELLENDİ: today_str() Istanbul saatine göre
 def today_str() -> str:
-    return datetime.now().strftime("%Y-%m-%d")
+    try:
+        return datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%Y-%m-%d")
+    except:
+        return datetime.now().strftime("%Y-%m-%d")
 
-# ✅ YENİ: TEFAS Effective Date (18:30 öncesi dün, sonrası bugün)
+# ✅ YARDIMCI: Önceki iş gününü bul
+def _prev_business_day(d):
+    d = d - timedelta(days=1)
+    while d.weekday() >= 5:  # 5=Sat, 6=Sun
+        d = d - timedelta(days=1)
+    return d
+
+# ✅ DÜZELTİLDİ: TEFAS Effective Date (Haftasonu + 09:30 Kuralı)
 def tefas_effective_date() -> str:
-    now = datetime.now()
-    if (now.hour > 18) or (now.hour == 18 and now.minute >= 30):
-        return now.strftime("%Y-%m-%d")        # bugünün verisi
+    try:
+        now = datetime.now(ZoneInfo("Europe/Istanbul"))
+    except:
+        now = datetime.now()
+
+    today = now.date()
+    after_0930 = (now.hour > 9) or (now.hour == 9 and now.minute >= 30)
+
+    if today.weekday() >= 5:
+        # Hafta sonu: TEFAS hâlâ Perşembe'yi verir (Cuma verisi “yayınlanmış” sayılmaz)
+        d = _prev_business_day(_prev_business_day(today))
     else:
-        return (now - timedelta(days=1)).strftime("%Y-%m-%d")  # dünkü veri
+        if after_0930:
+            # 09:30 sonrası: dünün iş günü
+            d = _prev_business_day(today)
+        else:
+            # 09:30 öncesi: iki önceki iş günü
+            d = _prev_business_day(_prev_business_day(today))
+
+    return d.strftime("%Y-%m-%d")
+
+# ✅ YENİ: Portföy güncelleme durumunu diskten oku (Optional ile uyumlu)
+def _load_portfolio_update_day() -> Optional[str]:
+    if os.path.exists(PORTFOLIO_UPDATE_STATE_PATH):
+        try:
+            with open(PORTFOLIO_UPDATE_STATE_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return data.get("last_day")
+        except:
+            pass
+    return None
+
+# ✅ YENİ: Portföy güncelleme durumunu diske yaz
+def _save_portfolio_update_day(day: str):
+    try:
+        with open(PORTFOLIO_UPDATE_STATE_PATH, "w", encoding="utf-8") as f:
+            json.dump({"last_day": day}, f, ensure_ascii=False)
+    except:
+        pass
+
+# ✅ YENİ: Canlı liste güncelleme durumunu diskten oku (Optional ile uyumlu)
+def _load_live_list_update_day() -> Optional[str]:
+    if os.path.exists(LIVE_LIST_UPDATE_STATE_PATH):
+        try:
+            with open(LIVE_LIST_UPDATE_STATE_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return data.get("last_day")
+        except:
+            pass
+    return None
+
+# ✅ YENİ: Canlı liste güncelleme durumunu diske yaz
+def _save_live_list_update_day(day: str):
+    try:
+        with open(LIVE_LIST_UPDATE_STATE_PATH, "w", encoding="utf-8") as f:
+            json.dump({"last_day": day}, f, ensure_ascii=False)
+    except:
+        pass
+
+# ✅ YENİ: FETCH TRACKING HELPER'LARI (Artık aktif kullanılmıyor ama dosya tanımı kalsın)
+def _load_fetch_tracking() -> Dict[str, str]:
+    if os.path.exists(FETCH_TRACKING_PATH):
+        try:
+            with open(FETCH_TRACKING_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except:
+            pass
+    return {}
+
+def _save_fetch_tracking(data: Dict[str, str]):
+    try:
+        with open(FETCH_TRACKING_PATH, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except:
+        pass
+
+# ✅ GÜNCELLENDİ: RAM CACHE İÇİNDE GÜNCEL VERİ KONTROLÜ (asof_day bazlı)
+def _is_code_fresh(code: str, effective_day: str) -> bool:
+    """
+    Bir fon kodu effective_day için güncel mi?
+    - asof_day kontrol edilir.
+    - RAM cache'e bakar, yoksa disk cache'ten bakar.
+    """
+    code = code.upper().strip()
+
+    def check_rec(r: Dict) -> bool:
+        if not r or r.get("nav", 0) <= 0:
+            return False
+        # ✅ Öncelik asof_day
+        rec_asof = str(r.get("asof_day") or "").strip()
+        if rec_asof == effective_day:
+            return True
+        # asof_day yoksa (eski veri) ama last_update tutuyorsa (legacy)
+        if not rec_asof and str(r.get("last_update", "")).startswith(effective_day):
+            return True
+        return False
+
+    # 1) RAM check
+    if check_rec(_PRICE_CACHE.get(code)):
+        return True
+
+    # 2) Disk check
+    if os.path.exists(LIVE_PRICES_PATH):
+        try:
+            with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
+                disk_raw = json.load(f)
+            disk_data = disk_raw.get("data", {}) if isinstance(disk_raw, dict) else {}
+            if check_rec(disk_data.get(code)):
+                return True
+        except:
+            pass
+
+    return False
+
+def _missing_codes_for_day(codes: List[str], effective_day: str) -> List[str]:
+    """codes içinden effective_day için güncel olmayanları döndürür."""
+    out = []
+    for c in codes:
+        c2 = (c or "").upper().strip()
+        if c2 and not _is_code_fresh(c2, effective_day):
+            out.append(c2)
+    return out
+
+# ✅ YENİ: Canlı listeden fon kodlarını oku
+def _get_live_list_codes() -> List[str]:
+    """Canlı listedeki fon kodlarını döndür"""
+    codes = []
+    if os.path.exists(LIVE_LIST_PATH):
+        try:
+            with open(LIVE_LIST_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for item in data.get("items", []):
+                code = str(item.get("code") or "").upper().strip()
+                if code:
+                    codes.append(code)
+        except:
+            pass
+    return codes
+
+# ✅ YENİ: Portföyden fon kodlarını oku
+def _get_portfolio_codes() -> List[str]:
+    """Portföydeki fon kodlarını döndür"""
+    codes = []
+    if os.path.exists(PORTFOLIO_PATH):
+        try:
+            with open(PORTFOLIO_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for pos in data.get("positions", []):
+                code = str(pos.get("code") or "").upper().strip()
+                if code:
+                    codes.append(code)
+        except:
+            pass
+    return codes
+
+# ✅ YENİ: İlk defa eklenen fonları tespit et
+def _get_newly_added_funds(previous_codes: List[str], current_codes: List[str]) -> List[str]:
+    """Yeni eklenen fon kodlarını döndür"""
+    prev_set = set(previous_codes)
+    new_codes = [code for code in current_codes if code not in prev_set]
+    return new_codes
 
 # 📌 DÜZELTME 1: Unicode eksi işareti ve temizleme mantığı güncellendi
 def _parse_turkish_float(text: str) -> float:
@@ -97,28 +314,64 @@ def _parse_turkish_float(text: str) -> float:
     except:
         return 0.0
 
+# ✅ DÜZELTİLDİ: 1️⃣ load_cache_to_memory()
 def load_cache_to_memory():
     """Server açılınca diskteki veriyi RAM'e yükler"""
     global _PRICE_CACHE
-    if os.path.exists(LIVE_PRICES_PATH):
+    
+    if not os.path.exists(LIVE_PRICES_PATH):
+        _PRICE_CACHE = {}
+    else:
         try:
             with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
-                _PRICE_CACHE = json.load(f)
-            print(f"✅ {_PRICE_CACHE.__len__()} fon hafızaya yüklendi.")
-        except:
+                raw = json.load(f)
+
+            # ✅ KRİTİK: batch output içinden SADECE data'yı al
+            if isinstance(raw, dict) and "data" in raw:
+                _PRICE_CACHE = raw["data"]
+            else:
+                _PRICE_CACHE = raw
+
+            print(f"✅ RAM cache yüklendi: {len(_PRICE_CACHE)} fon")
+
+        except Exception as e:
+            print(f"❌ Cache yüklenedi: {e}")
             _PRICE_CACHE = {}
 
+    # ✅ DEBUG PRINTS (İSTENİLEN)
+    print(f"🧭 BASE_DIR={BASE_DIR}")
+    print(f"🧭 PORTFOLIO_PATH={PORTFOLIO_PATH} exists={os.path.exists(PORTFOLIO_PATH)}")
+    print(f"🧭 LIVE_LIST_PATH={LIVE_LIST_PATH} exists={os.path.exists(LIVE_LIST_PATH)}")
+    print(f"🧭 LIVE_PRICES_PATH={LIVE_PRICES_PATH} exists={os.path.exists(LIVE_PRICES_PATH)}")
+
+# ✅ ADIM 3: KAYIT FORMATI DÜZELTİLDİ (Batch scraper uyumlu)
 def save_memory_to_disk():
     """RAM cache'i diske atomik yaz"""
     try:
         tmp = LIVE_PRICES_PATH + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(_PRICE_CACHE, f, ensure_ascii=False, indent=2)
+            json.dump(
+                {"data": _PRICE_CACHE, "asof": now_str()},
+                f,
+                ensure_ascii=False,
+                indent=2
+            )
         os.replace(tmp, LIVE_PRICES_PATH)
-    except:
-        pass
+    except Exception as e:
+        print(f"❌ save_memory_to_disk: {e}")
 
-# ✅ EKLENDİ: master map'i cacheli oku (type/name)
+# ✅ PATCH 1.1: Atomik JSON yazma helper'ı
+def _atomic_write_json(path: str, obj: Any):
+    """JSON'u atomik yaz (yarım dosya / bozuk JSON riskini azaltır)."""
+    try:
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(obj, f, ensure_ascii=False, indent=2)
+        os.replace(tmp, path)
+    except Exception as e:
+        print(f"❌ _atomic_write_json({path}): {e}")
+
+# ✅ EKLENDİ: master map'i cacheli oku (type/name için)
 def _get_master_map_cached() -> Dict[str, Dict[str, Any]]:
     global _MASTER_MAP, _MASTER_MAP_TS
     ts = time.time()
@@ -138,53 +391,215 @@ def _get_master_map_cached() -> Dict[str, Dict[str, Any]]:
 # ============================================================
 
 def _fetch_html(fund_code: str):
+    print(f"🌐 TEFAS HTML deniyorum: {fund_code}")
     url = f"https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={fund_code.upper()}"
-    headers = {"User-Agent": "Mozilla/5.0", "Connection": "close"}
+    
+    # 🔧 ACİL ÇÖZÜM: Daha güçlü headers ve timeout
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none"
+    }
+    
     try:
-        r = requests.get(url, headers=headers, timeout=5, verify=False)
-        if r.status_code == 200:
+        # 🔧 ACİL ÇÖZÜM: Timeout'u 15 saniyeye çıkar
+        session = requests.Session()
+        r = session.get(url, headers=headers, timeout=15, verify=False)
+        print(f"📊 TEFAS HTML Response: {r.status_code} | Content-Length: {len(r.text)}")
+        
+        if r.status_code == 200 and len(r.text) > 1000:  # Minimum içerik kontrolü
             html = r.text
-            p_match = re.search(r"Son Fiyat.*?<span>([\d,]+)</span>", html, re.DOTALL)
-            d_match = re.search(r"Günlük Getiri.*?<span>(.*?)</span>", html, re.DOTALL)
-            y_match = re.search(r"Son 1 Yıl.*?<span>(.*?)</span>", html, re.DOTALL)
-
-            price = _parse_turkish_float(p_match.group(1)) if p_match else 0.0
-            daily = _parse_turkish_float(d_match.group(1)) if d_match else 0.0
-            yearly = _parse_turkish_float(y_match.group(1)) if y_match else 0.0
-
+            
+            # 🔧 ACİL ÇÖZÜM: Daha esnek regex pattern'leri
+            # Fiyat için birden fazla pattern dene
+            price_patterns = [
+                r"Son Fiyat.*?<span>([\d,\.]+)</span>",
+                r"NAV.*?<span>([\d,\.]+)</span>", 
+                r"Fiyat.*?<span>([\d,\.]+)</span>",
+                r"<span.*?class.*?fiyat.*?>([\d,\.]+)</span>",
+                r"(\d+,\d{4})"  # Genel sayı formatı
+            ]
+            
+            price = 0.0
+            for pattern in price_patterns:
+                match = re.search(pattern, html, re.DOTALL)
+                if match:
+                    price = _parse_turkish_float(match.group(1))
+                    if price > 0:
+                        print(f"✅ Fiyat bulundu ({pattern}): {price}")
+                        break
+            
+            # Günlük getiri için birden fazla pattern
+            daily_patterns = [
+                r"Günlük Getiri.*?<span>(.*?)</span>",
+                r"Günlük.*?<span>(.*?)</span>",
+                r"Daily.*?<span>(.*?)</span>",
+                r"<span.*?günlük.*?>(.*?)</span>",
+            ]
+            
+            daily = 0.0
+            for pattern in daily_patterns:
+                match = re.search(pattern, html, re.DOTALL)
+                if match:
+                    daily = _parse_turkish_float(match.group(1))
+                    if daily != 0.0:
+                        print(f"✅ Günlük getiri bulundu ({pattern}): {daily}%")
+                        break
+            
+            # Yıllık getiri için pattern
+            yearly = 0.0
+            yearly_match = re.search(r"Son 1 Yıl.*?<span>(.*?)</span>", html, re.DOTALL)
+            if yearly_match:
+                yearly = _parse_turkish_float(yearly_match.group(1))
+            
             if price > 0:
+                print(f"🎯 TEFAS HTML BAŞARILI: {fund_code} - Fiyat: {price}, Günlük: {daily}%, Yıllık: {yearly}%")
                 return {"price": price, "daily_pct": daily, "yearly_pct": yearly, "source": "HTML"}
-    except:
-        pass
+            else:
+                print(f"❌ TEFAS HTML FİYAT BULUNAMADI: {fund_code}")
+                # HTML içeriğini debug için kaydet
+                debug_path = f"debug_{fund_code}.html"
+                with open(debug_path, "w", encoding="utf-8") as f:
+                    f.write(html)
+                print(f"💾 HTML içeriği kaydedildi: {debug_path}")
+                
+        else:
+            print(f"❌ TEFAS HTML HTTP HATA: {fund_code} - Status: {r.status_code}, Length: {len(r.text)}")
+            
+    except requests.exceptions.Timeout:
+        print(f"⏰ TEFAS HTML TIMEOUT: {fund_code} - 15 saniye aşıldı")
+    except requests.exceptions.ConnectionError:
+        print(f"🔌 TEFAS HTML BAĞLANTI HATASI: {fund_code} - İnternet bağlantısı kontrol edilmeli")
+    except Exception as e:
+        print(f"❌ TEFAS HTML GENEL HATA: {fund_code} - {str(e)}")
+    
     return None
 
-def _fetch_api(fund_code: str):
-    url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
-    headers = {"User-Agent": "Mozilla/5.0", "X-Requested-With": "XMLHttpRequest"}
+# ✅ EKLENDİ: TEFAS tarih parse yardımcısı
+def _parse_tefas_date(s: str) -> Optional[datetime]:
+    s = (s or "").strip()
+    if not s:
+        return None
+
+    # sık gelen formatlar
+    fmts = (
+        "%d.%m.%Y",
+        "%d/%m/%Y",
+        "%Y-%m-%d",
+        "%d.%m.%Y %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S",
+    )
+
+    for fmt in fmts:
+        try:
+            return datetime.strptime(s, fmt)
+        except:
+            pass
+
+    # bazen "25.12.2025 00:00:00.000" gibi geliyor -> noktadan sonrası kırp
     try:
-        end = datetime.now()
-        start = end - timedelta(days=5)
+        s2 = s.split(".000")[0]
+        return datetime.strptime(s2, "%d.%m.%Y %H:%M:%S")
+    except:
+        return None
+
+def _fetch_api(fund_code: str):
+    print(f"🌐 TEFAS API deniyorum: {fund_code}")
+    url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
+    
+    # 🔧 ACİL ÇÖZÜM: Daha güçlü headers
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+        "Origin": "https://www.tefas.gov.tr",
+        "Referer": "https://www.tefas.gov.tr/",
+        "Connection": "keep-alive"
+    }
+    
+    try:
+        # ✅ GÜNCELLENDİ: `end` tarihi İstanbul saatine göre
+        try:
+            end = datetime.now(ZoneInfo("Europe/Istanbul"))
+        except:
+            end = datetime.now()
+        start = end - timedelta(days=7)  # 5 gün yerine 7 gün yap
+        
         payload = {
             "fontip": "YAT",
             "fonkod": fund_code.upper(),
             "bastarih": start.strftime("%d.%m.%Y"),
             "bittarih": end.strftime("%d.%m.%Y"),
         }
-        r = requests.post(url, data=payload, headers=headers, timeout=5, verify=False)
-        data = r.json().get("data", [])
-        if data:
-            data.sort(key=lambda x: datetime.strptime(x["TARIH"], "%d.%m.%Y"))
-            last = data[-1]
-            price = _parse_turkish_float(last["FIYAT"])
-            if price > 0:
-                return {
-                    "price": price,
-                    "daily_pct": None,   # 🔴 API'den günlük getiri hesaplanmaz
-                    "yearly_pct": 0.0,
-                    "source": "API"
-                }
-    except:
-        pass
+        
+        print(f"📡 TEFAS API Request: {fund_code} - {start.strftime('%d.%m.%Y')} to {end.strftime('%d.%m.%Y')}")
+        
+        # 🔧 ACİL ÇÖZÜM: Timeout'u 15 saniyeye çıkar
+        r = requests.post(url, data=payload, headers=headers, timeout=15, verify=False)
+        print(f"📊 TEFAS API Response: {r.status_code} | Content-Length: {len(r.text)}")
+        
+        if r.status_code == 200:
+            try:
+                response_data = r.json()
+                data = response_data.get("data", [])
+                print(f"📈 TEFAS API Data Count: {len(data) if data else 0} records")
+                
+                if data and len(data) > 0:
+                    # En güncel veriyi bul
+                    valid_data = []
+                    for item in data:
+                        # Key isimleri TEFAS tarafında bazen değişebiliyor
+                        dt = _parse_tefas_date(
+                            item.get("TARIH") or item.get("Tarih") or item.get("tarih") or ""
+                        )
+                        if dt:
+                            valid_data.append((dt, item))
+                    
+                    if valid_data:
+                        valid_data.sort(key=lambda x: x[0], reverse=True)  # En yeni tarih en başta
+                        last_date, last_item = valid_data[0]
+                        # Güvenli fiyat parse
+                        price = _parse_turkish_float(last_item.get("FIYAT") or last_item.get("Fiyat") or last_item.get("fiyat") or 0)
+                        
+                        print(f"💰 TEFAS API Son Tarih: {last_date.strftime('%d.%m.%Y')} - Fiyat: {price}")
+                        
+                        if price > 0:
+                            print(f"🎯 TEFAS API BAŞARILI: {fund_code} - Fiyat: {price}")
+                            return {
+                                "price": price,
+                                "daily_pct": None,   # 🔴 API'den günlük getiri hesaplanmaz
+                                "yearly_pct": 0.0,
+                                "source": "API",
+                                "asof_day": last_date.strftime("%Y-%m-%d"),  # ✅ KRİTİK: API'den gelen gerçek tarih
+                            }
+                        else:
+                            print(f"❌ TEFAS API GEÇERSİZ FİYAT: {fund_code} - {price}")
+                    else:
+                        print(f"❌ TEFAS API GEÇERLI TARİH BULUNAMADI: {fund_code}")
+                else:
+                    print(f"❌ TEFAS API VERI YOK: {fund_code} - Boş response")
+                    
+            except ValueError as e:
+                print(f"❌ TEFAS API JSON HATA: {fund_code} - {str(e)}")
+                print(f"Raw Response: {r.text[:200]}...")
+        else:
+            print(f"❌ TEFAS API HTTP HATA: {fund_code} - Status: {r.status_code}")
+            
+    except requests.exceptions.Timeout:
+        print(f"⏰ TEFAS API TIMEOUT: {fund_code} - 15 saniye aşıldı")
+    except requests.exceptions.ConnectionError:
+        print(f"🔌 TEFAS API BAĞLANTI HATASI: {fund_code} - İnternet bağlantısı kontrol edilmeli")
+    except Exception as e:
+        print(f"❌ TEFAS API GENEL HATA: {fund_code} - {str(e)}")
+    
     return None
 
 def fetch_fund_live(fund_code: str):
@@ -231,54 +646,91 @@ def get_fund_data_safe(fund_code: str):
     """
     fund_code = fund_code.upper()
     
-    # ✅ 2️⃣ DEĞİŞİKLİK: Effective Date kullan
+    # ✅ ÇÖZÜM 1: EFFECTIVE DAY KULLANIMI
     effective_day = tefas_effective_date()
+
+    # 🔴 2. KRİTİK HATA DÜZELTİLDİ: Sadece flag olarak kullan, return etme
+    try:
+        now = datetime.now(ZoneInfo("Europe/Istanbul"))
+    except:
+        now = datetime.now()
+    before_open = now.hour < 9 or (now.hour == 9 and now.minute < 30)
 
     cached = _PRICE_CACHE.get(fund_code)
 
     # 🔴 FALLBACK: Batch scrape ile gelen ama RAM'e girmemiş fonlar
     if not cached:
-        # live_prices.json'dan oku
         if os.path.exists(LIVE_PRICES_PATH):
             try:
                 with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
-                    disk_cache = json.load(f)
-                disk_rec = disk_cache.get(fund_code)
+                    disk_raw = json.load(f)
+
+                disk_data = disk_raw.get("data", {})
+                disk_rec = disk_data.get(fund_code)
+
                 if disk_rec and disk_rec.get("nav", 0) > 0:
-                    # 👇 DÜZELTME 1: last_update yoksa effective_day baz al
-                    if "last_update" not in disk_rec:
-                        disk_rec["last_update"] = effective_day + " 18:30:00"
                     _PRICE_CACHE[fund_code] = disk_rec
-                    return disk_rec
+                    cached = disk_rec # cached'i güncelle
             except:
                 pass
 
-    # ✅ 3️⃣ DEĞİŞİKLİK: Cache kontrolünü effective_day'e bağla
-    if cached and cached.get("last_update", "").split(" ")[0] == effective_day:
+    # ✅ GÜNCELLENDİ: Freshness kontrolü asof_day ile yapılır
+    cached_asof = (cached.get("asof_day") or "").strip() if cached else ""
+    is_new_fund = not cached
+
+    if is_new_fund:
+        force_fetch = True
+        print(f"🆕 YENİ FON TESPİT EDİLDİ: {fund_code} - Piyasa saati kontrolü atlaniyor!")
+    else:
+        # ✅ asof_day varsa onu esas al
+        if cached_asof:
+            force_fetch = (cached_asof != effective_day)
+        else:
+            # ✅ asof_day yoksa bu kayıt “şüpheli” (legacy) → 1 kez zorla
+            force_fetch = True
+
+    # ⛔ Piyasa açılmadan fetch etme (SADECE ESKİ FONLAR İÇİN!)
+    if before_open and not is_new_fund:
+        force_fetch = False
+        print(f"⏰ Piyasa kapalı, eski fon güncellenmiyor: {fund_code}")
+
+    # Cache geçerliyse ve fetch gerekmiyorsa döndür
+    if not force_fetch and cached:
         return cached
 
+    # Hiç cache yok ve piyasa kapalıysa boş dön
+    if not cached and not force_fetch:
+        return {"nav": 0.0, "daily_return_pct": 0.0}
+
     with _TEFAS_LOCK:
+        # Lock içinde tekrar kontrol (Race condition önlemi)
         cached = _PRICE_CACHE.get(fund_code)
-        # Double check lock içinde
-        if cached and cached.get("last_update", "").split(" ")[0] == effective_day:
-            return cached
-
-        # 👇 DÜZELTME 2 (GÜÇLENDİRME): Gün içinde veri çekmeyi engelle
-        if datetime.now().strftime("%Y-%m-%d") != effective_day:
-            # Eğer effective_day bugün değilse (yani 18:30 öncesindeyiz)
-            # ve elimizde cached yoksa veya cached eski günse
-            # burada TEFAS'a gitmek riskli (yanlış veri gelebilir).
-            # Yine de hiç veri yoksa mecbur gideceğiz, ama cached varsa dönelim.
-            if cached:
+        if cached:
+            cached_asof = (cached.get("asof_day") or "").strip()
+            if cached_asof == effective_day:
                 return cached
-            # Cache yoksa mecburen fetch_fund_live çağrılacak
 
-        data = fetch_fund_live(fund_code)
+        # ✅ 4. ZORUNLU LOG
+        print(f"🚀 FORCE FETCH: {fund_code} | cached_asof={cached.get('asof_day') if cached else None} | effective_day={effective_day}")
 
-        if data:
+        data = None
+        if force_fetch:
+            data = fetch_fund_live(fund_code)
+
+        if data and data.get("price", 0) > 0:
+            # ✅ asof_day: API varsa onu kullan, yoksa effective_day’e düş
+            asof_day = (data.get("asof_day") or "").strip()
+            if not asof_day:
+                # HTML geldi ama tarih yok → API ile asof_day yakala (fiyatı değiştirmeden)
+                api_meta = _fetch_api(fund_code)
+                if api_meta and api_meta.get("asof_day"):
+                    asof_day = api_meta["asof_day"]
+                else:
+                    asof_day = effective_day  # en kötü fallback
+
             # 🔒 GÜNLÜK GETİRİ MUTLAK KİLİT
-            if cached:
-                cached_day = cached.get("last_update", "").split(" ")[0]
+            if cached and cached.get("source") == "HTML":
+                cached_day = cached.get("asof_day", "")
                 if cached_day == effective_day:
                     # ❗ Günlük getiri KİLİTLİ → HTML ne getirirse getirsin kullanma
                     safe_daily = cached.get("daily_return_pct", 0.0)
@@ -290,21 +742,44 @@ def get_fund_data_safe(fund_code: str):
             # ✅ FIX 2: AI prediction'a safe_daily gönder
             dir_str, conf = calculate_ai_prediction(data["yearly_pct"], safe_daily)
 
-            # ✅ 4️⃣ & 5️⃣ DEĞİŞİKLİK: daily_return_pct ASLA None OLMAZ ve last_update sabittir
+            # ✅ 4️⃣ & 5️⃣ DEĞİŞİKLİK: daily_return_pct ASLA None OLMAZ
+            # last_update artık asof_day'e göre belirlenir
             new_data = {
                 "nav": data["price"],
                 "daily_return_pct": safe_daily,  # FIXED: safe_daily kullan
-                "last_update": effective_day + " 18:30:00",
+                "asof_day": asof_day,  # ✅ KRİTİK
+                "last_update": asof_day + " 18:30:00", # ✅ ARTIK effective_day DEĞİL
+                "source": data.get("source", "HTML"), # Kaynağı kaydet
                 "ai_prediction": {
                     "direction": dir_str,
                     "confidence": conf,
                     "score": round(data["yearly_pct"] / 12, 2),
                 },
             }
+
+            # 🔧 ÇÖZÜM 2: HER DURUMDA YAZ (OVERWRITE)
             _PRICE_CACHE[fund_code] = new_data
             save_memory_to_disk()
-            time.sleep(0.1)
             return new_data
+        
+        elif force_fetch:
+            # 🔥 TEFAS denendi ama HTML başarısız → API fiyatını cache'e yaz
+            if data is None:
+                api = _fetch_api(fund_code)
+                if api and api.get("price", 0) > 0:
+                    asof_day = api.get("asof_day", effective_day)
+                    new_data = {
+                        "nav": api["price"],
+                        "daily_return_pct": cached.get("daily_return_pct", 0.0) if cached else 0.0,
+                        "asof_day": asof_day,
+                        "last_update": asof_day + " 18:30:00",
+                        "source": "API",
+                        "ai_prediction": cached.get("ai_prediction", {}) if cached else {},
+                    }
+                    
+                    _PRICE_CACHE[fund_code] = new_data
+                    save_memory_to_disk()
+                    return new_data
 
     return cached if cached else {"nav": 0.0, "daily_return_pct": 0.0}
 
@@ -327,12 +802,12 @@ def update_market_data():
         except:
             items.append({"code": c, "value": 0.0, "change_pct": 0.0})
 
+    # ✅ PATCH 2: Atomik yazma
     try:
-        with open(MARKET_CACHE_PATH, "w", encoding="utf-8") as f:
-            json.dump({"asof": now_str(), "items": items}, f, ensure_ascii=False, indent=2)
+        _atomic_write_json(MARKET_CACHE_PATH, {"asof": now_str(), "items": items})
         print(f"🔄 Market Updated: {now_str()}")
-    except:
-        pass
+    except Exception as e:
+        print(f"❌ Market write error: {e}")
     return items
 
 def _get_market_change_pct(code: str) -> float:
@@ -364,7 +839,16 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
 
     with _AI_LOCK:
         cached = _AI_CACHE.get(fund_code)
-        if cached and (now_ts - cached["_ts"]) < 5:
+        # Market açıksa cache'i kısalt
+        try:
+            now_tr = datetime.now(ZoneInfo("Europe/Istanbul"))
+        except:
+            now_tr = datetime.now()
+        market_open = 9 <= now_tr.hour < 18
+        # ✅ FIX 4: Daha canlı hissettirmesi için TTL düşürüldü
+        ttl = 1 if market_open else 10 
+
+        if cached and (now_ts - cached["_ts"]) < ttl:
             return cached
 
         # ===============================
@@ -386,8 +870,8 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
             fund_name=fund_name,
             fund_type_from_master=fund_type,
             daily_real_pct=daily_real,
-            bist_change_pct=bist,
-            usd_change_pct=usd,
+            bist_change_pct=float(bist or 0.0),
+            usd_change_pct=float(usd or 0.0),
             market_asof=now_str(),
         )
         premium_base = float(premium.get("predicted_return_pct", 0.0))
@@ -401,7 +885,11 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         # ===============================
         # GÜN İÇİ DRIFT (KAPANIŞA SIFIRLANIR)
         # ===============================
-        dt = datetime.now()
+        # ✅ GÜNCELLENDİ: dt İstanbul saatine göre
+        try:
+            dt = datetime.now(ZoneInfo("Europe/Istanbul"))
+        except:
+            dt = datetime.now()
         minutes = dt.hour * 60 + dt.minute
         session_pos = max(0.0, min(1.0, (minutes - 570) / (1090 - 570)))
         drift = 0.12 * (1.0 - session_pos)
@@ -473,13 +961,6 @@ def auto_market_loop():
         update_market_data()
         time.sleep(900)  # 15 dakika bekle
 
-# Server başladığında hafızayı yükle ve döngüyü başlat
-load_cache_to_memory()
-
-# Döngüyü arka planda başlat
-_market_thread = threading.Thread(target=auto_market_loop, daemon=True)
-_market_thread.start()
-
 # ============================================================
 # 6.5 ✅ PREMIUM AI SUMMARY (TIP ÖZET + TOP FONLAR)
 # ============================================================
@@ -537,7 +1018,7 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
         fund_name = str(rec.get("name") or "")
         fund_type = str(rec.get("type") or "")
 
-        # 📌 DÜZELTME 2: RAM cache yoksa Disk cache'ten oku (persistence)
+        # 📌 DÜZELME 2: RAM cache yoksa Disk cache'ten oku (persistence)
         info = _PRICE_CACHE.get(code)
         
         if not info:
@@ -545,8 +1026,9 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
             if os.path.exists(LIVE_PRICES_PATH):
                 try:
                     with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
-                        disk = json.load(f)
-                    info = disk.get(code, {})
+                        disk_raw = json.load(f)
+                    disk_data = disk_raw.get("data", {})
+                    info = disk_data.get(code, {})
                 except:
                     info = {}
 
@@ -623,7 +1105,178 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
     }
 
 # ============================================================
-# 7. API ENDPOINTS
+# 7. YENİ: OTOMATİK GÜNCELLEME SİSTEMİ
+# ============================================================
+
+def update_newly_added_funds(fund_codes: List[str]):
+    """
+    Yeni eklenen fonları hemen günceller
+    """
+    if not fund_codes:
+        return
+        
+    print(f"🚀 Yeni eklenen fonlar güncelleniyor: {', '.join(fund_codes)}")
+    
+    for i, code in enumerate(fund_codes, 1):
+        print(f"📈 [{i}/{len(fund_codes)}] Güncelleniyor: {code}")
+        try:
+            result = get_fund_data_safe(code)
+            if result and result.get("nav", 0) > 0:
+                print(f"✅ {code} başarıyla güncellendi - Fiyat: {result['nav']:.4f}")
+            else:
+                print(f"❌ {code} güncellenemedi - Veri alınamadı")
+        except Exception as e:
+            print(f"💥 {code} güncelleme hatası: {str(e)}")
+        
+        time.sleep(0.4)  # Ban koruması
+    
+    print(f"🎯 Tüm yeni fonlar işlendi: {len(fund_codes)} adet")
+
+# ✅ GÜNCELLENDİ: "Any" yerine tüm portföyün güncel olup olmadığını kontrol eder ve timezone düzeltmesi
+def maybe_update_portfolio_funds():
+    """
+    09:30 sonrası portföy fonlarını GÜNDE 1 KEZ (effective_day bazlı) tamamlar.
+    """
+    # Eğer server restart olmuşsa (RAM cache boşsa) günlük kilidi resetle
+    if not _PRICE_CACHE:
+        _save_portfolio_update_day("")
+
+    try:
+        now = datetime.now(ZoneInfo("Europe/Istanbul"))
+    except:
+        now = datetime.now()
+    if now.hour < 9 or (now.hour == 9 and now.minute < 30):
+        return
+
+    today = now.strftime("%Y-%m-%d")
+    effective_day = tefas_effective_date()
+    run_day = effective_day  # ✅ State anahtarı bu olmalı
+
+    with _PORTFOLIO_UPDATE_LOCK:
+        # Portföy yoksa state yazıp çık
+        if not os.path.exists(PORTFOLIO_PATH):
+            _save_portfolio_update_day(run_day)
+            return
+
+        # Portföy kodlarını oku
+        try:
+            with open(PORTFOLIO_PATH, "r", encoding="utf-8") as f:
+                raw = json.load(f)
+            codes = [
+                (p.get("code") or "").upper().strip()
+                for p in raw.get("positions", [])
+                if p.get("code")
+            ]
+        except Exception as e:
+            print(f"❌ Portföy okuma hata: {e}")
+            return
+
+        # ✅ DEBUG PRINT (İSTENİLEN)
+        print(f"🧪 Portfolio codes={len(codes)} | state_day={_load_portfolio_update_day()} | today={today} | effective_day={effective_day}")
+
+        # Eksikleri bul (RAM + disk üzerinden)
+        missing = _missing_codes_for_day(codes, effective_day)
+        last_day = _load_portfolio_update_day()
+
+        # ✅ SADECE: run_day state yazılmış VE portföyde eksik yoksa erken çık
+        if last_day == run_day and not missing:
+            return
+
+        # Eksik yoksa state'i düzelt ve çık
+        if not missing:
+            _save_portfolio_update_day(run_day)
+            return
+
+        print(f"🔄 Portföy auto-update: {len(missing)}/{len(codes)} fon eksik, güncellenecek. effective_day={effective_day}")
+
+        # Sadece eksikleri güncelle
+        for code in missing:
+            try:
+                get_fund_data_safe(code)
+            except Exception as e:
+                print(f"❌ Portföy update hata ({code}): {e}")
+            time.sleep(0.4)  # 🔒 BAN KORUMASI
+
+        # Gün bitti (portföy tamamlandı mı kontrol et) → state yaz
+        missing2 = _missing_codes_for_day(codes, effective_day)
+        if not missing2:
+            _save_portfolio_update_day(run_day)
+            print(f"✅ Portföy fonları tamamlandı ({run_day})")
+        else:
+            print(f"⚠️ Portföy fonları kısmi kaldı: {len(missing2)} fon hâlâ eksik; sonraki istekte tekrar denenecek.")
+
+# ✅ GÜNCELLENDİ: "Any" yerine tüm canlı listenin güncel olup olmadığını kontrol eder ve timezone düzeltmesi
+def maybe_update_live_list_funds():
+    """
+    09:30 sonrası canlı listedeki fonları GÜNDE 1 KEZ (effective_day bazlı) tamamlar.
+    """
+    # Eğer server restart olmuşsa (RAM cache boşsa) günlük kilidi resetle
+    if not _PRICE_CACHE:
+        _save_live_list_update_day("")
+
+    try:
+        now = datetime.now(ZoneInfo("Europe/Istanbul"))
+    except:
+        now = datetime.now()
+    if now.hour < 9 or (now.hour == 9 and now.minute < 30):
+        return
+
+    today = now.strftime("%Y-%m-%d")
+    effective_day = tefas_effective_date()
+    run_day = effective_day  # ✅ State anahtarı bu olmalı
+
+    with _LIVE_LIST_UPDATE_LOCK:
+        # Liste yoksa state yazıp çık
+        if not os.path.exists(LIVE_LIST_PATH):
+            _save_live_list_update_day(run_day)
+            return
+
+        # Liste kodlarını oku
+        try:
+            with open(LIVE_LIST_PATH, "r", encoding="utf-8") as f:
+                raw = json.load(f)
+            codes = [
+                (item.get("code") or "").upper().strip()
+                for item in raw.get("items", [])
+                if item.get("code")
+            ]
+        except Exception as e:
+            print(f"❌ Canlı liste okuma hata: {e}")
+            return
+
+        # Eksikleri bul
+        missing = _missing_codes_for_day(codes, effective_day)
+        last_day = _load_live_list_update_day()
+
+        # ✅ SADECE: run_day state yazılmış VE listede eksik yoksa erken çık
+        if last_day == run_day and not missing:
+            return
+
+        # Eksik yoksa state'i düzelt ve çık
+        if not missing:
+            _save_live_list_update_day(run_day)
+            return
+
+        print(f"🔄 Canlı liste auto-update: {len(missing)}/{len(codes)} fon eksik, güncellenecek. effective_day={effective_day}")
+
+        # Sadece eksikleri güncelle
+        for code in missing:
+            try:
+                get_fund_data_safe(code)
+            except Exception as e:
+                print(f"❌ Canlı liste update hata ({code}): {e}")
+            time.sleep(0.4)  # Ban koruması
+
+        # Gün bitti mi kontrol et → state yaz
+        missing2 = _missing_codes_for_day(codes, effective_day)
+        if not missing2:
+            _save_live_list_update_day(run_day)
+            print(f"✅ Canlı liste fonları tamamlandı ({run_day})")
+        else:
+            print(f"⚠️ Canlı liste fonları kısmi kaldı: {len(missing2)} fon hâlâ eksik; sonraki istekte tekrar denenecek.")
+
+# ============================================================
+# 8. API ENDPOINTS
 # ============================================================
 
 @router.get("/admin/refresh")
@@ -658,23 +1311,28 @@ def api_predictions_summary(scope: str = "portfolio"):
     if scope not in ("portfolio", "all"):
         scope = "portfolio"
 
-    # 15 sn cache
+    # ✅ PATCH 3.4: 15 sn cache (scope bazlı)
     with _PRED_SUMMARY_LOCK:
         ts = time.time()
         cached = _PRED_SUMMARY_CACHE.get(scope)
-        if cached and (ts - _PRED_SUMMARY_TS) < _PRED_SUMMARY_TTL_SEC:
+        last_ts = _PRED_SUMMARY_TS.get(scope, 0.0)
+        if cached and (ts - last_ts) < _PRED_SUMMARY_TTL_SEC:
             return cached
 
     data = _build_predictions_summary(scope=scope)
 
+    # ✅ PATCH 3.6: TS scope bazlı update
     with _PRED_SUMMARY_LOCK:
         _PRED_SUMMARY_CACHE[scope] = data
-        _PRED_SUMMARY_TS = time.time()
+        _PRED_SUMMARY_TS[scope] = time.time()
 
     return data
 
 @router.get("/portfolio")
 def api_portfolio():
+    # 🔥 09:30 sonrası otomatik portföy güncelleme
+    maybe_update_portfolio_funds()
+
     if os.path.exists(PORTFOLIO_PATH):
         try:
             with open(PORTFOLIO_PATH, "r", encoding="utf-8") as f:
@@ -705,8 +1363,8 @@ def api_portfolio():
             "nav": info.get("nav", 0.0),
             "daily_return_pct": daily_real,                    # ✅ TEFAŞ gerçek %
             
-            # 🎯 ÇÖZÜM: Mobil'in predicted_return_pct alanına TEFAŞ gerçek % koy
-            "predicted_return_pct": daily_real,               # ✅ GERÇEK % (TEFAŞ)
+            # 🎯 ÇÖZÜM: Mobil'in predicted_return_pct alanına AI TAHMİNİ koy (Fix 2)
+            "predicted_return_pct": ai.get("predicted_return_pct", daily_real), 
             "confidence_score": ai.get("confidence_score", 50),
             "direction": ai.get("direction", "NÖTR"),
             
@@ -722,11 +1380,27 @@ def api_portfolio():
 def api_pset(payload: Dict[str, Any]):
     """
     payload: {"positions":[{"code":"AFT","quantity":10}, ...]}
+    
+    YENİ: Fon eklendiğinde otomatik güncelleme
     """
     try:
         positions = payload.get("positions", [])
+        
+        # ✅ YENİ: Önceki fon kodlarını oku
+        previous_codes = _get_portfolio_codes()
+        
+        # Portföyü kaydet
         with open(PORTFOLIO_PATH, "w", encoding="utf-8") as f:
             json.dump({"asof": now_str(), "positions": positions}, f, ensure_ascii=False, indent=2)
+        
+        # ✅ YENİ: Yeni eklenen fonları tespit et ve güncelle
+        current_codes = [str(pos.get("code") or "").upper().strip() for pos in positions if pos.get("code")]
+        new_funds = _get_newly_added_funds(previous_codes, current_codes)
+        
+        if new_funds:
+            print(f"🆕 Yeni fonlar tespit edildi: {', '.join(new_funds)}")
+            update_newly_added_funds(new_funds)
+        
     except:
         pass
     return {"status": "success"}
@@ -743,6 +1417,79 @@ def api_list():
         master = []
     return {"status": "success", "data": {"items": master}}
 
+@router.get("/live-list")
+def api_live_list():
+    """
+    ✅ YENİ: Canlı liste endpoint'i
+    09:30 sonrası otomatik güncelleme yapar
+    """
+    # 09:30 sonrası otomatik canlı liste güncelleme
+    maybe_update_live_list_funds()
+    
+    if os.path.exists(LIVE_LIST_PATH):
+        try:
+            with open(LIVE_LIST_PATH, "r", encoding="utf-8") as f:
+                raw_list = json.load(f)
+        except:
+            raw_list = {"items": []}
+    else:
+        raw_list = {"items": []}
+
+    result_list = []
+    for item in raw_list.get("items", []):
+        code = (item.get("code") or "").upper().strip()
+        if not code:
+            continue
+
+        # TEFAŞ cacheli gerçek veri (günde 1 kere)
+        info = get_fund_data_safe(code)
+        daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
+
+        # AI tahmin
+        ai = get_ai_prediction_live(code, daily_real)
+
+        result_list.append({
+            "code": code,
+            "name": item.get("name", ""),
+            "nav": info.get("nav", 0.0),
+            "daily_return_pct": daily_real,
+            "predicted_return_pct": ai.get("predicted_return_pct", daily_real),
+            "confidence_score": ai.get("confidence_score", 50),
+            "direction": ai.get("direction", "NÖTR"),
+            "type": item.get("type", ""),
+        })
+
+    return {"status": "success", "data": result_list}
+
+@router.post("/live-list/set")
+def api_live_list_set(payload: Dict[str, Any]):
+    """
+    payload: {"items":[{"code":"AFT","name":"..."}, ...]}
+    
+    YENİ: Canlı listeye fon eklendiğinde otomatik güncelleme
+    """
+    try:
+        items = payload.get("items", [])
+        
+        # ✅ YENİ: Önceki fon kodlarını oku
+        previous_codes = _get_live_list_codes()
+        
+        # Canlı listeyi kaydet
+        with open(LIVE_LIST_PATH, "w", encoding="utf-8") as f:
+            json.dump({"asof": now_str(), "items": items}, f, ensure_ascii=False, indent=2)
+        
+        # ✅ YENİ: Yeni eklenen fonları tespit et ve güncelle
+        current_codes = [str(item.get("code") or "").upper().strip() for item in items if item.get("code")]
+        new_funds = _get_newly_added_funds(previous_codes, current_codes)
+        
+        if new_funds:
+            print(f"🆕 Canlı listeye yeni fonlar eklendi: {', '.join(new_funds)}")
+            update_newly_added_funds(new_funds)
+        
+    except:
+        pass
+    return {"status": "success"}
+
 @router.get("/detail/{code}")
 def api_detail(code: str):
     # Detayda cacheli hızlı dön (günde 1 TEFAS)
@@ -754,15 +1501,13 @@ def api_detail(code: str):
             "status": "success",
             "data": {
                 **info,
-                # 🎯 ÇÖZÜM: Mobil kolay kullansın diye düz alanlar
-                "predicted_return_pct": daily_real,           # ✅ GERÇEK % (TEFAŞ)
+                # 🎯 ÇÖZÜM: Mobil kolay kullansın diye düz alanlar (Fix 2)
+                "predicted_return_pct": ai.get("predicted_return_pct", daily_real),
                 "confidence_score": ai.get("confidence_score", 50),
                 "direction": ai.get("direction", "NÖTR"),
             }
         }
     return {"status": "error", "message": "Veri yok"}
-
-from scripts.tefas_batch_scrape import run_batch_scrape
 
 @router.get("/admin/refresh-tefas")
 def admin_refresh_tefas():
@@ -776,3 +1521,42 @@ def admin_refresh_tefas():
         "message": "TEFAS batch scrape tamamlandı",
         "result": result
     }
+
+# ✅ EKLENDİ: Server açılışında bootstrap güncellemesi
+def _startup_bootstrap_updates():
+    # Uvicorn import sırasında hemen saldırmasın, biraz bekle
+    time.sleep(2)
+
+    # Server 09:30 sonrası açıldıysa anında dene; değilse endpoint zaten tetikler.
+    try:
+        maybe_update_portfolio_funds()
+    except Exception as e:
+        print(f"❌ Startup portfolio bootstrap hata: {e}")
+
+    try:
+        maybe_update_live_list_funds()
+    except Exception as e:
+        print(f"❌ Startup live-list bootstrap hata: {e}")
+
+# ✅ PATCH 4.2: Threadleri tek sefer başlat (reload-safe)
+def _start_background_jobs_once():
+    """Uvicorn reload / çoklu import durumunda thread'leri tek sefer başlat."""
+    global _BG_STARTED
+    with _BG_LOCK:
+        if _BG_STARTED:
+            return
+        _BG_STARTED = True
+
+        # 1) Cache'i RAM'e yükle
+        load_cache_to_memory()
+
+        # 2) Market loop thread
+        t_market = threading.Thread(target=auto_market_loop, daemon=True)
+        t_market.start()
+
+        # 3) Startup bootstrap thread
+        t_boot = threading.Thread(target=_startup_bootstrap_updates, daemon=True)
+        t_boot.start()
+
+# ✅ Import olur olmaz çalıştır (ama tek sefer)
+_start_background_jobs_once()

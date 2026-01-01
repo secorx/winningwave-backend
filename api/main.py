@@ -1,6 +1,16 @@
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+import os
+import json
+import datetime
+import threading
+from zoneinfo import ZoneInfo
+
+# ============================================================
+# CORE SERVICES (DOKUNULMADI)
+# ============================================================
+
 from .services import (
     analyze_single,
     get_scanner,
@@ -14,13 +24,12 @@ from .services import (
     start_scan_internal,
 )
 
-from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
+# ============================================================
+# FUNDS & TECHNICAL ROUTERS
+# ============================================================
 
-import os
-import json
-import datetime
-import threading
-from zoneinfo import ZoneInfo
+from .funds_routes import router as funds_router
+from .technical_routes import router as technical_router
 
 # ============================================================
 # APP
@@ -28,100 +37,98 @@ from zoneinfo import ZoneInfo
 
 app = FastAPI(
     title="WinningWave SENTEZ AI API",
-    version="1.0",
+    version="1.1.0",
 )
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # ============================================================
-# STATE (GÜNLÜK ADMIN KORUMASI)
+# ROUTER REGISTER
 # ============================================================
 
-STATE_PATH = os.path.join(
-    os.path.dirname(__file__),
-    "..",
-    "data",
-    "auto_scan_state.json",
-)
-os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+app.include_router(funds_router, prefix="/funds", tags=["funds"])
+app.include_router(technical_router, prefix="/technical", tags=["technical"])
 
+# ============================================================
+# STATE (GÜNLÜK TARAMA)
+# ============================================================
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+STATE_DIR = os.path.join(BASE_DIR, "state")
+STATE_PATH = os.path.join(STATE_DIR, "scan_state.json")
+os.makedirs(STATE_DIR, exist_ok=True)
 
 def load_state() -> dict:
-    if not os.path.exists(STATE_PATH):
-        return {}
     try:
-        with open(STATE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f) or {}
+        if os.path.exists(STATE_PATH):
+            with open(STATE_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return {}
     except Exception:
         return {}
 
-
-def save_state(st: dict) -> None:
-    with open(STATE_PATH, "w", encoding="utf-8") as f:
-        json.dump(st, f, ensure_ascii=False, indent=2)
-
+def save_state(state: dict):
+    try:
+        tmp = STATE_PATH + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(state, f, ensure_ascii=False, indent=2)
+        os.replace(tmp, STATE_PATH)
+    except Exception:
+        pass
 
 # ============================================================
-# NORMAL ROUTES (HİÇBİRİ DEĞİŞMEDİ)
+# BASIC ROUTES
 # ============================================================
 
 @app.get("/")
-def home():
-    return {"status": "ok", "message": "API çalışıyor"}
+def root():
+    return {"status": "ok", "service": "WinningWave SENTEZ AI API"}
 
 @app.get("/analyze")
-def api_analyze(symbol: str):
+def api_analyze(symbol: str = Query(...)):
     return analyze_single(symbol)
 
 @app.get("/scanner")
 def api_scanner():
     return get_scanner()
 
-@app.get("/hedef_fiyat_radar")
 @app.get("/radar")
 def api_radar():
     return get_radar()
 
-@app.get("/update_database")
-@app.post("/update_database")
-def api_update_database():
+@app.get("/update_db")
+def api_update_db():
     return update_database()
 
-@app.get("/scan_status")
+@app.get("/scan/status")
 def api_scan_status():
     return get_scan_status()
 
-@app.get("/scan_result")
+@app.get("/scan/result")
 def api_scan_result():
     return get_scan_result()
 
 @app.get("/live_prices")
-def api_live_prices(
-    symbols: str = Query(..., description="GARAN,ASELS gibi")
-):
-    arr = [x.strip().upper() for x in symbols.split(",") if x.strip()]
+def api_live_prices(symbols: str = Query(...)):
+    arr = [s.strip().upper() for s in symbols.split(",") if s.strip()]
     return get_live_prices(arr)
 
-@app.get("/load_live_prices")
-def api_load_live_prices():
+@app.get("/live_prices/saved")
+def api_live_prices_saved():
     return get_saved_live_prices()
-
-@app.get("/all_symbols")
-def api_all_symbols():
-    return {"status": "success", "data": load_all_symbols()}
 
 @app.get("/indexes")
 def api_indexes():
     return get_indexes()
 
-
 # ============================================================
-# 🔒 ADMIN – GÜNLÜK TEK TARAMA (RADAR SAFE)
+# ADMIN – GÜNLÜK TEK TARAMA
 # ============================================================
 
 @app.api_route("/__admin/run_daily_scan", methods=["GET", "POST"])
@@ -135,22 +142,15 @@ def admin_run_daily_scan(token: str = Query(...)):
 
     state = load_state()
     if state.get("last_scan_day") == today:
-        return {
-            "status": "skip",
-            "message": f"{today} için tarama zaten yapıldı",
-        }
+        return {"status": "skip", "message": "Bugün zaten çalıştı"}
 
-    # önce state yaz → double run yok
     state["last_scan_day"] = today
     state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
     save_state(state)
 
-    # 🔥 ASLA BLOCKING DEĞİL
-    th = threading.Thread(target=start_scan_internal)
-    th.daemon = True
-    th.start()
+    threading.Thread(
+        target=start_scan_internal,
+        daemon=True
+    ).start()
 
-    return {
-        "status": "success",
-        "message": f"{today} günlük tarama başlatıldı (arka planda)",
-    }
+    return {"status": "success", "message": "Günlük tarama başlatıldı"}

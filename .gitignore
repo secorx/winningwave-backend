@@ -209,3 +209,25 @@ __marimo__/
 venv_api/
 venv_api/**
 
+api/funds_admin.secret
+
+technical_cache/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Runtime data
+data/
+funds_cache/
+funds/
+
+# Local scripts & debug
+scripts/
+debug_*.html
+
+# Virtual env
+venv/
+venv_api/
+
+

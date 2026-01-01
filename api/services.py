@@ -54,8 +54,39 @@ def _find_piyasa_json() -> str:
 
 
 DATA_PATH = _find_piyasa_json()
-LIVE_PRICE_PATH = os.path.join(os.path.dirname(DATA_PATH), "live_prices.json")
-RADAR_CACHE_PATH = os.path.join(os.path.dirname(DATA_PATH), "radar_cache.json")
+DATA_DIR = os.path.dirname(DATA_PATH)
+
+LIVE_PRICE_PATH = os.path.join(DATA_DIR, "live_prices.json")
+RADAR_CACHE_PATH = os.path.join(DATA_DIR, "radar_cache.json")
+
+
+# ============================================================
+# ATOMİK JSON YAZ
+# ============================================================
+
+def _atomic_write_json(path: str, obj: Any) -> None:
+    """
+    Dosya yazımı sırasında yarım/bozuk JSON oluşmasını engeller.
+    (tmp yaz -> replace)
+    """
+    try:
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(obj, f, indent=2, ensure_ascii=False)
+        os.replace(tmp, path)
+    except Exception:
+        # Disk hatası vs. olursa API çökmesin
+        pass
+
+
+def _safe_read_json(path: str, default: Any) -> Any:
+    try:
+        if not os.path.exists(path):
+            return default
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return default
 
 
 # ============================================================
@@ -63,22 +94,12 @@ RADAR_CACHE_PATH = os.path.join(os.path.dirname(DATA_PATH), "radar_cache.json")
 # ============================================================
 
 def load_json() -> List[Dict[str, Any]]:
-    if not os.path.exists(DATA_PATH):
-        return []
-    try:
-        with open(DATA_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return []
+    data = _safe_read_json(DATA_PATH, [])
+    return data if isinstance(data, list) else []
 
 
 def save_json(data: List[Dict[str, Any]]) -> None:
-    try:
-        with open(DATA_PATH, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-    except Exception:
-        # Disk hatası vs. olursa API çökmesin
-        pass
+    _atomic_write_json(DATA_PATH, data)
 
 
 # ============================================================
@@ -86,21 +107,12 @@ def save_json(data: List[Dict[str, Any]]) -> None:
 # ============================================================
 
 def save_live_price_json(data: List[Dict[str, Any]]) -> None:
-    try:
-        with open(LIVE_PRICE_PATH, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-    except Exception:
-        pass
+    _atomic_write_json(LIVE_PRICE_PATH, data)
 
 
 def load_live_price_json() -> List[Dict[str, Any]]:
-    if not os.path.exists(LIVE_PRICE_PATH):
-        return []
-    try:
-        with open(LIVE_PRICE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return []
+    data = _safe_read_json(LIVE_PRICE_PATH, [])
+    return data if isinstance(data, list) else []
 
 
 # ============================================================
@@ -108,21 +120,12 @@ def load_live_price_json() -> List[Dict[str, Any]]:
 # ============================================================
 
 def save_radar_cache(data: List[Dict[str, Any]]) -> None:
-    try:
-        with open(RADAR_CACHE_PATH, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-    except Exception:
-        pass
+    _atomic_write_json(RADAR_CACHE_PATH, data)
 
 
 def load_radar_cache() -> List[Dict[str, Any]]:
-    if not os.path.exists(RADAR_CACHE_PATH):
-        return []
-    try:
-        with open(RADAR_CACHE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return []
+    data = _safe_read_json(RADAR_CACHE_PATH, [])
+    return data if isinstance(data, list) else []
 
 
 # ============================================================
@@ -144,7 +147,6 @@ def _yahoo_price(
         fi = getattr(ticker, "fast_info", None)
         last = getattr(fi, "last_price", None) if fi else None
         if last is None:
-            # Bazı sembollerde last_price yok, last_close dönebiliyor
             last = getattr(fi, "last_close", None) if fi else None
 
         prev_close = getattr(fi, "previous_close", None) if fi else None
@@ -422,7 +424,7 @@ def _radar_refresh_thread() -> None:
 
             live = fetch_live_price_single(symbol)
             if live:
-                price_f = live["price"]
+                price_f = float(live["price"])
             else:
                 try:
                     price_f = float(x.get("price") or 0)
@@ -519,8 +521,8 @@ def get_indexes() -> Dict[str, Any]:
             continue
 
         chg = daily if daily is not None else 0.0
-        val = round(price, 2)
-        chg_r = round(chg, 2)
+        val = round(float(price), 2)
+        chg_r = round(float(chg), 2)
 
         out[key]["value"] = val
         out[key]["chg"] = chg_r
@@ -562,7 +564,7 @@ def _scan_thread() -> None:
 
     old = load_json()
     old_map: Dict[str, Dict[str, Any]] = {
-        x["symbol"]: x for x in old if "symbol" in x
+        x["symbol"]: x for x in old if isinstance(x, dict) and "symbol" in x
     }
 
     for i, sym in enumerate(symbols):
@@ -587,11 +589,11 @@ def _scan_thread() -> None:
                 "status": "success",
                 "last_check_time": time.strftime("%Y-%m-%d"),
                 "date_str": ds,
-                "date_sortable": int(ds.replace("-", "")),
+                "date_sortable": int(str(ds).replace("-", "")),
                 "score": payload.get("score_total_0_100"),
-                "target": payload.get("valuation", {}).get("target_price"),
+                "target": (payload.get("valuation") or {}).get("target_price"),
                 "price": payload.get("price"),
-                "band": payload.get("valuation", {}).get("confidence_band"),
+                "band": (payload.get("valuation") or {}).get("confidence_band"),
             }
 
         except Exception:
