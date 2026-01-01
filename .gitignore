@@ -230,4 +230,7 @@ debug_*.html
 venv/
 venv_api/
 
+funds_cache/
+state/
+technical_cache/
 
