@@ -28,6 +28,26 @@ from api.premium_ai import (
 
 from scripts.tefas_batch_scrape import run_batch_scrape
 
+# ============================================================
+# CACHE BASE DIR (LOCAL vs RENDER SAFE)
+# ============================================================
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+CACHE_ROOT = os.getenv(
+    "CACHE_ROOT",
+    BASE_DIR  # local default
+)
+
+CACHE_DIR = os.path.join(CACHE_ROOT, "funds_cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+# ✅ DATA DIR (HER ZAMAN PROJE İÇİNDE)
+DATA_DIR = os.path.join(BASE_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+
+
 # SSL Uyarılarını Kapat
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -54,9 +74,6 @@ def _detect_project_root() -> str:
     # fallback
     return candidates[0]
 
-BASE_DIR = _detect_project_root()
-CACHE_DIR = os.path.join(BASE_DIR, "funds_cache")
-DATA_DIR = os.path.join(BASE_DIR, "data")
 FUNDS_MASTER_PATH = os.path.join(DATA_DIR, "funds_master.json")
 LIVE_PRICES_PATH = os.path.join(CACHE_DIR, "live_prices.json")
 PORTFOLIO_PATH = os.path.join(CACHE_DIR, "portfolio.json")
@@ -1559,4 +1576,4 @@ def _start_background_jobs_once():
         t_boot.start()
 
 # ✅ Import olur olmaz çalıştır (ama tek sefer)
-_start_background_jobs_once()
+#_start_background_jobs_once()

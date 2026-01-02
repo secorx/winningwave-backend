@@ -1,0 +1,6618 @@
+[
+  {
+    "symbol": "AKBNK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 43.06,
+    "target": 136.49126236054795,
+    "price": 69.80000305175781,
+    "band": [
+      116.01757300646575,
+      156.96495171463013
+    ]
+  },
+  {
+    "symbol": "GARAN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 60.18258333333333,
+    "target": 526.4919697659386,
+    "price": 143.5,
+    "band": [
+      447.5181743010478,
+      605.4657652308293
+    ]
+  },
+  {
+    "symbol": "ISCTR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.84562470833333,
+    "target": 52.07148822838142,
+    "price": 14.09000015258789,
+    "band": [
+      44.2607649941242,
+      59.88221146263863
+    ]
+  },
+  {
+    "symbol": "YKBNK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 57.24491666666667,
+    "target": 95.69077520506542,
+    "price": 36.220001220703125,
+    "band": [
+      81.33715892430561,
+      110.04439148582523
+    ]
+  },
+  {
+    "symbol": "HALKB",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.80495833333333,
+    "target": 90.43228764852863,
+    "price": 36.779998779296875,
+    "band": [
+      76.86744450124934,
+      103.99713079580792
+    ]
+  },
+  {
+    "symbol": "VAKBN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.740875,
+    "target": 76.70000076293945,
+    "price": 30.68000030517578,
+    "band": [
+      65.19500064849854,
+      88.20500087738037
+    ]
+  },
+  {
+    "symbol": "SKBNK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.98433333333333,
+    "target": 25.838320017751272,
+    "price": 7.78000020980835,
+    "band": [
+      21.96257201508858,
+      29.71406802041396
+    ]
+  },
+  {
+    "symbol": "TSKB",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 61.278666666666666,
+    "target": 30.875000953674316,
+    "price": 12.350000381469727,
+    "band": [
+      26.24375081062317,
+      35.506251096725464
+    ]
+  },
+  {
+    "symbol": "ALBRK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 84.7375,
+    "target": 19.65000033378601,
+    "price": 7.860000133514404,
+    "band": [
+      16.70250028371811,
+      22.597500383853912
+    ]
+  },
+  {
+    "symbol": "ICBCT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 27.7,
+    "target": 7.860000228881836,
+    "price": 13.100000381469727,
+    "band": [
+      6.6810001945495605,
+      9.03900026321411
+    ]
+  },
+  {
+    "symbol": "QNBTR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 40.97050075,
+    "target": 270.9,
+    "price": 451.5,
+    "band": [
+      230.265,
+      311.53499999999997
+    ]
+  },
+  {
+    "symbol": "KLNMA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 61.000125,
+    "target": 18.20963847657264,
+    "price": 9.899999618530273,
+    "band": [
+      15.478192705086743,
+      20.941084248058534
+    ]
+  },
+  {
+    "symbol": "ONRYT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.415210981375317,
+    "target": 44.2567165176296,
+    "price": 63.5,
+    "band": [
+      37.61820903998516,
+      50.89522399527404
+    ]
+  },
+  {
+    "symbol": "ADESE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 37.75,
+    "target": 3.4698845012752835,
+    "price": 1.5199999809265137,
+    "band": [
+      2.949401826083991,
+      3.9903671764665756
+    ]
+  },
+  {
+    "symbol": "AKGRT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 93.031,
+    "target": 23.91236949766558,
+    "price": 6.800000190734863,
+    "band": [
+      20.325514073015743,
+      27.499224922315413
+    ]
+  },
+  {
+    "symbol": "ANHYT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 64.38192301949614,
+    "target": 147.8631006480831,
+    "price": 98.25,
+    "band": [
+      125.68363555087063,
+      170.04256574529555
+    ]
+  },
+  {
+    "symbol": "ANSGR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 95.573003,
+    "target": 78.69981832450269,
+    "price": 23.200000762939453,
+    "band": [
+      66.89484557582728,
+      90.50479107317808
+    ]
+  },
+  {
+    "symbol": "AGESA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 64.40698421850011,
+    "target": 356.7093789193832,
+    "price": 221.1999969482422,
+    "band": [
+      303.2029720814757,
+      410.21578575729063
+    ]
+  },
+  {
+    "symbol": "TURSG",
+    "status": "success",
+    "last_check_time": "2025-12-11",
+    "date_str": "2020-12-31",
+    "date_sortable": 20201231,
+    "score": 60.24166666666667,
+    "target": 7.091999816894531,
+    "price": 11.819999694824219,
+    "band": [
+      6.028199844360351,
+      8.15579978942871
+    ]
+  },
+  {
+    "symbol": "PAGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 89.57499999999999,
+    "target": 228.33709027316894,
+    "price": 82.3499984741211,
+    "band": [
+      194.0865267321936,
+      262.58765381414423
+    ]
+  },
+  {
+    "symbol": "MAGEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 24.299684995104023,
+    "target": 22.871999359130857,
+    "price": 38.119998931884766,
+    "band": [
+      19.441199455261227,
+      26.302799263000484
+    ]
+  },
+  {
+    "symbol": "ISMEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.962979896805415,
+    "target": 96.42547571236832,
+    "price": 39.619998931884766,
+    "band": [
+      81.96165435551308,
+      110.88929706922356
+    ]
+  },
+  {
+    "symbol": "INFO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.87489583333333,
+    "target": 13.570065648273621,
+    "price": 3.5,
+    "band": [
+      11.534555801032578,
+      15.605575495514662
+    ]
+  },
+  {
+    "symbol": "GEDIK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.37837833583251,
+    "target": 14.000558101551505,
+    "price": 5.699999809265137,
+    "band": [
+      11.900474386318779,
+      16.10064181678423
+    ]
+  },
+  {
+    "symbol": "OSMEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 44.747016891075575,
+    "target": 6.276722455,
+    "price": 7.840000152587891,
+    "band": [
+      5.33521408675,
+      7.218230823249999
+    ]
+  },
+  {
+    "symbol": "OYYAT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 57.33495195351713,
+    "target": 62.95163418918895,
+    "price": 40.5,
+    "band": [
+      53.50888906081061,
+      72.39437931756729
+    ]
+  },
+  {
+    "symbol": "A1CAP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 75.21575778235645,
+    "target": 16.111430362191697,
+    "price": 11.800000190734863,
+    "band": [
+      13.694715807862943,
+      18.52814491652045
+    ]
+  },
+  {
+    "symbol": "GLBMD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 20.750057144691763,
+    "target": 12.177821101694914,
+    "price": 13.699999809265137,
+    "band": [
+      10.351147936440677,
+      14.00449426694915
+    ]
+  },
+  {
+    "symbol": "TERA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 97.75,
+    "target": 519.7874680468589,
+    "price": 172.0,
+    "band": [
+      441.81934783983,
+      597.7555882538876
+    ]
+  },
+  {
+    "symbol": "SKYLP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 22.4125,
+    "target": 149.93999633789062,
+    "price": 249.89999389648438,
+    "band": [
+      127.44899688720702,
+      172.4309957885742
+    ]
+  },
+  {
+    "symbol": "SKYMD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 61.85106164227717,
+    "target": 17.72108377419355,
+    "price": 11.770000457763672,
+    "band": [
+      15.062921208064516,
+      20.37924634032258
+    ]
+  },
+  {
+    "symbol": "ISFIN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 57.722208333333334,
+    "target": 40.875000953674316,
+    "price": 16.350000381469727,
+    "band": [
+      34.74375081062317,
+      47.00625109672546
+    ]
+  },
+  {
+    "symbol": "GARFA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 61.65,
+    "target": 91.01279904051866,
+    "price": 27.780000686645508,
+    "band": [
+      77.36087918444086,
+      104.66471889659645
+    ]
+  },
+  {
+    "symbol": "CRDFA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 75.55,
+    "target": 38.85,
+    "price": 64.75,
+    "band": [
+      33.0225,
+      44.677499999999995
+    ]
+  },
+  {
+    "symbol": "LIDFA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.25966666666667,
+    "target": 11.399999856948853,
+    "price": 4.559999942779541,
+    "band": [
+      9.689999878406525,
+      13.109999835491179
+    ]
+  },
+  {
+    "symbol": "SEKFK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 50.99352281140915,
+    "target": 20.0,
+    "price": 8.0,
+    "band": [
+      17.0,
+      23.0
+    ]
+  },
+  {
+    "symbol": "TSGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 55.534621259505926,
+    "target": 11.015301710000001,
+    "price": 6.809999942779541,
+    "band": [
+      9.3630064535,
+      12.6675969665
+    ]
+  },
+  {
+    "symbol": "VAKFA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 57.360480442277655,
+    "target": 6.743999862670898,
+    "price": 11.239999771118164,
+    "band": [
+      5.732399883270263,
+      7.755599842071532
+    ]
+  },
+  {
+    "symbol": "BRKVY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 63.08097178961748,
+    "target": 93.20255431134956,
+    "price": 98.19999694824219,
+    "band": [
+      79.22217116464712,
+      107.18293745805198
+    ]
+  },
+  {
+    "symbol": "ATLAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 67.75,
+    "target": 18.04346675,
+    "price": 5.869999885559082,
+    "band": [
+      15.3369467375,
+      20.749986762499997
+    ]
+  },
+  {
+    "symbol": "AVHOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 67.75,
+    "target": 92.44999885559082,
+    "price": 36.97999954223633,
+    "band": [
+      78.5824990272522,
+      106.31749868392943
+    ]
+  },
+  {
+    "symbol": "BEYAZ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.772419105138226,
+    "target": 36.140394863021,
+    "price": 27.079999923706055,
+    "band": [
+      30.71933563356785,
+      41.56145409247415
+    ]
+  },
+  {
+    "symbol": "GRNYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 20.34786471539743,
+    "target": 8.987999725341796,
+    "price": 14.979999542236328,
+    "band": [
+      7.639799766540526,
+      10.336199684143065
+    ]
+  },
+  {
+    "symbol": "HDFGS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 57.350834921391,
+    "target": 2.8691802371681416,
+    "price": 3.1500000953674316,
+    "band": [
+      2.43880320159292,
+      3.2995572727433626
+    ]
+  },
+  {
+    "symbol": "HUBVC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 31.863161172402858,
+    "target": 3.1238767885714283,
+    "price": 2.490000009536743,
+    "band": [
+      2.655295270285714,
+      3.592458306857142
+    ]
+  },
+  {
+    "symbol": "IDGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.49064138774333,
+    "target": 2.579707026,
+    "price": 3.640000104904175,
+    "band": [
+      2.1927509721,
+      2.9666630798999996
+    ]
+  },
+  {
+    "symbol": "KAPLM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 14.614888829498494,
+    "target": 180.0,
+    "price": 300.0,
+    "band": [
+      153.0,
+      206.99999999999997
+    ]
+  },
+  {
+    "symbol": "KSTUR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 57.6509375,
+    "target": 1761.0,
+    "price": 2935.0,
+    "band": [
+      1496.85,
+      2025.1499999999999
+    ]
+  },
+  {
+    "symbol": "LINK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 73.79528514031453,
+    "target": 472.8372787397833,
+    "price": 216.89999389648438,
+    "band": [
+      401.9116869288158,
+      543.7628705507508
+    ]
+  },
+  {
+    "symbol": "MTRYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 47.47306331541707,
+    "target": 10.249935494898205,
+    "price": 8.630000114440918,
+    "band": [
+      8.712445170663473,
+      11.787425819132935
+    ]
+  },
+  {
+    "symbol": "ORMA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 42.827065391590324,
+    "target": 649.4241012613646,
+    "price": 168.89999389648438,
+    "band": [
+      552.0104860721599,
+      746.8377164505692
+    ]
+  },
+  {
+    "symbol": "OYAYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 34.72452866833446,
+    "target": 32.67000045776367,
+    "price": 54.45000076293945,
+    "band": [
+      27.769500389099118,
+      37.57050052642822
+    ]
+  },
+  {
+    "symbol": "POLTK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2021-09-30",
+    "date_sortable": 20210930,
+    "score": 35.82255756283014,
+    "target": 5583.0,
+    "price": 9305.0,
+    "band": [
+      4745.55,
+      6420.45
+    ]
+  },
+  {
+    "symbol": "PRDGS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 67.5,
+    "target": 15.58953074033704,
+    "price": 6.079999923706055,
+    "band": [
+      13.251101129286484,
+      17.927960351387593
+    ]
+  },
+  {
+    "symbol": "RYSAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.053544155079145,
+    "target": 21.738360073,
+    "price": 14.550000190734863,
+    "band": [
+      18.47760606205,
+      24.999114083949998
+    ]
+  },
+  {
+    "symbol": "SAMAT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 21.262851070468276,
+    "target": 2.4360032779168654,
+    "price": 5.929999828338623,
+    "band": [
+      2.0706027862293355,
+      2.801403769604395
+    ]
+  },
+  {
+    "symbol": "SANKO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 39.91183721872207,
+    "target": 18.04994384372958,
+    "price": 20.34000015258789,
+    "band": [
+      15.342452267170142,
+      20.757435420289013
+    ]
+  },
+  {
+    "symbol": "SEKUR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 21.419738337189774,
+    "target": 2.3134122151119634,
+    "price": 3.549999952316284,
+    "band": [
+      1.9664003828451688,
+      2.6604240473787577
+    ]
+  },
+  {
+    "symbol": "SEYKM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 64.55276735210006,
+    "target": 8.335590885,
+    "price": 5.03000020980835,
+    "band": [
+      7.08525225225,
+      9.58592951775
+    ]
+  },
+  {
+    "symbol": "SILVR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 38.41733810201469,
+    "target": 4.3115572,
+    "price": 2.940000057220459,
+    "band": [
+      3.66482362,
+      4.95829078
+    ]
+  },
+  {
+    "symbol": "SKTAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 52.764073489260014,
+    "target": 5.953407232,
+    "price": 3.7899999618530273,
+    "band": [
+      5.0603961472,
+      6.8464183167999995
+    ]
+  },
+  {
+    "symbol": "SNPAM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 47.1490208744755,
+    "target": 14.604000091552734,
+    "price": 24.34000015258789,
+    "band": [
+      12.413400077819825,
+      16.794600105285642
+    ]
+  },
+  {
+    "symbol": "SODSN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 38.465881950181895,
+    "target": 90.21697151279844,
+    "price": 99.05000305175781,
+    "band": [
+      76.68442578587867,
+      103.7495172397182
+    ]
+  },
+  {
+    "symbol": "SONME",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.533333333333346,
+    "target": 104.28000183105469,
+    "price": 173.8000030517578,
+    "band": [
+      88.63800155639649,
+      119.92200210571288
+    ]
+  },
+  {
+    "symbol": "SRVGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 84.26208544517851,
+    "target": 7.460120385368179,
+    "price": 3.1700000762939453,
+    "band": [
+      6.341102327562952,
+      8.579138443173406
+    ]
+  },
+  {
+    "symbol": "SUMAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 27.147805657216814,
+    "target": 168.45,
+    "price": 280.75,
+    "band": [
+      143.18249999999998,
+      193.71749999999997
+    ]
+  },
+  {
+    "symbol": "TBORG",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 72.79837346654712,
+    "target": 602.6939745708354,
+    "price": 169.0,
+    "band": [
+      512.28987838521,
+      693.0980707564606
+    ]
+  },
+  {
+    "symbol": "TDGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 57.591666666666654,
+    "target": 22.787999725341795,
+    "price": 37.97999954223633,
+    "band": [
+      19.369799766540524,
+      26.206199684143062
+    ]
+  },
+  {
+    "symbol": "TEKTU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 47.32777651083408,
+    "target": 22.999999523162842,
+    "price": 9.199999809265137,
+    "band": [
+      19.549999594688416,
+      26.449999451637265
+    ]
+  },
+  {
+    "symbol": "TGSAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.26660788738684,
+    "target": 111.04281312686913,
+    "price": 170.0,
+    "band": [
+      94.38639115783876,
+      127.6992350958995
+    ]
+  },
+  {
+    "symbol": "TMPOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 35.686357450088884,
+    "target": 174.75,
+    "price": 291.25,
+    "band": [
+      148.5375,
+      200.96249999999998
+    ]
+  },
+  {
+    "symbol": "TRCAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 58.36581876245616,
+    "target": 65.26004247870944,
+    "price": 41.880001068115234,
+    "band": [
+      55.47103610690302,
+      75.04904885051585
+    ]
+  },
+  {
+    "symbol": "TSPOR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-11-30",
+    "date_sortable": 20241130,
+    "score": 28.099522656813424,
+    "target": 0.7069748326666667,
+    "price": 1.0700000524520874,
+    "band": [
+      0.6009286077666667,
+      0.8130210575666666
+    ]
+  },
+  {
+    "symbol": "TUCLK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.572500000000005,
+    "target": 10.380473667225584,
+    "price": 4.800000190734863,
+    "band": [
+      8.823402617141745,
+      11.93754471730942
+    ]
+  },
+  {
+    "symbol": "UFUK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 41.86666666666667,
+    "target": 1060.8,
+    "price": 1768.0,
+    "band": [
+      901.68,
+      1219.9199999999998
+    ]
+  },
+  {
+    "symbol": "UNLU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 40.41257134648573,
+    "target": 15.37025809718903,
+    "price": 16.489999771118164,
+    "band": [
+      13.064719382610676,
+      17.675796811767384
+    ]
+  },
+  {
+    "symbol": "USAK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 43.468391620792126,
+    "target": 6.829746736509776,
+    "price": 3.049999952316284,
+    "band": [
+      5.805284726033309,
+      7.854208746986242
+    ]
+  },
+  {
+    "symbol": "VAKKO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 46.05668143927429,
+    "target": 93.59889626601043,
+    "price": 57.099998474121094,
+    "band": [
+      79.55906182610886,
+      107.63873070591198
+    ]
+  },
+  {
+    "symbol": "VERUS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.48603589439,
+    "target": 283.33654453447923,
+    "price": 363.5,
+    "band": [
+      240.83606285430733,
+      325.8370262146511
+    ]
+  },
+  {
+    "symbol": "VKFYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 31.891666666666666,
+    "target": 22.8,
+    "price": 38.0,
+    "band": [
+      19.38,
+      26.22
+    ]
+  },
+  {
+    "symbol": "VKING",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 24.636028021392733,
+    "target": 41.2904865,
+    "price": 33.099998474121094,
+    "band": [
+      35.096913525,
+      47.484059474999995
+    ]
+  },
+  {
+    "symbol": "YAPRK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 31.407205187501205,
+    "target": 160.79999999999998,
+    "price": 268.0,
+    "band": [
+      136.67999999999998,
+      184.91999999999996
+    ]
+  },
+  {
+    "symbol": "YATAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.23253649610055,
+    "target": 69.9858980043001,
+    "price": 39.84000015258789,
+    "band": [
+      59.48801330365508,
+      80.4837827049451
+    ]
+  },
+  {
+    "symbol": "YESIL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 60.64907712135873,
+    "target": 3.427127107634324,
+    "price": 1.9600000381469727,
+    "band": [
+      2.9130580414891756,
+      3.9411961737794723
+    ]
+  },
+  {
+    "symbol": "YGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 71.16666666666666,
+    "target": 3.1999999284744263,
+    "price": 1.2799999713897705,
+    "band": [
+      2.7199999392032623,
+      3.6799999177455898
+    ]
+  },
+  {
+    "symbol": "YKSLN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 17.81333002119459,
+    "target": 1.5689665858321207,
+    "price": 3.1500000953674316,
+    "band": [
+      1.3336215979573025,
+      1.8043115737069386
+    ]
+  },
+  {
+    "symbol": "YUNSA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.095000000000006,
+    "target": 15.72196645265186,
+    "price": 7.570000171661377,
+    "band": [
+      13.36367148475408,
+      18.080261420549636
+    ]
+  },
+  {
+    "symbol": "YYAPI",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-06-30",
+    "date_sortable": 20240630,
+    "score": 58.812166958333336,
+    "target": null,
+    "price": 1.850000023841858,
+    "band": null
+  },
+  {
+    "symbol": "KCHOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 26.58626479292645,
+    "target": 217.03614555660914,
+    "price": 168.8000030517578,
+    "band": [
+      184.48072372311776,
+      249.5915673901005
+    ]
+  },
+  {
+    "symbol": "SAHOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.029061137058804,
+    "target": 164.89383587748003,
+    "price": 84.25,
+    "band": [
+      140.15976049585802,
+      189.627911259102
+    ]
+  },
+  {
+    "symbol": "SISE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 42.520018135749,
+    "target": 48.28172615989328,
+    "price": 38.380001068115234,
+    "band": [
+      41.039467235909285,
+      55.52398508387727
+    ]
+  },
+  {
+    "symbol": "AGHOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 45.18640137412598,
+    "target": 31.741039884458214,
+    "price": 28.700000762939453,
+    "band": [
+      26.97988390178948,
+      36.50219586712694
+    ]
+  },
+  {
+    "symbol": "TKFEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 36.03640582664433,
+    "target": 91.05291302132457,
+    "price": 70.4000015258789,
+    "band": [
+      77.39497606812589,
+      104.71084997452324
+    ]
+  },
+  {
+    "symbol": "DOHOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 57.483787423842585,
+    "target": 14.417481479742902,
+    "price": 16.950000762939453,
+    "band": [
+      12.254859257781467,
+      16.580103701704335
+    ]
+  },
+  {
+    "symbol": "GSDHO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 47.05994386827159,
+    "target": 6.655016679246565,
+    "price": 4.570000171661377,
+    "band": [
+      5.656764177359579,
+      7.653269181133549
+    ]
+  },
+  {
+    "symbol": "ALARK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 61.557949644905975,
+    "target": 127.0946024449859,
+    "price": 102.0,
+    "band": [
+      108.03041207823802,
+      146.15879281173378
+    ]
+  },
+  {
+    "symbol": "ENKAI",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.628285376836,
+    "target": 47.30999908447266,
+    "price": 78.8499984741211,
+    "band": [
+      40.21349922180176,
+      54.406498947143554
+    ]
+  },
+  {
+    "symbol": "BERA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 31.965716391047266,
+    "target": 15.958448609356186,
+    "price": 17.5,
+    "band": [
+      13.564681317952758,
+      18.352215900759614
+    ]
+  },
+  {
+    "symbol": "GUBRF",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.355609712459426,
+    "target": 350.2171339806364,
+    "price": 348.0,
+    "band": [
+      297.68456388354093,
+      402.7497040777318
+    ]
+  },
+  {
+    "symbol": "GLYHO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.57494214059478,
+    "target": 45.8456853772136,
+    "price": 11.949999809265137,
+    "band": [
+      38.968832570631555,
+      52.722538183795635
+    ]
+  },
+  {
+    "symbol": "IHLAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.02727655185316,
+    "target": 3.803192623439198,
+    "price": 2.259999990463257,
+    "band": [
+      3.232713729923318,
+      4.373671516955078
+    ]
+  },
+  {
+    "symbol": "NTHOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 69.54389583333332,
+    "target": 178.36356298239605,
+    "price": 48.459999084472656,
+    "band": [
+      151.60902853503663,
+      205.11809742975544
+    ]
+  },
+  {
+    "symbol": "AKMGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 77.69282946634254,
+    "target": 348.9058712994598,
+    "price": 197.89999389648438,
+    "band": [
+      296.56999060454086,
+      401.2417519943788
+    ]
+  },
+  {
+    "symbol": "AKSGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 74.27753984222024,
+    "target": 18.825000524520874,
+    "price": 7.53000020980835,
+    "band": [
+      16.001250445842743,
+      21.648750603199005
+    ]
+  },
+  {
+    "symbol": "ALGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 67.40531365064103,
+    "target": 68.79761774557431,
+    "price": 29.739999771118164,
+    "band": [
+      58.477975083738166,
+      79.11726040741046
+    ]
+  },
+  {
+    "symbol": "ALKIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 22.675393926392058,
+    "target": 11.039999771118163,
+    "price": 18.399999618530273,
+    "band": [
+      9.383999805450438,
+      12.695999736785886
+    ]
+  },
+  {
+    "symbol": "ANELE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 34.15228179892091,
+    "target": 14.732813119367536,
+    "price": 16.690000534057617,
+    "band": [
+      12.522891151462405,
+      16.942735087272666
+    ]
+  },
+  {
+    "symbol": "ARCLK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 28.668914251245518,
+    "target": 370.94861179620784,
+    "price": 101.0,
+    "band": [
+      315.30632002677663,
+      426.590903565639
+    ]
+  },
+  {
+    "symbol": "ARENA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 34.13316666666667,
+    "target": 70.74999809265137,
+    "price": 28.299999237060547,
+    "band": [
+      60.13749837875366,
+      81.36249780654907
+    ]
+  },
+  {
+    "symbol": "ARSAN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 32.98257791364922,
+    "target": 1.577816319523269,
+    "price": 3.799999952316284,
+    "band": [
+      1.3411438715947788,
+      1.8144887674517594
+    ]
+  },
+  {
+    "symbol": "ASELS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 37.05936679353572,
+    "target": 139.0199981689453,
+    "price": 231.6999969482422,
+    "band": [
+      118.1669984436035,
+      159.8729978942871
+    ]
+  },
+  {
+    "symbol": "ASUZU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 45.511732899930905,
+    "target": 142.62499809265137,
+    "price": 57.04999923706055,
+    "band": [
+      121.23124837875366,
+      164.01874780654907
+    ]
+  },
+  {
+    "symbol": "ATAGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 73.76569429993144,
+    "target": 21.081568317682986,
+    "price": 15.479999542236328,
+    "band": [
+      17.91933307003054,
+      24.243803565335433
+    ]
+  },
+  {
+    "symbol": "ATEKS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 32.94381606597653,
+    "target": 103.68000183105468,
+    "price": 172.8000030517578,
+    "band": [
+      88.12800155639648,
+      119.23200210571288
+    ]
+  },
+  {
+    "symbol": "AVGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 77.83333333333333,
+    "target": 22.438083847670253,
+    "price": 9.489999771118164,
+    "band": [
+      19.072371270519714,
+      25.80379642482079
+    ]
+  },
+  {
+    "symbol": "AVOD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 39.136504152219565,
+    "target": 5.368069603703704,
+    "price": 3.6700000762939453,
+    "band": [
+      4.562859163148149,
+      6.1732800442592595
+    ]
+  },
+  {
+    "symbol": "AVTUR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 52.32962429081635,
+    "target": 10.832771105835755,
+    "price": 15.300000190734863,
+    "band": [
+      9.207855439960392,
+      12.457686771711117
+    ]
+  },
+  {
+    "symbol": "AYCES",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 25.56945827783102,
+    "target": 247.2,
+    "price": 412.0,
+    "band": [
+      210.11999999999998,
+      284.28
+    ]
+  },
+  {
+    "symbol": "AYEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 67.48376401384763,
+    "target": 43.51571725866465,
+    "price": 24.81999969482422,
+    "band": [
+      36.988359669864955,
+      50.04307484746435
+    ]
+  },
+  {
+    "symbol": "AYES",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 41.94747915261844,
+    "target": 42.270831551621896,
+    "price": 17.549999237060547,
+    "band": [
+      35.93020681887861,
+      48.611456284365175
+    ]
+  },
+  {
+    "symbol": "AYGAZ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 48.28633547243294,
+    "target": 367.38448266422427,
+    "price": 198.89999389648438,
+    "band": [
+      312.2768102645906,
+      422.49215506385787
+    ]
+  },
+  {
+    "symbol": "BAGFS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 49.344064520159264,
+    "target": 30.110624488885826,
+    "price": 25.639999389648438,
+    "band": [
+      25.59403081555295,
+      34.627218162218696
+    ]
+  },
+  {
+    "symbol": "BAKAB",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 26.982183973265258,
+    "target": 32.363419111111114,
+    "price": 37.29999923706055,
+    "band": [
+      27.508906244444447,
+      37.21793197777778
+    ]
+  },
+  {
+    "symbol": "BANVT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 38.81455108770174,
+    "target": 583.7457855643756,
+    "price": 162.0,
+    "band": [
+      496.18391772971927,
+      671.3076533990319
+    ]
+  },
+  {
+    "symbol": "BASCM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 38.31355011096433,
+    "target": 15.288642072436671,
+    "price": 13.670000076293945,
+    "band": [
+      12.995345761571171,
+      17.58193838330217
+    ]
+  },
+  {
+    "symbol": "BIMAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 43.77820566848105,
+    "target": 946.2159133988534,
+    "price": 536.5,
+    "band": [
+      804.2835263890254,
+      1088.1483004086813
+    ]
+  },
+  {
+    "symbol": "BIZIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 45.593873589115184,
+    "target": 64.74999904632568,
+    "price": 25.899999618530273,
+    "band": [
+      55.03749918937683,
+      74.46249890327454
+    ]
+  },
+  {
+    "symbol": "BJKAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-11-30",
+    "date_sortable": 20241130,
+    "score": 41.42083953244524,
+    "target": 1.739374968902143,
+    "price": 1.6299999952316284,
+    "band": [
+      1.4784687235668215,
+      2.0002812142374644
+    ]
+  },
+  {
+    "symbol": "BLCYT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 73.89340377345269,
+    "target": 51.52765520170592,
+    "price": 32.15999984741211,
+    "band": [
+      43.79850692145003,
+      59.2568034819618
+    ]
+  },
+  {
+    "symbol": "BOBET",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 54.594656011682794,
+    "target": 35.57435870263158,
+    "price": 18.81999969482422,
+    "band": [
+      30.23820489723684,
+      40.910512508026315
+    ]
+  },
+  {
+    "symbol": "BOSSA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 48.38084968379802,
+    "target": 8.757278741283447,
+    "price": 6.289999961853027,
+    "band": [
+      7.443686930090929,
+      10.070870552475963
+    ]
+  },
+  {
+    "symbol": "BRISA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 56.346622542493805,
+    "target": 264.5447514759713,
+    "price": 85.94999694824219,
+    "band": [
+      224.86303875457557,
+      304.22646419736697
+    ]
+  },
+  {
+    "symbol": "BRKO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-09-30",
+    "date_sortable": 20240930,
+    "score": 39.94545801492824,
+    "target": 9.105531092857143,
+    "price": 9.399999618530273,
+    "band": [
+      7.739701428928572,
+      10.471360756785714
+    ]
+  },
+  {
+    "symbol": "BRKSN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 40.54371027074435,
+    "target": 6.648002126068376,
+    "price": 7.300000190734863,
+    "band": [
+      5.650801807158119,
+      7.645202444978632
+    ]
+  },
+  {
+    "symbol": "BRMEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 26.833333333333332,
+    "target": null,
+    "price": 8.529999732971191,
+    "band": null
+  },
+  {
+    "symbol": "BRSAN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 32.64949534221679,
+    "target": 333.0,
+    "price": 555.0,
+    "band": [
+      283.05,
+      382.95
+    ]
+  },
+  {
+    "symbol": "BRYAT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.53333333333333,
+    "target": 1320.0,
+    "price": 2200.0,
+    "band": [
+      1122.0,
+      1517.9999999999998
+    ]
+  },
+  {
+    "symbol": "BSOKE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 26.001656407649165,
+    "target": 9.779999542236327,
+    "price": 16.299999237060547,
+    "band": [
+      8.312999610900878,
+      11.246999473571774
+    ]
+  },
+  {
+    "symbol": "BTCIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.79614468112535,
+    "target": 2.2859999656677243,
+    "price": 3.809999942779541,
+    "band": [
+      1.9430999708175656,
+      2.6288999605178827
+    ]
+  },
+  {
+    "symbol": "BUCIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.26120946766089,
+    "target": 11.108575593414228,
+    "price": 8.0,
+    "band": [
+      9.442289254402093,
+      12.774861932426361
+    ]
+  },
+  {
+    "symbol": "CCOLA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 63.361650226726844,
+    "target": 146.76705457837335,
+    "price": 58.79999923706055,
+    "band": [
+      124.75199639161734,
+      168.78211276512934
+    ]
+  },
+  {
+    "symbol": "CELHA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 25.818697761013087,
+    "target": 10.55285104,
+    "price": 10.609999656677246,
+    "band": [
+      8.969923384,
+      12.135778696
+    ]
+  },
+  {
+    "symbol": "CEMAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 42.5,
+    "target": 10.099999904632568,
+    "price": 4.039999961853027,
+    "band": [
+      8.584999918937683,
+      11.614999890327452
+    ]
+  },
+  {
+    "symbol": "CEMTS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 37.7132573460021,
+    "target": 6.086069642582382,
+    "price": 11.25,
+    "band": [
+      5.173159196195025,
+      6.998980088969739
+    ]
+  },
+  {
+    "symbol": "CEOEM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 50.19602009714119,
+    "target": 14.243999862670899,
+    "price": 23.739999771118164,
+    "band": [
+      12.107399883270263,
+      16.380599842071533
+    ]
+  },
+  {
+    "symbol": "CIMSA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 44.12928558489593,
+    "target": 62.84771829706912,
+    "price": 46.5,
+    "band": [
+      53.42056055250875,
+      72.27487604162948
+    ]
+  },
+  {
+    "symbol": "CLEBI",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 72.17369300553479,
+    "target": 2259.26510401018,
+    "price": 1523.0,
+    "band": [
+      1920.375338408653,
+      2598.154869611707
+    ]
+  },
+  {
+    "symbol": "CMBTN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 34.71384044401609,
+    "target": 795.2858824858757,
+    "price": 1945.0,
+    "band": [
+      675.9930001129943,
+      914.578764858757
+    ]
+  },
+  {
+    "symbol": "CMENT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 46.793409032570125,
+    "target": 227.0328887462822,
+    "price": 344.0,
+    "band": [
+      192.97795543433986,
+      261.0878220582245
+    ]
+  },
+  {
+    "symbol": "CONSE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 57.42443090550941,
+    "target": 7.355655281249836,
+    "price": 2.9200000762939453,
+    "band": [
+      6.252306989062361,
+      8.459003573437311
+    ]
+  },
+  {
+    "symbol": "COSMO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-09-30",
+    "date_sortable": 20240930,
+    "score": 50.38254007353569,
+    "target": 172.65,
+    "price": 287.75,
+    "band": [
+      146.7525,
+      198.54749999999999
+    ]
+  },
+  {
+    "symbol": "CRFSA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 42.05751161702547,
+    "target": 288.75,
+    "price": 115.5,
+    "band": [
+      245.4375,
+      332.0625
+    ]
+  },
+  {
+    "symbol": "CUSAN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 22.67460230128233,
+    "target": 14.740426711578948,
+    "price": 21.100000381469727,
+    "band": [
+      12.529362704842105,
+      16.95149071831579
+    ]
+  },
+  {
+    "symbol": "DAPGM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 64.50405653369239,
+    "target": 8.386397530846994,
+    "price": 11.859999656677246,
+    "band": [
+      7.128437901219944,
+      9.644357160474042
+    ]
+  },
+  {
+    "symbol": "DARDL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 41.71792710066054,
+    "target": 5.450000166893005,
+    "price": 2.180000066757202,
+    "band": [
+      4.632500141859055,
+      6.267500191926955
+    ]
+  },
+  {
+    "symbol": "DENGE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 33.38277580230086,
+    "target": 2.6851920584437203,
+    "price": 3.0399999618530273,
+    "band": [
+      2.282413249677162,
+      3.087970867210278
+    ]
+  },
+  {
+    "symbol": "DERIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 50.984499105771846,
+    "target": 83.20191155343221,
+    "price": 36.779998779296875,
+    "band": [
+      70.72162482041738,
+      95.68219828644703
+    ]
+  },
+  {
+    "symbol": "DESA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 67.97539071967208,
+    "target": 19.910349776697576,
+    "price": 11.210000038146973,
+    "band": [
+      16.92379731019294,
+      22.89690224320221
+    ]
+  },
+  {
+    "symbol": "DESPC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 54.799110196713855,
+    "target": 115.39999961853027,
+    "price": 46.15999984741211,
+    "band": [
+      98.08999967575073,
+      132.70999956130981
+    ]
+  },
+  {
+    "symbol": "DEVA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 57.250385012513,
+    "target": 124.27922660010391,
+    "price": 62.70000076293945,
+    "band": [
+      105.63734261008833,
+      142.9211105901195
+    ]
+  },
+  {
+    "symbol": "DGATE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 45.09475400693679,
+    "target": 147.88566742935114,
+    "price": 70.69999694824219,
+    "band": [
+      125.70281731494848,
+      170.0685175437538
+    ]
+  },
+  {
+    "symbol": "DITAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 39.53780866004952,
+    "target": 36.9,
+    "price": 61.5,
+    "band": [
+      31.365,
+      42.434999999999995
+    ]
+  },
+  {
+    "symbol": "DMSAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 27.99467731506485,
+    "target": 6.761247145,
+    "price": 10.069999694824219,
+    "band": [
+      5.747060073249999,
+      7.775434216749999
+    ]
+  },
+  {
+    "symbol": "DOAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 53.506697749771014,
+    "target": 685.0730104457411,
+    "price": 188.10000610351562,
+    "band": [
+      582.31205887888,
+      787.8339620126022
+    ]
+  },
+  {
+    "symbol": "DOCO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 44.23455115647402,
+    "target": 6201.0,
+    "price": 10335.0,
+    "band": [
+      5270.849999999999,
+      7131.15
+    ]
+  },
+  {
+    "symbol": "DOKTA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 15.472324614573818,
+    "target": 20.191075203703704,
+    "price": 24.020000457763672,
+    "band": [
+      17.162413923148147,
+      23.219736484259258
+    ]
+  },
+  {
+    "symbol": "DURDO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 40.240768917282935,
+    "target": 2.941602296,
+    "price": 3.640000104904175,
+    "band": [
+      2.5003619516,
+      3.3828426404
+    ]
+  },
+  {
+    "symbol": "DYOBY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 18.837386366986355,
+    "target": 12.27202929,
+    "price": 12.9399995803833,
+    "band": [
+      10.4312248965,
+      14.1128336835
+    ]
+  },
+  {
+    "symbol": "DZGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 90.33333333333334,
+    "target": 21.008795401052232,
+    "price": 7.489999771118164,
+    "band": [
+      17.857476090894398,
+      24.160114711210067
+    ]
+  },
+  {
+    "symbol": "ECILC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 63.12879185615533,
+    "target": 103.12793500024293,
+    "price": 81.80000305175781,
+    "band": [
+      87.65874475020648,
+      118.59712525027936
+    ]
+  },
+  {
+    "symbol": "ECZYT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 50.54493288514491,
+    "target": 160.519089280827,
+    "price": 287.0,
+    "band": [
+      136.44122588870295,
+      184.59695267295103
+    ]
+  },
+  {
+    "symbol": "EDIP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 66.00945386142693,
+    "target": 86.00000381469727,
+    "price": 34.400001525878906,
+    "band": [
+      73.10000324249268,
+      98.90000438690184
+    ]
+  },
+  {
+    "symbol": "EGEEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 44.505971504683465,
+    "target": 6514.504361886038,
+    "price": 8097.5,
+    "band": [
+      5537.328707603132,
+      7491.680016168943
+    ]
+  },
+  {
+    "symbol": "EGGUB",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 64.05622573849242,
+    "target": 131.2104338630029,
+    "price": 92.80000305175781,
+    "band": [
+      111.52886878355245,
+      150.8919989424533
+    ]
+  },
+  {
+    "symbol": "EGPRO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.50321190119517,
+    "target": 35.213135381384966,
+    "price": 24.219999313354492,
+    "band": [
+      29.93116507417722,
+      40.49510568859271
+    ]
+  },
+  {
+    "symbol": "EGSER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.39382885293337,
+    "target": 7.475000023841858,
+    "price": 2.990000009536743,
+    "band": [
+      6.353750020265579,
+      8.596250027418137
+    ]
+  },
+  {
+    "symbol": "EKGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 89.25381282699509,
+    "target": 51.10000133514404,
+    "price": 20.440000534057617,
+    "band": [
+      43.43500113487244,
+      58.76500153541564
+    ]
+  },
+  {
+    "symbol": "EMKEL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 30.308234913182,
+    "target": 20.7,
+    "price": 34.5,
+    "band": [
+      17.595,
+      23.804999999999996
+    ]
+  },
+  {
+    "symbol": "EMNIS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2021-12-31",
+    "date_sortable": 20211231,
+    "score": 37.695311483994885,
+    "target": 94.8,
+    "price": 158.0,
+    "band": [
+      80.58,
+      109.01999999999998
+    ]
+  },
+  {
+    "symbol": "ENJSA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 60.56055362421509,
+    "target": 225.87499618530273,
+    "price": 90.3499984741211,
+    "band": [
+      191.99374675750732,
+      259.75624561309814
+    ]
+  },
+  {
+    "symbol": "ERBOS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 53.51406666862108,
+    "target": 450.0,
+    "price": 180.0,
+    "band": [
+      382.5,
+      517.5
+    ]
+  },
+  {
+    "symbol": "EREGL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 42.49672908873176,
+    "target": 25.033676734099114,
+    "price": 23.81999969482422,
+    "band": [
+      21.278625223984246,
+      28.788728244213978
+    ]
+  },
+  {
+    "symbol": "ERSU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 25.337755841514948,
+    "target": 13.755388533333333,
+    "price": 18.420000076293945,
+    "band": [
+      11.692080253333332,
+      15.818696813333332
+    ]
+  },
+  {
+    "symbol": "ESCOM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 59.63600000000001,
+    "target": 9.25000011920929,
+    "price": 3.700000047683716,
+    "band": [
+      7.862500101327896,
+      10.637500137090683
+    ]
+  },
+  {
+    "symbol": "ESEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 36.03333333333334,
+    "target": 2.6640000343322754,
+    "price": 4.440000057220459,
+    "band": [
+      2.264400029182434,
+      3.0636000394821163
+    ]
+  },
+  {
+    "symbol": "ETILR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 28.845942897353215,
+    "target": 3.8117554180014794,
+    "price": 3.740000009536743,
+    "band": [
+      3.2399921053012575,
+      4.383518730701701
+    ]
+  },
+  {
+    "symbol": "EUPWR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.8401678897371,
+    "target": 29.585388259458014,
+    "price": 32.79999923706055,
+    "band": [
+      25.147580020539312,
+      34.02319649837671
+    ]
+  },
+  {
+    "symbol": "FENER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-11-30",
+    "date_sortable": 20241130,
+    "score": 32.34511456906141,
+    "target": 7.610161688,
+    "price": 9.220000267028809,
+    "band": [
+      6.4686374348,
+      8.7516859412
+    ]
+  },
+  {
+    "symbol": "FLAP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 31.531696264900997,
+    "target": 4.648866508159818,
+    "price": 8.930000305175781,
+    "band": [
+      3.9515365319358455,
+      5.346196484383791
+    ]
+  },
+  {
+    "symbol": "FMIZP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 55.27686385332642,
+    "target": 190.79999999999998,
+    "price": 318.0,
+    "band": [
+      162.17999999999998,
+      219.41999999999996
+    ]
+  },
+  {
+    "symbol": "FONET",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 60.94380968357816,
+    "target": 6.974999904632568,
+    "price": 2.7899999618530273,
+    "band": [
+      5.928749918937683,
+      8.021249890327454
+    ]
+  },
+  {
+    "symbol": "FORMT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 50.83333333333333,
+    "target": 7.9750001430511475,
+    "price": 3.190000057220459,
+    "band": [
+      6.778750121593475,
+      9.17125016450882
+    ]
+  },
+  {
+    "symbol": "FRIGO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.69163296106973,
+    "target": 22.087280091016872,
+    "price": 14.180000305175781,
+    "band": [
+      18.77418807736434,
+      25.4003721046694
+    ]
+  },
+  {
+    "symbol": "FROTO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 50.011969666926525,
+    "target": 190.30774619215578,
+    "price": 92.6500015258789,
+    "band": [
+      161.7615842633324,
+      218.85390812097913
+    ]
+  },
+  {
+    "symbol": "GEDZA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 40.32426174203095,
+    "target": 14.009184340357725,
+    "price": 28.059999465942383,
+    "band": [
+      11.907806689304067,
+      16.110561991411384
+    ]
+  },
+  {
+    "symbol": "GENTS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 40.794801435137956,
+    "target": 5.712000274658203,
+    "price": 9.520000457763672,
+    "band": [
+      4.855200233459472,
+      6.568800315856932
+    ]
+  },
+  {
+    "symbol": "GEREL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 44.659006089057506,
+    "target": 11.358000183105469,
+    "price": 18.93000030517578,
+    "band": [
+      9.654300155639648,
+      13.061700210571288
+    ]
+  },
+  {
+    "symbol": "GLRYH",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 68.90267163817488,
+    "target": 9.350000023841858,
+    "price": 3.740000009536743,
+    "band": [
+      7.947500020265579,
+      10.752500027418137
+    ]
+  },
+  {
+    "symbol": "GOLTS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 40.40501022642468,
+    "target": 317.9114211908904,
+    "price": 313.5,
+    "band": [
+      270.2247080122568,
+      365.5981343695239
+    ]
+  },
+  {
+    "symbol": "GOODY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 38.08997718819409,
+    "target": 31.406216748148147,
+    "price": 14.699999809265137,
+    "band": [
+      26.695284235925925,
+      36.11714926037037
+    ]
+  },
+  {
+    "symbol": "GOZDE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 34.16666666666667,
+    "target": 81.08200134545454,
+    "price": 21.719999313354492,
+    "band": [
+      68.91970114363636,
+      93.24430154727271
+    ]
+  },
+  {
+    "symbol": "GSDDE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 36.90554857349078,
+    "target": 4.174806666666667,
+    "price": 10.270000457763672,
+    "band": [
+      3.548585666666667,
+      4.801027666666666
+    ]
+  },
+  {
+    "symbol": "GSRAY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-08-31",
+    "date_sortable": 20250831,
+    "score": 55.644338049586324,
+    "target": 0.9729692563703704,
+    "price": 1.159999966621399,
+    "band": [
+      0.8270238679148147,
+      1.1189146448259257
+    ]
+  },
+  {
+    "symbol": "GWIND",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 75.43166666666667,
+    "target": 47.66215700701111,
+    "price": 22.34000015258789,
+    "band": [
+      40.512833455959445,
+      54.811480558062776
+    ]
+  },
+  {
+    "symbol": "HATEK",
+    "status": "success",
+    "last_check_time": "2025-12-09",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 24.321770115412917,
+    "target": 13.224081158730158,
+    "price": 18.700000762939453,
+    "band": [
+      11.240468984920634,
+      15.20769333253968
+    ]
+  },
+  {
+    "symbol": "HEKTS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 53.27970833333333,
+    "target": 7.6499998569488525,
+    "price": 3.059999942779541,
+    "band": [
+      6.502499878406525,
+      8.79749983549118
+    ]
+  },
+  {
+    "symbol": "HLGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 78.53968187030705,
+    "target": 9.375,
+    "price": 3.75,
+    "band": [
+      7.96875,
+      10.78125
+    ]
+  },
+  {
+    "symbol": "HURGZ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 45.45,
+    "target": 13.47499966621399,
+    "price": 5.389999866485596,
+    "band": [
+      11.45374971628189,
+      15.496249616146086
+    ]
+  },
+  {
+    "symbol": "IEYHO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 15.82119334452711,
+    "target": 39.93000183105469,
+    "price": 66.55000305175781,
+    "band": [
+      33.940501556396484,
+      45.91950210571289
+    ]
+  },
+  {
+    "symbol": "IHAAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 37.301944079539155,
+    "target": 24.659999084472656,
+    "price": 41.099998474121094,
+    "band": [
+      20.960999221801757,
+      28.35899894714355
+    ]
+  },
+  {
+    "symbol": "IHEVA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 43.60393700085655,
+    "target": 2.8051037399135312,
+    "price": 2.2200000286102295,
+    "band": [
+      2.3843381789265017,
+      3.225869300900561
+    ]
+  },
+  {
+    "symbol": "IHGZT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.49185515361926,
+    "target": 4.404544057669339,
+    "price": 1.559999942779541,
+    "band": [
+      3.743862449018938,
+      5.06522566631974
+    ]
+  },
+  {
+    "symbol": "IHLGM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 47.85416289521093,
+    "target": 1.5012293894,
+    "price": 2.049999952316284,
+    "band": [
+      1.2760449809899999,
+      1.7264137978099998
+    ]
+  },
+  {
+    "symbol": "IHYAY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 25.736416648325374,
+    "target": 1.2806045155555557,
+    "price": 1.9600000381469727,
+    "band": [
+      1.0885138382222224,
+      1.472695192888889
+    ]
+  },
+  {
+    "symbol": "INDES",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 53.835126308007446,
+    "target": 19.65000033378601,
+    "price": 7.860000133514404,
+    "band": [
+      16.70250028371811,
+      22.597500383853912
+    ]
+  },
+  {
+    "symbol": "INTEM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 34.15380642673158,
+    "target": 222.03863501678467,
+    "price": 276.0,
+    "band": [
+      188.73283976426697,
+      255.34443026930234
+    ]
+  },
+  {
+    "symbol": "INVEO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 72.4485950134909,
+    "target": 28.68109404477363,
+    "price": 8.34000015258789,
+    "band": [
+      24.378929938057585,
+      32.98325815148967
+    ]
+  },
+  {
+    "symbol": "IPEKE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.0,
+    "target": 231.8171563045415,
+    "price": 93.05000305175781,
+    "band": [
+      197.04458285886028,
+      266.5897297502227
+    ]
+  },
+  {
+    "symbol": "ISATR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.84562470833333,
+    "target": 12375000.0,
+    "price": 4950000.0,
+    "band": [
+      10518750.0,
+      14231249.999999998
+    ]
+  },
+  {
+    "symbol": "ISBTR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.84562470833333,
+    "target": 1112650.0,
+    "price": 445060.0,
+    "band": [
+      945752.5,
+      1279547.5
+    ]
+  },
+  {
+    "symbol": "ISDMR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 75.34249426170979,
+    "target": 72.90238398846037,
+    "price": 35.2599983215332,
+    "band": [
+      61.967026390191315,
+      83.83774158672942
+    ]
+  },
+  {
+    "symbol": "ISGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 72.98644429034722,
+    "target": 62.39158637966102,
+    "price": 21.0,
+    "band": [
+      53.032848422711865,
+      71.75032433661016
+    ]
+  },
+  {
+    "symbol": "ISYAT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 38.79029685503418,
+    "target": 4.638412681839851,
+    "price": 8.699999809265137,
+    "band": [
+      3.9426507795638734,
+      5.334174584115829
+    ]
+  },
+  {
+    "symbol": "IZMDC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 34.57370087306784,
+    "target": 12.95552301963618,
+    "price": 6.760000228881836,
+    "band": [
+      11.012194566690752,
+      14.898851472581606
+    ]
+  },
+  {
+    "symbol": "JANTS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 25.13505573250116,
+    "target": 11.166000366210938,
+    "price": 18.610000610351562,
+    "band": [
+      9.491100311279297,
+      12.840900421142576
+    ]
+  },
+  {
+    "symbol": "KAREL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 16.78941570920571,
+    "target": 5.039999771118164,
+    "price": 8.399999618530273,
+    "band": [
+      4.283999805450439,
+      5.795999736785888
+    ]
+  },
+  {
+    "symbol": "KARSN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 36.54623501215329,
+    "target": 12.124026666666667,
+    "price": 9.199999809265137,
+    "band": [
+      10.305422666666667,
+      13.942630666666666
+    ]
+  },
+  {
+    "symbol": "KARTN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 31.803469838643455,
+    "target": 43.402992992,
+    "price": 77.5999984741211,
+    "band": [
+      36.8925440432,
+      49.9134419408
+    ]
+  },
+  {
+    "symbol": "KATMR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 66.65635451571166,
+    "target": 6.331869672586765,
+    "price": 2.7899999618530273,
+    "band": [
+      5.382089221698751,
+      7.28165012347478
+    ]
+  },
+  {
+    "symbol": "KERVN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2022-12-31",
+    "date_sortable": 20221231,
+    "score": 56.66666666666667,
+    "target": 4.283098893131051,
+    "price": 2.240000009536743,
+    "band": [
+      3.640634059161393,
+      4.925563727100708
+    ]
+  },
+  {
+    "symbol": "KFEIN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.53266095395531,
+    "target": 24.095719628887636,
+    "price": 8.699999809265137,
+    "band": [
+      20.48136168455449,
+      27.71007757322078
+    ]
+  },
+  {
+    "symbol": "KGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 30.575,
+    "target": 3.0060001373291017,
+    "price": 5.010000228881836,
+    "band": [
+      2.5551001167297365,
+      3.456900157928467
+    ]
+  },
+  {
+    "symbol": "KLGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 83.6153935464811,
+    "target": 13.53458564778602,
+    "price": 6.090000152587891,
+    "band": [
+      11.504397800618117,
+      15.564773494953922
+    ]
+  },
+  {
+    "symbol": "KLMSN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 32.22258471624076,
+    "target": 54.11565311868687,
+    "price": 31.479999542236328,
+    "band": [
+      45.99830515088384,
+      62.2330010864899
+    ]
+  },
+  {
+    "symbol": "KNFRT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 11.893980962644177,
+    "target": 5.218743981060606,
+    "price": 13.039999961853027,
+    "band": [
+      4.435932383901515,
+      6.001555578219697
+    ]
+  },
+  {
+    "symbol": "KOCMT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 38.961853894070316,
+    "target": 4.738891643182724,
+    "price": 2.490000009536743,
+    "band": [
+      4.028057896705315,
+      5.449725389660132
+    ]
+  },
+  {
+    "symbol": "KONYA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 32.955373303200886,
+    "target": 2721.67030716287,
+    "price": 4577.5,
+    "band": [
+      2313.4197610884394,
+      3129.9208532373
+    ]
+  },
+  {
+    "symbol": "KORDS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 18.42625088565622,
+    "target": 29.075999450683593,
+    "price": 48.459999084472656,
+    "band": [
+      24.714599533081053,
+      33.43739936828613
+    ]
+  },
+  {
+    "symbol": "KOZAA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 50.093611006256054,
+    "target": 148.71441792799274,
+    "price": 104.4000015258789,
+    "band": [
+      126.40725523879382,
+      171.02158061719163
+    ]
+  },
+  {
+    "symbol": "KOZAL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.35424383205943,
+    "target": 26.054721145440862,
+    "price": 40.97999954223633,
+    "band": [
+      22.14651297362473,
+      29.96292931725699
+    ]
+  },
+  {
+    "symbol": "KRDMA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.47882193775506,
+    "target": 59.699997901916504,
+    "price": 23.8799991607666,
+    "band": [
+      50.74499821662903,
+      68.65499758720398
+    ]
+  },
+  {
+    "symbol": "KRDMB",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.78382193775506,
+    "target": 57.150001525878906,
+    "price": 22.860000610351562,
+    "band": [
+      48.57750129699707,
+      65.72250175476074
+    ]
+  },
+  {
+    "symbol": "KRDMD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 41.807993100690254,
+    "target": 36.29183565199869,
+    "price": 25.260000228881836,
+    "band": [
+      30.848060304198885,
+      41.73561099979849
+    ]
+  },
+  {
+    "symbol": "KRGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 71.8511836574626,
+    "target": 3.5083748075432095,
+    "price": 2.8499999046325684,
+    "band": [
+      2.982118586411728,
+      4.03463102867469
+    ]
+  },
+  {
+    "symbol": "KRONT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 53.27551794174301,
+    "target": 6.791334181349121,
+    "price": 12.869999885559082,
+    "band": [
+      5.772634054146752,
+      7.810034308551488
+    ]
+  },
+  {
+    "symbol": "KRSTL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.46569115401469,
+    "target": 35.32926087747201,
+    "price": 9.369999885559082,
+    "band": [
+      30.029871745851207,
+      40.62865000909281
+    ]
+  },
+  {
+    "symbol": "KRTEK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 42.47454053081056,
+    "target": 41.331867599143465,
+    "price": 24.760000228881836,
+    "band": [
+      35.13208745927194,
+      47.53164773901498
+    ]
+  },
+  {
+    "symbol": "KUTPO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 64.32884194503973,
+    "target": 238.81677176377292,
+    "price": 104.5999984741211,
+    "band": [
+      202.99425599920698,
+      274.63928752833885
+    ]
+  },
+  {
+    "symbol": "KUYAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2022-12-31",
+    "date_sortable": 20221231,
+    "score": 47.54844771766055,
+    "target": 32.1,
+    "price": 53.5,
+    "band": [
+      27.285,
+      36.915
+    ]
+  },
+  {
+    "symbol": "LKMNH",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 40.77570799074189,
+    "target": 24.649275518409247,
+    "price": 19.190000534057617,
+    "band": [
+      20.95188419064786,
+      28.34666684617063
+    ]
+  },
+  {
+    "symbol": "LOGO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 74.89247104104297,
+    "target": 382.5036164829023,
+    "price": 150.5,
+    "band": [
+      325.12807401046695,
+      439.87915895533763
+    ]
+  },
+  {
+    "symbol": "LUKSK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 37.106632972888825,
+    "target": 61.74000091552734,
+    "price": 102.9000015258789,
+    "band": [
+      52.479000778198234,
+      71.00100105285644
+    ]
+  },
+  {
+    "symbol": "MAALT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 41.03333333333333,
+    "target": 541.1999999999999,
+    "price": 902.0,
+    "band": [
+      460.0199999999999,
+      622.3799999999999
+    ]
+  },
+  {
+    "symbol": "MAKTK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 65.5928344989494,
+    "target": 31.161862114920222,
+    "price": 15.449999809265137,
+    "band": [
+      26.487582797682187,
+      35.83614143215825
+    ]
+  },
+  {
+    "symbol": "MANAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-09-30",
+    "date_sortable": 20240930,
+    "score": 22.611041666666665,
+    "target": 9.569999885559081,
+    "price": 15.949999809265137,
+    "band": [
+      8.134499902725219,
+      11.005499868392942
+    ]
+  },
+  {
+    "symbol": "MAVI",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-10-31",
+    "date_sortable": 20251031,
+    "score": 68.73246737009507,
+    "target": 84.59107652478843,
+    "price": 43.52000045776367,
+    "band": [
+      71.90241504607016,
+      97.2797380035067
+    ]
+  },
+  {
+    "symbol": "MEDTR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 30.934276913542295,
+    "target": 15.999193420168067,
+    "price": 28.760000228881836,
+    "band": [
+      13.599314407142858,
+      18.399072433193275
+    ]
+  },
+  {
+    "symbol": "MEGAP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 61.26826553576672,
+    "target": 8.24999988079071,
+    "price": 3.299999952316284,
+    "band": [
+      7.012499898672104,
+      9.487499862909317
+    ]
+  },
+  {
+    "symbol": "MEPET",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 43.823739399879656,
+    "target": 38.17500114440918,
+    "price": 15.270000457763672,
+    "band": [
+      32.4487509727478,
+      43.90125131607056
+    ]
+  },
+  {
+    "symbol": "MERCN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.60074290579865,
+    "target": 23.627519132560913,
+    "price": 17.280000686645508,
+    "band": [
+      20.083391262676777,
+      27.17164700244505
+    ]
+  },
+  {
+    "symbol": "MERIT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 74.68076443492721,
+    "target": 27.0678553270601,
+    "price": 17.899999618530273,
+    "band": [
+      23.007677028001087,
+      31.128033626119116
+    ]
+  },
+  {
+    "symbol": "MERKO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 73.12167305273526,
+    "target": 24.66390458649335,
+    "price": 13.600000381469727,
+    "band": [
+      20.964318898519345,
+      28.36349027446735
+    ]
+  },
+  {
+    "symbol": "MGROS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 54.433350288962004,
+    "target": 1305.0,
+    "price": 522.0,
+    "band": [
+      1109.25,
+      1500.7499999999998
+    ]
+  },
+  {
+    "symbol": "MMCAS",
+    "status": "success",
+    "last_check_time": "2025-12-11",
+    "date_str": "2020-12-31",
+    "date_sortable": 20201231,
+    "score": 51.391666666666666,
+    "target": 88.2,
+    "price": 147.0,
+    "band": [
+      74.97,
+      101.42999999999999
+    ]
+  },
+  {
+    "symbol": "MNDRS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 65.08353643172612,
+    "target": 47.3933724039644,
+    "price": 13.390000343322754,
+    "band": [
+      40.284366543369735,
+      54.502378264559056
+    ]
+  },
+  {
+    "symbol": "MPARK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 66.63951935835831,
+    "target": 1305.6474930034726,
+    "price": 380.5,
+    "band": [
+      1109.8003690529517,
+      1501.4946169539935
+    ]
+  },
+  {
+    "symbol": "MRSHL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 36.62141332319808,
+    "target": 940.8,
+    "price": 1568.0,
+    "band": [
+      799.68,
+      1081.9199999999998
+    ]
+  },
+  {
+    "symbol": "MSGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 72.0,
+    "target": 12.6525007874204,
+    "price": 6.199999809265137,
+    "band": [
+      10.754625669307341,
+      14.55037590553346
+    ]
+  },
+  {
+    "symbol": "MTRKS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 69.26258801831749,
+    "target": 60.64517175311959,
+    "price": 21.979999542236328,
+    "band": [
+      51.548395990151654,
+      69.74194751608752
+    ]
+  },
+  {
+    "symbol": "NATEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.0,
+    "target": 21.675000190734863,
+    "price": 8.670000076293945,
+    "band": [
+      18.423750162124634,
+      24.92625021934509
+    ]
+  },
+  {
+    "symbol": "NETAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 17.469030018320332,
+    "target": 34.07999954223633,
+    "price": 56.79999923706055,
+    "band": [
+      28.96799961090088,
+      39.19199947357178
+    ]
+  },
+  {
+    "symbol": "NIBAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.53573718921638,
+    "target": 2.171999931335449,
+    "price": 3.619999885559082,
+    "band": [
+      1.8461999416351318,
+      2.4977999210357664
+    ]
+  },
+  {
+    "symbol": "NUHCM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 60.86415293292893,
+    "target": 340.7738761210415,
+    "price": 222.89999389648438,
+    "band": [
+      289.65779470288527,
+      391.88995753919767
+    ]
+  },
+  {
+    "symbol": "NUGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 66.10080928084848,
+    "target": 24.96076666537448,
+    "price": 11.100000381469727,
+    "band": [
+      21.216651665568307,
+      28.704881665180647
+    ]
+  },
+  {
+    "symbol": "ODAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 63.49791641666667,
+    "target": 19.068705465,
+    "price": 5.070000171661377,
+    "band": [
+      16.20839964525,
+      21.92901128475
+    ]
+  },
+  {
+    "symbol": "ORGE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 70.90266666666668,
+    "target": 156.80004583191652,
+    "price": 68.69999694824219,
+    "band": [
+      133.28003895712905,
+      180.320052706704
+    ]
+  },
+  {
+    "symbol": "OSTIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 66.76485177618355,
+    "target": 8.441298838712113,
+    "price": 2.9700000286102295,
+    "band": [
+      7.175104012905296,
+      9.707493664518928
+    ]
+  },
+  {
+    "symbol": "OTKAR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 26.81209941977658,
+    "target": 389.3908833333333,
+    "price": 486.0,
+    "band": [
+      330.9822508333333,
+      447.79951583333326
+    ]
+  },
+  {
+    "symbol": "OYAKC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 71.24327258068122,
+    "target": 43.172401637445645,
+    "price": 23.040000915527344,
+    "band": [
+      36.696541391828795,
+      49.64826188306249
+    ]
+  },
+  {
+    "symbol": "OYLUM",
+    "status": "success",
+    "last_check_time": "2025-12-11",
+    "date_str": "2020-12-31",
+    "date_sortable": 20201231,
+    "score": 32.28068124315896,
+    "target": 6.330000114440918,
+    "price": 10.550000190734863,
+    "band": [
+      5.38050009727478,
+      7.279500131607056
+    ]
+  },
+  {
+    "symbol": "OZGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 74.99926872292438,
+    "target": 5.1499998569488525,
+    "price": 2.059999942779541,
+    "band": [
+      4.377499878406525,
+      5.9224998354911795
+    ]
+  },
+  {
+    "symbol": "OZKGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 74.58333333333333,
+    "target": 40.850693700196494,
+    "price": 14.220000267028809,
+    "band": [
+      34.72308964516702,
+      46.97829775522597
+    ]
+  },
+  {
+    "symbol": "PAMEL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.66666666666667,
+    "target": 205.12500762939453,
+    "price": 82.05000305175781,
+    "band": [
+      174.35625648498535,
+      235.89375877380368
+    ]
+  },
+  {
+    "symbol": "PARSN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 36.59375763041291,
+    "target": 123.28252629414223,
+    "price": 104.0,
+    "band": [
+      104.79014735002089,
+      141.77490523826356
+    ]
+  },
+  {
+    "symbol": "PCILT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 59.91536707597384,
+    "target": 52.0844893827752,
+    "price": 22.139999389648438,
+    "band": [
+      44.27181597535892,
+      59.89716279019148
+    ]
+  },
+  {
+    "symbol": "PEKGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 53.33417741853992,
+    "target": 7.560000228881836,
+    "price": 12.600000381469727,
+    "band": [
+      6.426000194549561,
+      8.694000263214111
+    ]
+  },
+  {
+    "symbol": "PENGD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 47.94570144729288,
+    "target": 23.985395845714287,
+    "price": 7.590000152587891,
+    "band": [
+      20.387586468857144,
+      27.58320522257143
+    ]
+  },
+  {
+    "symbol": "PENTA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.67219639187004,
+    "target": 25.37371525575979,
+    "price": 13.09000015258789,
+    "band": [
+      21.56765796739582,
+      29.179772544123757
+    ]
+  },
+  {
+    "symbol": "PETKM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.54840302956132,
+    "target": 9.243614662247476,
+    "price": 16.229999542236328,
+    "band": [
+      7.857072462910354,
+      10.630156861584595
+    ]
+  },
+  {
+    "symbol": "PETUN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 54.47086076337187,
+    "target": 38.703215700332635,
+    "price": 11.199999809265137,
+    "band": [
+      32.89773334528274,
+      44.508698055382524
+    ]
+  },
+  {
+    "symbol": "PGSUS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.60458539312245,
+    "target": 115.0199981689453,
+    "price": 191.6999969482422,
+    "band": [
+      97.76699844360351,
+      132.2729978942871
+    ]
+  },
+  {
+    "symbol": "PINSU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.42194522686313,
+    "target": 25.521216213304722,
+    "price": 11.170000076293945,
+    "band": [
+      21.693033781309012,
+      29.34939864530043
+    ]
+  },
+  {
+    "symbol": "PKART",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 41.20377579267229,
+    "target": 183.37499618530273,
+    "price": 73.3499984741211,
+    "band": [
+      155.86874675750732,
+      210.88124561309812
+    ]
+  },
+  {
+    "symbol": "PKENT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 43.00026375008703,
+    "target": 114.0,
+    "price": 190.0,
+    "band": [
+      96.89999999999999,
+      131.1
+    ]
+  },
+  {
+    "symbol": "PNSUT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 38.294680628258654,
+    "target": 27.650001049041748,
+    "price": 11.0600004196167,
+    "band": [
+      23.502500891685486,
+      31.797501206398007
+    ]
+  },
+  {
+    "symbol": "POLHO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 31.152611049745328,
+    "target": 18.33520341858932,
+    "price": 16.110000610351562,
+    "band": [
+      15.584922905800921,
+      21.085483931377716
+    ]
+  },
+  {
+    "symbol": "PRKAB",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 13.710993338313347,
+    "target": 18.395999908447266,
+    "price": 30.65999984741211,
+    "band": [
+      15.636599922180176,
+      21.155399894714353
+    ]
+  },
+  {
+    "symbol": "PRKME",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 67.22984029135242,
+    "target": 26.335928286907134,
+    "price": 18.479999542236328,
+    "band": [
+      22.385539043871063,
+      30.2863175299432
+    ]
+  },
+  {
+    "symbol": "PRZMA",
+    "status": "success",
+    "last_check_time": "2025-12-11",
+    "date_str": "2020-12-31",
+    "date_sortable": 20201231,
+    "score": 32.11977663275266,
+    "target": 7.2419998168945305,
+    "price": 12.069999694824219,
+    "band": [
+      6.155699844360351,
+      8.32829978942871
+    ]
+  },
+  {
+    "symbol": "PSDTC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 69.37165170715096,
+    "target": 170.47782031931172,
+    "price": 140.60000610351562,
+    "band": [
+      144.90614727141497,
+      196.04949336720847
+    ]
+  },
+  {
+    "symbol": "QUAGR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 52.54850143327708,
+    "target": 4.516959383712122,
+    "price": 2.8499999046325684,
+    "band": [
+      3.8394154761553034,
+      5.19450329126894
+    ]
+  },
+  {
+    "symbol": "RALYH",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.57933369341897,
+    "target": 117.01812240096544,
+    "price": 228.6999969482422,
+    "band": [
+      99.46540404082062,
+      134.57084076111025
+    ]
+  },
+  {
+    "symbol": "RODRG",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-06-30",
+    "date_sortable": 20240630,
+    "score": 54.51676068111006,
+    "target": 20.977420077628793,
+    "price": 21.299999237060547,
+    "band": [
+      17.830807065984473,
+      24.12403308927311
+    ]
+  },
+  {
+    "symbol": "RTALB",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 73.0831891859809,
+    "target": 8.75218513924336,
+    "price": 3.430000066757202,
+    "band": [
+      7.439357368356856,
+      10.065012910129864
+    ]
+  },
+  {
+    "symbol": "RYGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 77.4949910440718,
+    "target": 52.5,
+    "price": 21.0,
+    "band": [
+      44.625,
+      60.37499999999999
+    ]
+  },
+  {
+    "symbol": "SAFKR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 42.797911074770745,
+    "target": 12.908658172661742,
+    "price": 23.479999542236328,
+    "band": [
+      10.97235944676248,
+      14.844956898561001
+    ]
+  },
+  {
+    "symbol": "SANFM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 39.87582329836417,
+    "target": 4.326000022888183,
+    "price": 7.210000038146973,
+    "band": [
+      3.6771000194549557,
+      4.974900026321411
+    ]
+  },
+  {
+    "symbol": "SASA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 17.37234506735262,
+    "target": 2.9845257432215937,
+    "price": 2.7799999713897705,
+    "band": [
+      2.5368468817383545,
+      3.4322046047048325
+    ]
+  },
+  {
+    "symbol": "SAYAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.54474302415064,
+    "target": 38.864512807454076,
+    "price": 39.2599983215332,
+    "band": [
+      33.03483588633596,
+      44.694189728572184
+    ]
+  },
+  {
+    "symbol": "SELEC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 22.702818005338322,
+    "target": 62.94254379155293,
+    "price": 87.0,
+    "band": [
+      53.501162222819985,
+      72.38392536028586
+    ]
+  },
+  {
+    "symbol": "SMART",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 57.524382477827345,
+    "target": 53.96485050386191,
+    "price": 21.81999969482422,
+    "band": [
+      45.870122928282626,
+      62.059578079441195
+    ]
+  },
+  {
+    "symbol": "SOKM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 50.92540056254393,
+    "target": 127.62499809265137,
+    "price": 51.04999923706055,
+    "band": [
+      108.48124837875366,
+      146.76874780654907
+    ]
+  },
+  {
+    "symbol": "SUNTK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 47.22600706746433,
+    "target": 38.96883101616996,
+    "price": 60.900001525878906,
+    "band": [
+      33.12350636374446,
+      44.81415566859545
+    ]
+  },
+  {
+    "symbol": "TATGD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 50.52778888350636,
+    "target": 35.45524654029694,
+    "price": 11.75,
+    "band": [
+      30.1369595592524,
+      40.77353352134148
+    ]
+  },
+  {
+    "symbol": "TAVHL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 47.27988714427006,
+    "target": 178.95,
+    "price": 298.25,
+    "band": [
+      152.1075,
+      205.79249999999996
+    ]
+  },
+  {
+    "symbol": "TCELL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 70.25594110534104,
+    "target": 192.84527607589018,
+    "price": 93.0999984741211,
+    "band": [
+      163.91848466450665,
+      221.7720674872737
+    ]
+  },
+  {
+    "symbol": "THYAO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.665440605987165,
+    "target": 161.1,
+    "price": 268.5,
+    "band": [
+      136.935,
+      185.265
+    ]
+  },
+  {
+    "symbol": "TKNSA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 32.450759504414684,
+    "target": 54.85000133514404,
+    "price": 21.940000534057617,
+    "band": [
+      46.62250113487244,
+      63.07750153541564
+    ]
+  },
+  {
+    "symbol": "TLMAN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 56.888880701132166,
+    "target": 82.84732861904762,
+    "price": 96.55000305175781,
+    "band": [
+      70.42022932619047,
+      95.27442791190475
+    ]
+  },
+  {
+    "symbol": "TMSN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 84.62569974088925,
+    "target": 251.00000381469727,
+    "price": 100.4000015258789,
+    "band": [
+      213.35000324249268,
+      288.65000438690186
+    ]
+  },
+  {
+    "symbol": "TOASO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 37.9204014162715,
+    "target": 106.42519461552813,
+    "price": 247.0,
+    "band": [
+      90.4614154231989,
+      122.38897380785734
+    ]
+  },
+  {
+    "symbol": "TRILC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 49.79200504097052,
+    "target": 44.31549992274652,
+    "price": 16.079999923706055,
+    "band": [
+      37.66817493433454,
+      50.96282491115849
+    ]
+  },
+  {
+    "symbol": "TTKOM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 70.3997673179195,
+    "target": 150.57540716269756,
+    "price": 57.5,
+    "band": [
+      127.98909608829292,
+      173.16171823710218
+    ]
+  },
+  {
+    "symbol": "TTRAK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 47.92194451318893,
+    "target": 714.3549754804942,
+    "price": 519.5,
+    "band": [
+      607.2017291584201,
+      821.5082218025683
+    ]
+  },
+  {
+    "symbol": "TUKAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 56.108563809580374,
+    "target": 4.983005706557688,
+    "price": 2.4700000286102295,
+    "band": [
+      4.235554850574035,
+      5.730456562541341
+    ]
+  },
+  {
+    "symbol": "TUPRS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.8315799854499,
+    "target": 340.66830003023983,
+    "price": 184.39999389648438,
+    "band": [
+      289.56805502570387,
+      391.7685450347758
+    ]
+  },
+  {
+    "symbol": "TURGG",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 52.410443758660506,
+    "target": 13.50848087520937,
+    "price": 26.81999969482422,
+    "band": [
+      11.482208743927965,
+      15.534753006490774
+    ]
+  },
+  {
+    "symbol": "ULKER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.53212926199474,
+    "target": 270.0,
+    "price": 108.0,
+    "band": [
+      229.5,
+      310.5
+    ]
+  },
+  {
+    "symbol": "ULUUN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.498186560900976,
+    "target": 16.27500057220459,
+    "price": 6.510000228881836,
+    "band": [
+      13.833750486373901,
+      18.71625065803528
+    ]
+  },
+  {
+    "symbol": "VERTU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 68.33333333333333,
+    "target": 142.26298052660638,
+    "price": 42.29999923706055,
+    "band": [
+      120.92353344761543,
+      163.60242760559734
+    ]
+  },
+  {
+    "symbol": "VESBE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 39.83330650779415,
+    "target": 19.500000476837158,
+    "price": 7.800000190734863,
+    "band": [
+      16.575000405311584,
+      22.425000548362732
+    ]
+  },
+  {
+    "symbol": "VESTL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 38.0891548436211,
+    "target": 111.41836890664811,
+    "price": 28.700000762939453,
+    "band": [
+      94.7056135706509,
+      128.1311242426453
+    ]
+  },
+  {
+    "symbol": "VKGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 77.52852398248812,
+    "target": 6.210804192234998,
+    "price": 2.4800000190734863,
+    "band": [
+      5.279183563399748,
+      7.1424248210702475
+    ]
+  },
+  {
+    "symbol": "ZOREN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.71646807931085,
+    "target": 7.674999833106995,
+    "price": 3.069999933242798,
+    "band": [
+      6.523749858140945,
+      8.826249808073044
+    ]
+  },
+  {
+    "symbol": "SDTTR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 39.85558537149238,
+    "target": 106.26000366210937,
+    "price": 177.10000610351562,
+    "band": [
+      90.32100311279297,
+      122.19900421142576
+    ]
+  },
+  {
+    "symbol": "ALTNY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 63.17462100072031,
+    "target": 53.67717950205319,
+    "price": 14.649999618530273,
+    "band": [
+      45.625602576745216,
+      61.72875642736117
+    ]
+  },
+  {
+    "symbol": "PAPIL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 43.333333333333336,
+    "target": 45.731686690909086,
+    "price": 16.030000686645508,
+    "band": [
+      38.87193368727272,
+      52.59143969454544
+    ]
+  },
+  {
+    "symbol": "MIATK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.36014563732274,
+    "target": 70.8233637965956,
+    "price": 39.41999816894531,
+    "band": [
+      60.19985922710626,
+      81.44686836608493
+    ]
+  },
+  {
+    "symbol": "ARDYZ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 63.79926769593266,
+    "target": 83.10000419616699,
+    "price": 33.2400016784668,
+    "band": [
+      70.63500356674194,
+      95.56500482559203
+    ]
+  },
+  {
+    "symbol": "KONTR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 38.07586666666667,
+    "target": 27.030200206923077,
+    "price": 11.520000457763672,
+    "band": [
+      22.975670175884616,
+      31.084730237961537
+    ]
+  },
+  {
+    "symbol": "VBTYZ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 54.75623435430796,
+    "target": 67.40458047863248,
+    "price": 16.940000534057617,
+    "band": [
+      57.29389340683761,
+      77.51526755042735
+    ]
+  },
+  {
+    "symbol": "PATEK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 94.65437558882071,
+    "target": 47.171387771892185,
+    "price": 22.020000457763672,
+    "band": [
+      40.095679606108355,
+      54.24709593767601
+    ]
+  },
+  {
+    "symbol": "AGROT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.66666666666667,
+    "target": 14.874999523162842,
+    "price": 5.949999809265137,
+    "band": [
+      12.643749594688416,
+      17.106249451637268
+    ]
+  },
+  {
+    "symbol": "ALCTL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 35.38029600937512,
+    "target": 127.31824910366129,
+    "price": 103.5,
+    "band": [
+      108.2205117381121,
+      146.41598646921048
+    ]
+  },
+  {
+    "symbol": "ATATP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 96.94666666666667,
+    "target": 332.24998474121094,
+    "price": 132.89999389648438,
+    "band": [
+      282.4124870300293,
+      382.0874824523925
+    ]
+  },
+  {
+    "symbol": "AZTEK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.21360457187558,
+    "target": 9.574233225901812,
+    "price": 4.119999885559082,
+    "band": [
+      8.13809824201654,
+      11.010368209787083
+    ]
+  },
+  {
+    "symbol": "BINHO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 59.20333333333333,
+    "target": 22.074999809265137,
+    "price": 8.829999923706055,
+    "band": [
+      18.763749837875366,
+      25.386249780654904
+    ]
+  },
+  {
+    "symbol": "EDATA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.645604759592054,
+    "target": 4.2424308874356615,
+    "price": 6.059999942779541,
+    "band": [
+      3.606066254320312,
+      4.8787955205510105
+    ]
+  },
+  {
+    "symbol": "HTTBT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 52.5213538408417,
+    "target": 44.034759636013135,
+    "price": 41.959999084472656,
+    "band": [
+      37.429545690611164,
+      50.6399735814151
+    ]
+  },
+  {
+    "symbol": "REEDR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 45.0,
+    "target": 16.52500033378601,
+    "price": 6.610000133514404,
+    "band": [
+      14.04625028371811,
+      19.003750383853912
+    ]
+  },
+  {
+    "symbol": "ALVES",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 52.38993954080882,
+    "target": 88.6811724035762,
+    "price": 25.68000030517578,
+    "band": [
+      75.37899654303976,
+      101.98334826411262
+    ]
+  },
+  {
+    "symbol": "INGRM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 11.480792338349364,
+    "target": 261.89011708333334,
+    "price": 411.0,
+    "band": [
+      222.60659952083333,
+      301.1736346458333
+    ]
+  },
+  {
+    "symbol": "INTEK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 61.86502919763119,
+    "target": 161.4,
+    "price": 269.0,
+    "band": [
+      137.19,
+      185.60999999999999
+    ]
+  },
+  {
+    "symbol": "LIDER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 68.47981452681827,
+    "target": 46.54454307310661,
+    "price": 70.0,
+    "band": [
+      39.562861612140615,
+      53.5262245340726
+    ]
+  },
+  {
+    "symbol": "MOBTL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 37.0432489853619,
+    "target": 14.251673969662416,
+    "price": 9.0600004196167,
+    "band": [
+      12.113922874213054,
+      16.389425065111777
+    ]
+  },
+  {
+    "symbol": "OBASE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 60.050053868786115,
+    "target": 113.56482507692307,
+    "price": 31.059999465942383,
+    "band": [
+      96.53010131538461,
+      130.59954883846152
+    ]
+  },
+  {
+    "symbol": "ODINE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 41.3342322992539,
+    "target": 182.7,
+    "price": 304.5,
+    "band": [
+      155.295,
+      210.10499999999996
+    ]
+  },
+  {
+    "symbol": "SNKRN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2022-12-31",
+    "date_sortable": 20221231,
+    "score": 61.72895035883584,
+    "target": 169.2,
+    "price": 282.0,
+    "band": [
+      143.82,
+      194.57999999999998
+    ]
+  },
+  {
+    "symbol": "FORTE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 71.1034802836459,
+    "target": 202.00000762939453,
+    "price": 80.80000305175781,
+    "band": [
+      171.70000648498535,
+      232.30000877380368
+    ]
+  },
+  {
+    "symbol": "AKSEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 36.58167280932298,
+    "target": 51.664565299597214,
+    "price": 72.5,
+    "band": [
+      43.91488050465763,
+      59.41425009453679
+    ]
+  },
+  {
+    "symbol": "AYDEM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.02150534642797,
+    "target": 56.35000228881836,
+    "price": 22.540000915527344,
+    "band": [
+      47.897501945495605,
+      64.80250263214111
+    ]
+  },
+  {
+    "symbol": "SMRTG",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 23.66598629473917,
+    "target": 17.6765626312141,
+    "price": 23.0,
+    "band": [
+      15.025078236531984,
+      20.328047025896215
+    ]
+  },
+  {
+    "symbol": "ASTOR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.00279241611666,
+    "target": 117.70897307344154,
+    "price": 116.9000015258789,
+    "band": [
+      100.05262711242531,
+      135.36531903445777
+    ]
+  },
+  {
+    "symbol": "ALFAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 19.865328815332095,
+    "target": 24.49199981689453,
+    "price": 40.81999969482422,
+    "band": [
+      20.81819984436035,
+      28.165799789428707
+    ]
+  },
+  {
+    "symbol": "ARASE",
+    "status": "success",
+    "last_check_time": "2025-12-11",
+    "date_str": "2020-12-31",
+    "date_sortable": 20201231,
+    "score": 62.44307479877175,
+    "target": 37.62000045776367,
+    "price": 62.70000076293945,
+    "band": [
+      31.97700038909912,
+      43.26300052642822
+    ]
+  },
+  {
+    "symbol": "YEOTK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 52.08024598988807,
+    "target": 51.811610112235115,
+    "price": 36.540000915527344,
+    "band": [
+      44.039868595399845,
+      59.58335162907038
+    ]
+  },
+  {
+    "symbol": "CANTE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 44.34916666666667,
+    "target": 1.2,
+    "price": 2.0,
+    "band": [
+      1.02,
+      1.38
+    ]
+  },
+  {
+    "symbol": "BIOEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.314871554493923,
+    "target": 10.020000457763672,
+    "price": 16.700000762939453,
+    "band": [
+      8.51700038909912,
+      11.523000526428222
+    ]
+  },
+  {
+    "symbol": "AKENR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 35.45659536207172,
+    "target": 22.255221047665547,
+    "price": 11.270000457763672,
+    "band": [
+      18.916937890515715,
+      25.59350420481538
+    ]
+  },
+  {
+    "symbol": "GESAN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 59.03429594624015,
+    "target": 70.80522015025939,
+    "price": 46.400001525878906,
+    "band": [
+      60.18443712772048,
+      81.42600317279829
+    ]
+  },
+  {
+    "symbol": "IZENR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 44.84749355518267,
+    "target": 5.722189436981857,
+    "price": 9.390000343322754,
+    "band": [
+      4.8638610214345785,
+      6.580517852529135
+    ]
+  },
+  {
+    "symbol": "MOGAN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2022-12-31",
+    "date_sortable": 20221231,
+    "score": 59.60311051176946,
+    "target": 13.846434575208155,
+    "price": 8.1899995803833,
+    "band": [
+      11.769469388926932,
+      15.923399761489378
+    ]
+  },
+  {
+    "symbol": "TATEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 57.65470097069126,
+    "target": 18.811064376497484,
+    "price": 12.800000190734863,
+    "band": [
+      15.989404720022861,
+      21.632724032972106
+    ]
+  },
+  {
+    "symbol": "ULUSE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 33.962419191570405,
+    "target": 97.26000366210937,
+    "price": 162.10000610351562,
+    "band": [
+      82.67100311279296,
+      111.84900421142576
+    ]
+  },
+  {
+    "symbol": "AKFYE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 31.42892190396691,
+    "target": 9.733906510797562,
+    "price": 16.40999984741211,
+    "band": [
+      8.273820534177927,
+      11.193992487417194
+    ]
+  },
+  {
+    "symbol": "AKSUE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 48.925000000000004,
+    "target": 15.6,
+    "price": 26.0,
+    "band": [
+      13.26,
+      17.939999999999998
+    ]
+  },
+  {
+    "symbol": "BASGZ",
+    "status": "success",
+    "last_check_time": "2025-12-11",
+    "date_str": "2020-12-31",
+    "date_sortable": 20201231,
+    "score": 53.502496480518055,
+    "target": 25.259999084472657,
+    "price": 42.099998474121094,
+    "band": [
+      21.47099922180176,
+      29.048998947143552
+    ]
+  },
+  {
+    "symbol": "ENERY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.30371873859982,
+    "target": 10.90590401692458,
+    "price": 9.59000015258789,
+    "band": [
+      9.270018414385893,
+      12.541789619463266
+    ]
+  },
+  {
+    "symbol": "ENTRA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.2539190787103,
+    "target": 15.024169105691056,
+    "price": 10.199999809265137,
+    "band": [
+      12.770543739837398,
+      17.277794471544713
+    ]
+  },
+  {
+    "symbol": "HUNER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.77273780738991,
+    "target": 9.081280801112738,
+    "price": 3.0899999141693115,
+    "band": [
+      7.719088680945827,
+      10.443472921279648
+    ]
+  },
+  {
+    "symbol": "NTGAZ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 69.7830137361915,
+    "target": 26.09247607615517,
+    "price": 10.5,
+    "band": [
+      22.178604664731893,
+      30.00634748757844
+    ]
+  },
+  {
+    "symbol": "TRENJ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.4316251875,
+    "target": 299.07327297532134,
+    "price": 93.05000305175781,
+    "band": [
+      254.21228202902313,
+      343.9342639216195
+    ]
+  },
+  {
+    "symbol": "A1YEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 81.40208333333334,
+    "target": 53.20758009293509,
+    "price": 28.899999618530273,
+    "band": [
+      45.226443078994826,
+      61.188717106875345
+    ]
+  },
+  {
+    "symbol": "LYDYE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 48.28992520502106,
+    "target": 10987.37768091719,
+    "price": 13942.5,
+    "band": [
+      9339.27102877961,
+      12635.484333054768
+    ]
+  },
+  {
+    "symbol": "AKCNS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.98163132850473,
+    "target": 174.62006962077385,
+    "price": 165.39999389648438,
+    "band": [
+      148.42705917765775,
+      200.8130800638899
+    ]
+  },
+  {
+    "symbol": "AFYON",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 66.50792256443816,
+    "target": 21.0097360769826,
+    "price": 12.979999542236328,
+    "band": [
+      17.858275665435208,
+      24.161196488529985
+    ]
+  },
+  {
+    "symbol": "BIENY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 37.86218046281428,
+    "target": 34.117477806094186,
+    "price": 25.059999465942383,
+    "band": [
+      28.999856135180057,
+      39.23509947700831
+    ]
+  },
+  {
+    "symbol": "KLSER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.936037028413722,
+    "target": 13.771530908504383,
+    "price": 26.65999984741211,
+    "band": [
+      11.705801272228726,
+      15.837260544780039
+    ]
+  },
+  {
+    "symbol": "LMKDC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 82.99858740598795,
+    "target": 71.03257286555674,
+    "price": 28.299999237060547,
+    "band": [
+      60.37768693572323,
+      81.68745879539026
+    ]
+  },
+  {
+    "symbol": "EGEPO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 29.894681405156856,
+    "target": 4.913999748229981,
+    "price": 8.1899995803833,
+    "band": [
+      4.1768997859954835,
+      5.651099710464477
+    ]
+  },
+  {
+    "symbol": "AKFGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 87.81648786702921,
+    "target": 10.037990605171867,
+    "price": 2.569999933242798,
+    "band": [
+      8.532292014396086,
+      11.543689195947646
+    ]
+  },
+  {
+    "symbol": "ADGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 68.727256501104,
+    "target": 47.59736811975436,
+    "price": 43.97999954223633,
+    "band": [
+      40.457762901791206,
+      54.73697333771751
+    ]
+  },
+  {
+    "symbol": "AVPGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 77.83333333333333,
+    "target": 120.30263406525,
+    "price": 52.0,
+    "band": [
+      102.2572389554625,
+      138.34802917503748
+    ]
+  },
+  {
+    "symbol": "BEGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 75.98166645833334,
+    "target": 15.479778751354239,
+    "price": 4.690000057220459,
+    "band": [
+      13.157811938651102,
+      17.801745564057374
+    ]
+  },
+  {
+    "symbol": "FZLGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 52.063616510329204,
+    "target": 7.72800006866455,
+    "price": 12.880000114440918,
+    "band": [
+      6.568800058364867,
+      8.887200078964232
+    ]
+  },
+  {
+    "symbol": "KZBGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 84.18220046694705,
+    "target": 43.2477330404527,
+    "price": 10.899999618530273,
+    "band": [
+      36.760573084384795,
+      49.7348929965206
+    ]
+  },
+  {
+    "symbol": "MHRGY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2022-12-31",
+    "date_sortable": 20221231,
+    "score": 82.14804509232331,
+    "target": 6.075512253901188,
+    "price": 3.450000047683716,
+    "band": [
+      5.16418541581601,
+      6.986839091986366
+    ]
+  },
+  {
+    "symbol": "PSGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 82.04153533307105,
+    "target": 6.225000023841858,
+    "price": 2.490000009536743,
+    "band": [
+      5.291250020265579,
+      7.158750027418136
+    ]
+  },
+  {
+    "symbol": "RGYAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 87.14770786680572,
+    "target": 344.50000762939453,
+    "price": 137.8000030517578,
+    "band": [
+      292.82500648498535,
+      396.17500877380365
+    ]
+  },
+  {
+    "symbol": "SEGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 59.5,
+    "target": 11.738424008464275,
+    "price": 5.199999809265137,
+    "band": [
+      9.977660407194634,
+      13.499187609733916
+    ]
+  },
+  {
+    "symbol": "VRGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 71.30417841798675,
+    "target": 8.09781663378049,
+    "price": 2.4000000953674316,
+    "band": [
+      6.883144138713416,
+      9.312489128847561
+    ]
+  },
+  {
+    "symbol": "ZRGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 59.869679555049316,
+    "target": 24.08707014795297,
+    "price": 23.440000534057617,
+    "band": [
+      20.474009625760026,
+      27.700130670145914
+    ]
+  },
+  {
+    "symbol": "ASGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 71.16666666666666,
+    "target": 32.52763340955994,
+    "price": 10.850000381469727,
+    "band": [
+      27.64848839812595,
+      37.40677842099393
+    ]
+  },
+  {
+    "symbol": "KCAER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 38.4251221145246,
+    "target": 8.685961262183437,
+    "price": 10.550000190734863,
+    "band": [
+      7.383067072855921,
+      9.98885545151095
+    ]
+  },
+  {
+    "symbol": "AKSA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.21883622143428,
+    "target": 13.822476868320653,
+    "price": 9.819999694824219,
+    "band": [
+      11.749105338072555,
+      15.895848398568749
+    ]
+  },
+  {
+    "symbol": "BFREN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 44.779117201772614,
+    "target": 92.7,
+    "price": 154.5,
+    "band": [
+      78.795,
+      106.60499999999999
+    ]
+  },
+  {
+    "symbol": "KOTON",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 45.401160557496056,
+    "target": 39.000000953674316,
+    "price": 15.600000381469727,
+    "band": [
+      33.15000081062317,
+      44.850001096725464
+    ]
+  },
+  {
+    "symbol": "SUWEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.49275499386733,
+    "target": 13.315285140951147,
+    "price": 9.800000190734863,
+    "band": [
+      11.317992369808474,
+      15.312577912093818
+    ]
+  },
+  {
+    "symbol": "RUBNS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-03-31",
+    "date_sortable": 20250331,
+    "score": 54.0545937198634,
+    "target": 42.85199249542404,
+    "price": 23.15999984741211,
+    "band": [
+      36.42419362111043,
+      49.279791369737644
+    ]
+  },
+  {
+    "symbol": "ISSEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 24.859542293288715,
+    "target": 4.33199987411499,
+    "price": 7.21999979019165,
+    "band": [
+      3.6821998929977413,
+      4.981799855232238
+    ]
+  },
+  {
+    "symbol": "ENSRI",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 63.463559258993435,
+    "target": 7.44649924935756,
+    "price": 17.209999084472656,
+    "band": [
+      6.329524361953926,
+      8.563474136761194
+    ]
+  },
+  {
+    "symbol": "ACSEL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 29.90043057639045,
+    "target": 58.61999816894531,
+    "price": 97.69999694824219,
+    "band": [
+      49.82699844360351,
+      67.4129978942871
+    ]
+  },
+  {
+    "symbol": "KLKIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 60.82922823434263,
+    "target": 52.24545697729043,
+    "price": 35.400001525878906,
+    "band": [
+      44.40863843069687,
+      60.08227552388399
+    ]
+  },
+  {
+    "symbol": "KMPUR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 13.536031664147743,
+    "target": 9.49199981689453,
+    "price": 15.819999694824219,
+    "band": [
+      8.06819984436035,
+      10.915799789428709
+    ]
+  },
+  {
+    "symbol": "KOPOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 30.863201810498023,
+    "target": 3.1568755576598644,
+    "price": 5.320000171661377,
+    "band": [
+      2.6833442240108845,
+      3.630406891308844
+    ]
+  },
+  {
+    "symbol": "GIPTA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 64.22369798432166,
+    "target": 80.68925564676147,
+    "price": 69.30000305175781,
+    "band": [
+      68.58586729974725,
+      92.79264399377568
+    ]
+  },
+  {
+    "symbol": "GMTAS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 42.142882103915504,
+    "target": 19.816209914598023,
+    "price": 44.939998626708984,
+    "band": [
+      16.84377842740832,
+      22.788641401787725
+    ]
+  },
+  {
+    "symbol": "KBORU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.39976650110052,
+    "target": 21.17257737314133,
+    "price": 14.5,
+    "band": [
+      17.99669076717013,
+      24.348463979112527
+    ]
+  },
+  {
+    "symbol": "MAKIM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 21.264981210954296,
+    "target": 8.220400098214286,
+    "price": 14.949999809265137,
+    "band": [
+      6.987340083482143,
+      9.453460112946429
+    ]
+  },
+  {
+    "symbol": "PNLSN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 38.96783829945166,
+    "target": 31.795231537724742,
+    "price": 37.099998474121094,
+    "band": [
+      27.02594680706603,
+      36.56451626838345
+    ]
+  },
+  {
+    "symbol": "TEZOL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 39.170131758292314,
+    "target": 7.419317476032866,
+    "price": 11.850000381469727,
+    "band": [
+      6.3064198546279355,
+      8.532215097437795
+    ]
+  },
+  {
+    "symbol": "YIGIT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 39.012068431508965,
+    "target": 16.05759644609768,
+    "price": 22.899999618530273,
+    "band": [
+      13.648956979183028,
+      18.46623591301233
+    ]
+  },
+  {
+    "symbol": "HKTM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 35.55531130733405,
+    "target": 12.758779961904763,
+    "price": 10.899999618530273,
+    "band": [
+      10.844962967619049,
+      14.672596956190477
+    ]
+  },
+  {
+    "symbol": "IMASM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 28.155,
+    "target": 2.8140000343322753,
+    "price": 4.690000057220459,
+    "band": [
+      2.391900029182434,
+      3.236100039482116
+    ]
+  },
+  {
+    "symbol": "MEKAG",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 37.01643258806242,
+    "target": 1.72126820875,
+    "price": 3.869999885559082,
+    "band": [
+      1.4630779774375,
+      1.9794584400624997
+    ]
+  },
+  {
+    "symbol": "ALKA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2024-12-31",
+    "date_sortable": 20241231,
+    "score": 32.32369940790187,
+    "target": 11.923394891985446,
+    "price": 10.579999923706055,
+    "band": [
+      10.134885658187628,
+      13.711904125783262
+    ]
+  },
+  {
+    "symbol": "ARTMS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 58.6522047485718,
+    "target": 69.18731742875572,
+    "price": 37.540000915527344,
+    "band": [
+      58.80921981444236,
+      79.56541504306907
+    ]
+  },
+  {
+    "symbol": "BALAT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 40.11666666666667,
+    "target": 64.91999816894531,
+    "price": 108.19999694824219,
+    "band": [
+      55.18199844360351,
+      74.6579978942871
+    ]
+  },
+  {
+    "symbol": "BRLSM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 62.59709493336257,
+    "target": 28.221401300236302,
+    "price": 13.170000076293945,
+    "band": [
+      23.988191105200855,
+      32.45461149527174
+    ]
+  },
+  {
+    "symbol": "CASA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2021-12-31",
+    "date_sortable": 20211231,
+    "score": 33.03996514858076,
+    "target": 92.01431607718918,
+    "price": 106.9000015258789,
+    "band": [
+      78.2121686656108,
+      105.81646348876755
+    ]
+  },
+  {
+    "symbol": "DOFER",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 23.112406062851456,
+    "target": 32.640000915527345,
+    "price": 54.400001525878906,
+    "band": [
+      27.74400077819824,
+      37.53600105285644
+    ]
+  },
+  {
+    "symbol": "EUREN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 73.09626929931525,
+    "target": 12.02828300181662,
+    "price": 6.340000152587891,
+    "band": [
+      10.224040551544126,
+      13.832525452089111
+    ]
+  },
+  {
+    "symbol": "PLTUR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 65.83371151566078,
+    "target": 45.46538430517684,
+    "price": 22.68000030517578,
+    "band": [
+      38.64557665940031,
+      52.28519195095336
+    ]
+  },
+  {
+    "symbol": "PASEU",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 41.057829042761995,
+    "target": 81.3,
+    "price": 135.5,
+    "band": [
+      69.10499999999999,
+      93.49499999999999
+    ]
+  },
+  {
+    "symbol": "HRKET",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 33.440139850196246,
+    "target": 54.49955029513889,
+    "price": 70.1500015258789,
+    "band": [
+      46.32461775086806,
+      62.67448283940972
+    ]
+  },
+  {
+    "symbol": "TUREX",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2023-12-31",
+    "date_sortable": 20231231,
+    "score": 54.54274729110732,
+    "target": 10.17493153300506,
+    "price": 7.070000171661377,
+    "band": [
+      8.6486918030543,
+      11.701171262955818
+    ]
+  },
+  {
+    "symbol": "HOROZ",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 55.55782965490089,
+    "target": 163.41633589014882,
+    "price": 63.900001525878906,
+    "band": [
+      138.9038855066265,
+      187.92878627367114
+    ]
+  },
+  {
+    "symbol": "KRVGD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 42.33261886925026,
+    "target": 7.929673053754182,
+    "price": 2.759999990463257,
+    "band": [
+      6.740222095691054,
+      9.11912401181731
+    ]
+  },
+  {
+    "symbol": "OBAMS",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 32.614297620134614,
+    "target": 4.776000022888184,
+    "price": 7.960000038146973,
+    "band": [
+      4.0596000194549555,
+      5.492400026321411
+    ]
+  },
+  {
+    "symbol": "SELVA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 47.2843703009772,
+    "target": 4.222194346610353,
+    "price": 2.4800000190734863,
+    "band": [
+      3.5888651946188,
+      4.855523498601905
+    ]
+  },
+  {
+    "symbol": "YYLGD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 33.93704832700115,
+    "target": 24.537914516525667,
+    "price": 9.710000038146973,
+    "band": [
+      20.857227339046815,
+      28.218601694004516
+    ]
+  },
+  {
+    "symbol": "BIGCH",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 40.718079282116946,
+    "target": 67.89362322361718,
+    "price": 50.599998474121094,
+    "band": [
+      57.7095797400746,
+      78.07766670715975
+    ]
+  },
+  {
+    "symbol": "BYDNR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 54.0464324950395,
+    "target": 83.72477278571428,
+    "price": 26.760000228881836,
+    "band": [
+      71.16605686785714,
+      96.28348870357141
+    ]
+  },
+  {
+    "symbol": "ALKLC",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 33.70421068814353,
+    "target": 127.56000366210937,
+    "price": 212.60000610351562,
+    "band": [
+      108.42600311279296,
+      146.69400421142575
+    ]
+  },
+  {
+    "symbol": "ATAKP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 26.8977911482377,
+    "target": 39.310023537530675,
+    "price": 52.25,
+    "band": [
+      33.413520006901074,
+      45.20652706816027
+    ]
+  },
+  {
+    "symbol": "BESLR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 53.42634531974821,
+    "target": 30.59999942779541,
+    "price": 12.239999771118164,
+    "band": [
+      26.0099995136261,
+      35.18999934196472
+    ]
+  },
+  {
+    "symbol": "BORSK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 18.652573328509618,
+    "target": 3.794086278125,
+    "price": 5.699999809265137,
+    "band": [
+      3.22497333640625,
+      4.363199219843749
+    ]
+  },
+  {
+    "symbol": "DMRGD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 47.105622326439814,
+    "target": 2.656906334668204,
+    "price": 3.309999942779541,
+    "band": [
+      2.2583703844679732,
+      3.0554422848684344
+    ]
+  },
+  {
+    "symbol": "EFOR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 23.502583240932946,
+    "target": 14.520000457763672,
+    "price": 24.200000762939453,
+    "band": [
+      12.342000389099121,
+      16.69800052642822
+    ]
+  },
+  {
+    "symbol": "ELITE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 35.79957798033685,
+    "target": 33.53025952531295,
+    "price": 28.260000228881836,
+    "band": [
+      28.500720596516008,
+      38.55979845410989
+    ]
+  },
+  {
+    "symbol": "GUNDG",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 37.67674355375975,
+    "target": 273.4826578974359,
+    "price": 252.25,
+    "band": [
+      232.46025921282052,
+      314.5050565820513
+    ]
+  },
+  {
+    "symbol": "KAYSE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-10-31",
+    "date_sortable": 20251031,
+    "score": 39.13415420196314,
+    "target": 34.7194440141643,
+    "price": 18.43000030517578,
+    "band": [
+      29.511527412039655,
+      39.927360616288944
+    ]
+  },
+  {
+    "symbol": "KTSKR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 63.23463830195814,
+    "target": 175.48921914175904,
+    "price": 75.0,
+    "band": [
+      149.1658362704952,
+      201.81260201302288
+    ]
+  },
+  {
+    "symbol": "KUVVA",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 57.724775441234414,
+    "target": 239.82037882034797,
+    "price": 139.3000030517578,
+    "band": [
+      203.84732199729578,
+      275.79343564340013
+    ]
+  },
+  {
+    "symbol": "OFSYM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.088401726046385,
+    "target": 120.62652718745167,
+    "price": 69.0999984741211,
+    "band": [
+      102.53254810933392,
+      138.7205062655694
+    ]
+  },
+  {
+    "symbol": "ORCAY",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 43.4591211705314,
+    "target": 5.057692179166667,
+    "price": 3.5999999046325684,
+    "band": [
+      4.299038352291666,
+      5.816346006041666
+    ]
+  },
+  {
+    "symbol": "TABGD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 65.96032236385852,
+    "target": 366.60212280638314,
+    "price": 209.10000610351562,
+    "band": [
+      311.61180438542567,
+      421.5924412273406
+    ]
+  },
+  {
+    "symbol": "CVKMD",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 44.17883348323606,
+    "target": 15.247837644411078,
+    "price": 26.459999084472656,
+    "band": [
+      12.960661997749416,
+      17.535013291072737
+    ]
+  },
+  {
+    "symbol": "TRMET",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 61.153111006256054,
+    "target": 148.71441792799274,
+    "price": 104.4000015258789,
+    "band": [
+      126.40725523879382,
+      171.02158061719163
+    ]
+  },
+  {
+    "symbol": "RUZYE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 46.84235228417731,
+    "target": 8.9649953125592,
+    "price": 11.199999809265137,
+    "band": [
+      7.62024601567532,
+      10.30974460944308
+    ]
+  },
+  {
+    "symbol": "TRALT",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 51.35424383205943,
+    "target": 26.054721145440862,
+    "price": 40.97999954223633,
+    "band": [
+      22.14651297362473,
+      29.96292931725699
+    ]
+  },
+  {
+    "symbol": "GENIL",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 36.58278011629979,
+    "target": 119.39999999999999,
+    "price": 199.0,
+    "band": [
+      101.49,
+      137.30999999999997
+    ]
+  },
+  {
+    "symbol": "ONCSM",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 45.70680132600539,
+    "target": 157.79999999999998,
+    "price": 263.0,
+    "band": [
+      134.13,
+      181.46999999999997
+    ]
+  },
+  {
+    "symbol": "TNZTP",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 71.69329911029564,
+    "target": 46.11409892469304,
+    "price": 20.440000534057617,
+    "band": [
+      39.19698408598908,
+      53.03121376339699
+    ]
+  },
+  {
+    "symbol": "ANGEN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 32.5,
+    "target": 27.025001049041748,
+    "price": 10.8100004196167,
+    "band": [
+      22.971250891685486,
+      31.078751206398007
+    ]
+  },
+  {
+    "symbol": "GZNMI",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 30.97220307400942,
+    "target": 51.00891406153846,
+    "price": 57.0,
+    "band": [
+      43.35757695230769,
+      58.66025117076923
+    ]
+  },
+  {
+    "symbol": "MACKO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 90.19030080283432,
+    "target": 60.449137789260426,
+    "price": 30.899999618530273,
+    "band": [
+      51.38176712087136,
+      69.51650845764948
+    ]
+  },
+  {
+    "symbol": "AEFES",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 53.86606343727917,
+    "target": 39.27500009536743,
+    "price": 15.710000038146973,
+    "band": [
+      33.38375008106232,
+      45.166250109672546
+    ]
+  },
+  {
+    "symbol": "EBEBK",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 37.92620887670044,
+    "target": 102.18465640625,
+    "price": 55.650001525878906,
+    "band": [
+      86.8569579453125,
+      117.5123548671875
+    ]
+  },
+  {
+    "symbol": "EKSUN",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 32.514114240724616,
+    "target": 13.200000524520874,
+    "price": 5.28000020980835,
+    "band": [
+      11.220000445842743,
+      15.180000603199003
+    ]
+  },
+  {
+    "symbol": "FADE",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-06-30",
+    "date_sortable": 20250630,
+    "score": 15.644153072416913,
+    "target": 5.858798271649085,
+    "price": 13.34000015258789,
+    "band": [
+      4.979978530901722,
+      6.737618012396447
+    ]
+  },
+  {
+    "symbol": "GOKNR",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 56.065693578373306,
+    "target": 62.75810332084899,
+    "price": 19.75,
+    "band": [
+      53.344387822721636,
+      72.17181881897633
+    ]
+  },
+  {
+    "symbol": "MRGYO",
+    "status": "success",
+    "last_check_time": "2026-01-02",
+    "date_str": "2025-09-30",
+    "date_sortable": 20250930,
+    "score": 77.5220461934211,
+    "target": 5.975000262260437,
+    "price": 2.390000104904175,
+    "band": [
+      5.0787502229213715,
+      6.871250301599502
+    ]
+  }
+]

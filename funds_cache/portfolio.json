@@ -1,0 +1,25 @@
+{
+  "asof": "2026-01-02 01:50:05",
+  "positions": [
+    {
+      "code": "DFI",
+      "quantity": 87993.15305731849
+    },
+    {
+      "code": "ADP",
+      "quantity": 0
+    },
+    {
+      "code": "AFA",
+      "quantity": 0
+    },
+    {
+      "code": "AFT",
+      "quantity": 0
+    },
+    {
+      "code": "AJ1",
+      "quantity": 0
+    }
+  ]
+}

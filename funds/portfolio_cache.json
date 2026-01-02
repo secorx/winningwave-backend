@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "AKBNK",
+    "quantity": 120,
+    "value": 42000,
+    "weight_pct": 35.0
+  },
+  {
+    "symbol": "ASELS",
+    "quantity": 80,
+    "value": 31000,
+    "weight_pct": 26.0
+  },
+  {
+    "symbol": "GARAN",
+    "quantity": 60,
+    "value": 28000,
+    "weight_pct": 23.0
+  },
+  {
+    "symbol": "THYAO",
+    "quantity": 40,
+    "value": 18000,
+    "weight_pct": 16.0
+  }
+]

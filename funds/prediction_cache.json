@@ -1,0 +1,17 @@
+[
+  {
+    "symbol": "ASELS",
+    "direction": "UP",
+    "confidence": 78
+  },
+  {
+    "symbol": "AKBNK",
+    "direction": "UP",
+    "confidence": 71
+  },
+  {
+    "symbol": "THYAO",
+    "direction": "DOWN",
+    "confidence": 64
+  }
+]

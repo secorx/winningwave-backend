@@ -1,0 +1,6347 @@
+[
+  {
+    "code": "AAJ",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "AAK",
+    "name": "ATA PORTFÖY ÇOKLU VARLIK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "AAL",
+    "name": "ATA PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AAS",
+    "name": "ATA PORTFÖY FON SEPETİ SERBEST FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AAV",
+    "name": "ATA PORTFÖY İKİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ABE",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş.S&P 500 YABANCI BYF FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AC1",
+    "name": "PARDUS PORTFÖY KISA VADELİ KATILIM SERBEST FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AC4",
+    "name": "PARDUS PORTFÖY PARA PİYASASI (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AC5",
+    "name": "PARDUS PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AC6",
+    "name": "PARDUS PORTFÖY DÖRDÜNCÜ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ACC",
+    "name": "İSTANBUL PORTFÖY DÖRDÜNCÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ACD",
+    "name": "İSTANBUL PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ACU",
+    "name": "İSTANBUL PORTFÖY URARTU SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ADE",
+    "name": "AK PORTFÖY MUTLAK GETİRİ HEDEFLİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ADP",
+    "name": "AK PORTFÖY BIST BANKA ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AE2",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AE3",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AEA",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "AED",
+    "name": "ATA PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "AEH",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AEN",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. İKİNCİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AES",
+    "name": "AK PORTFÖY PETROL YABANCI BYF FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AEU",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. BIST TEMETTÜ ENDEKSİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AEV",
+    "name": "ALLBATROSS PORTFÖY SANAYİ ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AEZ",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. ATA PORTFÖY DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AFA",
+    "name": "AK PORTFÖY AMERİKA YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AFH",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "AFJ",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AFO",
+    "name": "AK PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "AFP",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AFS",
+    "name": "AK PORTFÖY SAĞLIK SEKTÖRÜ YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AFT",
+    "name": "AK PORTFÖY YENİ TEKNOLOJİLER YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AFV",
+    "name": "AK PORTFÖY AVRUPA YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AGA",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "AGB",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. BÜYÜME KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AGC",
+    "name": "AK PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "AGD",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AGE",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AGH",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. KATILIM HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AGM",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. MUHAFAZAKAR KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AH0",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. ATAK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AH1",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. İKİNCİ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AH3",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. BİRİNCİ KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AH4",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. İKİNCİ KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AH5",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AH6",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. BİRİNCİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AH8",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AH9",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AHB",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. İKİNCİ HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AHC",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. ÖZEL SEKTÖR BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AHI",
+    "name": "ATLAS PORTFÖY BİRİNCİ HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AHL",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AHN",
+    "name": "ATLAS PORTFÖY SERBEST(DÖVİZ)FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AHU",
+    "name": "ATLAS PORTFÖY BİRİNCİ ÖZEL SEKTÖR BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AHV",
+    "name": "AZİMUT PORTFÖY DENGELİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AIE",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS BÜYÜME KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AIP",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AIS",
+    "name": "AK PORTFÖY PARA PİYASASI KATILIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AJ1",
+    "name": "A1 CAPİTAL PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AJA",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJB",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS ATAK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJC",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJF",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJG",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJH",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. OKS ATAK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJK",
+    "name": "AK PORTFÖY 0-5 YIL VADELİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AJP",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS ATAK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJR",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJT",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJV",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJY",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS ATAK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AJZ",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AK2",
+    "name": "AK PORTFÖY UZUN VADELİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AK3",
+    "name": "AK PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AKE",
+    "name": "AK PORTFÖY EUROBOND (AMERİKAN DOLARI) BORÇLANMA ARAÇLARI FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AKU",
+    "name": "AK PORTFÖY BIST 30 ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ALC",
+    "name": "AK PORTFÖY KAR PAYI ÖDEYEN ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ALI",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. KOÇ İŞTİRAK ENDEKSİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "ALJ",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ALR",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. KARMA EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ALS",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ALU",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AMG",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. BİRİNCİ KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AMR",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. KAMU DIŞ BORÇLANMA ARAÇLARI (ABD DOLARI 0-5 YIL VADELİ) EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AMZ",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. ALTIN EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "AN1",
+    "name": "STRATEJİ PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ANE",
+    "name": "VİENNALİFE EMEKLİLİK VE HAYAT A.Ş. KARMA EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ANG",
+    "name": "VİENNALİFE EMEKLİLİK VE HAYAT A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "ANJ",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ANP",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ANS",
+    "name": "VİENNALİFE EMEKLİLİK VE HAYAT A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "ANZ",
+    "name": "ATA PORTFÖY DÖRDÜNCÜ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AOJ",
+    "name": "ALLBATROSS PORTFÖY İNŞAAT SEKTÖRÜ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AOY",
+    "name": "AK PORTFÖY ALTERNATİF ENERJİ YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AP5",
+    "name": "ATLAS PORTFÖY BEŞİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AP7",
+    "name": "PARDUS PORTFÖY ALGO ETNA İSTATİSTİKSEL ARBİTRAJ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "APG",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. SÜRDÜRÜLEBİLİRLİK FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "APJ",
+    "name": "AK PORTFÖY BIST ŞİRKETLERİ FON SEPETİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "APT",
+    "name": "AK PORTFÖY ORTA VADELI BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ARE",
+    "name": "İSTANBUL PORTFÖY YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "ARL",
+    "name": "AK PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ARM",
+    "name": "AK PORTFÖY İKİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AS1",
+    "name": "ALLBATROSS PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ASJ",
+    "name": "AKTİF PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ATE",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. İŞ BANKASI İŞTİRAK ENDEKSİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "ATK",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "AU1",
+    "name": "A1 CAPİTAL PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "AUA",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AUG",
+    "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş. DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AUT",
+    "name": "ATA PORTFÖY DENGELİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "AUV",
+    "name": "AK PORTFÖY UZUN VADELİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AVB",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. KAMU DIŞ BORÇLANMA ARAÇLARI (ABD DOLARI 5-15 YIL VADELİ) EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AVD",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. KARMA EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AVG",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AVN",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "AVO",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. ÖZEL SEKTÖR BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AVR",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. TEKNOLOJİ SEKTÖRÜ YABANCI DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AYA",
+    "name": "ATA PORTFÖY KAR PAYI ÖDEYEN HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "AYJ",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "AYR",
+    "name": "AK PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AZD",
+    "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş. BİRİNCİ KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "AZH",
+    "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "AZK",
+    "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "AZS",
+    "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "AZY",
+    "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş. TARIM VE GIDA FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BBF",
+    "name": "PARDUS PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BBP",
+    "name": "ALLBATROSS PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BBS",
+    "name": "BULLS PORTFÖY BİRİNCİ SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BCK",
+    "name": "DENİZ PORTFÖY BLOCKCHAİN VE FINTECH TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BCO",
+    "name": "BULLS PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BDA",
+    "name": "YAPI KREDİ PORTFÖY BİRİNCİ KATILIM SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "BDC",
+    "name": "AURA PORTFÖY BODRUM SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BDS",
+    "name": "PARDUS PORTFÖY BIST 30 DIŞI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BDY",
+    "name": "AK PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BEE",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BEF",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. OKS DİNAMİK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BEH",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "BEI",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BEK",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. FİBA PORTFÖY BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BEO",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BFE",
+    "name": "ALLBATROSS PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BFT",
+    "name": "AZİMUT PORTFÖY BANKA VE FİNANS SEKTÖRÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BGL",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. ALTIN EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "BGP",
+    "name": "AK PORTFÖY ÜÇÜNCÜ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BHA",
+    "name": "BULLS PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BHF",
+    "name": "PARDUS PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BHI",
+    "name": "BV PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BHK",
+    "name": "BEREKET EMEKLİLİK VE HAYAT A.Ş. KİRA SERTİFİKALARI KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BHL",
+    "name": "İŞ PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BHS",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. SÜRDÜRÜLEBİLİRLİK  HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "BHT",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. TEKNOLOJİ SEKTÖRÜ HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "BID",
+    "name": "QNB PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BIG",
+    "name": "YAPI KREDİ PORTFÖY ÜÇÜNCÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BIH",
+    "name": "PARDUS PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BIO",
+    "name": "İŞ PORTFÖY SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BIP",
+    "name": "İSTANBUL PORTFÖY BİRİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BIS",
+    "name": "BV PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BIY",
+    "name": "AZİMUT PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BJD",
+    "name": "AZİMUT PORTFÖY 13.0 SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "BKY",
+    "name": "YAPI KREDİ PORTFÖY BİRİNCİ KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "BLD",
+    "name": "DENİZ PORTFÖY BALEV EĞİTİME DESTEK SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BLT",
+    "name": "BULLS PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "BMU",
+    "name": "BULLS PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BNA",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. ALTIN EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "BNB",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. MUTLAK GETİRİ HEDEFLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BNC",
+    "name": "AK PORTFÖY BEŞİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BNH",
+    "name": "İSTANBUL PORTFÖY BANKACILIK SEKTÖRÜ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BNL",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "BNO",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş TEMETTÜ ÖDEYEN ŞİRKETLER HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "BNS",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "BNZ",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BOL",
+    "name": "AKTİF PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BON",
+    "name": "A1 CAPİTAL PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BOS",
+    "name": "BULLS PORTFÖY ALTINCI HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BPE",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BPG",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş.BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BPH",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "BPI",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BPJ",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BPK",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. İKİNCİ KAMU DIŞ BORÇLANMA ARAÇLARI (ABD DOLARI 0-5 YIL VADELİ) EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "BPN",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BPO",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS DİNAMİK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BPR",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS MUHAFAZAKAR DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BPS",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BPU",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. BİRİNCİ KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "BPZ",
+    "name": "BULLS PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BRC",
+    "name": "RE-PIE PORTFÖY BİRİNCİ İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BRF",
+    "name": "DENİZ PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BRR",
+    "name": "AK PORTFÖY İKİNCİ KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BRT",
+    "name": "PARDUS PORTFÖY BEREKET HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BSD",
+    "name": "BV PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "BSH",
+    "name": "ATLAS PORTFÖY BANKACILIK SEKTÖRÜ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BSM",
+    "name": "GLOBAL MD PORTFÖY BERRAK SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BSR",
+    "name": "BNP PARIBAS CARDIF EMEKLİLİK A.Ş. SÜRDÜRÜLEBİLİRLİK FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BST",
+    "name": "PARDUS PORTFÖY BANKACILIK SEKTÖRÜ DIŞI ŞİRKETLER HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BTE",
+    "name": "BV PORTFÖY OYUN VE TEKNOLOJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BTJ",
+    "name": "ATLAS PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BTK",
+    "name": "BV PORTFÖY TEKNOLOJİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "BTZ",
+    "name": "ATLAS PORTFÖY BIST 30 DIŞI ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BUV",
+    "name": "BULLS PORTFÖY VOLTRAN SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BUY",
+    "name": "AK PORTFÖY BÜYÜYEN ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BV1",
+    "name": "BV PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BVF",
+    "name": "BV PORTFÖY PARA PİYASASI (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "BVM",
+    "name": "ALLBATROSS PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "BVV",
+    "name": "BV PORTFÖY TEKNOLOJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BVZ",
+    "name": "BV PORTFÖY İSTATİSTİKSEL ARBİTRAJ SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "BZY",
+    "name": "BNP PARİBAS CARDİF EMEKLİLİK A.Ş. TEKNOLOJİ SEKTÖRÜ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CAH",
+    "name": "A1 CAPİTAL PORTFÖY HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "CFA",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. ALTIN EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "CFC",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. ORTA VADELİ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "CFD",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "CFE",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CFO",
+    "name": "ROTA PORTFÖY İKİNCİ PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "CHA",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHC",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. OKS MUHAFAZAKAR DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHD",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHG",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHH",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. BİRİNCİ HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "CHI",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. OKS DİNAMİK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHK",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "CHM",
+    "name": "QNB SAĞLIK HAYAT  SİGORTA VE EMEKLİLİK A.Ş. DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHN",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHO",
+    "name": "QNB SAĞLIK HAYAT  SİGORTA VE EMEKLİLİK A.Ş. OKS ATAK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CHS",
+    "name": "QNB SAĞLIK HAYAT  SİGORTA VE EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "CHU",
+    "name": "QNB SAĞLIK HAYAT SİGORTA VE EMEKLİLİK A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "CIN",
+    "name": "AKTİF PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "CKF",
+    "name": "ALBARAKA PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CKL",
+    "name": "YAPI KREDİ PORTFÖY ÇOKLU VARLIK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "CKS",
+    "name": "İŞ PORTFÖY BİRİNCİ KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "CPT",
+    "name": "ROTA PORTFÖY ÇİP TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "CPU",
+    "name": "AKTİF PORTFÖY TEKNOLOJİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CVK",
+    "name": "INVEO PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "CVL",
+    "name": "A1 CAPİTAL PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "DA1",
+    "name": "A1 CAPİTAL PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DAH",
+    "name": "DENİZ PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DAS",
+    "name": "DENİZ PORTFÖY ONİKİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DBA",
+    "name": "DENİZ PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "DBB",
+    "name": "DENİZ PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DBH",
+    "name": "DENİZ PORTFÖY EUROBOND (DÖVİZ) BORÇLANMA ARAÇLARI FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DBK",
+    "name": "DENİZ PORTFÖY KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DBP",
+    "name": "DENİZ PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DBZ",
+    "name": "DENİZ PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DCB",
+    "name": "DENİZ PORTFÖY PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DDA",
+    "name": "DENİZ PORTFÖY BANKACILIK SEKTÖRÜ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DDF",
+    "name": "DENİZ PORTFÖY DİNAMO SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DEF",
+    "name": "ALLBATROSS PORTFÖY DEFNE SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DFC",
+    "name": "DENİZ PORTFÖY TARIM VE GIDA DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DFD",
+    "name": "DENİZ PORTFÖY EMTİA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DFI",
+    "name": "ATLAS PORTFÖY SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DGF",
+    "name": "A1 CAPİTAL PORTFÖY DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DGH",
+    "name": "ATA PORTFÖY PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DHJ",
+    "name": "DENİZ PORTFÖY TEKNOLOJİ ŞİRKETLERİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DHM",
+    "name": "DENİZ PORTFÖY ESG-SÜRDÜRÜLEBİLİRLİK FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "DHT",
+    "name": "DENİZ PORTFÖY HAVACILIK VE SAVUNMA TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DID",
+    "name": "DENİZ PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DIP",
+    "name": "DENİZ PORTFÖY İKİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DKH",
+    "name": "DENİZ PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DKL",
+    "name": "DENİZ PORTFÖY BİRİNCİ KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DKR",
+    "name": "DENİZ PORTFÖY ONDÖRDÜNCÜ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DL2",
+    "name": "DENİZ PORTFÖY İKİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DLD",
+    "name": "DENİZ PORTFÖY SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DLY",
+    "name": "DENİZ PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DMG",
+    "name": "DENİZ PORTFÖY GÜMÜŞ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "DNF",
+    "name": "A1 CAPİTAL PORTFÖY DİNAMİK FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "DNH",
+    "name": "DENİZ PORTFÖY İNŞAAT SEKTÖRÜ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DNK",
+    "name": "TACİRLER PORTFÖY DENGE KATILIM SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DNM",
+    "name": "QNB PORTFÖY DİNAMİK DAĞILIMLI SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DNP",
+    "name": "DENİZ PORTFÖY PARA PİYASASI KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DOH",
+    "name": "TERA PORTFÖY DÖRDÜNCÜ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DOL",
+    "name": "AKTİF PORTFÖY ÜÇÜNCÜ AKTİF SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DOV",
+    "name": "DENİZ PORTFÖY ONÜÇÜNCÜ SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DPB",
+    "name": "DENİZ PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DPK",
+    "name": "DENİZ PORTFÖY KİRA SERTİFİKALARI KATILIM (TL) FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "DPT",
+    "name": "DENİZ PORTFÖY BİST TEMETTÜ 25 ENDEKSİ HİSSE SENEDİ FONU ( HİSSE SENEDİ YOĞUN FON )",
+    "type": "HISSE"
+  },
+  {
+    "code": "DSD",
+    "name": "DENİZ PORTFÖY İKİNCİ SERBEST (DÖVİZ_AVRO) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DSP",
+    "name": "DENİZ PORTFÖY DENGELİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "DTH",
+    "name": "EMAA BLUE PORTFÖY DÖNÜŞÜM TEKNOLOJİLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DTL",
+    "name": "DENİZ PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DTM",
+    "name": "DENİZ PORTFÖY TEMETTÜ ÖDEYEN ŞİRKETLER DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DTZ",
+    "name": "AK PORTFÖY ROBOTİK TEKNOLOJİLER DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DUD",
+    "name": "DENİZ PORTFÖY UZUN VADELİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "DUH",
+    "name": "HEDEF PORTFÖY UFUK HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DUV",
+    "name": "DENİZ PORTFÖY UZUN VADELİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DVS",
+    "name": "DENİZ PORTFÖY KISA VADELİ SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "DVT",
+    "name": "DENİZ PORTFÖY METAVERSE VE DİJİTAL YAŞAM TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DXP",
+    "name": "DENİZ PORTFÖY İHRACATÇI ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DYN",
+    "name": "DENİZ PORTFÖY ELEKTRİKLİ VE OTONOM ARAÇ TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "DZE",
+    "name": "DENİZ PORTFÖY BIST 100 ENDEKSİ HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "DZM",
+    "name": "DENİZ PORTFÖY BEŞİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "EAE",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. ALTIN EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "EBD",
+    "name": "GLOBAL MD PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "EBI",
+    "name": "EMAA BLUE PORTFÖY İKİNCİ SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "EBS",
+    "name": "EMAA BLUE PORTFÖY BİRİNCİ SERBEST (DÖVİZ-ABD DOLARI) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "EC2",
+    "name": "GLOBAL MD PORTFÖY BİRİNCİ HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ECA",
+    "name": "GLOBAL MD PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "EDT",
+    "name": "DENİZ PORTFÖY TED EĞİTİME DESTEK SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "EDU",
+    "name": "İŞ PORTFÖY TEV EĞİTİME DESTEK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "EHG",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OYAK PORTFÖY DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "EHK",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. KATILIM HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "EIB",
+    "name": "QİNVEST PORTFÖY DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "EID",
+    "name": "QİNVEST PORTFÖY HİSSE SENEDİ FONU (HİSSE YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "EIE",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. ATAK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "EIF",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OYAK PORTFÖY KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "EIG",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "EIH",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OYAK PORTFÖY HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "EIK",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "EIL",
+    "name": "QİNVEST PORTFÖY PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "EKF",
+    "name": "QİNVEST PORTFÖY KİRA SERTİFİKASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ELZ",
+    "name": "QİNVEST PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "EML",
+    "name": "AK PORTFÖY EMLAK SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ENF",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. ENERJİ SEKTÖRÜ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ENJ",
+    "name": "AKTİF PORTFÖY ENERJİ ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "EPA",
+    "name": "EMAA BLUE PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "EPI",
+    "name": "EMAA BLUE PORTFÖY İNŞAAT SEKTÖRÜ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "EPK",
+    "name": "EMAA BLUE PORTFÖY KIYMETLİ MADENLER KATILIM FON SEPETİ FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "EPP",
+    "name": "EMAA BLUE PORTFÖY PARA PİYASASI SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "EPT",
+    "name": "EMAA BLUE PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ESG",
+    "name": "AKTİF PORTFÖY ESG SÜRDÜRÜLEBİLİRLİK SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ESP",
+    "name": "AURA PORTFÖY EMTİA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "EST",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OYAK PORTFÖY STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "EUN",
+    "name": "GARANTİ PORTFÖY İKİNCİ SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "EUZ",
+    "name": "GARANTİ PORTFÖY SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "EYT",
+    "name": "AKTİF PORTFÖY İKİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FAK",
+    "name": "FONMAP PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "FAL",
+    "name": "ONE PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "FBC",
+    "name": "ONE PORTFÖY KAR PAYI ÖDEYEN KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FBI",
+    "name": "FİBA PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FBV",
+    "name": "İŞ PORTFÖY MODEL SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FBZ",
+    "name": "FİBA PORTFÖY TEKNOLOJİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FCK",
+    "name": "ONE PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FD1",
+    "name": "ONE PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FDG",
+    "name": "FONMAP PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FEA",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. ATLAS PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FEF",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. TACİRLER PORTFÖY DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FEN",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "FEO",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. İSTANBUL PORTFÖY DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FES",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FFC",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. TEKNOLOJİ SEKTÖRÜ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FFH",
+    "name": "QNB PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FFP",
+    "name": "QNB PORTFÖY FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FFZ",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. INVEO PORTFÖY FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FGF",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "FGH",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FI3",
+    "name": "QNB PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FIB",
+    "name": "FİBA PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "FIC",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FID",
+    "name": "FİBA PORTFÖY ÇOKLU VARLIK İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIF",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. İSTANBUL PORTFÖY DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIG",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIH",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS ATAK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIK",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIL",
+    "name": "FİBA PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FIM",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIR",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OSMANLI PORTFÖY DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIS",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIT",
+    "name": "FİBA PORTFÖY BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FIU",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIV",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS ATAK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FIZ",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. OKS MUHAFAZAKAR DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FJB",
+    "name": "FİBA PORTFÖY BLOK ZİNCİRİ TEKNOLOJİLERİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FJG",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş.  RE-PIE PORTFÖY DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FJZ",
+    "name": "FİBA PORTFÖY FIRTINA SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FKE",
+    "name": "QNB PORTFÖY KRİSTAL SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FLS",
+    "name": "YAPI KREDİ PORTFÖY FLORYA SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FLY",
+    "name": "AKTİF PORTFÖY HAVACILIK VE SAVUNMA TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FMG",
+    "name": "QNB PORTFÖY GÜMÜŞ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FMV",
+    "name": "DENİZ PORTFÖY FMV IŞIK ÜNİVERSİTESİ EĞİTİME DESTEK SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FNO",
+    "name": "QNB PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FNT",
+    "name": "HEDEF PORTFÖY MODEL HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FOA",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. AZİMUT FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FP4",
+    "name": "ONE PORTFÖY DÖRDÜNCÜ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FPE",
+    "name": "FİBA PORTFÖY EUROBOND BORÇLANMA ARAÇLARI (DÖVİZ) FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FPG",
+    "name": "FİBA PORTFÖY GÜMÜŞ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FPH",
+    "name": "FİBA PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FPI",
+    "name": "FONMAP PORTFÖY BİRİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FPK",
+    "name": "FİBA PORTFÖY KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FPZ",
+    "name": "QNB PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FRC",
+    "name": "FONMAP PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FS5",
+    "name": "ONE PORTFÖY BİRİNCİ İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FS6",
+    "name": "ONE PORTFÖY İKİNCİ İSTATİSTİKSEL ARBİTRAJ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FSF",
+    "name": "FİBA PORTFÖY PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FSG",
+    "name": "FİBA PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FSH",
+    "name": "FİBA PORTFÖY FON SEPETİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FSK",
+    "name": "QNB PORTFÖY İKİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FSP",
+    "name": "FONMAP PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FSR",
+    "name": "FİBA PORTFÖY İKİNCİ SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FSU",
+    "name": "TERA PORTFÖY FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FTF",
+    "name": "ONE PORTFÖY TEKNOLOJİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FTL",
+    "name": "ONE PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FUA",
+    "name": "AK PORTFÖY İHRACATÇI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FUB",
+    "name": "QNB PORTFÖY EUROBOND (DÖVİZ) BORÇLANMA ARAÇLARI FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "FVI",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş ESG SÜRDÜRÜLEBİLİRLİK FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FYD",
+    "name": "QNB PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "FYI",
+    "name": "AZİMUT PORTFÖY 4.0 SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "FYN",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FYO",
+    "name": "QNB PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "FYU",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FZJ",
+    "name": "FİBA PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "FZP",
+    "name": "FİBA PORTFÖY SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GA1",
+    "name": "GARANTİ PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GAE",
+    "name": "GARANTİ PORTFÖY BİST30 ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GAF",
+    "name": "INVEO PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GAG",
+    "name": "INVEO PORTFÖY BİRİNCİ SERBEST (DÖVIZ)  FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "GAH",
+    "name": "GARANTİ PORTFÖY MUTLAK GETİRİ HEDEFLİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GAS",
+    "name": "GARANTİ PORTFÖY ÜÇÜNCÜ SERBEST(DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "GBC",
+    "name": "AZİMUT PORTFÖY YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GBG",
+    "name": "INVEO PORTFÖY G-20 ÜLKELERİ YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GBH",
+    "name": "GARANTİ PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GBJ",
+    "name": "GARANTİ PORTFÖY BANKACILIK SEKTÖRÜ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GBL",
+    "name": "AZİMUT PYŞ KISA VADELİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GBN",
+    "name": "GARANTİ PORTFÖY BEŞİNCİ (TL) SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GBV",
+    "name": "GARANTİ PORTFÖY BLOCKCHAİN TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GBZ",
+    "name": "AZİMUT PORTFÖY EMTİA FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GCK",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GCN",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. YENİ TEKNOLOJİLER HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GCS",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "GCT",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. BİRİNCİ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GCY",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. KARMA EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GEA",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GED",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. TEMETTÜ ÖDEYEN ŞİRKETLER HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GEH",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GEK",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GES",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GEU",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GEV",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "GFH",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GGJ",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. GÜMÜŞ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GGK",
+    "name": "INVEO PORTFÖY ALTIN FON",
+    "type": "ALTIN"
+  },
+  {
+    "code": "GHA",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "GHD",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "GHE",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHG",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "GHH",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GHJ",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHM",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHN",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHO",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. ÜÇÜNCÜ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHP",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHS",
+    "name": "GARANTİ PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GHT",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHU",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHV",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS DENGELİ KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHY",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS DİNAMİK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GHZ",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. OKS TEMKİNLİ KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GID",
+    "name": "GARANTİ PORTFÖY İNŞAAT SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GIE",
+    "name": "GARANTİ PORTFÖY GARANTİ BBVA İKLİM ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GIH",
+    "name": "ALLBATROSS PORTFÖY GIDA VE İÇECEK SEKTÖRÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GJB",
+    "name": "INVEO PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GKB",
+    "name": "GARANTİ EMEKLİLİK VE HAYAT A.Ş. KİRA SERTİFİKALARI KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GKF",
+    "name": "GLOBAL MD PORTFÖY KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GKG",
+    "name": "GARANTİ PORTFÖY KAR PAYI ÖDEYEN HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GKH",
+    "name": "GARANTİ PORTFÖY PARA PİYASASI KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GKV",
+    "name": "GARANTİ PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GL1",
+    "name": "AZİMUT PYŞ BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GLC",
+    "name": "AKTİF PORTFÖY ÜÇÜNCÜ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GLG",
+    "name": "AKTİF PORTFÖY CAPİTAL HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GLS",
+    "name": "AZİMUT PORTFÖY  KİRA SERTİFİKALARI (SUKUK) KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GMA",
+    "name": "AZİMUT PORTFÖY ÇOKLU VARLIK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GMC",
+    "name": "TEB PORTFÖY GÜMÜŞ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GMD",
+    "name": "GLOBAL MD PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GMF",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. GÜMÜŞ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GMI",
+    "name": "AK PORTFÖY GÜMÜŞ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GMN",
+    "name": "GLOBAL MD PORTFÖY BİRİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GMR",
+    "name": "INVEO PORTFÖY İKİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GNH",
+    "name": "GLOBAL MD PORTFÖY ALGORİTMİK MODEL HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GNS",
+    "name": "GARANTİ PORTFÖY ENERJİ ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GO1",
+    "name": "ONE PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GO2",
+    "name": "ONE PORTFÖY KATILIM FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GO3",
+    "name": "ONE PORTFÖY ÜÇÜNCÜ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GO4",
+    "name": "ONE PORTFÖY DÖRDÜNCÜ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GO6",
+    "name": "ONE PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GO9",
+    "name": "ONE PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GOH",
+    "name": "GARANTİ PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GOL",
+    "name": "GARANTİ PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "GPA",
+    "name": "GARANTİ PORTFÖY EUROBOND BORÇLANMA ARAÇLARI (DÖVİZ) FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "GPB",
+    "name": "GARANTİ PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GPC",
+    "name": "GARANTİ PORTFÖY İKİNCİ SERBEST ( DÖVİZ ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "GPF",
+    "name": "GARANTİ PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GPG",
+    "name": "INVEO PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GPI",
+    "name": "GARANTİ PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GPL",
+    "name": "GARANTİ PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "GPN",
+    "name": "GARANTİ PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GPT",
+    "name": "AKTİF PORTFÖY ROBOTİK TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GPU",
+    "name": "GARANTİ PORTFÖY ÜÇÜNCÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GPZ",
+    "name": "GARANTİ PORTFÖY ÜÇÜNCÜ PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GRA",
+    "name": "HDI FİBA EMEKLİLİK VE HAYAT A.Ş. ALTIN EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "GRL",
+    "name": "QNB PORTFÖY AGRESİF SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GRO",
+    "name": "GARANTİ PORTFÖY OTUZUNCU SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "GRT",
+    "name": "GARANTİ PORTFÖY TEKNOLOJİ ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GSP",
+    "name": "AZİMUT PYŞ KAR PAYI ÖDEYEN HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GTA",
+    "name": "GARANTİ PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "GTF",
+    "name": "AZİMUT PYŞ BİRİNCİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GTH",
+    "name": "GARANTİ PORTFÖY İHRACATÇI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GTM",
+    "name": "GARANTİ PORTFÖY TEMETTÜ ÖDEYEN ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GTY",
+    "name": "GARANTİ PORTFÖY TREND SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GTZ",
+    "name": "GARANTİ PORTFÖY GÜMÜŞ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GUB",
+    "name": "GARANTİ PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GUH",
+    "name": "GARANTİ PORTFÖY YABANCI TEKNOLOJİ HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "GUK",
+    "name": "GARANTİ PORTFÖY GÜMÜŞ KATILIM SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GUM",
+    "name": "AK PORTFÖY GÜMÜŞ FON SEPETI FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GUV",
+    "name": "GARANTİ PORTFÖY UZUN VADELİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GVA",
+    "name": "GARANTİ PORTFÖY ELEKTRİKLİ VE OTONOM ARAÇLAR DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GVI",
+    "name": "GARANTİ PORTFÖY ÜÇÜNCÜ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GYK",
+    "name": "INVEO PORTFÖY BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "GZE",
+    "name": "GARANTİ PORTFÖY EMTİA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZG",
+    "name": "GARANTİ PORTFÖY SAĞLIK SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZH",
+    "name": "GARANTİ PORTFÖY TEMİZ ENERJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZJ",
+    "name": "GARANTİ PORTFÖY İKİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZL",
+    "name": "GARANTİ PORTFÖY TARIM VE GIDA SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZM",
+    "name": "GLOBAL MD PORTFÖY DURU SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZN",
+    "name": "GLOBAL MD PORTFÖY BOĞAZİÇİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZP",
+    "name": "GARANTİ PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZR",
+    "name": "GARANTİ PORTFÖY SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "GZV",
+    "name": "GARANTİ PORTFÖY ESG SÜRDÜRÜLEBİLİRLİK FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZY",
+    "name": "GARANTİ PORTFÖY TURİZM VE SEYAHAT SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "GZZ",
+    "name": "GARANTİ PORTFÖY FİNANS SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HAM",
+    "name": "HEDEF PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "HAR",
+    "name": "BV PORTFÖY HARMONY SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HAT",
+    "name": "HEDEF PORTFÖY ATLAS İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HBF",
+    "name": "HSBC PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "HBN",
+    "name": "HSBC PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "HBU",
+    "name": "HSBC PORTFÖY BİST 30 ENDEKSİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HDA",
+    "name": "HEDEF PORTFÖY DÖRDÜNCÜ İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HDK",
+    "name": "HEDEF PORTFÖY VEGA İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HEA",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "HEB",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "HEC",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "HED",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "HEE",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "HEH",
+    "name": "HEDEF PORTFÖY ALGO EVEREST İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HEI",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "HEK",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "HES",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "HFI",
+    "name": "HEDEF PORTFÖY İKİNCİ KATILIM HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HFR",
+    "name": "A1 CAPİTAL PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HFS",
+    "name": "ALLIANZ HAYAT VE EMEKLİLİK A.Ş. HSBC FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "HGM",
+    "name": "HEDEF PORTFÖY İKİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HGR",
+    "name": "HEDEF PORTFÖY ALGORİTMİK STRATEJİLER SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HGV",
+    "name": "HEDEF PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HHB",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. BIST-30 DIŞI ŞİRKETLER HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "HHM",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KATILIM AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "HHY",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KARMA EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "HIA",
+    "name": "HEDEF PORTFÖY İSTATİSTİKSEL ARBİTRAJ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HIH",
+    "name": "GARANTİ  PORTFÖY HOLDİNGLER VE İŞTİRAKLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HIM",
+    "name": "HEDEF PORTFÖY İKİNCİ MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HIZ",
+    "name": "AZİMUT PORTFÖY DİNAMİK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HJB",
+    "name": "HEDEF PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HKG",
+    "name": "ZİRAAT PORTFÖY HALK'IN ÜRETEN KADINLARI DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HKH",
+    "name": "HEDEF PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HKJ",
+    "name": "HEDEF PORTFÖY PARA PİYASASI SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HKM",
+    "name": "HEDEF PORTFÖY BAŞAK HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HKR",
+    "name": "HSBC PORTFÖY KIRMIZI HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HMC",
+    "name": "HEDEF PORTFÖY EKİNOKS SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HMG",
+    "name": "HSBC PYŞ MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST (TL) FON(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HML",
+    "name": "HEDEF PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "HMS",
+    "name": "HSBC PORTFÖY SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HNC",
+    "name": "HEDEF PORTFÖY ÜÇÜNCÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HOA",
+    "name": "HSBC PORTFÖY TEKNOLOJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HOY",
+    "name": "HSBC PORTFÖY YABANCI BYF FON SEPETI",
+    "type": "KARMA"
+  },
+  {
+    "code": "HP3",
+    "name": "HEDEF PORTFÖY LİDYA SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "HPD",
+    "name": "HSBC PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HPH",
+    "name": "HEDEF PORTFÖY PARA PİYASASI KATILIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HPO",
+    "name": "HSBC PORTFÖY ÇOKLU VARLIK BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HPT",
+    "name": "HSBC PORTFÖY KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HRZ",
+    "name": "AKTİF PORTFÖY BIST HALKA ARZ ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HS1",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HSA",
+    "name": "HSBC PORTFÖY DEĞİŞKEN (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HSL",
+    "name": "HSBC PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HSR",
+    "name": "ALLİANZ YAŞAM VE EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "HST",
+    "name": "HSBC PORTFÖY  BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HTF",
+    "name": "HSBC PORTFÖY PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HTJ",
+    "name": "HEDEF PORTFÖY TEKNOLOJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HTS",
+    "name": "HSBC PORTFÖY ALTINCI SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "HVI",
+    "name": "DENİZ PORTFÖY HOLDİNGLER VE İŞTİRAKLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HVK",
+    "name": "HEDEF PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HVS",
+    "name": "HSBC PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HVT",
+    "name": "ALLBATROSS PORTFÖY BİRİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HVU",
+    "name": "ALLBATROSS PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HVZ",
+    "name": "ALLBATROSS PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "HYP",
+    "name": "AZİMUT PORTFÖY İVME SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "HYU",
+    "name": "HSBC PORTFÖY KISA VADELİ SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "HYV",
+    "name": "HEDEF PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IAE",
+    "name": "İSTANBUL PORTFÖY AGRESİF DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IAM",
+    "name": "İŞ PORTFÖY AGRESİF FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IAT",
+    "name": "İŞ PORTFÖY KİRA SERTİFİKALARI KATILIM (TL) FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IAU",
+    "name": "PARDUS PORTFÖY İKİNCİ İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IAY",
+    "name": "INVEO PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "IBB",
+    "name": "İŞ PORTFÖY ATAK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ICA",
+    "name": "ICBC TURKEY PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "ICC",
+    "name": "ICBC TURKEY PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ICD",
+    "name": "ICBC TURKEY PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ICE",
+    "name": "ICBC TURKEY PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ICF",
+    "name": "ICBC TURKEY PORTFÖY HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ICH",
+    "name": "PARDUS PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ICS",
+    "name": "ICBC TURKEY PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ICV",
+    "name": "ICBC TURKEY PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ICZ",
+    "name": "AK PORTFÖY TEKNOLOJİ ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IDD",
+    "name": "LOGOS PORTFÖY DİNAMİK DAĞIMLI SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IDF",
+    "name": "İŞ PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "IDH",
+    "name": "İŞ PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IDI",
+    "name": "AZİMUT PORTFÖY İNŞAAT SEKTÖRÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IDL",
+    "name": "AKTİF PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IDO",
+    "name": "İŞ PORTFÖY ONDOKUZUNCU SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "IDY",
+    "name": "TEB PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IEA",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IEB",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "IEE",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IEF",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IEG",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IEH",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "IEK",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. KARMA EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IEN",
+    "name": "İSTANBUL PORTFÖY İNŞAAT SEKTÖRÜ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IEV",
+    "name": "İŞ PORTFÖY TAŞIMACILIK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IFN",
+    "name": "ICBC TURKEY PORTFÖY SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IFV",
+    "name": "ICBC TURKEY PORTFÖY BİRİNCİ KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IHA",
+    "name": "ALLBATROSS PORTFÖY İKİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IHC",
+    "name": "INVEO PORTFÖY INTER SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IHK",
+    "name": "İŞ PORTFÖY İŞ'TE KADIN HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IHP",
+    "name": "İSTANBUL PORTFÖY İKİNCİ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IHT",
+    "name": "İŞ PORTFÖY İHRACATÇI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IHV",
+    "name": "INVEO PORTFÖY BEŞİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IHZ",
+    "name": "ALLBATROSS PORTFÖY İKİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IIE",
+    "name": "İSTANBUL PORTFÖY ONDÖRDÜNCÜ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IIH",
+    "name": "İSTANBUL PORTFÖY ÜÇÜNCÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IIN",
+    "name": "INVEO PORTFÖY PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IJA",
+    "name": "INVEO PORTFÖY ATAK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IJB",
+    "name": "İŞ PORTFÖY DİJİTAL OYUN SEKTÖRÜ KARMA FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IJC",
+    "name": "İŞ PORTFÖY YARI İLETKEN TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IJH",
+    "name": "ICBC TURKEY PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IJP",
+    "name": "İŞ PORTFÖY BLOCKCHAİN TEKNOLOJİLERİ KARMA FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IJT",
+    "name": "İŞ PORTFÖY TARIM SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IJV",
+    "name": "İSTANBUL PORTFÖY BİRİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IJZ",
+    "name": "İŞ PORTFÖY SİBER GÜVENLİK TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IKL",
+    "name": "İŞ PORTFÖY SAĞLIK ŞİRKETLERİ KARMA FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IKP",
+    "name": "İŞ PORTFÖY YENİLENEBİLİR ENERJİ KARMA FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IKV",
+    "name": "İŞ PORTFÖY İKİNCİ KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ILZ",
+    "name": "İŞ PORTFÖY TEMKİNLİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IMB",
+    "name": "İSTANBUL PORTFÖY ALGORİTMİK MODEL HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IMF",
+    "name": "İSTANBUL PORTFÖY MAESTRO SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IML",
+    "name": "İŞ PORTFÖY MODEL PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IOG",
+    "name": "İŞ PORTFÖY GÜMÜŞ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IOO",
+    "name": "İŞ PORTFÖY İKİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IPB",
+    "name": "İSTANBUL PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IPG",
+    "name": "İŞ PORTFÖY ATAK FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IPJ",
+    "name": "İŞ PORTFÖY ELEKTRİKLİ ARAÇLAR KARMA FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IPV",
+    "name": "İŞ PORTFÖY EUROBOND BORÇLANMA ARAÇLARI (DÖVİZ) FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "IRB",
+    "name": "İSTANBUL PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IRF",
+    "name": "İSTANBUL PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IRO",
+    "name": "İSTANBUL PORTFÖY ROBOTİK TEKNOLOJİLERİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IRT",
+    "name": "INVEO PORTFÖY TEKNOLOJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IRV",
+    "name": "İSTANBUL PORTFÖY İSTATİSTİKSEL ARBİTRAJ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IRY",
+    "name": "INVEO PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "IST",
+    "name": "İSTANBUL PORTFÖY KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ITP",
+    "name": "İŞ PORTFÖY TEKNOLOJİ KARMA FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IUF",
+    "name": "İŞ PORTFÖY YEDİNCİ SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "IUH",
+    "name": "INVEO PORTFÖY DÖNÜŞTÜRÜCÜ TEKNOLOJİLER FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IUV",
+    "name": "İŞ PORTFÖY BEŞİNCİ SERBEST (DÖVİZ)  FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "IV8",
+    "name": "INVEO PORTFÖY KİRA SERTİFİKALARI KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IVF",
+    "name": "İSTANBUL PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "IVY",
+    "name": "İSTANBUL PORTFÖY BLOCKCHAIN TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IYB",
+    "name": "AURA PORTFÖY DEĞİŞKEN FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "IZB",
+    "name": "İSTANBUL PORTFÖY BİRİNCİ FON SEPETİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "IZS",
+    "name": "İSTANBUL PORTFÖY ALTINCI SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "JET",
+    "name": "ATA PORTFÖY HAVACILIK VE SAVUNMA TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "JUP",
+    "name": "AURA PORTFÖY JÜPİTER SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KAV",
+    "name": "KUVEYT TÜRK PORTFÖY ALTINCI KATILIM SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KCL",
+    "name": "KARE PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KCV",
+    "name": "KUVEYT TÜRK PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KDE",
+    "name": "KUVEYT TÜRK PORTFÖY DENGELİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KDL",
+    "name": "KUVEYT TÜRK PORTFÖY BEŞİNCİ KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KDO",
+    "name": "İŞ PORTFÖY KATILIM SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KDT",
+    "name": "GARANTİ PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KEB",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KED",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. GENÇLERE YÖNELIK ATAK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KEF",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "KEG",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. DENGELİ KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KEH",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. KATILIM HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "KES",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. AGRESİF KATILIM DEĞİŞKEN (DÖVİZ) EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KET",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. OKS ATAK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KEZ",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KFE",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. KATILIM FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KGC",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. GÜMÜŞ KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KGM",
+    "name": "KUVEYT TÜRK PORTFÖY GÜMÜŞ KATILIM FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KH1",
+    "name": "AK PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KHA",
+    "name": "PARDUS PORTFÖY İKİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KHB",
+    "name": "KARE PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KHC",
+    "name": "PARDUS PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KHJ",
+    "name": "ATLAS PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KHT",
+    "name": "ALLBATROSS PORTFÖY KARTAL HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KIA",
+    "name": "TRIVE PORTFÖY MUTLAK GETİRİ HEDEFLİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "KIB",
+    "name": "TRIVE PORTFÖY ROBOTİK TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "KID",
+    "name": "TRIVE PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KIE",
+    "name": "TRIVE PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KIF",
+    "name": "TRIVE PORTFÖY EMTİA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "KIH",
+    "name": "KARE PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KIK",
+    "name": "KUVEYT TÜRK PORTFÖY İKİNCİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KIS",
+    "name": "QİNVEST PORTFÖY KİRA SERTİFİKASI KATILIM (DÖVİZ) FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KJM",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. KIYMETLİ MADENLER KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "KKC",
+    "name": "KARE PORTFÖY KATILIM SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KKH",
+    "name": "İŞ PORTFÖY DENGELİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KKL",
+    "name": "ALLBATROSS PORTFÖY KISA VADELİ KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KKS",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. KİRA SERTİFİKALARI KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KKV",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. KISA VADELİ KİRA SERTİFİKALARI KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KLH",
+    "name": "ATLAS PORTFÖY KATILIM HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KLI",
+    "name": "AK PORTFÖY PARA PİYASASI KATILIM SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KLS",
+    "name": "ALLBATROSS PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KLT",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. TEMETTÜ ÖDEYEN ŞİRKETLER KATILIM HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "KLU",
+    "name": "KUVEYT TÜRK PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KME",
+    "name": "KUVEYT TÜRK PORTFÖY TEMKİNLİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KMF",
+    "name": "AZİMUT PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "KML",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. KIYMETLİ MADENLER EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "KNI",
+    "name": "AZİMUT PORTFÖY İKİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KNJ",
+    "name": "KUVEYT TÜRK PORTFÖY ENERJİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KOA",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "KOS",
+    "name": "ALLIANZ YAŞAM VE EMEKLİLİK A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KOT",
+    "name": "AZİMUT PORTFÖY KOÇ TOPLULUĞU ŞİRKETLERİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KP3",
+    "name": "KARE PORTFÖY ÜÇÜNCÜ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KPA",
+    "name": "KUVEYT TÜRK PORTFÖY KAR PAYI ÖDEYEN KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KPC",
+    "name": "KUVEYT TÜRK PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KPD",
+    "name": "KUVEYT TÜRK PORTFÖY KAR PAYI ÖDEYEN KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KPF",
+    "name": "NEO PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KPH",
+    "name": "İŞ PORTFÖY KAR PAYI ÖDEYEN HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KPI",
+    "name": "İŞ PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KPP",
+    "name": "KARE PORTFÖY PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KPU",
+    "name": "KUVEYT TÜRK PORTFÖY İKİNCİ KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KRA",
+    "name": "TRİVE PORTFÖY KİRA SERTİFİKALARI KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KRC",
+    "name": "KARE PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KRF",
+    "name": "KARE PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "KRM",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KATILIM KARMA EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KRS",
+    "name": "KARE PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KRT",
+    "name": "KARE PORTFÖY TÜRKİYE ODAKLI SERBEST (DÖVİZ ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KSA",
+    "name": "HEDEF PORTFÖY KISA VADELİ SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KSH",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. TEKNOLOJİ SEKTÖRÜ KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KSK",
+    "name": "AZİMUT PORTFÖY İKİNCİ PARA PİYASASI KATILIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KSR",
+    "name": "KUVEYT TÜRK PORTFÖY SÜRDÜRÜLEBİLİRLİK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KST",
+    "name": "ALLBATROSS PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KSU",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. SÜRDÜRÜLEBİLİRLİK KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KSV",
+    "name": "KUVEYT TÜRK PORTFÖY KISA VADELİ KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KTI",
+    "name": "AZİMUT PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KTJ",
+    "name": "KUVEYT TÜRK PORTFÖY TEKNOLOJİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KTM",
+    "name": "KUVEYT TÜRK PORTFÖY BİRİNCİ KATILIM (TL) FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KTN",
+    "name": "KUVEYT TÜRK PORTFÖY KİRA SERTİFİKALARI KATILIM (TL) FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KTR",
+    "name": "KUVEYT TÜRK PORTFÖY BİRİNCİ KATILIM SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "KTS",
+    "name": "KUVEYT TÜRK PORTFÖY KATILIM HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KTT",
+    "name": "KUVEYT TÜRK PORTFÖY DÖRDÜNCÜ KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KTV",
+    "name": "KUVEYT TÜRK PORTFÖY KISA VADELİ KİRA SERTİFİKALARI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KTZ",
+    "name": "KATILIM EMEKLİLİK VE HAYAT A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KUA",
+    "name": "KUVEYT TÜRK PORTFÖY AGRESİF KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KUB",
+    "name": "KARE PORTFÖY DEĞİŞKEN  (DÖVİZ) FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KUD",
+    "name": "KUVEYT TÜRK PORTFÖY DİNAMİK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "KUT",
+    "name": "KUVEYT TÜRK PORTFÖY KIYMETLİ MADENLER KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "KVK",
+    "name": "HEDEF PORTFÖY KATILIM İSTATİSTİKSEL ARBİTRAJ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "KVR",
+    "name": "ATLAS PORTFÖY KISA VADELİ KATILIM SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KVS",
+    "name": "AZİMUT PORTFÖY KISA VADELİ SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "KVT",
+    "name": "AK PORTFÖY ENERJİ ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KYA",
+    "name": "KARE PORTFÖY HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "KYS",
+    "name": "KARE PORTFÖY YEDİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "KZL",
+    "name": "KUVEYT TÜRK PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "KZU",
+    "name": "KUVEYT TÜRK PORTFÖY İKİNCİ ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "LID",
+    "name": "ALLBATROSS PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "LKT",
+    "name": "AKTİF PORTFÖY İKİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "LLA",
+    "name": "ALLBATROSS PORTFÖY AYDIN HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "LPH",
+    "name": "STATECH PORTFÖY İKİNCİ ALPHA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MAC",
+    "name": "MARMARA CAPITAL PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MAD",
+    "name": "MEKSA PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MBL",
+    "name": "MEKSA PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MBR",
+    "name": "MT PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "MCU",
+    "name": "AZİMUT PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MD1",
+    "name": "MT PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MD2",
+    "name": "MT PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MDD",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş.MERKEZİ ALACAĞIN DEVRİ DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MDE",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. MERKEZİ ALACAĞIN DEVRİ TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MDF",
+    "name": "FİBA PORTFÖY MODEL EMTİA FON SEPETİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MDK",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. MERKEZİ ALACAĞIN DEVRİ MUHAFAZAKAR KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MEA",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "MEB",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "MET",
+    "name": "GARANTİ PORTFÖY METAVERSE VE YENİ TEKNOLOJİLER DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MEV",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş.TEKNOLOJİ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MEY",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. SÜRDÜRÜLEBİLİRLİK FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MGB",
+    "name": "İŞ PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MGH",
+    "name": "TEB PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MHD",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. KAMU DIŞ BORÇLANMA ARAÇLARI (ABD DOLARI 0-5 YIL VADELİ) EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "MHE",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. MUTLAK GETİRİ HEDEFLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHF",
+    "name": "MT PORTFÖY BIST HALKA ARZ ŞİRKETLERİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MHH",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "MHI",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHK",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "MHM",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHN",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHO",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS ATAK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHR",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHS",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHU",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS ATAK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHV",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MHZ",
+    "name": "METLİFE EMEKLİLİK VE HAYAT A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "MJB",
+    "name": "AKTİF PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MJG",
+    "name": "AKTİF PORTFÖY GÜMÜŞ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MJL",
+    "name": "AKTİF PORTFÖY AKTİF SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "MKA",
+    "name": "MARMARA CAPİTAL PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MKG",
+    "name": "AKTİF PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "MLT",
+    "name": "DENİZ PORTFÖY MELTEM HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MMH",
+    "name": "AKTİF PORTFÖY BIST 30 ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MOZ",
+    "name": "EMAA BLUE PORTFÖY MOZAİK SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MPE",
+    "name": "MT PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "MPF",
+    "name": "AKTİF PORTFÖY KISA VADELİ KİRA SERTİFİKASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "MPK",
+    "name": "AKTİF PORTFÖY KİRA SERTİFİKASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "MPL",
+    "name": "MT PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "MPN",
+    "name": "AKTİF PORTFÖY İKİNCİ AKTİF SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "MPP",
+    "name": "MEKSA PORTFÖY PRİME SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MPS",
+    "name": "AKTİF PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MRI",
+    "name": "TEB PORTFÖY MERİDYEN SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MT1",
+    "name": "MT PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "MT2",
+    "name": "MT PORTFÖY PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "MTD",
+    "name": "BV PORTFÖY MALZEME TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MTF",
+    "name": "MT PORTFÖY BİRİNCİ İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MTG",
+    "name": "DENİZ PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOGUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MTH",
+    "name": "MT PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MTK",
+    "name": "MT PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MTS",
+    "name": "AKTİF PORTFÖY TARIM VE SÜRDÜRÜLEBİLİRLİK FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MTV",
+    "name": "AK PORTFÖY METAVERSE VE DİJİTAL YAŞAM TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MTX",
+    "name": "TEB PORTFÖY METAVERSE VE DİJİTAL TEKNOLOJİLER DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "MUT",
+    "name": "GARANTİ PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "MZL",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. İKİNCİ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MZN",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. BİRİNCİ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "MZP",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. ÜÇÜNCÜ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "NAU",
+    "name": "NEO PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "NBH",
+    "name": "NEO PORTFÖY ALGORİTMİK STRATEJİLER SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NBO",
+    "name": "NEO PORTFÖY BORÇLANMA ARACI FONLARI FON SEPETİ FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NBZ",
+    "name": "NEO PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NCS",
+    "name": "NUROL PORTFÖY ÜÇÜNCÜ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NFF",
+    "name": "NEO PORTFÖY FON SEPETİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NHA",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. ALTIN EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "NHM",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. QINVEST PORTFÖY TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "NHN",
+    "name": "ZURICH YAŞAM VE EMEKLİLİK A.Ş. İKİNCİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "NHP",
+    "name": "NEO PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "NHY",
+    "name": "NEO PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NJF",
+    "name": "NUROL PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "NJR",
+    "name": "NUROL PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NJY",
+    "name": "NUROL PORTFÖY BİRİNCİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "NKA",
+    "name": "NEO PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NKC",
+    "name": "NEO PORTFÖY İKİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NKP",
+    "name": "NEO PORTFÖY KAR PAYI ÖDEYEN DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NKT",
+    "name": "NUROL PORTFÖY BİRİNCİ KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NLE",
+    "name": "NUROL PORTFÖY EMLAK SEKTÖRÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NLK",
+    "name": "NUROL PORTFÖY KISA VADELİ SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NME",
+    "name": "NUROL PORTFÖY MERCAN KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NMU",
+    "name": "NUROL PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NNF",
+    "name": "HEDEF PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NOI",
+    "name": "TACİRLER PORTFÖY NOVA İSTATİSTİKSEL ARBİTRAJ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NPH",
+    "name": "NUROL PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NRC",
+    "name": "NEO PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NRG",
+    "name": "NEO PORTFÖY BİRİNCİ PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NSA",
+    "name": "NEO PORTFÖY PARA PİYASASI KATILIM SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NSD",
+    "name": "NUROL PORTFÖY DÖRDÜNCÜ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NSH",
+    "name": "NUROL PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NSK",
+    "name": "NEO PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NSP",
+    "name": "NUROL PORTFÖY PARA PİYASASI KATILIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NST",
+    "name": "İŞ PORTFÖY İNŞAAT SEKTÖRÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NSY",
+    "name": "NEO PORTFÖY YEDİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NTI",
+    "name": "NEO PORTFÖY TEKNOLOJİ VE İNOVASYON DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NUB",
+    "name": "NUROL PORTFÖY BEŞİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NUH",
+    "name": "NEO PORTFÖY ÜÇÜNCÜ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "NVB",
+    "name": "NEO PORTFÖY İKİNCİ PARA PİYASASI (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NVC",
+    "name": "NEO PORTFÖY VENTO SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NVK",
+    "name": "INVEO PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NVT",
+    "name": "NEO PORTFÖY ÜÇÜNCÜ SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NVZ",
+    "name": "NEO PORTFÖY ORSA SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "NZH",
+    "name": "NEO PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "NZT",
+    "name": "NEO PORTFÖY PARA PİYASASI SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "NZU",
+    "name": "NUROL PORTFÖY ZÜMRÜT KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "OBI",
+    "name": "OYAK PORTFÖY İKİNCİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "OBP",
+    "name": "OYAK PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ODD",
+    "name": "OYAK PORTFÖY DÖRDÜNCÜ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ODP",
+    "name": "OSMANLI PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ODS",
+    "name": "OYAK PORTFÖY İKİNCİ SERBEST(DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ODV",
+    "name": "AK PORTFÖY ÜÇÜNCÜ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OFI",
+    "name": "OYAK PORTFÖY İKİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OFS",
+    "name": "OYAK PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OGD",
+    "name": "OYAK PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "OHB",
+    "name": "OYAK PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "OHK",
+    "name": "OYAK PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "OIL",
+    "name": "OSMANLI PORTFÖY AGRESİF FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OIR",
+    "name": "OSMANLI PORTFÖY DENGELİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OJB",
+    "name": "QNB PORTFÖY BEŞİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "OJK",
+    "name": "QNB PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "OJT",
+    "name": "QNB PORTFÖY TEKNOLOJİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OKD",
+    "name": "OYAK PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "OKP",
+    "name": "OYAK PORTFÖY BİRİNCİ KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "OKT",
+    "name": "OYAK PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "OLA",
+    "name": "OSMANLI PORTFÖY İKİNCİ SERBEST (DÖVİZ- AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "OLD",
+    "name": "QNB PORTFÖY TEMİZ ENERJİ VE SU FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OLE",
+    "name": "OSMANLI PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "OMG",
+    "name": "AZİMUT PORTFÖY İKİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ONE",
+    "name": "AKTİF PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ONK",
+    "name": "AK PORTFÖY ONİKİNCİ SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ONN",
+    "name": "AKTİF PORTFÖY AKTİF ONİKS SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ONS",
+    "name": "İŞ PORTFÖY ONİKİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "OPB",
+    "name": "OSMANLI PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "OPD",
+    "name": "OSMANLI PORTFÖY ANKA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "OPF",
+    "name": "OSMANLI PORTFÖY AGRESİF DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "OPH",
+    "name": "OSMANLI PORTFÖY BİRİNCİ HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "OPI",
+    "name": "OSMANLI PORTFÖY İKİNCİ HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "OPL",
+    "name": "OSMANLI PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ORC",
+    "name": "QINVEST PORTFÖY ALFA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "OSD",
+    "name": "OSMANLI PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "OSL",
+    "name": "OSMANLI PORTFÖY KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "OTJ",
+    "name": "OYAK PORTFÖY KIYMETLİ MADENLER FON SEPETİ FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "OTK",
+    "name": "OYAK PORTFÖY BİRİNCİ KATILIM SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "OTM",
+    "name": "AZİMUT PORTFÖY OTOMOTİV SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "OUD",
+    "name": "OSMANLI PORTFÖY ATLANTİK SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "OVD",
+    "name": "QNB PORTFÖY EMTİA FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "P1A",
+    "name": "A1 CAPİTAL PORTFÖY PARA PİYASASI (TL) SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PAB",
+    "name": "A1 CAPİTAL PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PAF",
+    "name": "PARDUS PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "PAL",
+    "name": "AK PORTFÖY ALTINCI SERBEST(DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "PAO",
+    "name": "PARDUS PORTFÖY ANADOLU HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PBI",
+    "name": "PARDUS PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "PBK",
+    "name": "QİNVEST PORTFÖY BİRİNCİ KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "PBN",
+    "name": "PİRAMİT PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PBR",
+    "name": "PUSULA PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PCE",
+    "name": "PARDUS PORTFÖY İNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PDD",
+    "name": "QİNVEST PORTFÖY KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "PDF",
+    "name": "QİNVEST PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "PEA",
+    "name": "PERFORM PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "PFO",
+    "name": "PHİLLİP PORTFÖY FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "PFS",
+    "name": "ATLAS PORTFÖY FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "PGD",
+    "name": "QİNVEST PORTFÖY AGRESİF DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PGS",
+    "name": "AZİMUT PORTFÖY PAY GERİ ALIMI YAPAN ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PHE",
+    "name": "PUSULA PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PHI",
+    "name": "PİRAMİT PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PHK",
+    "name": "PHİLLİP PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PID",
+    "name": "PİRAMİT PORTFÖY DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PIL",
+    "name": "ROTA PORTFÖY PİL TEKNOLOJİLERİ VE ENERJİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "PIP",
+    "name": "GARANTİ PORTFÖY İKİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PIR",
+    "name": "PİRAMİT PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "PIS",
+    "name": "PARDUS PORTFÖY İKİNCİ KISA VADELİ SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PJL",
+    "name": "PHİLLİP PORTFÖY PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PJP",
+    "name": "PERFORM PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "PKD",
+    "name": "PUSULA PORTFÖY İKİNCİ DENGE KATILIM SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PKF",
+    "name": "ATA PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "PKR",
+    "name": "ROTA PORTFÖY PARA PİYASASI KATILIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PKT",
+    "name": "YAPI KREDİ PORTFÖY PARA PİYASASI KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PKV",
+    "name": "PARDUS PORTFÖY KISA VADELİ SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PLR",
+    "name": "OSMANLI PORTFÖY PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PMP",
+    "name": "PARDUS PORTFÖY MODEL PORTFÖY HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PO9",
+    "name": "PARDUS PORTFÖY ONDOKUZUNCU HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "POS",
+    "name": "PARDUS PORTFÖY ONBEŞİNCİ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PP1",
+    "name": "PARDUS PORTFÖY BİRİNCİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "PPB",
+    "name": "PHİLLİP PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PPE",
+    "name": "PHİLLİP PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "PPG",
+    "name": "ALBARAKA PORTFÖY PARA PİYASASI KATILIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PPH",
+    "name": "PARDUS PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PPI",
+    "name": "YAPI KREDİ PORTFÖY ÜÇÜNCÜ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PPJ",
+    "name": "AK PORTFÖY İKİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PPK",
+    "name": "QNB PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PPM",
+    "name": "PİRAMİT PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PPN",
+    "name": "NUROL PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PPP",
+    "name": "PERFORM PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PPS",
+    "name": "PHİLLİP PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PPT",
+    "name": "ATLAS PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PPZ",
+    "name": "AZİMUT PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PRD",
+    "name": "PİRAMİT PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PRH",
+    "name": "AURA PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PRR",
+    "name": "INVEO PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PRU",
+    "name": "ALLBATROSS PORTFÖY KISA VADELİ SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PRV",
+    "name": "QINVEST PORTFÖY PARA PİYASASI SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PRY",
+    "name": "PUSULA PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PSE",
+    "name": "ATLAS PORTFÖY PARA PİYASASI SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PSL",
+    "name": "AZİMUT PORTFÖY 8.0 SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PTE",
+    "name": "TEB PORTFÖY BİRİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PTF",
+    "name": "QNB PORTFÖY TREND SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "PTN",
+    "name": "PHİLLİP PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "PTO",
+    "name": "PARDUS PORTFÖY TEMETTÜ ÖDEYEN ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "PTS",
+    "name": "QNB PORTFÖY PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PUC",
+    "name": "AK PORTFÖY BİRİNCİ KISA VADELİ SERBEST (TL)  FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PVK",
+    "name": "ALBARAKA PORTFÖY KISA VADELİ KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "PYR",
+    "name": "PARDUS PORTFÖY YİRMİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RBA",
+    "name": "ALBARAKA PORTFÖY BEREKET VAKFI NA DESTEK ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "RBB",
+    "name": "RE-PIE PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RBF",
+    "name": "ROTA PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RBH",
+    "name": "ALBARAKA PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RBI",
+    "name": "RE-PIE PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "RBK",
+    "name": "ALBARAKA PORTFÖY KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "RBL",
+    "name": "QNB PORTFÖY ROBOTİK VE BLOCKCHAİN TEKNOLOJİLERİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RBN",
+    "name": "RE-PIE PORTFÖY BEŞİNCİ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RBP",
+    "name": "RE-PIE PORTFÖY BİRİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RBR",
+    "name": "RE-PIE  PORTFÖY BİRİNCİ KATILIM SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RBT",
+    "name": "ALBARAKA PORTFÖY KİRA SERTİFİKALARI  KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "RBV",
+    "name": "ALBARAKA PORTFÖY KISA VADELİ KİRA SERTİFİKALARI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RCV",
+    "name": "AZİMUT PORTFÖY BİRİNCİ ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "RD1",
+    "name": "ROTA PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RDF",
+    "name": "ROTA PORTFÖY DOKUZUNCU HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RDT",
+    "name": "PHİLLİP PORTFÖY RODOSTO SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RGH",
+    "name": "RE-PIE PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RHI",
+    "name": "RE-PIE PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RHS",
+    "name": "ROTA PORTFÖY HİSSE SENEDİ (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RIA",
+    "name": "ROTA PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RIH",
+    "name": "RE-PIE PORTFÖY İKİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RIK",
+    "name": "RE-PIE PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RJG",
+    "name": "RE-PIE PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "RKC",
+    "name": "ROTA PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RKH",
+    "name": "RE-PIE PORTFÖY KATILIM HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RKS",
+    "name": "ROTA PORTFÖY KİRA SERTİFİKALARI KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "RKV",
+    "name": "RE-PIE PORTFÖY KISA VADELİ KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ROF",
+    "name": "ROTA PORTFÖY ONUNCU SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RPC",
+    "name": "ROTA PORTFÖY İKLİM DEĞİŞİKLİĞİ ÇÖZÜMLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RPD",
+    "name": "RE-PIE PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RPG",
+    "name": "ROTA PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "RPI",
+    "name": "ROTA PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RPL",
+    "name": "RE-PIE PORTFÖY ALGORİTMİK STRATEJİLER SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RPM",
+    "name": "ROTA PORTFÖY İLAÇ VE MEDİKAL TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RPP",
+    "name": "ROTA PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RPS",
+    "name": "ROTA PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "RPT",
+    "name": "ROTA PORTFÖY İKİNCİ SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RPX",
+    "name": "ROTA PORTFÖY ÜÇÜNCÜ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "RRA",
+    "name": "ROTA PORTFÖY PARA PİYASASI SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RRP",
+    "name": "RE-PIE PORTFÖY PARA PİYASASI KATILIM (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RS1",
+    "name": "ROTA PORTFÖY BİRİNCİ KISA VADELİ SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "RSK",
+    "name": "ROTA PORTFÖY ONSEKİZİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RTD",
+    "name": "RE-PIE PORTFÖY TEKNOLOJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RTG",
+    "name": "ATA PORTFÖY ROBOTİK TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RTH",
+    "name": "RE-PIE PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "RTP",
+    "name": "RE-PIE PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RUT",
+    "name": "BV PORTFÖY ROBOTİK VE UZAY TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "RZM",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "RZN",
+    "name": "AXA HAYAT VE EMEKLİLİK A.Ş. FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "SAS",
+    "name": "AK PORTFÖY SABANCI TOPLULUĞU ŞİRKETLERİ ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SBA",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. SABANCI TOPLULUĞU ŞİRKETLERİ ENDEKSİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "SBH",
+    "name": "SPARTA PORTFÖY BİRİNCİ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SFS",
+    "name": "AZİMUT PORTFÖY AGRESİF FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "SGT",
+    "name": "GARANTİ PORTFÖY SİBER GÜVENLİK TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SHE",
+    "name": "TEB PORTFÖY ÖNCE KADIN DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SKO",
+    "name": "STRATEJİ PORTFÖY KAR PAYI ÖDEYEN HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SKZ",
+    "name": "NEO PORTFÖY SEKİZİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SLG",
+    "name": "QNB PORTFÖY ALGORİTMİK STRATEJİLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SNY",
+    "name": "ATLAS PORTFÖY SANAYİ SEKTÖRÜ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SOS",
+    "name": "HEDEF PORTFÖY SAĞLIK SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SPE",
+    "name": "AZIMUT PORTFÖY 5.0 SERBEST (DÖVIZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "SPN",
+    "name": "AZİMUT PORTFÖY İSTATİSTİKSEL ARBİTRAJ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SPP",
+    "name": "SPARTA PORTFÖY BİRİNCİ PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "SPR",
+    "name": "BV PORTFÖY SPOR ENDÜSTRİSİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SPT",
+    "name": "AKTİF PORTFÖY KATILIM FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "SRL",
+    "name": "PARDUS PORTFÖY SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SSK",
+    "name": "DENİZ PORTFÖY SAĞLIK SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SSS",
+    "name": "YAPI KREDİ PORTFÖY SAVUNMA SANAYİİ ŞİRKETLERİ ENDEKSİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ST1",
+    "name": "STRATEJİ PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "STI",
+    "name": "ATLAS PORTFÖY SENTİMENT SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SUA",
+    "name": "ÜNLÜ PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SUB",
+    "name": "ÜNLÜ PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SUC",
+    "name": "ÜNLÜ PORTFÖY ÜÇÜNCÜ DEĞIŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "SUR",
+    "name": "EMAA BLUE PORTFÖY SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "SVB",
+    "name": "STRATEJİ PORTFÖY AGRESİF DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TAL",
+    "name": "ATLAS PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "TAR",
+    "name": "AK PORTFÖY TARIM VE GIDA TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TAU",
+    "name": "İŞ PORTFÖY BIST BANKA ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TBJ",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. TEKNOLOJİ SEKTÖRÜ HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "TBT",
+    "name": "TEB PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TBV",
+    "name": "İŞ PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TCA",
+    "name": "ZİRAAT PORTFÖY ALTIN KATILIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "TCB",
+    "name": "TACİRLER PORTFÖY PARA PİYASASI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TCC",
+    "name": "TACİRLER PORTFÖY SERBEST ( DÖVİZ ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "TCD",
+    "name": "TACİRLER PORTFÖY DEĞIŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TCF",
+    "name": "TEB PORTFÖY ÜÇÜNCÜ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TDG",
+    "name": "İŞ PORTFÖY YABANCI BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TE3",
+    "name": "TEB PORTFÖY MUTLAK GETİRİ HEDEFLİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TE4",
+    "name": "TEB PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TEJ",
+    "name": "AZİMUT PORTFÖY TEKNOLOJİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TFF",
+    "name": "TEB PORTFÖY AMERİKA TEKNOLOJİ YABANCI BYF FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TFU",
+    "name": "İŞ PORTFÖY TÜFEYE ENDEKSLİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TGA",
+    "name": "GARANTİ PORTFÖY AGRESİF DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TGE",
+    "name": "İŞ PORTFÖY EMTİA YABANCI BYF FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TGR",
+    "name": "AK PORTFÖY TURİZM VE SEYAHAT SEKTÖRÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "THD",
+    "name": "TRIVE PORTFÖY BİRİNCİ HİSSE SENEDİ (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "THE",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. TARIM VE GIDA FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "THF",
+    "name": "TERA PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "THK",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KİRA SERTİFİKALARI KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "THT",
+    "name": "TRİVE PORTFÖY HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "THV",
+    "name": "ATA PORTFÖY BARBAROS HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TI2",
+    "name": "İŞ PORTFÖY HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TI3",
+    "name": "İŞ PORTFÖY İŞ BANKASI İŞTİRAKLERİ ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TI4",
+    "name": "İŞ PORTFÖY TEMKİNLİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TI6",
+    "name": "İŞ PORTFÖY BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TI7",
+    "name": "İŞ PORTFÖY DENGELİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TIE",
+    "name": "İŞ PORTFÖY BIST 30 ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TIL",
+    "name": "İŞ PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TJF",
+    "name": "TEB PORTFÖY SÜRDÜRÜLEBİLİRLİK FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TJI",
+    "name": "TEB PORTFÖY İKİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TJT",
+    "name": "TEB PORTFÖY ALTINCI SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "TJY",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. ÜÇÜNCÜ YAŞAM DÖNGÜSÜ EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "TKF",
+    "name": "TACİRLER PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TLE",
+    "name": "AURA PORTFÖY YABANCI BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TLH",
+    "name": "AURA PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TLK",
+    "name": "AKTİF PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TLV",
+    "name": "TERA PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TLY",
+    "name": "TERA PORTFÖY BİRİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TLZ",
+    "name": "ATA PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TMC",
+    "name": "İŞ PORTFÖY TEMA DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TMG",
+    "name": "İŞ PORTFÖY YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "TML",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. BİRİNCİ YAŞAM DÖNGÜSÜ EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "TMM",
+    "name": "TERA PORTFÖY İKİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "TMN",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. MERKEZİ ALACAĞIN DEVRİ DENGELİ KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TMU",
+    "name": "AZİMUT PORTFÖY TEMKİNLİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TMZ",
+    "name": "İŞ PORTFÖY SÜRDÜRÜLEBİLİRLİK VE TARIM FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TND",
+    "name": "İŞ PORTFÖY TTF TENİSE DESTEK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TOT",
+    "name": "TEB PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TP2",
+    "name": "TERA PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TPC",
+    "name": "TEB PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TPF",
+    "name": "TACİRLER PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TPJ",
+    "name": "TEB PORTFÖY BİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "TPL",
+    "name": "TEB PORTFÖY EUROBOND (DÖVİZ) BORÇLANMA ARAÇLARI FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "TPP",
+    "name": "TEB PORTFÖY PUSULA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TPV",
+    "name": "AURA PORTFÖY İKİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TPZ",
+    "name": "TEB PORTFÖY KİRA SERTİFİKALARI (DÖVİZ) KATILIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "TRJ",
+    "name": "TERA PORTFÖY BİRİNCİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "TRO",
+    "name": "TRIVE PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "TRU",
+    "name": "TERA PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "TSZ",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. TAŞINMAZ VE İNŞAAT SEKTÖRÜ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TTA",
+    "name": "İŞ PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "TTE",
+    "name": "İŞ PORTFÖY BIST TEKNOLOJİ AĞIRLIK SINIRLAMALI ENDEKSİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TTL",
+    "name": "TACİRLER PORTFÖY KARTOPU SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "TUA",
+    "name": "TEB PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "TVC",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. TARIM VE GIDA SEKTÖRÜ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TVE",
+    "name": "EMAA BLUE PORTFÖY TARIM VE GIDA SEKTÖRÜ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TVG",
+    "name": "ANADOLU HAYAT EMEKLİLİK A.Ş. TARIM VE GIDA FON SEPETİ  EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TVH",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. TEKNOLOJİ ŞİRKETLERİ HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "TVN",
+    "name": "TRIVE PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "TYH",
+    "name": "TEB PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TYJ",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. İKİNCİ YAŞAM DÖNGÜSÜ EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "TZD",
+    "name": "ZİRAAT PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "TZT",
+    "name": "ZİRAAT PORTFÖY BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ULH",
+    "name": "ÜNLÜ PORTFÖY ONUNCU SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "UNT",
+    "name": "İŞ PORTFÖY ÜÇÜNCÜ SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "UP1",
+    "name": "ÜNLÜ PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "UP2",
+    "name": "ÜNLÜ PORTFÖY ONİKİNCİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "UPD",
+    "name": "ÜNLÜ PORTFÖY DÖRDÜNCÜ SERBEST (DÖVIZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "UPH",
+    "name": "ÜNLÜ PORTFÖY HİSSE SENEDİ (TL) FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "UPP",
+    "name": "ÜNLÜ PORTFÖY PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "URA",
+    "name": "ATA PORTFÖY ENERJİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "USY",
+    "name": "ÜNLÜ PORTFÖY DEĞER YATIRIMLARI SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "VAY",
+    "name": "AK PORTFÖY DEĞER ODAKLI 100 ŞİRKETLERİ HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "VCY",
+    "name": "AK PORTFÖY ELEKTRİKLİ VE OTONOM ARAÇ TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "VEB",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KATILIM DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VED",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS MUHAFAZAKAR KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VEG",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. BİRİNCİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VEH",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "VEK",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "VEO",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VEP",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VES",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "VET",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KAMU DIŞ BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "VEU",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VEV",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VFK",
+    "name": "ZİRAAT PORTFÖY İKİNCİ KISA VADELİ KİRA SERTİFİKALARI KATILIM (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "VGA",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. ALTIN KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "VGB",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VGC",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VGD",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KIYMETLİ MADENLER KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "VGF",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VGG",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS DENGELİ KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VGH",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS ATAK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VGK",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS KATILIM STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VGZ",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. OKS STANDART EMEKLİLİK YATIRIM FONU",
+    "type": "DIGER"
+  },
+  {
+    "code": "VMV",
+    "name": "VEGA PORTFÖY MAVİ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "VNK",
+    "name": "VEGA PORTFÖY ANKA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "VRK",
+    "name": "DENİZ PORTFÖY ÇOKLU VARLIK KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VVA",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS AGRESİF DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VVD",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS DİNAMİK DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VVE",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VVM",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS MUHAFAZAKAR DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VVU",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS DİNAMİK KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VVZ",
+    "name": "AGESA HAYAT VE EMEKLİLİK A.Ş. OKS AGRESİF KATILIM DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "VYB",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KATILIM HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "YAC",
+    "name": "YAPI KREDİ PORTFÖY İKİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YAK",
+    "name": "YAPI KREDİ PORTFÖY KARMA FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YAN",
+    "name": "YAPI KREDİ PORTFÖY BİRİNCİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YAS",
+    "name": "YAPI KREDİ PORTFÖY KOÇ HOLDİNG İŞTİRAK VE HİSSE SENEDİ FONU(HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YAY",
+    "name": "YAPI KREDİ PORTFÖY YABANCI TEKNOLOJİ SEKTÖRÜ HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "YBE",
+    "name": "YAPI KREDİ PORTFÖY EUROBOND (DOLAR) BORÇLANMA ARAÇLARI FONU",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YBH",
+    "name": "YAPI KREDİ PORTFÖY 5-15 YIL VADELİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YBR",
+    "name": "İŞ PORTFÖY YİRMİBİRİNCİ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YBS",
+    "name": "YAPI KREDİ PORTFÖY ÖZEL SEKTÖR BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "YCK",
+    "name": "YAPI KREDİ PORTFÖY CİHANGİR SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YCP",
+    "name": "YAPI KREDİ PORTFÖY BANKACILIK SEKTÖRÜ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YCY",
+    "name": "İSTANBUL PORTFÖY KATILIM FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YDI",
+    "name": "YAPI KREDİ PORTFÖY MODEL PORTFÖY HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YDP",
+    "name": "YAPI KREDİ PORTFÖY BİRİNCİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YEF",
+    "name": "YAPI KREDİ PORTFÖY BIST 30 ENDEKSİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YFV",
+    "name": "YAPI KREDİ PORTFÖY KİRA SERTİFİKALARI KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YGM",
+    "name": "YAPI KREDİ PORTFÖY EMTİA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YHB",
+    "name": "YAPI KREDİ PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YHI",
+    "name": "YAPI KREDİ PORTFÖY İNŞAAT SEKTÖRÜ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YHK",
+    "name": "YAPI KREDİ PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YHS",
+    "name": "YAPI KREDİ PORTFÖY BİRİNCİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YHT",
+    "name": "YAPI KREDİ PORTFÖY KISA VADELİ BORÇLANMA ARAÇLARI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "YHZ",
+    "name": "YAPI KREDİ PORTFÖY BIST TEKNOLOJİ AĞIRLIK SINIRLAMALI ENDEKSİ HİSSE SENEDİ FONU ( HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YIK",
+    "name": "YAPI KREDİ PORTFÖY İKİNCİ PARA PİYASASI SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "YIT",
+    "name": "GARANTİ PORTFÖY YARI İLETKEN TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YJH",
+    "name": "YAPI KREDİ PORTFÖY TEMİZ ENERJİ DEĞİŞKEN FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YJK",
+    "name": "YAPI KREDİ PORTFÖY ROBOTİK VE YARI İLETKEN TEKNOLOJİLERİ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YJY",
+    "name": "YAPI KREDİ PORTFÖY YENİKÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YKS",
+    "name": "YAPI KREDİ PORTFÖY İSTANBUL SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YKT",
+    "name": "YAPI KREDİ PORTFÖY ALTIN FONU",
+    "type": "ALTIN"
+  },
+  {
+    "code": "YLC",
+    "name": "ATA PORTFÖY TARIM VE GIDA DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YLE",
+    "name": "YAPI KREDİ PORTFÖY BIST SÜRDÜRÜLEBİLİRLİK ENDEKSİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YLO",
+    "name": "YAPI KREDİ PORTFÖY ELEKTRİKLİ ARAÇLAR DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YLY",
+    "name": "YAPI KREDİ PORTFÖY KİLYOS KAR PAYI ÖDEYEN HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YMD",
+    "name": "YAPI KREDİ PORTFÖY MASLAK SERBEST (DÖVİZ- ABD DOLARI) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YMH",
+    "name": "YAPI KREDİ PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YNK",
+    "name": "YAPI KREDİ PORTFÖY NİŞANTAŞI KAR PAYI ÖDEYEN SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YOT",
+    "name": "YAPI KREDİ PORTFÖY BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "YOZ",
+    "name": "DENİZ PORTFÖY YAKAMOZ SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YP4",
+    "name": "YAPI KREDİ PORTFÖY FERİKÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YPC",
+    "name": "YAPI KREDİ PORTFÖY SÜRDÜRÜLEBİLİRLİK DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YPK",
+    "name": "YAPI KREDİ PORTFÖY GALATA SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YPL",
+    "name": "YAPI KREDİ PORTFÖY BALAT SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YPR",
+    "name": "AZİMUT PORTFÖY YILDIZ PAZAR ŞİRKETLERİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YPV",
+    "name": "YAPI KREDİ PORTFÖY ÜÇÜNCÜ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YSA",
+    "name": "YAPI KREDİ PORTFÖY SUADİYE SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YSL",
+    "name": "YAPI KREDİ PORTFÖY KAR PAYI ÖDEYEN KİRA SERTİFİKALARI KATILIM SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YSO",
+    "name": "YAPI KREDİ PORTFÖY SAĞLIK SEKTÖRÜ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YSU",
+    "name": "YAPI KREDİ PORTFÖY ÜÇÜNCÜ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YTD",
+    "name": "YAPI KREDİ PORTFÖY YABANCI FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YTV",
+    "name": "YAPI KREDİ PORTFÖY TARIM DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YTY",
+    "name": "YAPI KREDİ PORTFÖY TARABYA SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YUB",
+    "name": "YAPI KREDİ PORTFÖY KARAKÖY HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YUN",
+    "name": "YAPI KREDİ PORTFÖY İSTİNYE SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YVB",
+    "name": "YAPI KREDİ PORTFÖY UZUN VADELİ BORÇLANMA ARAÇLARI FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "YVG",
+    "name": "YAPI KREDİ PORTFÖY SARIYER SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "YZC",
+    "name": "YAPI KREDİ PORTFÖY FİNTECH VE BLOCKCHAİN TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "YZD",
+    "name": "ALLİANZ YAŞAM VE EMEKLİLİK A.Ş. TEKNOLOJİ SEKTÖRÜ FON SEPETİ EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YZG",
+    "name": "YAPI KREDİ PORTFÖY GÜMÜŞ FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "YZH",
+    "name": "TEB PORTFÖY BIST BANKA ENDEKSİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN)",
+    "type": "HISSE"
+  },
+  {
+    "code": "YZK",
+    "name": "YAPI KREDİ PORTFÖY KALAMIŞ SERBEST FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZBD",
+    "name": "ZİRAAT PORTFÖY DENGELİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZBI",
+    "name": "ZİRAAT PORTFÖY TEMKİNLİ KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZBJ",
+    "name": "ZİRAAT PORTFÖY BAŞAK PARA PİYASASI (TL) FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ZBO",
+    "name": "ZİRAAT PORTFÖY MUTLAK GETİRİ HEDEFLİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZCD",
+    "name": "ZİRAAT PORTFÖY ALTINCI SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZCK",
+    "name": "ZİRAAT PORTFÖY AGRESİF KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZCN",
+    "name": "ZİRAAT PORTFÖY EMTİA FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZDD",
+    "name": "ZİRAAT PORTFÖY TEMKİNLİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZDZ",
+    "name": "ZİRAAT PORTFÖY AGRESİF DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZFB",
+    "name": "AK PORTFÖY FİNTEK VE BLOKZİNCİRİ TEKNOLOJİLERİ DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZHB",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. SÜRDÜRÜLEBİLİRLİK HİSSE SENEDİ EMEKLİLİK YATIRIM FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZHD",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KAMU DIŞ KİRA SERTİFİKALARI KATILIM EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZHE",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. DENGELİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZHF",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KATILIM TEMKİNLİ DEĞİŞKEN EMEKLİLİK YATIRIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZHG",
+    "name": "TÜRKİYE HAYAT VE EMEKLİLİK A.Ş. KAMU BORÇLANMA ARAÇLARI EMEKLİLİK YATIRIM FONU",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ZHH",
+    "name": "ZİRAAT PORTFÖY HALKBANK SÜRDÜRÜLEBİLİRLİK 30 ŞİRKETLERİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZJB",
+    "name": "ZİRAAT PORTFÖY BİRİNCİ SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZJI",
+    "name": "ZİRAAT PORTFÖY İKİNCİ SERBEST (TL) FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZJL",
+    "name": "ZİRAAT PORTFÖY BIST 100 DIŞI ŞİRKETLER HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZJV",
+    "name": "ZİRAAT PORTFÖY BIST 30 DIŞI YILDIZ PAZAR ŞİRKETLERİ HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZLH",
+    "name": "ZİRAAT PORTFÖY BIST 100-30 ŞİRKETLERİ HİSSE SENEDİ FONU ( HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZMT",
+    "name": "AZİMUT PORTFÖY 22.0 SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ZMY",
+    "name": "ZİRAAT PORTFÖY METAVERSE VE YENİ TEKNOLOJİLER DEĞİŞKEN FON",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZP6",
+    "name": "ZİRAAT PORTFÖY SEDEF KATILIM SERBEST (DÖVİZ - AMERİKAN DOLARI) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ZP8",
+    "name": "ZİRAAT PORTFÖY KEHRİBAR PARA PİYASASI KATILIM SERBEST (TL) FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ZP9",
+    "name": "ZİRAAT PORTFÖY AKİK KATILIM SERBEST (DÖVİZ-AVRO) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ZPA",
+    "name": "ZİRAAT PORTFÖY SERBEST (DÖVİZ) FON",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ZPC",
+    "name": "ZİRAAT PORTFÖY FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZPE",
+    "name": "ZİRAAT PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZPF",
+    "name": "ZİRAAT PORTFÖY KATILIM FONU (DÖVİZ)",
+    "type": "DOVIZ"
+  },
+  {
+    "code": "ZPG",
+    "name": "ZİRAAT PORTFÖY KİRA SERTİFİKALARI (SUKUK) KATILIM FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZPR",
+    "name": "ZİRAAT PORTFÖY PARA PİYASASI SERBEST FON",
+    "type": "BORCLANMA"
+  },
+  {
+    "code": "ZSF",
+    "name": "ZİRAAT PORTFÖY S&P/OIC COMCEC (İSEDAK) 50 SHARİAH ŞİRKETLERİ YABANCI HİSSE SENEDİ FONU",
+    "type": "HISSE"
+  },
+  {
+    "code": "ZSG",
+    "name": "ZİRAAT PORTFÖY ESG SÜRDÜRÜLEBİLİRLİK FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZTG",
+    "name": "ZİRAAT PORTFÖY TARIM VE GIDA FON SEPETİ FONU",
+    "type": "KARMA"
+  },
+  {
+    "code": "ZVO",
+    "name": "ZİRAAT PORTFÖY ÜÇÜNCÜ SERBEST (TL) FON",
+    "type": "KARMA"
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "data": {
+    "DFI": {
+      "nav": 2.673391,
+      "daily_return_pct": 0.1992,
+      "asof_day": "2025-12-31",
+      "last_update": "2025-12-31 18:30:00",
+      "source": "HTML",
+      "ai_prediction": {
+        "direction": "POZİTİF",
+        "confidence": 50,
+        "score": 0.0
+      }
+    },
+    "AFT": {
+      "nav": 0.859646,
+      "daily_return_pct": 0.8281,
+      "asof_day": "2025-12-31",
+      "last_update": "2025-12-31 18:30:00",
+      "source": "HTML",
+      "ai_prediction": {
+        "direction": "POZİTİF",
+        "confidence": 50,
+        "score": 0.0
+      }
+    },
+    "YP4": {
+      "nav": 47.647799,
+      "daily_return_pct": 0.057,
+      "asof_day": "2025-12-25",
+      "last_update": "2025-12-25 18:30:00",
+      "source": "HTML",
+      "ai_prediction": {
+        "direction": "NÖTR",
+        "confidence": 50,
+        "score": 0.0
+      }
+    },
+    "YPK": {
+      "nav": 13.278107,
+      "daily_return_pct": 0.6127,
+      "asof_day": "2025-12-25",
+      "last_update": "2025-12-25 18:30:00",
+      "source": "HTML",
+      "ai_prediction": {
+        "direction": "POZİTİF",
+        "confidence": 50,
+        "score": 0.0
+      }
+    },
+    "ADP": {
+      "nav": 1.23414,
+      "daily_return_pct": 0.2666,
+      "asof_day": "2025-12-31",
+      "last_update": "2025-12-31 18:30:00",
+      "source": "HTML",
+      "ai_prediction": {
+        "direction": "POZİTİF",
+        "confidence": 50,
+        "score": 0.0
+      }
+    },
+    "AFA": {
+      "nav": 1.014404,
+      "daily_return_pct": 0.0949,
+      "asof_day": "2025-12-31",
+      "last_update": "2025-12-31 18:30:00",
+      "source": "HTML",
+      "ai_prediction": {
+        "direction": "NÖTR",
+        "confidence": 50,
+        "score": 0.0
+      }
+    },
+    "AJ1": {
+      "nav": 1.109981,
+      "daily_return_pct": 0.1973,
+      "asof_day": "2025-12-31",
+      "last_update": "2025-12-31 18:30:00",
+      "source": "HTML",
+      "ai_prediction": {
+        "direction": "POZİTİF",
+        "confidence": 50,
+        "score": 0.0
+      }
+    }
+  },
+  "asof": "2026-01-01 23:31:27"
+}

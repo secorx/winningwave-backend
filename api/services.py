@@ -285,9 +285,27 @@ def fetch_live_prices(symbols: List[str]) -> List[Dict[str, Any]]:
     return out
 
 
-def get_live_prices(symbols: List[str]) -> Dict[str, Any]:
-    data = fetch_live_prices(symbols)
+def get_live_prices(symbols: Optional[List[str]] = None) -> Dict[str, Any]:
+    # 🔁 symbols gelmezse scanner datasındaki tüm hisseleri kullan
+    if not symbols:
+        all_data = load_json()
+        symbols_list = [
+            x["symbol"]
+            for x in all_data
+            if isinstance(x, dict) and x.get("symbol")
+        ]
+    else:
+        symbols_list = symbols
+
+    data = fetch_live_prices(symbols_list)
     save_live_price_json(data)
+
+    # 🔁 Live refresh sonrası radar da tetiklensin
+    if not RADAR_STATE.get("refresh_running", False):
+        th = threading.Thread(target=_radar_refresh_thread)
+        th.daemon = True
+        th.start()
+
     return {"status": "success", "data": data}
 
 

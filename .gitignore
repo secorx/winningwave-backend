@@ -219,8 +219,7 @@ __pycache__/
 
 # Runtime data
 # data/
-funds_cache/
-funds/
+
 
 # Local scripts & debug
 scripts/
@@ -230,7 +229,12 @@ debug_*.html
 venv/
 venv_api/
 
-funds_cache/
+
 state/
 technical_cache/
 
+# Allow seed caches for deploy
+!data/
+!data/*.json
+!funds_cache/
+!funds_cache/*.json

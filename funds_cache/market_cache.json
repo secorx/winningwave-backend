@@ -1,0 +1,20 @@
+{
+  "asof": "2026-01-02 00:58:49",
+  "items": [
+    {
+      "code": "USDTRY",
+      "value": 42.9475,
+      "change_pct": -0.04
+    },
+    {
+      "code": "BIST100",
+      "value": 11261.5,
+      "change_pct": 0.36
+    },
+    {
+      "code": "BIST30",
+      "value": 12223.5996,
+      "change_pct": 0.15
+    }
+  ]
+}
