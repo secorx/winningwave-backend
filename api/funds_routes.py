@@ -26,7 +26,6 @@ from api.premium_ai import (
     market_change_pct,
 )
 
-from scripts.tefas_batch_scrape import run_batch_scrape
 
 # ============================================================
 # CACHE BASE DIR (LOCAL vs RENDER SAFE)
@@ -1526,18 +1525,18 @@ def api_detail(code: str):
         }
     return {"status": "error", "message": "Veri yok"}
 
-@router.get("/admin/refresh-tefas")
-def admin_refresh_tefas():
-    """
-    TEFAS toplu batch scrape.
-    Runtime API'yi etkilemez.
-    """
-    result = run_batch_scrape()
-    return {
-        "status": "success",
-        "message": "TEFAS batch scrape tamamlandı",
-        "result": result
-    }
+# @router.get("/admin/refresh-tefas")
+# def admin_refresh_tefas():
+#     """
+#     TEFAS toplu batch scrape.
+#     Runtime API'yi etkilemez.
+#     """
+#     result = run_batch_scrape()
+#     return {
+#         "status": "success",
+#         "message": "TEFAS batch scrape tamamlandı",
+#         "result": result
+#     }
 
 # ✅ EKLENDİ: Server açılışında bootstrap güncellemesi
 def _startup_bootstrap_updates():
@@ -1576,4 +1575,4 @@ def _start_background_jobs_once():
         t_boot.start()
 
 # ✅ Import olur olmaz çalıştır (ama tek sefer)
-#_start_background_jobs_once()
+_start_background_jobs_once()
