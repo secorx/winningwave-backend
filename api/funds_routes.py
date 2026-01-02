@@ -680,8 +680,8 @@ def get_fund_data_safe(fund_code: str):
     except:
         now = datetime.now()
     before_open = now.hour < 9 or (now.hour == 9 and now.minute < 30)
-        # ✅ EKLENDİ: Hafta sonu kontrolü
-    is_weekend = now.weekday() >= 5  # 5=Cumartesi, 6=Pazar
+    # ✅ Hafta sonu kontrolü
+    is_weekend = now.weekday() >= 5
 
 
     cached = _PRICE_CACHE.get(fund_code)
@@ -857,6 +857,21 @@ def _get_market_change_pct(code: str) -> float:
 # ============================================================
 
 def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
+
+    # ===============================
+    # ⏰ PİYASA AÇIK / KAPALI KONTROLÜ
+    # ===============================
+    try:
+        now_tr = datetime.now(ZoneInfo("Europe/Istanbul"))
+    except:
+        now_tr = datetime.now()
+
+    # BIST: 09:30 – 18:10 arası açık kabul edelim
+    market_open = (
+        (now_tr.hour > 9 or (now_tr.hour == 9 and now_tr.minute >= 30)) and
+        (now_tr.hour < 18 or (now_tr.hour == 18 and now_tr.minute <= 10))
+    )
+
     """
     🔒 Direction kilidi
     🌊 Yumuşak jitter
@@ -868,14 +883,18 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
 
     with _AI_LOCK:
         cached = _AI_CACHE.get(fund_code)
+
+        # ⛔ PİYASA KAPALIYSA → CANLI AI KİLİTLENİR
+        if not market_open and cached:
+            return cached
+
         # Market açıksa cache'i kısalt
         try:
             now_tr = datetime.now(ZoneInfo("Europe/Istanbul"))
         except:
             now_tr = datetime.now()
-        market_open = 9 <= now_tr.hour < 18
-        # ✅ FIX 4: Daha canlı hissettirmesi için TTL düşürüldü
-        ttl = 1 if market_open else 10 
+        ttl = 1 if market_open else 3600  # Kapalıyken 1 saat kilit
+
 
         if cached and (now_ts - cached["_ts"]) < ttl:
             return cached
