@@ -680,6 +680,9 @@ def get_fund_data_safe(fund_code: str):
     except:
         now = datetime.now()
     before_open = now.hour < 9 or (now.hour == 9 and now.minute < 30)
+        # ✅ EKLENDİ: Hafta sonu kontrolü
+    is_weekend = now.weekday() >= 5  # 5=Cumartesi, 6=Pazar
+
 
     cached = _PRICE_CACHE.get(fund_code)
 
@@ -714,10 +717,11 @@ def get_fund_data_safe(fund_code: str):
             # ✅ asof_day yoksa bu kayıt “şüpheli” (legacy) → 1 kez zorla
             force_fetch = True
 
-    # ⛔ Piyasa açılmadan fetch etme (SADECE ESKİ FONLAR İÇİN!)
-    if before_open and not is_new_fund:
+    # ⛔ Piyasa açılmadan fetch etme (SADECE HAFTA İÇİ & ESKİ FONLAR)
+    if (not is_weekend) and before_open and not is_new_fund:
         force_fetch = False
         print(f"⏰ Piyasa kapalı, eski fon güncellenmiyor: {fund_code}")
+
 
     # Cache geçerliyse ve fetch gerekmiyorsa döndür
     if not force_fetch and cached:
