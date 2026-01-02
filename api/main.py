@@ -200,3 +200,18 @@ def auto_daily_scan():
 
     return {"status": "started", "message": "Otomatik günlük tarama başlatıldı"}
 
+
+# ============================================================
+# 🔁 BACKWARD COMPATIBILITY (MOBILE SUPPORT)
+# Flutter eski endpoint isimlerini kullanıyor
+# ============================================================
+
+@app.get("/scan_status")
+def api_scan_status_compat():
+    return get_scan_status()
+
+
+@app.get("/hedef_fiyat_radar")
+def api_hedef_fiyat_radar_compat():
+    return get_radar()
+
