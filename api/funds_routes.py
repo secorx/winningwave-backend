@@ -14,7 +14,11 @@ import urllib3
 import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
-from zoneinfo import ZoneInfo  # ✅ EKLENDİ: Haftasonu ve saat düzeltmesi için
+try:
+    from zoneinfo import ZoneInfo
+except Exception:
+    ZoneInfo = None
+  # ✅ EKLENDİ: Haftasonu ve saat düzeltmesi için
 
 from fastapi import APIRouter
 
@@ -138,16 +142,21 @@ _LIVE_LIST_UPDATE_LOCK = threading.Lock()
 # ✅ GÜNCELLENDİ: now_str() Istanbul saatine göre
 def now_str() -> str:
     try:
-        return datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%Y-%m-%d %H:%M:%S")
+        if ZoneInfo:
+            return datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%Y-%m-%d %H:%M:%S")
     except:
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        pass
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 
 # ✅ GÜNCELLENDİ: today_str() Istanbul saatine göre
 def today_str() -> str:
     try:
-        return datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%Y-%m-%d")
+        if ZoneInfo:
+            return datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%Y-%m-%d")
     except:
-        return datetime.now().strftime("%Y-%m-%d")
+        pass
+    return datetime.now().strftime("%Y-%m-%d")
 
 # ✅ YARDIMCI: Önceki iş gününü bul
 def _prev_business_day(d):
