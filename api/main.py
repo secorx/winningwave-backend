@@ -114,8 +114,8 @@ def api_analyze(symbol: str = Query(...)):
 
 @app.get("/scanner")
 def api_scanner():
-    auto_daily_scan()   # 👈 günlük tarama tetikleme (günde 1 kez)
     return get_scanner()
+
 
 @app.get("/radar")
 def api_radar():
@@ -183,14 +183,19 @@ def admin_run_daily_scan(token: str = Query(...)):
 @app.get("/auto/daily_scan")
 def auto_daily_scan():
     tz = ZoneInfo("Europe/Istanbul")
-    today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
+    now = datetime.datetime.now(tz)
+    today = now.strftime("%Y-%m-%d")
+
+    # ❗ FON KORUMA KİLİDİ
+    if (now.hour, now.minute) < (9, 30):
+        return {"status": "skip", "message": "Piyasa kapalı, fon taraması yapılmaz"}
 
     state = load_state()
     if state.get("last_scan_day") == today:
         return {"status": "ok", "message": "Bugün zaten tarandı"}
 
     state["last_scan_day"] = today
-    state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
+    state["last_scan_ts"] = now.isoformat()
     save_state(state)
 
     threading.Thread(
@@ -199,6 +204,7 @@ def auto_daily_scan():
     ).start()
 
     return {"status": "started", "message": "Otomatik günlük tarama başlatıldı"}
+
 
 # ============================================================
 # 🔁 BACKWARD COMPATIBILITY (MOBILE SUPPORT)
