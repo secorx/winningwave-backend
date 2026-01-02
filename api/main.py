@@ -113,15 +113,9 @@ def api_analyze(symbol: str = Query(...)):
     return analyze_single(symbol)
 
 @app.get("/scanner")
-def api_scanner(readOnly: bool = Query(True)):
-    """
-    readOnly=True  -> sadece sonuç okur, ASLA tarama başlatmaz
-    readOnly=False -> (isteğe bağlı) günlük taramayı tetikler (kilitli)
-    """
-    if not readOnly:
-        auto_daily_scan()
+def api_scanner():
+    auto_daily_scan()   # 👈 günlük tarama tetikleme (günde 1 kez)
     return get_scanner()
-
 
 @app.get("/radar")
 def api_radar():
@@ -190,12 +184,6 @@ def admin_run_daily_scan(token: str = Query(...)):
 def auto_daily_scan():
     tz = ZoneInfo("Europe/Istanbul")
     today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
-
-    now = datetime.datetime.now(tz)
-    # 09:30'dan önce otomatik tarama başlatma
-    if (now.hour, now.minute) < (9, 30):
-        return {"status": "skip", "message": "09:30 öncesi otomatik tarama yok"}
-
 
     state = load_state()
     if state.get("last_scan_day") == today:
