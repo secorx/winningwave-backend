@@ -186,6 +186,22 @@ def api_live_prices(symbols: Optional[str] = Query(None)):
     # symbols yoksa: services.py kendi içinden "tüm hisseleri" çeker
     return get_live_prices(None)
 
+@app.get("/live_prices/auto-trigger")
+def api_live_prices_auto_trigger():
+    """
+    03:30 sonrası ilk çağrıda canlı fiyatları otomatik yeniler.
+    Günde 1 defa çalışır, snapshot + state yazar.
+    """
+    def _runner():
+        # Tüm hisseler için canlı fiyatları çek + diske yaz
+        return get_live_prices(None)
+
+    return maybe_start_daily_live_prices_after_0330(
+        runner=_runner,
+        mode="auto"
+    )
+
+
 @app.get("/live_prices/saved")
 def api_live_prices_saved():
     return get_saved_live_prices()
