@@ -23,6 +23,13 @@ from .services import (
     start_scan_internal,
 )
 
+from .fundamental_scan_auto import (
+    maybe_start_daily_scan_after_0300,
+    start_admin_scan,
+    get_scanner_state,
+)
+
+
 # ============================================================
 # FUNDS ROUTER
 # ============================================================
@@ -106,13 +113,26 @@ def api_analyze(symbol: str = Query(...)):
 
 @app.get("/scanner")
 def api_scanner(readOnly: bool = Query(True)):
+    
     """
     readOnly=True -> sadece sonuç okur, ASLA tarama başlatmaz
     readOnly=False -> (isteğe bağlı) günlük taramayı tetikler (kilitli)
     """
     if not readOnly:
-        auto_daily_scan()
+        pass
     return get_scanner()
+
+@app.get("/scan/auto-trigger")
+def api_scan_auto_trigger():
+    """
+    Temel Analiz ekranına girildiğinde çağrılır.
+    03:00 sonrası, günde 1 defa otomatik taramayı başlatır.
+    """
+    return maybe_start_daily_scan_after_0300(
+        scan_runner=start_scan_internal
+    )
+
+
 
 @app.get("/radar")
 def api_radar():
@@ -152,6 +172,7 @@ def api_indexes():
 # ============================================================
 @app.api_route("/__admin/run_daily_scan", methods=["GET", "POST"])
 def admin_run_daily_scan(token: str = Query(...)):
+    
     ADMIN_TOKEN = os.getenv("ADMIN_SCAN_TOKEN")
     if not ADMIN_TOKEN or token != ADMIN_TOKEN:
         raise HTTPException(status_code=403, detail="Yetkisiz")
@@ -174,30 +195,17 @@ def admin_run_daily_scan(token: str = Query(...)):
     
     return {"status": "success", "message": "Günlük tarama başlatıldı"}
 
-@app.get("/auto/daily_scan")
-def auto_daily_scan():
-    tz = ZoneInfo("Europe/Istanbul")
-    today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
-    now = datetime.datetime.now(tz)
-    
-    # 09:30'dan önce otomatik tarama başlatma
-    if (now.hour, now.minute) < (9, 30):
-        return {"status": "skip", "message": "09:30 öncesi otomatik tarama yok"}
-    
-    state = load_state()
-    if state.get("last_scan_day") == today:
-        return {"status": "ok", "message": "Bugün zaten tarandı"}
-    
-    state["last_scan_day"] = today
-    state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
-    save_state(state)
-    
-    threading.Thread(
-        target=start_scan_internal,
-        daemon=True
-    ).start()
-    
-    return {"status": "started", "message": "Otomatik günlük tarama başlatıldı"}
+@app.post("/scan/admin-run")
+def api_admin_scan_run(token: str = Query(...)):
+    ADMIN_TOKEN = os.getenv("ADMIN_SCAN_TOKEN")
+    if not ADMIN_TOKEN or token != ADMIN_TOKEN:
+        raise HTTPException(status_code=403, detail="Yetkisiz")
+
+    return start_admin_scan(
+        scan_runner=start_scan_internal
+    )
+
+
 
 # ============================================================
 # 🔁 BACKWARD COMPATIBILITY (MOBILE SUPPORT)
