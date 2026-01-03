@@ -29,6 +29,12 @@ from .fundamental_scan_auto import (
     get_scanner_state,
 )
 
+from .live_prices_auto import (
+    maybe_start_daily_live_prices_after_0330,
+    get_live_prices_state,
+)
+
+
 
 # ============================================================
 # FUNDS ROUTER
@@ -132,11 +138,32 @@ def api_scan_auto_trigger():
         scan_runner=start_scan_internal
     )
 
+@app.get("/live_prices/state")
+def api_live_prices_state():
+    """
+    Canlı fiyat refresh state + snapshot (herkes için ortak)
+    """
+    return get_live_prices_state()
+
+
 
 
 @app.get("/radar")
 def api_radar():
+    # ✅ 03:30 sonrası ilk radar girişinde canlı fiyat refresh'i arka planda başlat
+    def _runner():
+        # full refresh: scanner datasındaki tüm hisseler
+        r = get_live_prices(None)
+        # snapshot için özet dönelim
+        try:
+            cnt = len((r or {}).get("data") or [])
+        except Exception:
+            cnt = 0
+        return {"status": "success", "count": cnt}
+
+    maybe_start_daily_live_prices_after_0330(runner=_runner, mode="auto")
     return get_radar()
+
 
 @app.get("/update_db")
 def api_update_db():
