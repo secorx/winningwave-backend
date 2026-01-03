@@ -398,14 +398,27 @@ def _radar_refresh_thread() -> None:
             if not symbol:
                 continue
 
-            live = fetch_live_price_single(symbol)
-            if live:
-                price_f = float(live["price"])
-            else:
+            # ✅ Önce disk cache'teki live_prices.json'ı kullan (herkes aynı veriyi görsün)
+            cached_live_list = load_live_price_json()
+            cached_map = {str(it.get("symbol") or "").upper(): it for it in cached_live_list if isinstance(it, dict)}
+
+            cl = cached_map.get(symbol.upper())
+            if cl and cl.get("price") is not None:
                 try:
-                    price_f = float(x.get("price") or 0)
+                    price_f = float(cl["price"])
                 except Exception:
-                    continue
+                    price_f = 0.0
+            else:
+                # Cache'te yoksa eski davranışa fallback (en güvenlisi)
+                live = fetch_live_price_single(symbol)
+                if live:
+                    price_f = float(live["price"])
+                else:
+                    try:
+                        price_f = float(x.get("price") or 0)
+                    except Exception:
+                        continue
+
 
             if price_f <= 0:
                 continue
