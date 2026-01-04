@@ -9,11 +9,35 @@ from typing import Dict, Any, List, Optional, Tuple
 
 import requests
 import yfinance as yf
+import pymongo # <--- EKLENDİ: MongoDB Kütüphanesi
 
 from pathlib import Path
 
 # ============================================================
-# PATHS (TEK KAYNAK: api/data)
+# MONGODB BAĞLANTISI (YENİ EKLENEN KISIM)
+# ============================================================
+# Eski sistem dosyaya yazıyordu, şimdi buraya yazacak.
+MONGO_URI = "mongodb+srv://secorx:852456Rocco@borsaapp.dhrfqjg.mongodb.net/?retryWrites=true&w=majority&appName=BorsaApp"
+
+# Global değişkenler (Bağlantı koparsa kod çökmesin diye None ile başlatıyoruz)
+col_scanner = None
+col_live = None
+col_radar = None
+
+try:
+    client = pymongo.MongoClient(MONGO_URI)
+    db = client["borsa_db"]
+    
+    # Koleksiyonlar (Tablolar)
+    col_scanner = db["scanner_data"]
+    col_live = db["live_prices"]
+    col_radar = db["radar_cache"]
+    print("✅ MongoDB Bağlantısı Başarılı (services.py)")
+except Exception as e:
+    print(f"❌ MongoDB Bağlantı Hatası: {e}")
+
+# ============================================================
+# PATHS (TEK KAYNAK: api/data) - HİÇBİRİ SİLİNMEDİ
 # ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent              # .../api
@@ -42,7 +66,7 @@ from temel_analiz.veri_saglayicilar.yerel_csv import load_all_symbols
 
 
 # ============================================================
-# SAFE JSON IO (ATOMİK YAZMA)
+# SAFE JSON IO (ATOMİK YAZMA) - SİLİNMEDİ (Yedek olarak duruyor)
 # ============================================================
 
 def _atomic_write_json(path: Path, obj: Any) -> None:
@@ -72,46 +96,98 @@ def _safe_read_json(path: Path, default: Any) -> Any:
 
 
 # ============================================================
-# PIYASA (SCANNER DATA) OKU / YAZ
+# PIYASA (SCANNER DATA) OKU / YAZ - GÜNCELLENDİ (MongoDB)
 # ============================================================
 
 def load_json() -> List[Dict[str, Any]]:
+    # Önce MongoDB'den okumayı dene
+    if col_scanner is not None:
+        try:
+            # _id:0 diyerek MongoDB'nin özel ID'sini siliyoruz, yoksa Flutter bozulur
+            return list(col_scanner.find({}, {"_id": 0}))
+        except:
+            pass
+    
+    # MongoDB çalışmazsa eski sistemden devam et (Yedek)
     data = _safe_read_json(PIYASA_PATH, [])
     return data if isinstance(data, list) else []
 
 
 def save_json(data: List[Dict[str, Any]]) -> None:
+    # MongoDB'ye yaz
+    if col_scanner is not None and data:
+        try:
+            col_scanner.delete_many({}) # Eskiyi sil
+            col_scanner.insert_many(data) # Yeniyi yaz
+        except Exception as e:
+            print(f"MongoDB Yazma Hatası: {e}")
+
+    # Dosyaya da yaz (Yedek olsun, garanti olsun)
     _atomic_write_json(PIYASA_PATH, data)
 
 
 # ============================================================
-# LIVE PRICES CACHE
+# LIVE PRICES CACHE - GÜNCELLENDİ (MongoDB)
 # ============================================================
 
 def save_live_price_json(data: List[Dict[str, Any]]) -> None:
+    # MongoDB
+    if col_live is not None and data:
+        try:
+            col_live.delete_many({})
+            col_live.insert_many(data)
+        except:
+            pass
+            
+    # Dosya (Yedek)
     _atomic_write_json(LIVE_PRICES_PATH, data)
 
 
 def load_live_price_json() -> List[Dict[str, Any]]:
+    # MongoDB
+    if col_live is not None:
+        try:
+            return list(col_live.find({}, {"_id": 0}))
+        except:
+            pass
+            
+    # Dosya (Yedek)
     data = _safe_read_json(LIVE_PRICES_PATH, [])
     return data if isinstance(data, list) else []
 
 
 # ============================================================
-# RADAR CACHE
+# RADAR CACHE - GÜNCELLENDİ (MongoDB)
 # ============================================================
 
 def save_radar_cache(data: List[Dict[str, Any]]) -> None:
+    # MongoDB
+    if col_radar is not None and data:
+        try:
+            col_radar.delete_many({})
+            col_radar.insert_many(data)
+        except:
+            pass
+            
+    # Dosya (Yedek)
     _atomic_write_json(RADAR_PATH, data)
 
 
 def load_radar_cache() -> List[Dict[str, Any]]:
+    # MongoDB
+    if col_radar is not None:
+        try:
+            return list(col_radar.find({}, {"_id": 0}))
+        except:
+            pass
+
+    # Dosya (Yedek)
     data = _safe_read_json(RADAR_PATH, [])
     return data if isinstance(data, list) else []
 
 
 # ============================================================
-# YAHOO PRICE HELPER (Hisse + Endeks)
+# YAHOO PRICE HELPER (Hisse + Endeks) - DOKUNULMADI
 # ============================================================
 
 def _yahoo_price(yahoo_symbol: str) -> Tuple[Optional[float], Optional[float], Optional[float]]:
@@ -158,7 +234,7 @@ def _yahoo_price(yahoo_symbol: str) -> Tuple[Optional[float], Optional[float], O
 
 
 # ============================================================
-# TEKLİ ANALİZ
+# TEKLİ ANALİZ - DOKUNULMADI
 # ============================================================
 
 def analyze_single(symbol: str) -> Dict[str, Any]:
@@ -177,11 +253,11 @@ def analyze_single(symbol: str) -> Dict[str, Any]:
 
 
 # ============================================================
-# SCANNER (OKUMA)
+# SCANNER (OKUMA) - DOKUNULMADI
 # ============================================================
 
 def get_scanner() -> Dict[str, Any]:
-    data = load_json()
+    data = load_json() # Artık önce MongoDB'ye bakar
     out: List[Dict[str, Any]] = []
 
     for x in data:
@@ -200,7 +276,7 @@ def get_scanner() -> Dict[str, Any]:
 
 
 # ============================================================
-# LIVE PRICE (BIST)
+# LIVE PRICE (BIST) - DOKUNULMADI
 # ============================================================
 
 def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
@@ -253,7 +329,7 @@ def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
 
     # 3) Local piyasa JSON fallback
     try:
-        all_data = load_json()
+        all_data = load_json() # MongoDB
         for x in all_data:
             if (x.get("symbol", "") or "").upper() == short:
                 price_f = float(x.get("price") or 0)
@@ -298,7 +374,7 @@ def get_live_prices(symbols: Optional[List[str]] = None) -> Dict[str, Any]:
         symbols_list = symbols
 
     data = fetch_live_prices(symbols_list)
-    save_live_price_json(data)
+    save_live_price_json(data) # MongoDB + Dosya
 
     # 🔁 Live refresh sonrası radar da tetiklensin
     if not RADAR_STATE.get("refresh_running", False):
@@ -314,7 +390,7 @@ def get_saved_live_prices() -> Dict[str, Any]:
 
 
 # ============================================================
-# RADAR (cache + background refresh)
+# RADAR (cache + background refresh) - DOKUNULMADI
 # ============================================================
 
 RADAR_STATE: Dict[str, Any] = {
@@ -324,7 +400,7 @@ RADAR_STATE: Dict[str, Any] = {
 
 
 def _build_radar_from_local_only() -> List[Dict[str, Any]]:
-    data = load_json()
+    data = load_json() # MongoDB
     radar: List[Dict[str, Any]] = []
 
     for x in data:
@@ -379,7 +455,7 @@ def _radar_refresh_thread() -> None:
 
     RADAR_STATE["refresh_running"] = True
     try:
-        data = load_json()
+        data = load_json() # MongoDB
         radar: List[Dict[str, Any]] = []
 
         for x in data:
@@ -399,7 +475,7 @@ def _radar_refresh_thread() -> None:
                 continue
 
             # ✅ Önce disk cache'teki live_prices.json'ı kullan (herkes aynı veriyi görsün)
-            cached_live_list = load_live_price_json()
+            cached_live_list = load_live_price_json() # MongoDB
             cached_map = {str(it.get("symbol") or "").upper(): it for it in cached_live_list if isinstance(it, dict)}
 
             cl = cached_map.get(symbol.upper())
@@ -453,7 +529,7 @@ def _radar_refresh_thread() -> None:
             time.sleep(random.uniform(0.08, 0.16))
 
         radar.sort(key=lambda x: x["potential"], reverse=True)
-        save_radar_cache(radar)
+        save_radar_cache(radar) # MongoDB
         RADAR_STATE["last_refresh_ts"] = time.time()
 
     finally:
@@ -461,7 +537,7 @@ def _radar_refresh_thread() -> None:
 
 
 def get_radar() -> Dict[str, Any]:
-    cached = load_radar_cache()
+    cached = load_radar_cache() # MongoDB
     if cached:
         data = cached
     else:
@@ -476,7 +552,7 @@ def get_radar() -> Dict[str, Any]:
 
 
 # ============================================================
-# INDEXES (XU100 / XU030)
+# INDEXES (XU100 / XU030) - DOKUNULMADI
 # ============================================================
 
 INDEX_CACHE: Dict[str, Dict[str, Optional[float]]] = {
@@ -522,7 +598,7 @@ def get_indexes() -> Dict[str, Any]:
 
 
 # ============================================================
-# SCAN ENGINE (server internal)
+# SCAN ENGINE (server internal) - BURASI GÜNCELLENDİ
 # ============================================================
 
 SCAN_STATE: Dict[str, Any] = {
@@ -551,7 +627,7 @@ def _scan_thread() -> None:
         "message": "Tarama başladı",
     })
 
-    old = load_json()
+    old = load_json() # MongoDB
     old_map: Dict[str, Dict[str, Any]] = {
         x["symbol"]: x for x in old if isinstance(x, dict) and "symbol" in x
     }
@@ -589,9 +665,27 @@ def _scan_thread() -> None:
             pass
 
         if (i + 1) % 10 == 0:
-            save_json(list(old_map.values()))
+            save_json(list(old_map.values())) # MongoDB + Dosya
 
-    save_json(list(old_map.values()))
+    # Tarama BİTTİ. Veriyi kaydet.
+    final_data = list(old_map.values())
+    save_json(final_data)
+
+    # ==============================================================
+    # 🌟 İSTEDİĞİN ÖZELLİK BURAYA EKLENDİ 🌟
+    # Tarama bittiğinde (03:30 gibi) canlı fiyatları da otomatik güncelle
+    # ==============================================================
+    try:
+        SCAN_STATE["message"] = "Tarama bitti, canlı fiyatlar güncelleniyor..."
+        # Taranan tüm sembolleri al
+        all_symbols = list(old_map.keys())
+        
+        # Canlı fiyatlarını çek ve MongoDB'ye kaydet
+        # (get_live_prices fonksiyonu hem çeker hem kaydeder hem de Radarı tetikler)
+        get_live_prices(all_symbols)
+        
+    except Exception as e:
+        print(f"Oto fiyat güncelleme hatası: {e}")
 
     SCAN_STATE.update({
         "running": False,
