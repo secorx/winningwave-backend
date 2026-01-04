@@ -327,20 +327,20 @@ def fetch_live_price_single(symbol: str) -> Optional[Dict[str, Any]]:
             "chgPct": round(float(daily), 2),
         }
 
-    # 3) Local piyasa JSON fallback
+    # 3) Local piyasa JSON fallback (Veritabanından bakar)
     try:
         all_data = load_json() # MongoDB
         for x in all_data:
             if (x.get("symbol", "") or "").upper() == short:
                 price_f = float(x.get("price") or 0)
-                if price_f <= 0:
-                    break
-                return {
-                    "symbol": short,
-                    "price": round(price_f, 2),
-                    "prev": round(price_f, 2),
-                    "chgPct": 0.0,
-                }
+                if price_f > 0:
+                    # Scannerdaki fiyatı fallback olarak dön
+                    return {
+                        "symbol": short,
+                        "price": round(price_f, 2),
+                        "prev": round(price_f, 2),
+                        "chgPct": 0.0,
+                    }
     except Exception:
         pass
 
@@ -361,27 +361,31 @@ def fetch_live_prices(symbols: List[str]) -> List[Dict[str, Any]]:
     return out
 
 
+# ============================================================
+# GET LIVE PRICES - AKILLI MOD (DÜZELTİLDİ)
+# ============================================================
+
 def get_live_prices(symbols: Optional[List[str]] = None) -> Dict[str, Any]:
-    # 🔁 symbols gelmezse scanner datasındaki tüm hisseleri kullan
+    """
+    BURASI KRİTİK DEĞİŞİKLİK:
+    1. Eğer symbols Yoksa (Tüm Liste isteniyorsa) -> MongoDB'den hazır listeyi oku (Hızlı, Veri Silmez).
+    2. Eğer symbols Varsa (Özel Liste/Tekil) -> Taze çek, ama veritabanını SİLME.
+    """
+    
+    # 1. TAM LİSTE İSTEĞİ (Telefondaki ana liste)
     if not symbols:
-        all_data = load_json()
-        symbols_list = [
-            x["symbol"]
-            for x in all_data
-            if isinstance(x, dict) and x.get("symbol")
-        ]
-    else:
-        symbols_list = symbols
-
-    data = fetch_live_prices(symbols_list)
-    save_live_price_json(data) # MongoDB + Dosya
-
-    # 🔁 Live refresh sonrası radar da tetiklensin
-    if not RADAR_STATE.get("refresh_running", False):
-        th = threading.Thread(target=_radar_refresh_thread)
-        th.daemon = True
-        th.start()
-
+        # Render Free Tier 500 hisseyi anlık çekemez, zaman aşımı olur.
+        # O yüzden gece 03:00'te kaydettiğimiz hazineyi (MongoDB) sunuyoruz.
+        cached_data = load_live_price_json()
+        return {"status": "success", "data": cached_data}
+    
+    # 2. ÖZEL LİSTE / REFRESH İSTEĞİ (Az sayıda hisse)
+    data = fetch_live_prices(symbols)
+    
+    # Buradaki kritik nokta: save_live_price_json() çağırmıyoruz!
+    # Çünkü çağırırsak tüm veritabanını silip sadece bu 3 hisseyi yazar.
+    # Bu yüzden sadece sonucu kullanıcıya dönüyoruz.
+    
     return {"status": "success", "data": data}
 
 
@@ -598,7 +602,7 @@ def get_indexes() -> Dict[str, Any]:
 
 
 # ============================================================
-# SCAN ENGINE (server internal) - BURASI GÜNCELLENDİ
+# SCAN ENGINE (server internal) - BURASI ÖNEMLİ
 # ============================================================
 
 SCAN_STATE: Dict[str, Any] = {
@@ -672,17 +676,19 @@ def _scan_thread() -> None:
     save_json(final_data)
 
     # ==============================================================
-    # 🌟 İSTEDİĞİN ÖZELLİK BURAYA EKLENDİ 🌟
-    # Tarama bittiğinde (03:30 gibi) canlı fiyatları da otomatik güncelle
+    # 🌟 GECE OTOMATİK FİYAT GÜNCELLEMESİ 🌟
+    # Tarama bittiğinde (03:30 gibi) canlı fiyatları çekip KALICI olarak kaydeder.
     # ==============================================================
     try:
         SCAN_STATE["message"] = "Tarama bitti, canlı fiyatlar güncelleniyor..."
         # Taranan tüm sembolleri al
         all_symbols = list(old_map.keys())
         
-        # Canlı fiyatlarını çek ve MongoDB'ye kaydet
-        # (get_live_prices fonksiyonu hem çeker hem kaydeder hem de Radarı tetikler)
-        get_live_prices(all_symbols)
+        # 1. Hepsini Taze Çek
+        full_live_data = fetch_live_prices(all_symbols)
+        
+        # 2. Veritabanına Yaz (Burada silip yazması güvenlidir çünkü liste tamdır)
+        save_live_price_json(full_live_data)
         
     except Exception as e:
         print(f"Oto fiyat güncelleme hatası: {e}")
