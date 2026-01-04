@@ -6,6 +6,7 @@ import json
 import datetime
 import threading
 from zoneinfo import ZoneInfo
+import pymongo # <--- EKLENDİ
 
 # ============================================================
 # TEMEL ANALİZ SERVİSLERİ (DOKUNULMADI)
@@ -34,8 +35,6 @@ from .live_prices_auto import (
     get_live_prices_state,
 )
 
-
-
 # ============================================================
 # FUNDS ROUTER
 # ============================================================
@@ -56,7 +55,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Mobil için pratik (istersen sonra daraltırız)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -81,14 +80,37 @@ app.include_router(
 )
 
 # ============================================================
-# STATE (GÜNLÜK TARAMA)
+# STATE (GÜNLÜK TARAMA) - MONGODB GÜNCELLEMESİ YAPILDI
 # ============================================================
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 STATE_DIR = os.path.join(BASE_DIR, "state")
 STATE_PATH = os.path.join(STATE_DIR, "scan_state.json")
 os.makedirs(STATE_DIR, exist_ok=True)
 
+# --- MONGODB BAĞLANTISI ---
+MONGO_URI_STATE = "mongodb+srv://secorx:852456Rocco@borsaapp.dhrfqjg.mongodb.net/?retryWrites=true&w=majority&appName=BorsaApp"
+col_state = None
+
+try:
+    client_state = pymongo.MongoClient(MONGO_URI_STATE)
+    db_state = client_state["borsa_db"]
+    col_state = db_state["app_state"]
+    print("✅ MongoDB Bağlantısı Başarılı (main.py)")
+except Exception as e:
+    print(f"❌ MongoDB State Bağlantı Hatası: {e}")
+
+
 def load_state() -> dict:
+    # 1. Önce MongoDB'ye bak
+    if col_state is not None:
+        try:
+            doc = col_state.find_one({"_id": "daily_scan_state"})
+            if doc:
+                return doc
+        except:
+            pass
+
+    # 2. Yedek olarak dosyaya bak (Eski sistem)
     try:
         if os.path.exists(STATE_PATH):
             with open(STATE_PATH, "r", encoding="utf-8") as f:
@@ -97,7 +119,17 @@ def load_state() -> dict:
     except Exception:
         return {}
 
+
 def save_state(state: dict):
+    # 1. MongoDB'ye kaydet
+    if col_state is not None:
+        try:
+            state["_id"] = "daily_scan_state"
+            col_state.replace_one({"_id": "daily_scan_state"}, state, upsert=True)
+        except:
+            pass
+
+    # 2. Dosyaya da kaydet (Yedek)
     try:
         tmp = STATE_PATH + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
@@ -119,7 +151,6 @@ def api_analyze(symbol: str = Query(...)):
 
 @app.get("/scanner")
 def api_scanner(readOnly: bool = Query(True)):
-    
     """
     readOnly=True -> sadece sonuç okur, ASLA tarama başlatmaz
     readOnly=False -> (isteğe bağlı) günlük taramayı tetikler (kilitli)
@@ -144,8 +175,6 @@ def api_live_prices_state():
     Canlı fiyat refresh state + snapshot (herkes için ortak)
     """
     return get_live_prices_state()
-
-
 
 
 @app.get("/radar")
@@ -222,6 +251,8 @@ def admin_run_daily_scan(token: str = Query(...)):
     
     tz = ZoneInfo("Europe/Istanbul")
     today = datetime.datetime.now(tz).strftime("%Y-%m-%d")
+    
+    # ARTIK MONGODB'DEN KONTROL EDİYOR
     state = load_state()
     
     if state.get("last_scan_day") == today:
@@ -229,6 +260,8 @@ def admin_run_daily_scan(token: str = Query(...)):
     
     state["last_scan_day"] = today
     state["last_scan_ts"] = datetime.datetime.now(tz).isoformat()
+    
+    # ARTIK MONGODB'YE KAYDEDİYOR
     save_state(state)
     
     threading.Thread(
