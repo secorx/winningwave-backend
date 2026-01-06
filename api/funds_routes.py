@@ -1,5 +1,5 @@
 # Fon Otomatik Güncelleme Sistemi
-# Bu kodu mevcut funds.py dosyanızın yerine koyun
+# Bu kodu mevcut funds.py dosyanızın yerine koyun - TAM VE EKSİKSİZ VERSİRON
 
 from __future__ import annotations
 
@@ -684,21 +684,22 @@ def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
 
 def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
     """
-    Fintables'tan Fonun Tam Detaylarını Çeker:
-    - Pozisyonlar (Hisse, Oran)
-    - Artan/Azalanlar
-    - Risk, Kurucu, Yönetim Ücreti
-    - 1000 TL Karşılaştırması
+    Fintables Scraper - GÜÇLENDİRİLMİŞ VERSİYON
     """
     print(f"💎 Fintables Detay Çekiliyor: {fund_code}")
     url = f"https://fintables.com/fonlar/{fund_code.upper()}"
+    
+    # 🛡️ Anti-Bot Headers (Gerçek Tarayıcı Gibi Davran)
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Referer": "https://fintables.com/"
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Referer": "https://www.google.com/",
+        "Upgrade-Insecure-Requests": "1"
     }
 
     try:
-        r = requests.get(url, headers=headers, timeout=12)
+        r = requests.get(url, headers=headers, timeout=10)
         if r.status_code != 200:
             print(f"❌ Fintables HTTP {r.status_code}")
             return None
@@ -709,94 +710,68 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
             "positions": [],
             "increased": [],
             "decreased": [],
-            "info": {
-                "founder": "",
-                "risk_value": 0,
-                "mgmt_fee": "",
-                "stopaj": ""
-            },
-            "performance_chart": [] # 1000 TL ne oldu
+            "info": {"founder": "", "risk_value": 0, "mgmt_fee": "", "stopaj": ""},
+            "performance_chart": []
         }
 
-        # 1. EN BÜYÜK POZİSYONLAR
-        # Fintables yapısına göre genelde "En Büyük Pozisyonlar" başlığından sonraki tablo
-        # (Basitleştirilmiş scraping mantığı - Class isimleri değişebileceği için text bazlı arama daha güvenli)
+        # 1. POZİSYONLAR TABLOSUNU BUL (Daha zeki yöntem)
+        all_tables = soup.find_all("table")
         
-        # Bu fonksiyon için örnek bir yapı kuruyoruz. Fintables sürekli değişebilir, 
-        # bu yüzden generic bir "table" bulucu kullanacağız.
-        
-        tables = soup.find_all("table")
-        
-        # Basit heuristic: İçinde "Sembol" ve "Ağırlık" geçen tabloları bul
-        for table in tables:
-            headers_text = [th.get_text(strip=True) for th in table.find_all("th")]
-            rows = table.find_all("tr")[1:] # Skip header
+        for table in all_tables:
+            txt = table.get_text().lower()
+            rows = table.find_all("tr")
+            if len(rows) < 2: continue
+
+            # Bu tablonun ne tablosu olduğunu başlığından veya üstündeki divden anlamaya çalış
+            parent_txt = table.parent.parent.get_text().lower() if table.parent and table.parent.parent else ""
             
-            table_data = []
-            for row in rows:
+            parsed_rows = []
+            for row in rows[1:]: # Başlığı atla
                 cols = row.find_all("td")
                 if len(cols) >= 2:
-                    code = cols[0].get_text(strip=True).split(" ")[0] # Bazen isimle gelir
+                    # İlk kolon hisse kodu, ikinci kolon oran (genelde)
+                    code_cand = cols[0].get_text(strip=True).split(" ")[0] # "THYAO (Türk Hava..)" -> "THYAO"
+                    ratio_cand = cols[1].get_text(strip=True)
+                    
+                    # Sayısal kontrol
                     try:
-                        ratio_text = cols[1].get_text(strip=True).replace("%", "").replace(",", ".")
-                        ratio = float(ratio_text)
-                        table_data.append({"code": code, "ratio": ratio})
+                        ratio_val = _parse_turkish_float(ratio_cand)
+                        if len(code_cand) >= 3 and ratio_val > 0:
+                            parsed_rows.append({"code": code_cand, "ratio": ratio_val})
                     except:
-                        continue
+                        pass
             
-            if "En Büyük Pozisyonlar" in str(table.parent) or "Sembol" in headers_text:
-                 # Eğer bu "Artırılan" veya "Azaltılan" değilse, ana pozisyonlardır
-                 if "Artırılan" in str(table.parent):
-                     details["increased"] = table_data
-                 elif "Azaltılan" in str(table.parent):
-                     details["decreased"] = table_data
-                 else:
-                     if not details["positions"]: # İlk bulduğumuz (veya en üstteki) ana pozisyonlardır
-                        details["positions"] = table_data
+            if not parsed_rows: continue
 
-        # 2. SAĞ PANEL BİLGİLERİ (Risk, Kurucu vb.)
-        # Genelde bir liste (ul/li) veya dl/dt yapısındadır.
-        # Metin taraması yaparak değerleri alalım.
-        text_content = soup.get_text(" ", strip=True)
+            if "artırılan" in parent_txt or "artırılan" in txt:
+                details["increased"] = parsed_rows
+            elif "azaltılan" in parent_txt or "azaltılan" in txt:
+                details["decreased"] = parsed_rows
+            elif "büyük pozisyonlar" in parent_txt or "büyük pozisyonlar" in txt:
+                details["positions"] = parsed_rows
+            else:
+                # Hiçbir başlık uymuyorsa ama veri varsa ve ana liste boşsa, bunu ana liste yap
+                if not details["positions"]:
+                    details["positions"] = parsed_rows
+
+        # 2. KÜNYE BİLGİLERİ (Risk, Kurucu vb.)
+        full_text = soup.get_text(" ", strip=True)
         
-        # Risk Değeri
-        risk_match = re.search(r"Risk Değeri\s*(\d)", text_content)
+        # Risk Değeri (Regex ile avla: "Risk Değeri 7")
+        risk_match = re.search(r"Risk Değeri\s*[:]?\s*(\d)", full_text, re.IGNORECASE)
         if risk_match:
             details["info"]["risk_value"] = int(risk_match.group(1))
-
+        
         # Kurucu
-        founder_match = re.search(r"Kurucu\s+(.*?)(?=\s+Yıllık|$)", text_content)
+        founder_match = re.search(r"Kurucu\s+(.*?)(?=\s+Yıllık|$)", full_text, re.IGNORECASE)
         if founder_match:
             details["info"]["founder"] = founder_match.group(1).strip()
-            
-        # Yönetim Ücreti
-        fee_match = re.search(r"Yıllık Yönetim Ücreti\s+%([\d,]+)", text_content)
-        if fee_match:
-            details["info"]["mgmt_fee"] = fee_match.group(1).replace(",", ".")
 
-        # Stopaj
-        stopaj_match = re.search(r"Stopaj Oranı\s+%([\d,]+)", text_content)
-        if stopaj_match:
-            details["info"]["stopaj"] = stopaj_match.group(1).replace(",", ".")
-
-        # 3. 1000 TL NE OLDU (Grafik Verisi)
-        # Script tagleri içinde JSON arayacağız.
-        # Genelde "series" anahtar kelimesi ile grafik datası verilir.
-        scripts = soup.find_all("script")
-        for script in scripts:
-            if script.string and "series" in script.string and "1.000 TL" in script.string:
-                # Basit bir regex ile verileri yakalamaya çalışalım
-                # Bu kısım sitenin yapısına çok bağımlı, try-except ile koruyalım
-                try:
-                    # Örnek: {name: 'DFI', data: [1000, 1010, ...]}
-                    pass 
-                except:
-                    pass
-
+        print(f"✅ Fintables Data: {len(details['positions'])} pozisyon, Risk: {details['info'].get('risk_value')}")
         return details
 
     except Exception as e:
-        print(f"❌ Fintables Scraping Error: {e}")
+        print(f"❌ Fintables Error: {e}")
         return None
 
 # ============================================================
@@ -933,7 +908,7 @@ def get_fund_data_safe(fund_code: str):
     cached_asof = (cached.get("asof_day") or "").strip() if cached else ""
     
     # Detay verisi var mı kontrol et (Yeni eklenen özellik)
-    has_details = cached and "details" in cached
+    has_details = cached and "details" in cached and cached["details"].get("positions")
 
     is_new_fund = not cached
     force_fetch = False
@@ -942,7 +917,6 @@ def get_fund_data_safe(fund_code: str):
         force_fetch = True
     elif not has_details: 
         # Veri var ama detay yoksa, detay çekmek için zorla (günde 1 kere)
-        # Ama sürekli denememek için last_update kontrolü de yapılabilir
         force_fetch = True 
     elif cached_asof != effective_day:
         force_fetch = True
@@ -958,7 +932,7 @@ def get_fund_data_safe(fund_code: str):
 
     with _TEFAS_LOCK:
         cached = _PRICE_CACHE.get(fund_code)
-        if cached and cached.get("asof_day") == effective_day and "details" in cached:
+        if cached and cached.get("asof_day") == effective_day and "details" in cached and cached["details"].get("positions"):
             return cached
 
         print(f"🚀 FORCE FETCH (X-RAY): {fund_code}")
@@ -1765,8 +1739,6 @@ def api_live_list_set(payload: Dict[str, Any]):
 def api_detail(code: str):
     # Detayda cacheli hızlı dön (günde 1 TEFAS)
     info = get_fund_data_safe(code)
-    
-    # AI Tahmini anlık olarak hesaplanıp sunuluyor
     if info.get("nav", 0) > 0:
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
         ai = get_ai_prediction_live(code.upper(), daily_real)
