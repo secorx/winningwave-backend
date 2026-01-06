@@ -1,5 +1,5 @@
 # Fon Otomatik Güncelleme Sistemi
-# Bu kodu mevcut funds.py dosyanızın yerine koyun - TAM VE EKSİKSİZ VERSİRON
+# Bu kodu mevcut funds.py dosyanızın yerine koyun
 
 from __future__ import annotations
 
@@ -645,7 +645,7 @@ def fetch_fund_live(fund_code: str):
     return None
 
 # ============================================================
-# 🔥 YENİ: FINTABLES & TEFAS DETAY SCRAPER (X-RAY)
+# 🔥 YENİ: FINTABLES & TEFAS DETAY SCRAPER (X-RAY) - GÜÇLENDİRİLMİŞ
 # ============================================================
 
 def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
@@ -684,22 +684,29 @@ def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
 
 def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
     """
-    Fintables Scraper - GÜÇLENDİRİLMİŞ VERSİYON
+    Fintables'tan Fonun Tam Detaylarını Çeker - GÜÇLENDİRİLMİŞ (ANTI-403)
     """
     print(f"💎 Fintables Detay Çekiliyor: {fund_code}")
     url = f"https://fintables.com/fonlar/{fund_code.upper()}"
     
-    # 🛡️ Anti-Bot Headers (Gerçek Tarayıcı Gibi Davran)
+    # 🛡️ GÜÇLENDİRİLMİŞ HEADERS: Gerçek Bir Tarayıcı Gibi Davran
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
         "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-        "Referer": "https://www.google.com/",
-        "Upgrade-Insecure-Requests": "1"
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Referer": "https://www.google.com/", # Referer Google olsun
+        "Cache-Control": "max-age=0"
     }
 
     try:
-        r = requests.get(url, headers=headers, timeout=10)
+        # Fintables bazen cloudflare veya benzeri korumalar kullanır
+        # Session kullanmak cookie yönetimini sağlar
+        session = requests.Session()
+        r = session.get(url, headers=headers, timeout=12)
+        
         if r.status_code != 200:
             print(f"❌ Fintables HTTP {r.status_code}")
             return None
@@ -710,68 +717,90 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
             "positions": [],
             "increased": [],
             "decreased": [],
-            "info": {"founder": "", "risk_value": 0, "mgmt_fee": "", "stopaj": ""},
-            "performance_chart": []
+            "info": {
+                "founder": "",
+                "risk_value": 0,
+                "mgmt_fee": "",
+                "stopaj": ""
+            },
+            "performance_chart": [] # 1000 TL ne oldu
         }
 
-        # 1. POZİSYONLAR TABLOSUNU BUL (Daha zeki yöntem)
-        all_tables = soup.find_all("table")
+        # 1. EN BÜYÜK POZİSYONLAR
+        # Fintables yapısı değişse bile "Table" taglarını bulup içindeki metne göre analiz yapıyoruz
+        tables = soup.find_all("table")
         
-        for table in all_tables:
-            txt = table.get_text().lower()
-            rows = table.find_all("tr")
-            if len(rows) < 2: continue
-
-            # Bu tablonun ne tablosu olduğunu başlığından veya üstündeki divden anlamaya çalış
-            parent_txt = table.parent.parent.get_text().lower() if table.parent and table.parent.parent else ""
+        for table in tables:
+            # Tablo içeriğini text olarak alıp analiz et
+            table_text = table.get_text().lower()
             
-            parsed_rows = []
-            for row in rows[1:]: # Başlığı atla
+            headers_text = [th.get_text(strip=True) for th in table.find_all("th")]
+            rows = table.find_all("tr")[1:] # Skip header
+            
+            if len(rows) < 1: continue
+
+            table_data = []
+            for row in rows:
                 cols = row.find_all("td")
                 if len(cols) >= 2:
-                    # İlk kolon hisse kodu, ikinci kolon oran (genelde)
-                    code_cand = cols[0].get_text(strip=True).split(" ")[0] # "THYAO (Türk Hava..)" -> "THYAO"
-                    ratio_cand = cols[1].get_text(strip=True)
-                    
-                    # Sayısal kontrol
+                    # İlk kolon hisse kodu, ikinci kolon oran
+                    code_raw = cols[0].get_text(strip=True).split(" ")[0] # "THYAO (Türk Hava..)" -> "THYAO"
                     try:
-                        ratio_val = _parse_turkish_float(ratio_cand)
-                        if len(code_cand) >= 3 and ratio_val > 0:
-                            parsed_rows.append({"code": code_cand, "ratio": ratio_val})
+                        ratio_text = cols[1].get_text(strip=True).replace("%", "").replace(",", ".")
+                        ratio = float(ratio_text)
+                        # Kod en az 3 harfli olmalı
+                        if len(code_raw) >= 3:
+                            table_data.append({"code": code_raw, "ratio": ratio})
                     except:
-                        pass
+                        continue
             
-            if not parsed_rows: continue
-
-            if "artırılan" in parent_txt or "artırılan" in txt:
-                details["increased"] = parsed_rows
-            elif "azaltılan" in parent_txt or "azaltılan" in txt:
-                details["decreased"] = parsed_rows
-            elif "büyük pozisyonlar" in parent_txt or "büyük pozisyonlar" in txt:
-                details["positions"] = parsed_rows
+            # Bu tablo hangi tablo?
+            # Üst başlıklara veya tablo içine bak
+            parent = table.parent.parent
+            parent_text = parent.get_text().lower() if parent else ""
+            
+            if "artırılan" in parent_text or "artırılan" in table_text:
+                 details["increased"] = table_data
+            elif "azaltılan" in parent_text or "azaltılan" in table_text:
+                 details["decreased"] = table_data
+            elif "büyük pozisyonlar" in parent_text or "büyük pozisyonlar" in table_text:
+                 details["positions"] = table_data
             else:
-                # Hiçbir başlık uymuyorsa ama veri varsa ve ana liste boşsa, bunu ana liste yap
-                if not details["positions"]:
-                    details["positions"] = parsed_rows
+                 # Eğer hiçbiri uymuyorsa ama içinde "Sembol" ve "Ağırlık" varsa, ana pozisyondur
+                 if not details["positions"] and ("Sembol" in headers_text or "Ağırlık" in headers_text):
+                    details["positions"] = table_data
 
-        # 2. KÜNYE BİLGİLERİ (Risk, Kurucu vb.)
-        full_text = soup.get_text(" ", strip=True)
+        # 2. SAĞ PANEL BİLGİLERİ (Risk, Kurucu vb.)
+        text_content = soup.get_text(" ", strip=True)
         
-        # Risk Değeri (Regex ile avla: "Risk Değeri 7")
-        risk_match = re.search(r"Risk Değeri\s*[:]?\s*(\d)", full_text, re.IGNORECASE)
+        # Risk Değeri
+        risk_match = re.search(r"Risk Değeri\s*[:]?\s*(\d)", text_content)
         if risk_match:
             details["info"]["risk_value"] = int(risk_match.group(1))
-        
+
         # Kurucu
-        founder_match = re.search(r"Kurucu\s+(.*?)(?=\s+Yıllık|$)", full_text, re.IGNORECASE)
+        founder_match = re.search(r"Kurucu\s+(.*?)(?=\s+Yıllık|$)", text_content)
         if founder_match:
             details["info"]["founder"] = founder_match.group(1).strip()
+            
+        # Yönetim Ücreti
+        fee_match = re.search(r"Yıllık Yönetim Ücreti\s+%([\d,]+)", text_content)
+        if fee_match:
+            details["info"]["mgmt_fee"] = fee_match.group(1).replace(",", ".")
 
-        print(f"✅ Fintables Data: {len(details['positions'])} pozisyon, Risk: {details['info'].get('risk_value')}")
+        # Stopaj
+        stopaj_match = re.search(r"Stopaj Oranı\s+%([\d,]+)", text_content)
+        if stopaj_match:
+            details["info"]["stopaj"] = stopaj_match.group(1).replace(",", ".")
+
+        # Log
+        pos_count = len(details["positions"])
+        print(f"✅ Fintables OK: {pos_count} pozisyon, Risk: {details['info'].get('risk_value')}")
+        
         return details
 
     except Exception as e:
-        print(f"❌ Fintables Error: {e}")
+        print(f"❌ Fintables Scraping Error: {e}")
         return None
 
 # ============================================================
@@ -908,7 +937,12 @@ def get_fund_data_safe(fund_code: str):
     cached_asof = (cached.get("asof_day") or "").strip() if cached else ""
     
     # Detay verisi var mı kontrol et (Yeni eklenen özellik)
-    has_details = cached and "details" in cached and cached["details"].get("positions")
+    # Positions dizisi doluysa detay var demektir
+    has_details = False
+    if cached and "details" in cached:
+        d = cached["details"]
+        if d.get("positions") or d.get("info", {}).get("risk_value"):
+            has_details = True
 
     is_new_fund = not cached
     force_fetch = False
@@ -916,7 +950,7 @@ def get_fund_data_safe(fund_code: str):
     if is_new_fund:
         force_fetch = True
     elif not has_details: 
-        # Veri var ama detay yoksa, detay çekmek için zorla (günde 1 kere)
+        # Veri var ama detay YOKSA, detay çekmek için zorla (günde 1 kere)
         force_fetch = True 
     elif cached_asof != effective_day:
         force_fetch = True
@@ -924,7 +958,8 @@ def get_fund_data_safe(fund_code: str):
     if (not is_weekend) and before_open and not is_new_fund and has_details:
         force_fetch = False
 
-    if not force_fetch and cached:
+    # Cache varsa ve detaylar tamsa, döndür
+    if not force_fetch and cached and has_details:
         return cached
 
     if not cached and not force_fetch:
@@ -932,7 +967,14 @@ def get_fund_data_safe(fund_code: str):
 
     with _TEFAS_LOCK:
         cached = _PRICE_CACHE.get(fund_code)
-        if cached and cached.get("asof_day") == effective_day and "details" in cached and cached["details"].get("positions"):
+        
+        # Tekrar kontrol (Race condition)
+        has_details_inner = False
+        if cached and "details" in cached:
+             if cached["details"].get("positions") or cached["details"].get("info", {}).get("risk_value"):
+                 has_details_inner = True
+
+        if cached and cached.get("asof_day") == effective_day and has_details_inner:
             return cached
 
         print(f"🚀 FORCE FETCH (X-RAY): {fund_code}")
@@ -991,8 +1033,9 @@ def get_fund_data_safe(fund_code: str):
             return new_data
         
         elif force_fetch and cached:
-             # TEFAS ana veri başarısız ama cache var -> Detayları güncellemeye çalış
-             # (Opsiyonel: Sadece detay eksikse buraya düşebilir)
+             # TEFAS ana veri başarısız ama cache var.
+             # Sadece detay eksikse, detayları çekip mevcut cache'e eklemeyi deneyebiliriz.
+             # Ama şimdilik basit tutalım, risk almayalım.
              pass
 
     return cached if cached else {"nav": 0.0, "daily_return_pct": 0.0}
