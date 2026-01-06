@@ -48,3 +48,10 @@ watchfiles==1.1.1
 websockets==15.0.1
 yahooquery==2.4.1
 yfinance==0.2.66
+
+# =========================
+# 🔒 FINTABLES CLOUDFLARE BYPASS
+# =========================
+cloudscraper==1.2.71
+requests-toolbelt==1.0.0
+pyparsing==3.3.1
