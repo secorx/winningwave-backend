@@ -1,5 +1,4 @@
-# Fon Otomatik Güncelleme Sistemi
-# Bu kodu mevcut funds.py dosyanızın yerine koyun
+# funds_routes.py
 
 from __future__ import annotations
 
@@ -14,6 +13,8 @@ import urllib3
 import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
+from bs4 import BeautifulSoup  # ✅ EKLENDİ: Fintables scraping için
+
 try:
     from zoneinfo import ZoneInfo
 except Exception:
@@ -639,29 +640,201 @@ def fetch_fund_live(fund_code: str):
 
     return None
 
-def calculate_ai_prediction(yearly: float, daily: float):
+# ============================================================
+# 🌟 YENİ EKLENEN SCRAPER MOTORLARI (FINTABLES & TEFAS ALLOCATION)
+# ============================================================
+
+def _fetch_fintables_full_details(fund_code: str) -> Dict[str, Any]:
+    """
+    Fintables üzerinden detaylı fon analizi çeker.
+    Risk, Kurucu, Pozisyonlar, Karşılaştırmalar.
+    """
+    print(f"🕵️ FINTABLES Scrape Başlıyor: {fund_code}")
+    url = f"https://fintables.com/fonlar/{fund_code.upper()}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+    }
+    
+    out = {
+        "founder": "",
+        "risk_value": 0,
+        "management_fee": "",
+        "stopaj": "",
+        "holdings_top": [],  # En büyükler
+        "holdings_inc": [],  # Artırılanlar
+        "holdings_dec": [],  # Azaltılanlar
+        "comparison": {}     # 1000 TL ne oldu
+    }
+
+    try:
+        r = requests.get(url, headers=headers, timeout=10, verify=False)
+        if r.status_code != 200:
+            return out
+        
+        soup = BeautifulSoup(r.text, "html.parser")
+        
+        # 1. SOL PANEL BİLGİLERİ
+        founder_tag = soup.find("h1") 
+        if founder_tag:
+            txt = founder_tag.get_text(strip=True)
+            if "-" in txt:
+                out["founder"] = txt.split("-", 1)[1].strip()
+            else:
+                out["founder"] = txt
+
+        for elem in soup.find_all(string=re.compile("Risk Değeri")):
+            parent = elem.parent
+            if parent:
+                val = re.search(r"(\d)", parent.parent.get_text())
+                if val:
+                    out["risk_value"] = int(val.group(1))
+                    break
+
+        for elem in soup.find_all(string=re.compile("Yıllık Yönetim Ücreti")):
+             parent = elem.parent.parent
+             if parent:
+                 val = re.search(r"%([\d,]+)", parent.get_text())
+                 if val: out["management_fee"] = val.group(1)
+
+        # 2. HİSSE POZİSYONLARI
+        tables = soup.find_all("table")
+        for tbl in tables:
+            headers_txt = tbl.get_text(strip=True).upper()
+            rows = []
+            tbody = tbl.find("tbody")
+            if not tbody: continue
+            
+            for tr in tbody.find_all("tr"):
+                cols = tr.find_all("td")
+                if len(cols) >= 2:
+                    name = cols[0].get_text(strip=True)
+                    ratio_txt = cols[1].get_text(strip=True)
+                    ratio = _parse_turkish_float(ratio_txt)
+                    rows.append({"code": name, "ratio": ratio})
+            
+            if "ORAN" in headers_txt and len(rows) > 0:
+                if len(out["holdings_top"]) == 0:
+                     out["holdings_top"] = rows
+                elif not out["holdings_inc"]: out["holdings_inc"] = rows
+                elif not out["holdings_dec"]: out["holdings_dec"] = rows
+
+        # 3. KARŞILAŞTIRMA
+        comp_data = {}
+        target_labels = {"BIST 100": "bist100", "Dolar": "usd", "Altın": "gold", "Mevduat": "deposit"}
+        
+        for label, key in target_labels.items():
+            for elem in soup.find_all(string=re.compile(label)):
+                parent_text = elem.parent.parent.get_text()
+                match = re.search(r"%([\d,]+)", parent_text)
+                if match:
+                    comp_data[key] = _parse_turkish_float(match.group(1))
+        
+        out["comparison"] = comp_data
+        
+    except Exception as e:
+        print(f"❌ Fintables Scrape Error: {e}")
+    
+    return out
+
+def _fetch_tefas_allocation(fund_code: str) -> List[Dict[str, Any]]:
+    """TEFAS üzerinden Varlık Dağılımını çeker."""
+    url = f"https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={fund_code.upper()}"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    allocation = []
+    
+    try:
+        r = requests.get(url, headers=headers, timeout=10, verify=False)
+        soup = BeautifulSoup(r.text, "html.parser")
+        
+        scripts = soup.find_all("script")
+        for script in scripts:
+            if script.string and "series:" in script.string and "name: 'Varlık Dağılımı'" in script.string:
+                match = re.search(r"data:\s*\[(.*?)\]", script.string, re.DOTALL)
+                if match:
+                    raw_data = match.group(1)
+                    items = re.findall(r"\['(.*?)',\s*([\d\.]+)\]", raw_data)
+                    for name, val in items:
+                        allocation.append({"name": name, "value": float(val)})
+                break
+                
+    except Exception as e:
+        print(f"❌ TEFAS Allocation Error: {e}")
+        
+    return allocation
+
+# ✅ GÜNCELLENDİ: AI MOTORU (HOLDINGS DESTEKLİ)
+def calculate_ai_prediction(yearly: float, daily: float, holdings: List[Dict] = []):
+    """
+    Parametre olarak `holdings` (Fintables'tan gelen hisseler) listesini de alır.
+    Mantık: (Bilinen Hisse Ağırlığı * Canlı Borsa Değişimi) + (Bilinmeyen Kısım * Endeks Değişimi).
+    """
     # Eğer daily None gelirse (API fallback ve cache yoksa) hata almamak için 0.0 kabul et
     d_val = daily if daily is not None else 0.0
     
     direction = "NÖTR"
-    confidence = 50
+    confidence = 50.0
+    
+    # 1. Mevcut Yıllık Mantık
     if yearly > 40:
         confidence += 20
         direction = "POZİTİF"
     elif yearly < 0:
         confidence += 10
         direction = "NEGATİF"
+
+    # 2. Holdings (Hisseler) Analizi
+    estimated_return = 0.0
+    
+    if holdings:
+        # Piyasayı oku (BIST100 değişimi) - Cache'den
+        market_pct = 0.0
+        try:
+             if os.path.exists(MARKET_CACHE_PATH):
+                 with open(MARKET_CACHE_PATH, "r", encoding="utf-8") as f:
+                     mdata = json.load(f)
+                     for item in mdata.get("items", []):
+                         if item["code"] == "BIST100":
+                             market_pct = float(item["change_pct"])
+                             break
+        except: pass
+
+        # Ağırlıklı Ortalama Hesabı
+        total_weight = 0.0
+        weighted_sum = 0.0
+        
+        for h in holdings:
+            ratio = h.get("ratio", 0.0)
+            stock_change = market_pct # Şimdilik hisse verisi yoksa endeksle eşdeğer
+            weighted_sum += (stock_change * ratio)
+            total_weight += ratio
+            
+        if total_weight > 0:
+            part1 = weighted_sum / 100.0
+            part2 = ((100 - total_weight) / 100.0) * 0.13 # Kalan kısım sabit getiri
+            estimated_return = part1 + part2
+            
+            # Yönü güncelle
+            if estimated_return > 0.3: 
+                direction = "POZİTİF"
+                confidence += 15
+            elif estimated_return < -0.3:
+                direction = "NEGATİF"
+                confidence += 15
+        else:
+            estimated_return = d_val # Hisseler boşsa momentum
+    else:
+        estimated_return = d_val # Holdings yoksa eski usul
+
+    # 3. Momentum Etkisi
     if d_val > 0.1:
-        if direction == "POZİTİF":
-            confidence += 10
-        elif direction == "NÖTR":
-            direction = "POZİTİF"
+        if direction == "POZİTİF": confidence += 10
+        elif direction == "NÖTR": direction = "POZİTİF"
     elif d_val < -0.1:
-        if direction == "NEGATİF":
-            confidence += 10
-        elif direction == "POZİTİF":
-            confidence -= 15
-    return direction, min(95, max(10, confidence))
+        if direction == "NEGATİF": confidence += 10
+        elif direction == "POZİTİF": confidence -= 15
+        
+    return direction, min(95, max(10, confidence)), estimated_return
 
 def get_fund_data_safe(fund_code: str):
     """
@@ -705,6 +878,9 @@ def get_fund_data_safe(fund_code: str):
     # ✅ GÜNCELLENDİ: Freshness kontrolü asof_day ile yapılır
     cached_asof = (cached.get("asof_day") or "").strip() if cached else ""
     is_new_fund = not cached
+    
+    # ✅ DETAY KONTROLÜ: Eğer tarih güncel olsa bile 'details' yoksa yine de çek
+    has_details = cached and "details" in cached
 
     if is_new_fund:
         force_fetch = True
@@ -712,7 +888,7 @@ def get_fund_data_safe(fund_code: str):
     else:
         # ✅ asof_day varsa onu esas al
         if cached_asof:
-            force_fetch = (cached_asof != effective_day)
+            force_fetch = (cached_asof != effective_day) or (not has_details)
         else:
             # ✅ asof_day yoksa bu kayıt “şüpheli” (legacy) → 1 kez zorla
             force_fetch = True
@@ -734,10 +910,8 @@ def get_fund_data_safe(fund_code: str):
     with _TEFAS_LOCK:
         # Lock içinde tekrar kontrol (Race condition önlemi)
         cached = _PRICE_CACHE.get(fund_code)
-        if cached:
-            cached_asof = (cached.get("asof_day") or "").strip()
-            if cached_asof == effective_day:
-                return cached
+        if cached and cached.get("asof_day") == effective_day and "details" in cached:
+            return cached
 
         # ✅ 4. ZORUNLU LOG
         print(f"🚀 FORCE FETCH: {fund_code} | cached_asof={cached.get('asof_day') if cached else None} | effective_day={effective_day}")
@@ -768,8 +942,16 @@ def get_fund_data_safe(fund_code: str):
             else:
                 safe_daily = data["daily_pct"] if data["daily_pct"] is not None else 0.0
 
-            # ✅ FIX 2: AI prediction'a safe_daily gönder
-            dir_str, conf = calculate_ai_prediction(data["yearly_pct"], safe_daily)
+            # ✅ YENİ: Fintables ve Allocation Çek
+            fintables_data = _fetch_fintables_full_details(fund_code)
+            allocation_data = _fetch_tefas_allocation(fund_code)
+
+            # ✅ FIX 2: AI prediction'a safe_daily gönder ve Holdings
+            dir_str, conf, est_ret = calculate_ai_prediction(
+                data["yearly_pct"], 
+                safe_daily,
+                fintables_data["holdings_top"]
+            )
 
             # ✅ 4️⃣ & 5️⃣ DEĞİŞİKLİK: daily_return_pct ASLA None OLMAZ
             # last_update artık asof_day'e göre belirlenir
@@ -779,10 +961,25 @@ def get_fund_data_safe(fund_code: str):
                 "asof_day": asof_day,  # ✅ KRİTİK
                 "last_update": asof_day + " 18:30:00", # ✅ ARTIK effective_day DEĞİL
                 "source": data.get("source", "HTML"), # Kaynağı kaydet
+                
+                # ✅ YENİ DETAY ALANLARI
+                "details": {
+                    "founder": fintables_data["founder"],
+                    "risk_value": fintables_data["risk_value"],
+                    "management_fee": fintables_data["management_fee"],
+                    "stopaj": fintables_data["stopaj"],
+                    "holdings_top": fintables_data["holdings_top"],
+                    "holdings_inc": fintables_data["holdings_inc"],
+                    "holdings_dec": fintables_data["holdings_dec"],
+                    "allocation": allocation_data,
+                    "comparison": fintables_data["comparison"]
+                },
+
                 "ai_prediction": {
                     "direction": dir_str,
                     "confidence": conf,
                     "score": round(data["yearly_pct"] / 12, 2),
+                    "predicted_return_pct": round(est_ret, 2) # ✅ YENİ
                 },
             }
 
@@ -1420,6 +1617,9 @@ def api_portfolio():
 
             # ESKİ alanı koru (mevcut sistemle uyumlu)
             "prediction": info.get("ai_prediction", {}),
+
+            # ✅ YENİ EKLENEN DETAYLAR
+            "risk_value": info.get("details", {}).get("risk_value", 0)
         })
 
     return {"status": "success", "data": result_list}
