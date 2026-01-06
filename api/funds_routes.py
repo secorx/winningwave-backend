@@ -1,5 +1,5 @@
 # Fon Otomatik Güncelleme Sistemi
-# Bu kodu mevcut funds.py dosyanızın yerine koyun
+# Bu kodu mevcut funds.py dosyanızın yerine koyun - TAM VE EKSİKSİZ FİNAL VERSİYON
 
 from __future__ import annotations
 
@@ -15,6 +15,13 @@ import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 from bs4 import BeautifulSoup  # ✅ EKLENDİ: HTML Parsing için
+
+# 🛡️ Fintables Korumasını Aşmak İçin Cloudscraper Desteği (Varsa Kullanır)
+try:
+    import cloudscraper
+    _scraper = cloudscraper.create_scraper()
+except ImportError:
+    _scraper = None
 
 try:
     from zoneinfo import ZoneInfo
@@ -684,7 +691,7 @@ def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
 
 def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
     """
-    Fintables'tan Fonun Tam Detaylarını Çeker - GÜÇLENDİRİLMİŞ (ANTI-403)
+    Fintables'tan Fonun Tam Detaylarını Çeker - CLOUDSCRAPER / REQUESTS HYBRID
     """
     print(f"💎 Fintables Detay Çekiliyor: {fund_code}")
     url = f"https://fintables.com/fonlar/{fund_code.upper()}"
@@ -697,15 +704,19 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
         "Upgrade-Insecure-Requests": "1",
-        "Referer": "https://www.google.com/", # Referer Google olsun
+        "Referer": "https://www.google.com/",
         "Cache-Control": "max-age=0"
     }
 
     try:
-        # Fintables bazen cloudflare veya benzeri korumalar kullanır
-        # Session kullanmak cookie yönetimini sağlar
-        session = requests.Session()
-        r = session.get(url, headers=headers, timeout=12)
+        # ÖNCELİK: Cloudscraper varsa onu kullan (Anti-Bot Bypass)
+        if _scraper:
+            print("🛡️ Cloudscraper kullanılıyor...")
+            r = _scraper.get(url, timeout=15)
+        else:
+            # Fallback: Requests Session
+            session = requests.Session()
+            r = session.get(url, headers=headers, timeout=12)
         
         if r.status_code != 200:
             print(f"❌ Fintables HTTP {r.status_code}")
@@ -726,11 +737,10 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
             "performance_chart": [] # 1000 TL ne oldu
         }
 
-        # 1. EN BÜYÜK POZİSYONLAR
-        # Fintables yapısı değişse bile "Table" taglarını bulup içindeki metne göre analiz yapıyoruz
-        tables = soup.find_all("table")
+        # 1. POZİSYONLAR TABLOSUNU BUL
+        all_tables = soup.find_all("table")
         
-        for table in tables:
+        for table in all_tables:
             # Tablo içeriğini text olarak alıp analiz et
             table_text = table.get_text().lower()
             
@@ -755,7 +765,6 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
                         continue
             
             # Bu tablo hangi tablo?
-            # Üst başlıklara veya tablo içine bak
             parent = table.parent.parent
             parent_text = parent.get_text().lower() if parent else ""
             
@@ -771,15 +780,15 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
                     details["positions"] = table_data
 
         # 2. SAĞ PANEL BİLGİLERİ (Risk, Kurucu vb.)
-        text_content = soup.get_text(" ", strip=True)
+        text_content = soup.get_text(" ", strip=True) # <-- DÜZELTİLDİ: Tüm text burada
         
         # Risk Değeri
-        risk_match = re.search(r"Risk Değeri\s*[:]?\s*(\d)", text_content)
+        risk_match = re.search(r"Risk Değeri\s*[:]?\s*(\d)", text_content, re.IGNORECASE)
         if risk_match:
             details["info"]["risk_value"] = int(risk_match.group(1))
 
         # Kurucu
-        founder_match = re.search(r"Kurucu\s+(.*?)(?=\s+Yıllık|$)", text_content)
+        founder_match = re.search(r"Kurucu\s+(.*?)(?=\s+Yıllık|$)", text_content, re.IGNORECASE)
         if founder_match:
             details["info"]["founder"] = founder_match.group(1).strip()
             
