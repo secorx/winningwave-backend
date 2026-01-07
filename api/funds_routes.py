@@ -1590,6 +1590,23 @@ def get_fund_data_safe(fund_code: str):
                 if fintables.get("comparison_1000tl"):
                     details["comparison_1000tl"] = fintables.get("comparison_1000tl", [])
 
+            # 🔥 SERVER CACHE FALLBACK (is_equity_based'E BAKMADAN)
+            # Amaç: Bu ay KAP / Fintables boşsa, en son geçerli pozisyonu göstermek
+            try:
+                if not details.get("positions"):
+                    prev = (cached or {}).get("details", {}) if cached else {}
+                    if isinstance(prev, dict) and prev.get("positions"):
+                        details["positions"] = prev.get("positions", [])
+                        details["increased"] = prev.get("increased", [])
+                        details["decreased"] = prev.get("decreased", [])
+                        details["note"] = (
+                            "Bu ay KAP portföy raporu yayınlanmamıştır. "
+                            "Son mevcut veri gösterilmektedir."
+                        )
+            except Exception as e:
+                print(f"❌ Cache fallback hatası ({fund_code}): {e}")
+
+
 # === SEÇENEK A (FINTABLES LOGIC): HİSSE BAZLI MI? ===
 
             # 1️⃣ Önce KAP / positions'tan bak
