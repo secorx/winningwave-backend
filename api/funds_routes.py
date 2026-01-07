@@ -1,6 +1,6 @@
 # api/funds.py
 # FINTABLES KALİTESİNDE FON DETAY SCRAPER (KAP + TEFAS)
-# %100 ÇALIŞAN VERSİYON - FULL FILE - CERRAH MODU
+# %100 ÇALIŞAN VERSİYON - FULL FILE - FINAL FIX
 
 from __future__ import annotations
 
@@ -12,10 +12,12 @@ import math
 import re
 import requests
 import urllib3
-import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 from bs4 import BeautifulSoup  # HTML Parsing için
+
+# 🔥 KRİTİK EKSİK GİDERİLDİ
+import yfinance as yf 
 
 try:
     from zoneinfo import ZoneInfo
@@ -58,7 +60,7 @@ def _detect_project_root() -> str:
     # fallback
     return candidates[0]
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BASE_DIR = _detect_project_root()
 
 CACHE_ROOT = os.getenv(
     "CACHE_ROOT",
@@ -223,7 +225,7 @@ def _save_live_list_update_day(day: str):
     except:
         pass
 
-# ✅ YENİ: FETCH TRACKING HELPER'LARI (Artık aktif kullanılmıyor ama dosya tanımı kalsın)
+# ✅ YENİ: FETCH TRACKING HELPER'LARI
 def _load_fetch_tracking() -> Dict[str, str]:
     if os.path.exists(FETCH_TRACKING_PATH):
         try:
@@ -428,6 +430,7 @@ def _fetch_html_tefas(fund_code: str):
     
     try:
         r = requests.get(url, headers=headers, timeout=10, verify=False)
+        r.encoding = 'utf-8' # ENCODING FIX
         if r.status_code == 200:
             price, daily, yearly = 0.0, 0.0, 0.0
             
@@ -468,15 +471,12 @@ def _fetch_api_tefas(fund_code: str):
                 # En son tarihi bul
                 valid = []
                 for i in data:
-                    # Tarih parse (Unix ms timestamp geliyor genelde)
                     ts = i.get("TARIH", 0)
                     if ts: valid.append(i)
                 
                 if valid:
-                    # Tarihe göre sırala (en büyük tarih en başa)
-                    # "TARIH" alanı genellikle timestamp (long) gelir.
+                    # Tarihe göre sırala
                     valid.sort(key=lambda x: x.get("TARIH", 0), reverse=True)
-                    
                     last = valid[0] 
                     price = _parse_turkish_float(last.get("FIYAT", 0))
                     if price > 0:
@@ -504,11 +504,10 @@ def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
 
     try:
         r = requests.get(url, headers=headers, timeout=10, verify=False)
-        r.encoding = 'utf-8' # Encoding fix
+        r.encoding = 'utf-8'
         if r.status_code == 200:
-            # Regex ile Highcharts verisini bul: series: [{ name: 'Varlık Dağılımı', data: [...] }]
-            # Daha esnek regex
-            match = re.search(r"data\s*:\s*(\[\[.*?\]\])", r.text)
+            # Regex ile Highcharts verisini bul: data: [['Hisse', 20], ['Mevduat', 80]]
+            match = re.search(r"data\s*:\s*(\[\[.*?\]\])", r.text, re.DOTALL)
             if match:
                 raw = match.group(1).replace("'", '"')
                 try:
@@ -570,44 +569,52 @@ def _fetch_kap_portfolio_from_isyatirim(fund_code: str) -> Optional[Dict[str, An
             except:
                 pass
 
-        # 3. EN BÜYÜK POZİSYONLAR (Gelişmiş Tablo Bulma)
-        # Tablo başlıkları bazen "Menkul Kıymet", bazen "Varlık", bazen "Grup" olabilir.
+        # 3. EN BÜYÜK POZİSYONLAR (Gelişmiş Tablo Bulma - VAKUM MODU)
         tables = soup.find_all("table")
-        for table in tables:
-            # Headerları text olarak al ve temizle
-            headers_text = [th.get_text(strip=True).lower() for th in table.find_all("th")]
-            
-            # Anahtar kelime kontrolü (Esnek)
-            has_name_col = any(x in h for h in headers_text for x in ["kod", "menkul", "varlık", "grup", "sembol"])
-            has_ratio_col = any(x in h for h in headers_text for x in ["oran", "%", "dağılım", "ağırlık"])
-            
-            if has_name_col and has_ratio_col:
-                rows = table.find_all("tr")[1:] # Header hariç
-                for row in rows:
-                    cols = row.find_all("td")
-                    if len(cols) >= 2:
-                        name_code = cols[0].get_text(strip=True)
-                        ratio_str = cols[1].get_text(strip=True)
-                        
-                        if not ratio_str: continue
+        candidates = []
 
-                        ratio = _parse_turkish_float(ratio_str)
-                        # Kod temizliği
-                        clean_code = name_code.strip().upper()
-                        # Eğer parantez varsa öncesini al (Örn: "AKBNK (Hisse)")
-                        if "(" in clean_code:
-                            clean_code = clean_code.split("(")[0].strip()
+        for table in tables:
+            rows = table.find_all("tr")
+            if len(rows) < 2: continue # Başlık + en az 1 veri
+            
+            temp_list = []
+            
+            # Satırları gez (Header hariç)
+            for row in rows[1:]:
+                cols = row.find_all("td")
+                if len(cols) >= 2:
+                    # İlk kolon isim, ikinci kolon oran olma ihtimali yüksek
+                    col0_txt = cols[0].get_text(strip=True)
+                    col1_txt = cols[1].get_text(strip=True)
+                    
+                    if not col1_txt: continue
+                    
+                    # Oran parse etmeye çalış
+                    try:
+                        ratio = _parse_turkish_float(col1_txt)
+                        # Mantık kontrolü: 
+                        # 1. İsim çok kısa olmamalı (>2)
+                        # 2. Oran sayı olmalı
+                        # 3. "TOPLAM" satırı olmamalı
                         
-                        # Filtreleme
-                        if "TOPLAM" in clean_code: continue
-                        if ratio > 0.01: # %0.01 üstü
-                            details["positions"].append({"code": clean_code, "ratio": ratio})
-                
-                # Eğer tablo doluysa, işlemi bitir
-                if details["positions"]:
-                    # Orana göre sırala (büyükten küçüğe)
-                    details["positions"].sort(key=lambda x: x["ratio"], reverse=True)
-                    break 
+                        if len(col0_txt) > 2 and "TOPLAM" not in col0_txt.upper():
+                            # Kod temizle (Parantezleri at)
+                            clean_code = col0_txt.split("(")[0].strip().upper()
+                            temp_list.append({"code": clean_code, "ratio": ratio})
+                    except:
+                        continue
+            
+            # Eğer bu tablodan anlamlı veri çıktıysa listeye ekle
+            if len(temp_list) > 0:
+                candidates.append(temp_list)
+
+        # En iyi adayı seç: En çok satırı olan tablo muhtemelen portföy tablosudur.
+        if candidates:
+            # Satır sayısına göre sırala (En çok satır en başa)
+            candidates.sort(key=len, reverse=True)
+            details["positions"] = candidates[0]
+            # Kendi içinde orana göre sırala
+            details["positions"].sort(key=lambda x: x["ratio"], reverse=True)
 
         print(f"✅ İş Yatırım Data: {len(details['positions'])} pozisyon, Risk: {details['info']['risk_value']}")
         return details
@@ -677,6 +684,10 @@ def calculate_ai_prediction(yearly: float, daily: float, holdings: List[Dict[str
                 
                 live_chg = live_stocks.get(clean_code)
                 
+                # Yahoo finance için .IS eklemeyi dene
+                if live_chg is None:
+                     live_chg = live_stocks.get(clean_code + ".IS")
+
                 if live_chg is not None:
                     weighted_change += (live_chg * ratio)
                     total_w += ratio
@@ -868,6 +879,7 @@ def update_market_data():
     return items
 
 def _get_market_change_pct(code: str) -> float:
+    """AI tahmin için market yüzdesini okur (TEFAS değil)"""
     try:
         if os.path.exists(MARKET_CACHE_PATH):
             with open(MARKET_CACHE_PATH, "r", encoding="utf-8") as f:
@@ -884,36 +896,61 @@ def _get_market_change_pct(code: str) -> float:
 # ============================================================
 
 def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
+
+    # ===============================
+    # ⏰ PİYASA AÇIK / KAPALI KONTROLÜ
+    # ===============================
     try:
         now_tr = datetime.now(ZoneInfo("Europe/Istanbul"))
     except:
         now_tr = datetime.now()
 
+    # BIST: 09:30 – 18:10 arası açık kabul edelim
     market_open = (
         (now_tr.hour > 9 or (now_tr.hour == 9 and now_tr.minute >= 30)) and
         (now_tr.hour < 18 or (now_tr.hour == 18 and now_tr.minute <= 10))
     )
 
+    """
+    🔒 Direction kilidi
+    🌊 Yumuşak jitter
+    🧠 Premium AI anchor
+    TEFAS'a DOKUNMAZ
+    """
     fund_code = fund_code.upper()
     now_ts = time.time()
 
     with _AI_LOCK:
         cached = _AI_CACHE.get(fund_code)
         
+        # Eğer cached veri varsa ve "predicted_return_pct" yoksa (eski cache), yenile
         if cached and "predicted_return_pct" not in cached:
              cached = None
 
+        # ⛔ PİYASA KAPALIYSA → CANLI AI KİLİTLENİR
         if not market_open and cached:
             return cached
 
-        ttl = 1 if market_open else 3600
+        # Market açıksa cache'i kısalt
+        try:
+            now_tr = datetime.now(ZoneInfo("Europe/Istanbul"))
+        except:
+            now_tr = datetime.now()
+        ttl = 1 if market_open else 3600  # Kapalıyken 1 saat kilit
+
 
         if cached and (now_ts - cached["_ts"]) < ttl:
             return cached
 
+        # ===============================
+        # MARKET VERİLERİ
+        # ===============================
         bist = _get_market_change_pct("BIST100")
         usd = _get_market_change_pct("USDTRY")
 
+        # ===============================
+        # 🧠 PREMIUM AI ANCHOR (TEK SATIR MANTIĞI)
+        # ===============================
         master = _get_master_map_cached()
         rec = master.get(fund_code, {})
         fund_name = rec.get("name", "")
@@ -930,7 +967,15 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         )
         premium_base = float(premium.get("predicted_return_pct", 0.0))
 
-        jitter = math.sin(now_ts / 60.0) * 0.03
+        # ===============================
+        # 🌊 SOFT JITTER (ÇOK KÜÇÜK)
+        # ===============================
+        # deterministik (random yok)
+        jitter = math.sin(now_ts / 60.0) * 0.03  # max ±0.03
+
+        # ===============================
+        # GÜN İÇİ DRIFT (KAPANIŞA SIFIRLANIR)
+        # ===============================
         try:
             dt = datetime.now(ZoneInfo("Europe/Istanbul"))
         except:
@@ -939,12 +984,16 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         session_pos = max(0.0, min(1.0, (minutes - 570) / (1090 - 570)))
         drift = 0.12 * (1.0 - session_pos)
 
-        # AI Prediction: Cached detay bilgisini kullan
+        # ===============================
+        # 🎯 FİNAL TAHMİN (AĞIRLIKLI)
+        # ===============================
+        # Eğer cached veride hisse bazlı tahmin varsa (estimated_return), onu da kat
         fund_data = _PRICE_CACHE.get(fund_code, {})
         holdings_impact = 0.0
         if "ai_prediction" in fund_data:
              holdings_impact = fund_data["ai_prediction"].get("estimated_return", 0.0)
 
+        # Formül: Premium Base %50 + Holdings %40 + Daily %10
         predicted = (
             premium_base * 0.50 +
             holdings_impact * 0.40 +
@@ -954,6 +1003,9 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         )
         predicted = round(predicted, 2)
 
+        # ===============================
+        # 🔒 DIRECTION LOCK
+        # ===============================
         prev = _AI_DIRECTION_LOCK.get(fund_code)
 
         raw_direction = (
@@ -965,10 +1017,13 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         direction = raw_direction
 
         if prev:
+            # yön değişimi için eşik
             if raw_direction != prev["direction"]:
+                # küçük değişimde yönü KORU
                 if abs(predicted) < 0.25:
                     direction = prev["direction"]
                 else:
+                    # yön değişti ama TS güncelle
                     _AI_DIRECTION_LOCK[fund_code] = {
                         "direction": raw_direction,
                         "ts": now_ts,
@@ -999,12 +1054,13 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
 # ============================================================
 
 def auto_market_loop():
+    """Server açık olduğu sürece her 15 dakikada bir çalışır"""
     while True:
         update_market_data()
-        time.sleep(900)
+        time.sleep(900)  # 15 dakika bekle
 
 # ============================================================
-# 6.5 ✅ PREMIUM AI SUMMARY
+# 6.5 ✅ PREMIUM AI SUMMARY (TIP ÖZET + TOP FONLAR)
 # ============================================================
 
 def _safe_float(v: Any, default: float = 0.0) -> float:
@@ -1019,17 +1075,26 @@ def _safe_float(v: Any, default: float = 0.0) -> float:
         return default
 
 def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
+    """
+    scope:
+      - "portfolio": sadece portföydeki fonlar
+      - "all": funds_master içindeki tüm fonlar
+    """
+    # market snapshot (premium_ai yardımcıları ile)
     snap = read_market_snapshot(MARKET_CACHE_PATH)
     bist = market_change_pct(snap, "BIST100")
     usd = market_change_pct(snap, "USDTRY")
     market_asof = str(snap.get("asof") or "")
 
     master = _get_master_map_cached()
+
+    # universe seçimi
     codes: List[str] = []
 
     if scope == "all":
         codes = list(master.keys())
     else:
+        # portfolio
         if os.path.exists(PORTFOLIO_PATH):
             try:
                 with open(PORTFOLIO_PATH, "r", encoding="utf-8") as f:
@@ -1041,14 +1106,16 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
             except:
                 codes = []
 
+    # compute predictions
     items: List[Dict[str, Any]] = []
-    by_type_acc: Dict[str, Dict[str, float]] = {}
+    by_type_acc: Dict[str, Dict[str, float]] = {}  # type -> {sum, cnt}
 
     for code in codes:
         rec = master.get(code, {}) if isinstance(master, dict) else {}
         fund_name = str(rec.get("name") or "")
         fund_type = str(rec.get("type") or "")
 
+        # 📌 RAM cache yoksa Disk cache'ten oku
         info = _PRICE_CACHE.get(code)
         
         if not info:
@@ -1094,6 +1161,7 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
             acc["sum"] += pred
             acc["cnt"] += 1.0
 
+    # by_type averages
     by_type = []
     for t, acc in by_type_acc.items():
         cnt = int(acc["cnt"])
@@ -1104,11 +1172,14 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
             "count": cnt,
         })
 
+    # sort by avg desc (kurumsal görünüm)
     by_type.sort(key=lambda x: x.get("avg_pct", 0.0), reverse=True)
 
+    # top funds: pred desc, conf >= 65
     top_funds = [x for x in items if int(x.get("confidence_score", 0)) >= 65]
     top_funds.sort(key=lambda x: (x.get("predicted_return_pct", 0.0), x.get("confidence_score", 0)), reverse=True)
     
+    # ✅ FIX 3: Fallback mekanizması (Liste asla boş dönmesin)
     if not top_funds:
         items.sort(key=lambda x: (x.get("predicted_return_pct", 0.0), x.get("confidence_score", 0)), reverse=True)
         top_funds = items[:8]
@@ -1134,6 +1205,9 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
 # ============================================================
 
 def update_newly_added_funds(fund_codes: List[str]):
+    """
+    Yeni eklenen fonları hemen günceller
+    """
     if not fund_codes:
         return
         
@@ -1150,11 +1224,16 @@ def update_newly_added_funds(fund_codes: List[str]):
         except Exception as e:
             print(f"💥 {code} güncelleme hatası: {str(e)}")
         
-        time.sleep(0.4)
+        time.sleep(0.4)  # Ban koruması
     
     print(f"🎯 Tüm yeni fonlar işlendi: {len(fund_codes)} adet")
 
+# ✅ GÜNCELLENDİ: "Any" yerine tüm portföyün güncel olup olmadığını kontrol eder ve timezone düzeltmesi
 def maybe_update_portfolio_funds():
+    """
+    09:30 sonrası portföy fonlarını GÜNDE 1 KEZ (effective_day bazlı) tamamlar.
+    """
+    # Eğer server restart olmuşsa (RAM cache boşsa) günlük kilidi resetle
     if not _PRICE_CACHE:
         _save_portfolio_update_day("")
 
@@ -1167,13 +1246,15 @@ def maybe_update_portfolio_funds():
 
     today = now.strftime("%Y-%m-%d")
     effective_day = tefas_effective_date()
-    run_day = effective_day
+    run_day = effective_day  # ✅ State anahtarı bu olmalı
 
     with _PORTFOLIO_UPDATE_LOCK:
+        # Portföy yoksa state yazıp çık
         if not os.path.exists(PORTFOLIO_PATH):
             _save_portfolio_update_day(run_day)
             return
 
+        # Portföy kodlarını oku
         try:
             with open(PORTFOLIO_PATH, "r", encoding="utf-8") as f:
                 raw = json.load(f)
@@ -1186,25 +1267,30 @@ def maybe_update_portfolio_funds():
             print(f"❌ Portföy okuma hata: {e}")
             return
 
+        # Eksikleri bul (RAM + disk üzerinden)
         missing = _missing_codes_for_day(codes, effective_day)
         last_day = _load_portfolio_update_day()
 
+        # ✅ SADECE: run_day state yazılmış VE portföyde eksik yoksa erken çık
         if last_day == run_day and not missing:
             return
 
+        # Eksik yoksa state'i düzelt ve çık
         if not missing:
             _save_portfolio_update_day(run_day)
             return
 
         print(f"🔄 Portföy auto-update: {len(missing)}/{len(codes)} fon eksik, güncellenecek. effective_day={effective_day}")
 
+        # Sadece eksikleri güncelle
         for code in missing:
             try:
                 get_fund_data_safe(code)
             except Exception as e:
                 print(f"❌ Portföy update hata ({code}): {e}")
-            time.sleep(0.4)
+            time.sleep(0.4)  # 🔒 BAN KORUMASI
 
+        # Gün bitti (portföy tamamlandı mı kontrol et) → state yaz
         missing2 = _missing_codes_for_day(codes, effective_day)
         if not missing2:
             _save_portfolio_update_day(run_day)
@@ -1212,7 +1298,12 @@ def maybe_update_portfolio_funds():
         else:
             print(f"⚠️ Portföy fonları kısmi kaldı: {len(missing2)} fon hâlâ eksik; sonraki istekte tekrar denenecek.")
 
+# ✅ GÜNCELLENDİ: "Any" yerine tüm canlı listenin güncel olup olmadığını kontrol eder ve timezone düzeltmesi
 def maybe_update_live_list_funds():
+    """
+    09:30 sonrası canlı listedeki fonları GÜNDE 1 KEZ (effective_day bazlı) tamamlar.
+    """
+    # Eğer server restart olmuşsa (RAM cache boşsa) günlük kilidi resetle
     if not _PRICE_CACHE:
         _save_live_list_update_day("")
 
@@ -1225,13 +1316,15 @@ def maybe_update_live_list_funds():
 
     today = now.strftime("%Y-%m-%d")
     effective_day = tefas_effective_date()
-    run_day = effective_day
+    run_day = effective_day  # ✅ State anahtarı bu olmalı
 
     with _LIVE_LIST_UPDATE_LOCK:
+        # Liste yoksa state yazıp çık
         if not os.path.exists(LIVE_LIST_PATH):
             _save_live_list_update_day(run_day)
             return
 
+        # Liste kodlarını oku
         try:
             with open(LIVE_LIST_PATH, "r", encoding="utf-8") as f:
                 raw = json.load(f)
@@ -1244,25 +1337,30 @@ def maybe_update_live_list_funds():
             print(f"❌ Canlı liste okuma hata: {e}")
             return
 
+        # Eksikleri bul
         missing = _missing_codes_for_day(codes, effective_day)
         last_day = _load_live_list_update_day()
 
+        # ✅ SADECE: run_day state yazılmış VE listede eksik yoksa erken çık
         if last_day == run_day and not missing:
             return
 
+        # Eksik yoksa state'i düzelt ve çık
         if not missing:
             _save_live_list_update_day(run_day)
             return
 
         print(f"🔄 Canlı liste auto-update: {len(missing)}/{len(codes)} fon eksik, güncellenecek. effective_day={effective_day}")
 
+        # Sadece eksikleri güncelle
         for code in missing:
             try:
                 get_fund_data_safe(code)
             except Exception as e:
                 print(f"❌ Canlı liste update hata ({code}): {e}")
-            time.sleep(0.4)
+            time.sleep(0.4)  # Ban koruması
 
+        # Gün bitti mi kontrol et → state yaz
         missing2 = _missing_codes_for_day(codes, effective_day)
         if not missing2:
             _save_live_list_update_day(run_day)
@@ -1292,11 +1390,21 @@ def api_market():
 
 @router.get("/predictions/summary")
 def api_predictions_summary(scope: str = "portfolio"):
+    """
+    ✅ Yeni endpoint:
+      GET /funds/predictions/summary?scope=portfolio
+      GET /funds/predictions/summary?scope=all
+
+    Döner:
+      by_type: tip bazlı ortalamalar
+      top_funds: güçlü fonlar listesi
+    """
     global _PRED_SUMMARY_CACHE, _PRED_SUMMARY_TS
     scope = (scope or "portfolio").strip().lower()
     if scope not in ("portfolio", "all"):
         scope = "portfolio"
 
+    # ✅ PATCH 3.4: 15 sn cache (scope bazlı)
     with _PRED_SUMMARY_LOCK:
         ts = time.time()
         cached = _PRED_SUMMARY_CACHE.get(scope)
@@ -1306,6 +1414,7 @@ def api_predictions_summary(scope: str = "portfolio"):
 
     data = _build_predictions_summary(scope=scope)
 
+    # ✅ PATCH 3.6: TS scope bazlı update
     with _PRED_SUMMARY_LOCK:
         _PRED_SUMMARY_CACHE[scope] = data
         _PRED_SUMMARY_TS[scope] = time.time()
@@ -1314,6 +1423,7 @@ def api_predictions_summary(scope: str = "portfolio"):
 
 @router.get("/portfolio")
 def api_portfolio():
+    # 🔥 09:30 sonrası otomatik portföy güncelleme
     maybe_update_portfolio_funds()
 
     if os.path.exists(PORTFOLIO_PATH):
@@ -1332,19 +1442,28 @@ def api_portfolio():
             continue
         qty = float(pos.get("quantity", 0) or 0)
 
+        # TEFAŞ cacheli gerçek veri (günde 1 kere)
         info = get_fund_data_safe(code)
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
+
+        # AI tahmin (sadece yön için)
         ai = get_ai_prediction_live(code, daily_real)
 
+        # 🎯 ÇÖZÜM: Mobil app'in beklediği alanları gerçek TEFAŞ verilerine bağla
         result_list.append({
             "code": code,
             "quantity": qty,
             "nav": info.get("nav", 0.0),
-            "daily_return_pct": daily_real,
+            "daily_return_pct": daily_real,                    # ✅ TEFAŞ gerçek %
+            
+            # 🎯 ÇÖZÜM: Mobil'in predicted_return_pct alanına AI TAHMİNİ koy (Fix 2)
             "predicted_return_pct": ai.get("predicted_return_pct", daily_real), 
             "confidence_score": ai.get("confidence_score", 50),
             "direction": ai.get("direction", "NÖTR"),
+            
             "value": qty * float(info.get("nav", 0.0) or 0.0),
+
+            # ESKİ alanı koru (mevcut sistemle uyumlu)
             "prediction": info.get("ai_prediction", {}),
         })
 
@@ -1352,17 +1471,27 @@ def api_portfolio():
 
 @router.post("/portfolio/set")
 def api_pset(payload: Dict[str, Any]):
+    """
+    payload: {"positions":[{"code":"AFT","quantity":10}, ...]}
+    
+    YENİ: Fon eklendiğinde otomatik güncelleme
+    """
     try:
         positions = payload.get("positions", [])
+        
+        # ✅ YENİ: Önceki fon kodlarını oku
         previous_codes = _get_portfolio_codes()
         
+        # Portföyü kaydet
         with open(PORTFOLIO_PATH, "w", encoding="utf-8") as f:
             json.dump({"asof": now_str(), "positions": positions}, f, ensure_ascii=False, indent=2)
         
+        # ✅ YENİ: Yeni eklenen fonları tespit et ve güncelle
         current_codes = [str(pos.get("code") or "").upper().strip() for pos in positions if pos.get("code")]
         new_funds = _get_newly_added_funds(previous_codes, current_codes)
         
         if new_funds:
+            print(f"🆕 Yeni fonlar tespit edildi: {', '.join(new_funds)}")
             update_newly_added_funds(new_funds)
         
     except:
@@ -1383,6 +1512,11 @@ def api_list():
 
 @router.get("/live-list")
 def api_live_list():
+    """
+    ✅ YENİ: Canlı liste endpoint'i
+    09:30 sonrası otomatik güncelleme yapar
+    """
+    # 09:30 sonrası otomatik canlı liste güncelleme
     maybe_update_live_list_funds()
     
     if os.path.exists(LIVE_LIST_PATH):
@@ -1400,8 +1534,11 @@ def api_live_list():
         if not code:
             continue
 
+        # TEFAŞ cacheli gerçek veri (günde 1 kere)
         info = get_fund_data_safe(code)
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
+
+        # AI tahmin
         ai = get_ai_prediction_live(code, daily_real)
 
         result_list.append({
@@ -1419,17 +1556,27 @@ def api_live_list():
 
 @router.post("/live-list/set")
 def api_live_list_set(payload: Dict[str, Any]):
+    """
+    payload: {"items":[{"code":"AFT","name":"..."}, ...]}
+    
+    YENİ: Canlı listeye fon eklendiğinde otomatik güncelleme
+    """
     try:
         items = payload.get("items", [])
+        
+        # ✅ YENİ: Önceki fon kodlarını oku
         previous_codes = _get_live_list_codes()
         
+        # Canlı listeyi kaydet
         with open(LIVE_LIST_PATH, "w", encoding="utf-8") as f:
             json.dump({"asof": now_str(), "items": items}, f, ensure_ascii=False, indent=2)
         
+        # ✅ YENİ: Yeni eklenen fonları tespit et ve güncelle
         current_codes = [str(item.get("code") or "").upper().strip() for item in items if item.get("code")]
         new_funds = _get_newly_added_funds(previous_codes, current_codes)
         
         if new_funds:
+            print(f"🆕 Canlı listeye yeni fonlar eklendi: {', '.join(new_funds)}")
             update_newly_added_funds(new_funds)
         
     except:
@@ -1438,17 +1585,24 @@ def api_live_list_set(payload: Dict[str, Any]):
 
 @router.get("/detail/{code}")
 def api_detail(code: str):
+    # Detayda cacheli hızlı dön (günde 1 TEFAS)
     info = get_fund_data_safe(code)
     if info.get("nav", 0) > 0:
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
         ai = get_ai_prediction_live(code.upper(), daily_real)
         
+        # Eğer Fintables'tan gelen detaylı AI skoru varsa (hisse bazlı), onu da ekle
         predicted_return = ai.get("predicted_return_pct", daily_real)
-        
+        if "ai_prediction" in info and "estimated_return" in info["ai_prediction"]:
+             # Cache'teki hisse bazlı skoru kullanabiliriz, ama live market data daha taze
+             # O yüzden get_ai_prediction_live fonksiyonu zaten bunu birleştiriyor.
+             pass
+
         return {
             "status": "success",
             "data": {
                 **info,
+                # 🎯 ÇÖZÜM: Mobil kolay kullansın diye düz alanlar (Fix 2)
                 "predicted_return_pct": predicted_return,
                 "confidence_score": ai.get("confidence_score", 50),
                 "direction": ai.get("direction", "NÖTR"),
@@ -1456,8 +1610,25 @@ def api_detail(code: str):
         }
     return {"status": "error", "message": "Veri yok"}
 
+# @router.get("/admin/refresh-tefas")
+# def admin_refresh_tefas():
+#     """
+#     TEFAS toplu batch scrape.
+#     Runtime API'yi etkilemez.
+#     """
+#     result = run_batch_scrape()
+#     return {
+#         "status": "success",
+#         "message": "TEFAS batch scrape tamamlandı",
+#         "result": result
+#     }
+
+# ✅ EKLENDİ: Server açılışında bootstrap güncellemesi
 def _startup_bootstrap_updates():
+    # Uvicorn import sırasında hemen saldırmasın, biraz bekle
     time.sleep(2)
+
+    # Server 09:30 sonrası açıldıysa anında dene; değilse endpoint zaten tetikler.
     try:
         maybe_update_portfolio_funds()
     except Exception as e:
@@ -1468,16 +1639,25 @@ def _startup_bootstrap_updates():
     except Exception as e:
         print(f"❌ Startup live-list bootstrap hata: {e}")
 
+# ✅ PATCH 4.2: Threadleri tek sefer başlat (reload-safe)
 def _start_background_jobs_once():
+    """Uvicorn reload / çoklu import durumunda thread'leri tek sefer başlat."""
     global _BG_STARTED
     with _BG_LOCK:
         if _BG_STARTED:
             return
         _BG_STARTED = True
+
+        # 1) Cache'i RAM'e yükle
         load_cache_to_memory()
+
+        # 2) Market loop thread
         t_market = threading.Thread(target=auto_market_loop, daemon=True)
         t_market.start()
+
+        # 3) Startup bootstrap thread
         t_boot = threading.Thread(target=_startup_bootstrap_updates, daemon=True)
         t_boot.start()
 
+# ✅ Import olur olmaz çalıştır (ama tek sefer)
 _start_background_jobs_once()
