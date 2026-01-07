@@ -11,6 +11,10 @@ import math
 import re
 import requests
 import urllib3
+import io
+import zipfile
+import xml.etree.ElementTree as ET
+from urllib.parse import quote_plus, urljoin
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 from bs4 import BeautifulSoup  # HTML Parsing için
@@ -324,6 +328,46 @@ def _parse_turkish_float(text: str) -> float:
         return float(s)
     except:
         return 0.0
+    
+def _detect_equity_based_from_positions(positions: Optional[List[Dict[str, Any]]]) -> bool:
+    """
+    Seçenek A mantığı:
+    - 'positions' içinde gerçek hisse kodları (ASELS, THYAO gibi) varsa True
+    - Sadece kategori/varlık sınıfı (Hisse Senedi, Mevduat, DİBS vb.) varsa False
+    """
+    if not positions:
+        return False
+
+    # TEFAS allocation fallback'ında gelen kategori adları vb.
+    non_equity_keywords = [
+        "HİSSE SENEDİ", "HISSE SENEDI", "MEVDUAT", "DİBS", "DIBS",
+        "TAHVİL", "TAHVIL", "BONO", "EUROBOND", "KATILIM",
+        "ALTIN", "GÜMÜŞ", "GUMUS", "DÖVİZ", "DOVIZ",
+        "REPO", "FON", "KAMU", "ÖZEL", "OZEL", "KİRA", "KIRA",
+        "BORÇLANMA", "BORCLANMA", "VADELİ", "VADELI", "BPP",
+        "TERS REPO", "EMTİA", "EMTIA", "PAY", "HİSSE"
+    ]
+
+    for it in positions:
+        code = str(it.get("code") or "").strip().upper()
+
+        if not code:
+            continue
+
+        # Kategori gibi duranlar (TEFAS allocation'dan gelen "Hisse Senedi" vb.)
+        if any(k in code for k in non_equity_keywords):
+            continue
+
+        # Çok uzun/garip stringler kategori olabilir
+        if len(code) > 12:
+            continue
+
+        # Gerçek hisse kodu için basit kural: 3-6 harf/rakam, boşluk yok
+        if re.fullmatch(r"[A-Z0-9]{3,6}", code):
+            return True
+
+    return False
+
 
 # ✅ DÜZELTİLDİ: load_cache_to_memory
 def load_cache_to_memory():
@@ -481,12 +525,449 @@ def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
     
     return None
 
+
+# ============================================================
+# 🔥 YENİ: KAP (RESMİ) FON BİLDİRİMLERİNDEN PORTFÖY RAPORU (EXCEL) OKUMA
+# ============================================================
+
+def _kap_find_fund_notifications_url(fund_code: str) -> Optional[str]:
+    """KAP üzerinde ilgili fonun /tr/fon-bildirimleri/... sayfasını bulur.
+
+    Strateji:
+      1) KAP arama sayfasında fon kodu ile arama yap
+      2) Sonuçlardan ilk /tr/fon-bildirimleri/ linkini yakala
+
+    Bulamazsa None döner.
+    """
+    try:
+        code = (fund_code or "").strip().upper()
+        if not code:
+            return None
+        search_url = f"https://www.kap.org.tr/tr/arama?q={quote_plus(code)}"
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Connection": "keep-alive",
+        }
+        r = requests.get(search_url, headers=headers, timeout=12)
+        r.encoding = "utf-8"
+        if r.status_code != 200:
+            return None
+        soup = BeautifulSoup(r.text or "", "html.parser")
+        for a in soup.find_all("a", href=True):
+            href = a.get("href") or ""
+            if "/tr/fon-bildirimleri/" in href:
+                if f"/{code.lower()}-" in href.lower() or href.lower().endswith(f"/{code.lower()}") or f" {code} " in (a.get_text(" ", strip=True) + " "):
+                    return urljoin("https://www.kap.org.tr", href)
+        for a in soup.find_all("a", href=True):
+            href = a.get("href") or ""
+            if "/tr/fon-bildirimleri/" in href:
+                return urljoin("https://www.kap.org.tr", href)
+    except:
+        return None
+    return None
+
+
+
+def _kap_list_portfolio_disclosures(notif_url: str, fund_code: str, max_items: int = 30) -> List[str]:
+    """Fon bildirimleri sayfasından 'Portföy Dağılım Raporu' bildirim linklerini listeler.
+
+    ✅ Kritiklik:
+      - KAP'ta bazı aylarda ilgili rapor olmayabilir. Biz "en güncel bulunan" raporu seçmek isteriz.
+      - Bu yüzden tarih yakalayıp (varsa) en yeni -> eski sıralarız.
+      - Eğer tarih yakalanamazsa sayfadaki doğal sıra korunur.
+    """
+    out: List[str] = []
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Connection": "keep-alive",
+        }
+        r = requests.get(notif_url, headers=headers, timeout=12)
+        r.encoding = "utf-8"
+        if r.status_code != 200:
+            return out
+        soup = BeautifulSoup(r.text or "", "html.parser")
+
+        # Row bazlı tarama (tarih + link + başlık)
+        items: List[Dict[str, Any]] = []
+
+        def _parse_date_from_text(t: str) -> Optional[datetime]:
+            t = (t or "").strip()
+            # dd.mm.yyyy
+            mm = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", t)
+            if mm:
+                try:
+                    return datetime(int(mm.group(3)), int(mm.group(2)), int(mm.group(1)))
+                except:
+                    return None
+            # yyyy-mm-dd
+            mm = re.search(r"(\d{4})-(\d{2})-(\d{2})", t)
+            if mm:
+                try:
+                    return datetime(int(mm.group(1)), int(mm.group(2)), int(mm.group(3)))
+                except:
+                    return None
+            return None
+
+        for row in soup.find_all("tr"):
+            row_txt = (row.get_text(" ", strip=True) or "").lower()
+            if ("portföy" in row_txt and "dağılım" in row_txt) or ("portfoy" in row_txt and "dagilim" in row_txt):
+                a = row.find("a", href=True)
+                if not a:
+                    continue
+                href = a.get("href") or ""
+                if "/tr/Bildirim/" not in href and "/tr/bildirim/" not in href:
+                    continue
+                full = urljoin("https://www.kap.org.tr", href)
+
+                # Tarih yakala (satır metninden)
+                dt = _parse_date_from_text(row.get_text(" ", strip=True))
+
+                items.append({"url": full, "dt": dt})
+
+        # Eğer tablolu yapı yakalanamadıysa, link metinlerinden ara (fallback)
+        if not items:
+            for a in soup.find_all("a", href=True):
+                href = a.get("href") or ""
+                txt2 = (a.get_text(" ", strip=True) or "").lower()
+                if ("portföy" in txt2 and "dağılım" in txt2) or ("portfoy" in txt2 and "dagilim" in txt2):
+                    if "/tr/Bildirim/" in href or "/tr/bildirim/" in href:
+                        full = urljoin("https://www.kap.org.tr", href)
+                        items.append({"url": full, "dt": None})
+
+        # Sırala: tarih varsa yeni -> eski
+        if any(it.get("dt") for it in items):
+            items.sort(key=lambda x: (x.get("dt") is not None, x.get("dt") or datetime(1970, 1, 1)), reverse=True)
+
+        seen = set()
+        for it in items:
+            u = it.get("url")
+            if not u or u in seen:
+                continue
+            seen.add(u)
+            out.append(u)
+            if len(out) >= max_items:
+                break
+
+    except:
+        return out
+    return out
+
+
+def _kap_download_first_excel_attachment(disclosure_url: str) -> Optional[bytes]:
+    """Bir bildirim sayfasından ilk Excel ekini indirir (xlsx/xls)."""
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Connection": "keep-alive",
+        }
+        r = requests.get(disclosure_url, headers=headers, timeout=12)
+        r.encoding = "utf-8"
+        if r.status_code != 200:
+            return None
+
+        soup = BeautifulSoup(r.text or "", "html.parser")
+
+        candidates: List[str] = []
+        for a in soup.find_all("a", href=True):
+            href = a.get("href") or ""
+            text = (a.get_text(" ", strip=True) or "").lower()
+            if "/api/file/download/" in href:
+                full = urljoin("https://www.kap.org.tr", href)
+                if ("excel" in text) or ("xlsx" in href.lower()) or ("xls" in href.lower()):
+                    candidates.append(full)
+
+        if not candidates:
+            for a in soup.find_all("a", href=True):
+                href = a.get("href") or ""
+                if "/api/file/download/" in href:
+                    candidates.append(urljoin("https://www.kap.org.tr", href))
+
+        if not candidates:
+            return None
+
+        dl = candidates[0]
+        rr = requests.get(dl, headers=headers, timeout=20)
+        if rr.status_code != 200:
+            return None
+        if not rr.content or len(rr.content) < 2000:
+            return None
+        return rr.content
+
+    except:
+        return None
+
+
+def _xlsx_table_rows_from_bytes(xlsx_bytes: bytes) -> List[List[str]]:
+    """XLSX dosyasını (bytes) minimum bağımlılıkla satır listesine çevirir."""
+    rows_out: List[List[str]] = []
+
+    try:
+        import openpyxl  # type: ignore
+        from io import BytesIO
+        wb = openpyxl.load_workbook(BytesIO(xlsx_bytes), data_only=True, read_only=True)
+        for ws in wb.worksheets:
+            for row in ws.iter_rows(values_only=True):
+                if row is None:
+                    continue
+                rows_out.append(["" if v is None else str(v).strip() for v in row])
+            if rows_out:
+                break
+        if rows_out:
+            return rows_out
+    except:
+        pass
+
+    try:
+        zf = zipfile.ZipFile(io.BytesIO(xlsx_bytes))
+        shared_strings: List[str] = []
+        if "xl/sharedStrings.xml" in zf.namelist():
+            ss_xml = zf.read("xl/sharedStrings.xml")
+            root = ET.fromstring(ss_xml)
+            ns = ""
+            if root.tag.startswith("{"):
+                ns = root.tag.split("}")[0] + "}"
+            for si in root.findall(f"{ns}si"):
+                texts = []
+                for t in si.findall(f".//{ns}t"):
+                    if t.text:
+                        texts.append(t.text)
+                shared_strings.append("".join(texts).strip())
+
+        sheet_name = None
+        for name in zf.namelist():
+            if name.startswith("xl/worksheets/sheet") and name.endswith(".xml"):
+                sheet_name = name
+                break
+        if not sheet_name:
+            return rows_out
+
+        sh_xml = zf.read(sheet_name)
+        root = ET.fromstring(sh_xml)
+        ns = ""
+        if root.tag.startswith("{"):
+            ns = root.tag.split("}")[0] + "}"
+
+        for row in root.findall(f".//{ns}row"):
+            row_vals: List[str] = []
+            for c in row.findall(f"{ns}c"):
+                t = c.get("t")
+                v = c.find(f"{ns}v")
+                val = ""
+                if v is not None and v.text is not None:
+                    if t == "s":
+                        try:
+                            idx = int(v.text)
+                            val = shared_strings[idx] if 0 <= idx < len(shared_strings) else ""
+                        except:
+                            val = ""
+                    else:
+                        val = v.text
+                row_vals.append(str(val).strip())
+            if any(x for x in row_vals):
+                rows_out.append(row_vals)
+    except:
+        return rows_out
+
+    return rows_out
+
+
+def _parse_kap_portfolio_positions_from_xlsx(xlsx_bytes: bytes) -> List[Dict[str, Any]]:
+    """KAP Portföy Dağılım Raporu excelinden hisse kodu ve portföy oranı yakalar."""
+    rows = _xlsx_table_rows_from_bytes(xlsx_bytes)
+    if not rows:
+        return []
+
+    header_idx = -1
+    code_col = None
+    ratio_col = None
+
+    for i in range(min(60, len(rows))):
+        r = rows[i]
+        joined = " | ".join([str(x).lower() for x in r if x is not None])
+        if any(k in joined for k in ["portföy", "portfoy"]) and any(k in joined for k in ["oran", "%"]):
+            for j, cell in enumerate(r):
+                c = (cell or "").lower()
+                if code_col is None and any(k in c for k in ["kod", "hisse", "borsa", "menkul", "sembol", "symbol"]):
+                    code_col = j
+                if ratio_col is None and any(k in c for k in ["oran", "%", "pay"]):
+                    ratio_col = j
+            header_idx = i
+            break
+
+    if header_idx == -1:
+        for i in range(min(60, len(rows))):
+            r = rows[i]
+            joined = " ".join([str(x).lower() for x in r])
+            if ("kod" in joined or "hisse" in joined) and ("oran" in joined or "%" in joined):
+                header_idx = i
+                code_col = 0
+                ratio_col = max(0, len(r) - 1)
+                break
+
+    if header_idx == -1:
+        return []
+
+    if code_col is None:
+        code_col = 0
+    if ratio_col is None:
+        ratio_col = max(0, len(rows[header_idx]) - 1)
+
+    out: List[Dict[str, Any]] = []
+    blank_run = 0
+
+    for r in rows[header_idx + 1:]:
+        if not any((x or "").strip() for x in r):
+            blank_run += 1
+            if blank_run >= 10:
+                break
+            continue
+        blank_run = 0
+
+        raw_code = ""
+        if code_col < len(r):
+            raw_code = (r[code_col] or "").strip()
+
+        if not raw_code:
+            for cell in r:
+                s = (cell or "").strip().upper()
+                mm = re.search(r"\b[A-Z0-9]{3,6}\b", s)
+                if mm:
+                    raw_code = mm.group(0)
+                    break
+
+        raw_ratio = ""
+        if ratio_col < len(r):
+            raw_ratio = (r[ratio_col] or "").strip()
+
+        if not raw_ratio:
+            for cell in reversed(r):
+                s = (cell or "").strip()
+                if any(ch.isdigit() for ch in s) and ("%" in s or "," in s or "." in s):
+                    raw_ratio = s
+                    break
+
+        if not raw_code or not raw_ratio:
+            continue
+
+        code = raw_code.upper().replace(".IS", "").replace(".E", "").strip()
+        if len(code) > 10:
+            continue
+
+        ratio = _parse_turkish_float(raw_ratio)
+        if ratio <= 0:
+            continue
+
+        out.append({"code": code, "ratio": float(ratio)})
+
+    merged: Dict[str, float] = {}
+    for it in out:
+        c = it.get("code")
+        r = float(it.get("ratio", 0.0) or 0.0)
+        if not c:
+            continue
+        merged[c] = merged.get(c, 0.0) + r
+
+    final = [{"code": k, "ratio": v} for k, v in merged.items()]
+    final.sort(key=lambda x: x.get("ratio", 0.0), reverse=True)
+    return final
+
+
+def _compute_increased_decreased(curr: List[Dict[str, Any]], prev: List[Dict[str, Any]], top_n: int = 10):
+    """İki portföy arasında artan/azalan pozisyonları çıkarır."""
+    try:
+        curr_map = {str(x.get("code") or "").upper(): float(x.get("ratio", 0.0) or 0.0) for x in (curr or [])}
+        prev_map = {str(x.get("code") or "").upper(): float(x.get("ratio", 0.0) or 0.0) for x in (prev or [])}
+
+        inc = []
+        dec = []
+        all_codes = set(curr_map.keys()) | set(prev_map.keys())
+        for c in all_codes:
+            if not c:
+                continue
+            d = curr_map.get(c, 0.0) - prev_map.get(c, 0.0)
+            if abs(d) < 1e-9:
+                continue
+            item = {"code": c, "ratio": curr_map.get(c, 0.0), "delta": d}
+            if d > 0:
+                inc.append(item)
+            else:
+                dec.append(item)
+
+        inc.sort(key=lambda x: x.get("delta", 0.0), reverse=True)
+        dec.sort(key=lambda x: x.get("delta", 0.0))
+
+        return inc[:top_n], dec[:top_n]
+    except:
+        return [], []
+
+
+def _fetch_kap_portfolio_from_kap(fund_code: str) -> Optional[Dict[str, Any]]:
+    """KAP resmi fon bildirimlerinden 'Portföy Dağılım Raporu' eklerini indirip okur."""
+    print(f"🏛️ KAP (Fon Bildirimleri) Verisi Çekiliyor: {fund_code}")
+    try:
+        notif_url = _kap_find_fund_notifications_url(fund_code)
+        if not notif_url:
+            return None
+
+        disclosures = _kap_list_portfolio_disclosures(notif_url, fund_code, max_items=40)
+        if not disclosures:
+            return None
+
+        excels: List[bytes] = []
+        for durl in disclosures[:12]:
+            b = _kap_download_first_excel_attachment(durl)
+            if b:
+                excels.append(b)
+            if len(excels) >= 2:
+                break
+
+        if not excels:
+            return None
+
+        current_positions = _parse_kap_portfolio_positions_from_xlsx(excels[0])
+        prev_positions = _parse_kap_portfolio_positions_from_xlsx(excels[1]) if len(excels) > 1 else []
+
+        if not current_positions:
+            return None
+
+        increased, decreased = _compute_increased_decreased(current_positions, prev_positions, top_n=10)
+
+        details = {
+            "positions": current_positions,
+            "increased": increased,
+            "decreased": decreased,
+            "info": {"risk_value": 4, "founder": ""},
+            "allocation": [],
+        }
+        print(f"✅ KAP Portfolio: {fund_code} positions={len(current_positions)} inc={len(increased)} dec={len(decreased)}")
+        return details
+
+    except Exception as e:
+        print(f"❌ KAP Portfolio Error: {e}")
+        return None
+
 def _fetch_kap_portfolio_from_isyatirim(fund_code: str) -> Optional[Dict[str, Any]]:
     """
     İş Yatırım Fon Detay Sayfasından KAP Verilerini Çeker (Resmi Kaynak Scraper)
     CERRAH MODU: AFT gibi fon sepetleri veya karmaşık tablolar için iyileştirildi.
     """
     print(f"🏛️ İş Yatırım (KAP) Verisi Çekiliyor: {fund_code}")
+
+    # ✅ ÖNCELİK 1: KAP resmi fon bildirimleri (Portföy Dağılım Raporu - Excel)
+    try:
+        kap_details = _fetch_kap_portfolio_from_kap(fund_code)
+        if kap_details and kap_details.get("positions"):
+            return kap_details
+    except Exception as e:
+        print(f"❌ KAP (fon-bildirimleri) Hata: {e}")
+
     
     url = f"https://www.isyatirim.com.tr/tr-tr/analiz/fonlar/Sayfalar/Fon-Detay.aspx?FonKodu={fund_code.upper()}"
     headers = {
@@ -756,6 +1237,17 @@ def get_fund_data_safe(fund_code: str):
                     "allocation": allocation if allocation else []
                 }
 
+            # === SEÇENEK A: HİSSE BAZLI MI? ===
+            is_equity = _detect_equity_based_from_positions(details.get("positions"))
+
+            details["is_equity_based"] = is_equity
+
+            if not is_equity:
+                details["note"] = "Bu fon hisse bazlı değildir. Hisse pozisyonları gösterilmez."
+            else:
+                details["note"] = None
+                
+
             # 4. TEFAS BACKUP (Eğer İş Yatırım boş döndüyse ve TEFAS allocation varsa)
             # DFI gibi fonlarda KAP verisi olmayabilir, TEFAS'taki genel dağılımı kullan.
             if not details["positions"] and details.get("allocation"):
@@ -766,8 +1258,10 @@ def get_fund_data_safe(fund_code: str):
                     })
                 details["positions"].sort(key=lambda x: x["ratio"], reverse=True)
 
+            
+
             # 🔥 YENİ: AI Hesapla (Pozisyon verisiyle)
-            holdings = details.get("positions", [])
+            holdings = details.get("positions", []) if bool(details.get("is_equity_based")) else []
             dir_str, conf, est_ret = calculate_ai_prediction(data["yearly_pct"], safe_daily, holdings)
 
             new_data = {
@@ -1404,6 +1898,10 @@ def api_portfolio():
 
             # ESKİ alanı koru (mevcut sistemle uyumlu)
             "prediction": info.get("ai_prediction", {}),
+
+            # ✅ UI için: hisse bazlı mı? (sekme göster/gizle)
+            "is_equity_based": bool((info.get("details", {}) or {}).get("is_equity_based", False)),
+            "note": (info.get("details", {}) or {}).get("note"),
         })
 
     return {"status": "success", "data": result_list}
@@ -1489,6 +1987,9 @@ def api_live_list():
             "confidence_score": ai.get("confidence_score", 50),
             "direction": ai.get("direction", "NÖTR"),
             "type": item.get("type", ""),
+            # ✅ UI için
+            "is_equity_based": bool((info.get("details", {}) or {}).get("is_equity_based", False)),
+            "note": (info.get("details", {}) or {}).get("note"),
         })
 
     return {"status": "success", "data": result_list}
@@ -1541,6 +2042,9 @@ def api_detail(code: str):
             "status": "success",
             "data": {
                 **info,
+                # ✅ UI için
+                "is_equity_based": bool((info.get("details", {}) or {}).get("is_equity_based", False)),
+                "note": (info.get("details", {}) or {}).get("note"),
                 # 🎯 ÇÖZÜM: Mobil kolay kullansın diye düz alanlar (Fix 2)
                 "predicted_return_pct": predicted_return,
                 "confidence_score": ai.get("confidence_score", 50),
