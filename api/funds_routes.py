@@ -527,6 +527,268 @@ def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
 
 
 # ============================================================
+# 🔥 YENİ (ZORUNLU): FINTABLES FULL DETAILS SCRAPER (HTML + BeautifulSoup)
+# ============================================================
+
+def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
+    """
+    Fintables fon detay sayfasını (HTML) parse ederek aşağıdaki verileri döndürür:
+
+    {
+      "positions": [{ "code": "GARAN", "ratio": 12.3 }],
+      "increased": [{ "code": "THYAO", "ratio": 3.1, "delta": 0.8 }],
+      "decreased": [{ "code": "ASELS", "ratio": 2.2, "delta": -1.1 }],
+      "risk_value": 1-7,
+      "yearly_management_fee": "%2.90",
+      "withholding_tax": "%17.5",
+      "founder": "...",
+      "comparison_1000tl": [
+        { "label": "Fon", "value": 1093, "pct": 9.3 },
+        { "label": "BIST100", "value": 1097, "pct": 9.7 }
+      ]
+    }
+
+    ❗ Hata olursa None döner; sistem asla çökmez.
+    """
+    try:
+        code = (fund_code or "").strip().upper()
+        if not code:
+            return None
+
+        # Fintables URL'leri (redirect ihtimaline karşı birkaç aday)
+        # Not: Fintables bazen rotaları değiştiriyor; bu yüzden çoklu deneme var.
+        url_candidates = [
+            f"https://fintables.com/fon/{code}",
+            f"https://fintables.com/fon/{code.lower()}",
+            f"https://fintables.com/tefas/fon/{code}",
+            f"https://fintables.com/tefas/{code}",
+        ]
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Connection": "keep-alive",
+        }
+
+        html = None
+        for url in url_candidates:
+            try:
+                r = requests.get(url, headers=headers, timeout=12)
+                if r.status_code == 200 and (r.text or "").strip():
+                    html = r.text
+                    break
+            except Exception:
+                continue
+
+        if not html:
+            return None
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        out: Dict[str, Any] = {
+            "positions": [],
+            "increased": [],
+            "decreased": [],
+            "risk_value": None,
+            "yearly_management_fee": None,
+            "withholding_tax": None,
+            "founder": None,
+            "comparison_1000tl": [],
+        }
+
+        # ------------------------------------------------------------
+        # 1) META: Kurucu / Risk / Ücret / Stopaj
+        # ------------------------------------------------------------
+        try:
+            text_all = soup.get_text(" ", strip=True)
+        except Exception:
+            text_all = str(html)
+
+        def _extract_pct(label_regex: str) -> Optional[str]:
+            try:
+                m = re.search(label_regex + r".{0,60}?%?\s*([0-9]{1,2}(?:[.,][0-9]{1,2})?)", text_all, re.IGNORECASE)
+                if not m:
+                    return None
+                v = m.group(1)
+                v = v.replace(",", ".")
+                # format: "%2.00"
+                return f"%{v}"
+            except Exception:
+                return None
+
+        # Risk Değeri: 1-7
+        try:
+            m = re.search(r"Risk\s*Değeri.{0,40}?([1-7])", text_all, re.IGNORECASE)
+            if m:
+                out["risk_value"] = int(m.group(1))
+        except Exception:
+            pass
+
+        # Yıllık Yönetim Ücreti
+        out["yearly_management_fee"] = _extract_pct(r"Yıllık\s*Yönetim\s*Ücreti")
+
+        # Stopaj Oranı
+        out["withholding_tax"] = _extract_pct(r"Stopaj\s*(Oranı|Orani)?")
+
+        # Kurucu
+        try:
+            # "Kurucu  ATLAS PORTFÖY YÖNETİMİ A.Ş." gibi
+            m = re.search(r"Kurucu\s+(.{2,80}?)(?=(Yıllık\s*Yönetim\s*Ücreti|Stopaj|Risk\s*Değeri|Fon\s*Kodu|$))", text_all, re.IGNORECASE)
+            if m:
+                founder = m.group(1).strip(" :|-")
+                # çok uzunsa kırp (yanlış capture)
+                if 2 <= len(founder) <= 80:
+                    out["founder"] = founder
+        except Exception:
+            pass
+
+        # ------------------------------------------------------------
+        # 2) TABLO PARSE: Pozisyonlar / Artırılan / Azaltılan
+        # ------------------------------------------------------------
+        def _looks_like_stock_code(s: str) -> bool:
+            s = (s or "").strip().upper()
+            if not s:
+                return False
+            if len(s) > 12:
+                return False
+            if any(k in s for k in ["TOPLAM", "DİĞER", "DIGER", "BİLİNMEYEN", "BILINMEYEN"]):
+                return False
+            return re.fullmatch(r"[A-Z0-9]{3,6}", s) is not None
+
+        def _parse_rows_from_table(table) -> List[Dict[str, Any]]:
+            items: List[Dict[str, Any]] = []
+            try:
+                rows = table.find_all("tr")
+                for row in rows:
+                    cols = row.find_all(["td", "th"])
+                    if len(cols) < 2:
+                        continue
+
+                    c0 = cols[0].get_text(" ", strip=True)
+                    c1 = cols[1].get_text(" ", strip=True)
+
+                    # code temizle
+                    code_txt = (c0 or "").strip().upper()
+                    # icon/extra metinleri temizleme (parantez vs)
+                    if "(" in code_txt:
+                        code_txt = code_txt.split("(")[0].strip()
+                    code_txt = re.sub(r"[^A-Z0-9]", "", code_txt)
+
+                    if not _looks_like_stock_code(code_txt):
+                        continue
+
+                    # satırdaki tüm sayıları yakala (oran + değişim olabilir)
+                    nums = []
+                    for col in cols[1:]:
+                        t = col.get_text(" ", strip=True)
+                        if not t:
+                            continue
+                        # "%51,25" gibi değerler
+                        val = _parse_turkish_float(t)
+                        if val != 0.0 or ("0" in str(t)):
+                            nums.append(val)
+
+                    if not nums:
+                        continue
+
+                    ratio = float(nums[0])
+                    delta = float(nums[1]) if len(nums) >= 2 else None
+
+                    item = {"code": code_txt, "ratio": ratio}
+                    if delta is not None:
+                        item["delta"] = delta
+                    items.append(item)
+            except Exception:
+                return items
+            return items
+
+        # Bütün tablolardan adayları topla
+        all_items: List[Dict[str, Any]] = []
+        try:
+            for tbl in soup.find_all("table"):
+                all_items.extend(_parse_rows_from_table(tbl))
+        except Exception:
+            pass
+
+        # Deduplicate (en yüksek ratio'yu tut)
+        uniq: Dict[str, Dict[str, Any]] = {}
+        for it in all_items:
+            c = it.get("code")
+            if not c:
+                continue
+            prev = uniq.get(c)
+            if (prev is None) or (float(it.get("ratio", 0.0) or 0.0) > float(prev.get("ratio", 0.0) or 0.0)):
+                uniq[c] = it
+
+        positions = list(uniq.values())
+        positions.sort(key=lambda x: float(x.get("ratio", 0.0) or 0.0), reverse=True)
+        out["positions"] = positions[:20]  # güvenli limit
+
+        # Increased / Decreased: delta varsa işaretine göre ayır
+        inc: List[Dict[str, Any]] = []
+        dec: List[Dict[str, Any]] = []
+        for it in positions:
+            d = it.get("delta")
+            if d is None:
+                continue
+            try:
+                dval = float(d)
+                if dval > 0:
+                    inc.append(it)
+                elif dval < 0:
+                    dec.append(it)
+            except Exception:
+                continue
+
+        inc.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0), reverse=True)
+        dec.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0))
+
+        out["increased"] = inc[:10]
+        out["decreased"] = dec[:10]
+
+        # ------------------------------------------------------------
+        # 3) 1000 TL Ne Oldu? (best-effort; bulunamazsa boş)
+        # ------------------------------------------------------------
+        try:
+            # Bölüm başlığını bulup yakınındaki metni tarayalım.
+            # Fintables bu veriyi bazen grafik datası olarak HTML içine gömüyor.
+            idx = (html or "").lower().find("1.000")
+            if idx == -1:
+                idx = (html or "").lower().find("1000")
+            snippet = (html or "")[idx: idx + 6000] if idx != -1 else (html or "")[:6000]
+
+            # Örnek hedef: label + TL + % değerleri
+            # Tam garanti değil, ama yakalarsa güzel.
+            # label: harf/rakam, value: TL (tam sayı), pct: yüzde
+            pat = re.compile(r"([A-Z0-9]{2,10})[^0-9]{0,40}([0-9]{1,3}(?:\.[0-9]{3})*)(?:\s*TL)?[^0-9%-]{0,40}%\s*([0-9]{1,2}(?:[.,][0-9]{1,2})?)", re.IGNORECASE)
+            matches = pat.findall(snippet)
+            tmp = []
+            for (lbl, val_s, pct_s) in matches:
+                try:
+                    val = int(val_s.replace(".", ""))
+                    pct = float(pct_s.replace(",", "."))
+                    tmp.append({"label": lbl.upper(), "value": val, "pct": pct})
+                except Exception:
+                    continue
+
+            # Çok fazla şey yakalanırsa en anlamlı ilk 6'yı al
+            if tmp:
+                out["comparison_1000tl"] = tmp[:6]
+        except Exception:
+            pass
+
+        # Hiçbir şey yakalanmadıysa None döndürmek yerine boş içerik dönebiliriz.
+        # Ancak KAP/TEFAS merge mantığında "None" daha net; burada minimal kontrol:
+        has_any = bool(out["positions"]) or bool(out["risk_value"]) or bool(out["founder"])
+        return out if has_any else None
+
+    except Exception as e:
+        print(f"❌ Fintables Scraper Error ({fund_code}): {e}")
+        return None
+
+
+# ============================================================
 # 🔥 YENİ: KAP (RESMİ) FON BİLDİRİMLERİNDEN PORTFÖY RAPORU (EXCEL) OKUMA
 # ============================================================
 
@@ -1081,55 +1343,85 @@ def _load_live_stocks() -> Dict[str, float]:
     return prices
 
 def calculate_ai_prediction(yearly: float, daily: float, holdings: List[Dict[str, Any]] = None):
-    # 1. Klasik (Baz) Skor
+    """
+    ✅ GÜNCEL (İstenen Mantık):
+      (Bilinen hisseler * canlı borsa) + (Bilinmeyen kısım * endeks)
+
+    - holdings: [{"code":"GARAN","ratio":12.3}, ...]  -> ratio portföy ağırlığı (%)
+    - canlı hisse verisi: api/data/live_prices.json (services.py'nin ürettiği)
+    - endeks: market_cache.json içindeki BIST100 değişimi (yoksa fallback)
+    """
+    # 1) Baz skor / varsayılanlar
     d_val = daily if daily is not None else 0.0
-    
+
     direction = "NÖTR"
     confidence = 50
-    
-    if yearly > 40:
-        confidence += 20
-        direction = "POZİTİF"
-    elif yearly < 0:
-        confidence += 10
-        direction = "NEGATİF"
 
-    # 2. HİSSE BAZLI CANLI SKOR
-    stock_impact = 0.0
-    
-    if holdings:
-        live_stocks = _load_live_stocks()
-        if live_stocks:
-            total_w = 0.0
-            weighted_change = 0.0
-            
-            for h in holdings:
-                code = h.get("code", "")
-                ratio = h.get("ratio", 0.0)
-                
-                clean_code = code.replace(".E", "").strip()
-                
+    try:
+        if yearly > 40:
+            confidence += 20
+        elif yearly < 0:
+            confidence += 10
+    except Exception:
+        pass
+
+    # 2) Bilinen hisse katkısı (canlı borsa)
+    known_return = 0.0              # % cinsinden toplam katkı (ör: 0.18)
+    known_ratio_sum = 0.0           # % (ör: 65.4)
+    matched_cnt = 0
+
+    live_stocks = _load_live_stocks() if holdings else {}
+
+    if holdings and live_stocks:
+        for h in holdings:
+            try:
+                code = (h.get("code") or "").strip().upper()
+                ratio = float(h.get("ratio", 0.0) or 0.0)
+
+                if ratio <= 0:
+                    continue
+
+                clean_code = code.replace(".E", "").replace(".IS", "").strip()
+
+                # canlı fiyat JSON'unda genelde GARAN / THYAO gibi gelir
                 live_chg = live_stocks.get(clean_code)
                 if live_chg is None:
-                     live_chg = live_stocks.get(clean_code + ".IS")
+                    live_chg = live_stocks.get(clean_code + ".IS")
 
-                if live_chg is not None:
-                    weighted_change += (live_chg * ratio)
-                    total_w += ratio
-            
-            stock_impact = weighted_change / 100.0
-            
-            if stock_impact > 0.15:
-                direction = "POZİTİF"
-                confidence = min(95, confidence + 25)
-            elif stock_impact < -0.15:
-                direction = "NEGATİF"
-                confidence = min(95, confidence + 25)
+                if live_chg is None:
+                    continue
 
-    estimated_return = stock_impact
-    if not holdings or stock_impact == 0.0:
+                live_chg = float(live_chg)
+
+                # katkı: ratio% * live_chg% / 100  -> sonuç yüzde puan (0.18 gibi)
+                known_return += (ratio * live_chg) / 100.0
+                known_ratio_sum += ratio
+                matched_cnt += 1
+            except Exception:
+                continue
+
+    # 3) Bilinmeyen kısım (endeks)
+    # BIST100 yoksa BIST30 -> yoksa 0
+    index_pct = 0.0
+    try:
+        index_pct = float(_get_market_change_pct("BIST100") or 0.0)
+        if index_pct == 0.0:
+            index_pct = float(_get_market_change_pct("BIST30") or 0.0)
+    except Exception:
+        index_pct = 0.0
+
+    unknown_ratio = max(0.0, 100.0 - known_ratio_sum)
+    unknown_return = (unknown_ratio * index_pct) / 100.0
+
+    estimated_return = known_return + unknown_return
+
+    # 4) Fallback (endeks yoksa veya hiç eşleşme yoksa)
+    # - Endeks verisi 0 gelirse, en azından TEFAS günlük getiriyi referans al (mevcut akışı bozma)
+    if (index_pct == 0.0) and (estimated_return == 0.0):
         estimated_return = d_val
-        
+
+    # 5) Direction / Confidence
+    # (eşikler UI'daki "Tahmini Etki" mantığıyla uyumlu; 0.10 = %0.10)
     if estimated_return > 0.10:
         direction = "POZİTİF"
     elif estimated_return < -0.10:
@@ -1137,7 +1429,19 @@ def calculate_ai_prediction(yearly: float, daily: float, holdings: List[Dict[str
     else:
         direction = "NÖTR"
 
+    # Eşleşen hisse sayısı + bilinen ağırlık arttıkça güveni yükselt
+    try:
+        if matched_cnt >= 3 and known_ratio_sum >= 25:
+            confidence = min(95, confidence + 15)
+        if matched_cnt >= 6 and known_ratio_sum >= 50:
+            confidence = min(95, confidence + 15)
+        if abs(estimated_return) >= 0.50:
+            confidence = min(95, confidence + 10)
+    except Exception:
+        pass
+
     return direction, confidence, estimated_return
+
 
 def get_fund_data_safe(fund_code: str):
     """
@@ -1237,7 +1541,56 @@ def get_fund_data_safe(fund_code: str):
                     "allocation": allocation if allocation else []
                 }
 
-            # === SEÇENEK A (FINTABLES LOGIC): HİSSE BAZLI MI? ===
+            
+            # 🔥 YENİ: FINTABLES FULL DETAILS BACKUP (KAP/İşYatırım boşsa)
+            # Amaç: KAP raporu gecikirse bile kullanıcı ekranda veri görsün.
+            fintables = None
+            try:
+                need_ft = False
+                if not details:
+                    need_ft = True
+                else:
+                    if not details.get("positions"):
+                        need_ft = True
+                    info_obj = details.get("info", {}) if isinstance(details.get("info"), dict) else {}
+                    if (not info_obj.get("risk_value")) and (not info_obj.get("founder")):
+                        need_ft = True
+
+                if need_ft:
+                    print(f"🌐 Fintables Full Details deniyorum: {fund_code}")
+                    fintables = _fetch_fintables_full_details(fund_code)
+            except Exception as e:
+                print(f"❌ Fintables deneme hatası ({fund_code}): {e}")
+                fintables = None
+
+            if fintables:
+                # LISTLER (KAP varsa KAP'ı bozma; sadece eksikleri doldur)
+                if not details.get("positions") and fintables.get("positions"):
+                    details["positions"] = fintables.get("positions", [])
+                if not details.get("increased") and fintables.get("increased"):
+                    details["increased"] = fintables.get("increased", [])
+                if not details.get("decreased") and fintables.get("decreased"):
+                    details["decreased"] = fintables.get("decreased", [])
+
+                # INFO alanı (Flutter meta chip'leri buradan okuyor)
+                if "info" not in details or not isinstance(details.get("info"), dict):
+                    details["info"] = {}
+                info_obj = details["info"]
+
+                if not info_obj.get("risk_value") and fintables.get("risk_value"):
+                    info_obj["risk_value"] = fintables.get("risk_value")
+                if not info_obj.get("yearly_management_fee") and fintables.get("yearly_management_fee"):
+                    info_obj["yearly_management_fee"] = fintables.get("yearly_management_fee")
+                if not info_obj.get("withholding_tax") and fintables.get("withholding_tax"):
+                    info_obj["withholding_tax"] = fintables.get("withholding_tax")
+                if not info_obj.get("founder") and fintables.get("founder"):
+                    info_obj["founder"] = fintables.get("founder")
+
+                # 1000 TL Ne Oldu? (varsa)
+                if fintables.get("comparison_1000tl"):
+                    details["comparison_1000tl"] = fintables.get("comparison_1000tl", [])
+
+# === SEÇENEK A (FINTABLES LOGIC): HİSSE BAZLI MI? ===
 
             # 1️⃣ Önce KAP / positions'tan bak
             is_equity = _detect_equity_based_from_positions(details.get("positions"))
@@ -1251,6 +1604,21 @@ def get_fund_data_safe(fund_code: str):
                 # Hisse senedi fonuysa ZORLA TRUE
                 if "hisse" in fund_type:
                     is_equity = True
+
+
+            # 2.5️⃣ Eğer master map net değilse ama TEFAS allocation içinde "Hisse/Pay" varsa equity kabul et
+            # (YANLIŞ POZİTİF "Bu fon hisse bazlı değildir" yazısını engeller)
+            if not is_equity:
+                try:
+                    alloc_list = details.get("allocation") or []
+                    for a in alloc_list:
+                        nm = str(a.get("name") or "").lower()
+                        val = float(a.get("value") or 0.0)
+                        if val > 0 and ("hisse" in nm or "pay" in nm):
+                            is_equity = True
+                            break
+                except:
+                    pass
 
             details["is_equity_based"] = is_equity
 
@@ -1271,7 +1639,23 @@ def get_fund_data_safe(fund_code: str):
 
                 
 
-            # 4. TEFAS BACKUP (Eğer İş Yatırım boş döndüyse ve TEFAS allocation varsa)
+            
+            # 🔥 YENİ: Eğer bu ay KAP raporu yoksa ama server cache'te önceki pozisyon varsa,
+            # onu göster (Flutter cache'e ek olarak server-side güvence).
+            try:
+                if is_equity and not details.get("positions"):
+                    prev_det = (cached or {}).get("details", {}) if cached else {}
+                    if isinstance(prev_det, dict) and prev_det.get("positions"):
+                        details["positions"] = prev_det.get("positions", [])
+                        if not details.get("increased"):
+                            details["increased"] = prev_det.get("increased", [])
+                        if not details.get("decreased"):
+                            details["decreased"] = prev_det.get("decreased", [])
+                        # note zaten "KAP raporu yok" şeklinde set edilmiş olabilir; koruyoruz.
+            except:
+                pass
+
+# 4. TEFAS BACKUP (Eğer İş Yatırım boş döndüyse ve TEFAS allocation varsa)
             # DFI gibi fonlarda KAP verisi olmayabilir, TEFAS'taki genel dağılımı kullan.
             if not details["positions"] and details.get("allocation"):
                 for item in details["allocation"]:
