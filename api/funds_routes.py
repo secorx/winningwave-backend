@@ -598,240 +598,6 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
         }
 
         # ------------------------------------------------------------
-        # 0) NEXT.JS DATA EXTRACTION (FINTABLES SSR JSON)
-        # ------------------------------------------------------------
-        # Fintables sayfaları çoğu zaman veriyi tablo HTML'ine basmak yerine
-        # Next.js __NEXT_DATA__ içine gömüyor. Render ortamında JS çalışmadığı için
-        # burada SSR JSON'u parse edip gerçek pozisyonları yakalıyoruz.
-        try:
-            next_data = None
-            script = soup.find("script", id="__NEXT_DATA__")
-            if script:
-                raw_json = script.string if script.string else script.get_text()
-                if raw_json and raw_json.strip().startswith("{"):
-                    next_data = json.loads(raw_json)
-
-            def _deep_iter(o):
-                if isinstance(o, dict):
-                    yield o
-                    for v in o.values():
-                        yield from _deep_iter(v)
-                elif isinstance(o, list):
-                    for it in o:
-                        yield from _deep_iter(it)
-
-            def _norm_code(v: Any) -> str:
-                s = (str(v) if v is not None else "").strip().upper()
-                if "(" in s:
-                    s = s.split("(")[0].strip()
-                s = re.sub(r"[^A-Z0-9]", "", s)
-                return s
-
-            def _looks_like_code(s: str) -> bool:
-                if not s:
-                    return False
-                if len(s) > 12:
-                    return False
-                return re.fullmatch(r"[A-Z0-9]{3,6}", s) is not None
-
-            def _pick_str(d: Dict[str, Any], keys: List[str]) -> Optional[str]:
-                for k in keys:
-                    v = d.get(k)
-                    if isinstance(v, str) and v.strip():
-                        return v.strip()
-                    if isinstance(v, dict):
-                        for kk in keys:
-                            vv = v.get(kk)
-                            if isinstance(vv, str) and vv.strip():
-                                return vv.strip()
-                return None
-
-            def _pick_num(d: Dict[str, Any], keys: List[str]) -> Optional[float]:
-                for k in keys:
-                    v = d.get(k)
-                    if isinstance(v, (int, float)):
-                        return float(v)
-                    if isinstance(v, str) and v.strip():
-                        fv = _parse_turkish_float(v)
-                        if fv != 0.0 or "0" in v:
-                            return float(fv)
-                    if isinstance(v, dict):
-                        for kk in keys:
-                            vv = v.get(kk)
-                            if isinstance(vv, (int, float)):
-                                return float(vv)
-                            if isinstance(vv, str) and vv.strip():
-                                fv = _parse_turkish_float(vv)
-                                if fv != 0.0 or "0" in vv:
-                                    return float(fv)
-                return None
-
-            def _score_positions_list(lst: List[Dict[str, Any]]) -> int:
-                score = 0
-                hit = 0
-                for it in lst:
-                    if not isinstance(it, dict):
-                        continue
-                    code = _pick_str(it, ["code","symbol","ticker","sembol","stockCode","assetCode"]) or _pick_str(it, ["name","title"])
-                    code = _norm_code(code)
-                    ratio = _pick_num(it, ["ratio","weight","pct","percentage","oran","share","portfolioShare","value"])
-                    if code and ratio is not None:
-                        score += 1
-                        try:
-                            if _looks_like_code(code) and 0 < float(ratio) <= 100:
-                                hit += 1
-                        except:
-                            pass
-                return hit * 20 + score
-
-            best_pos: List[Dict[str, Any]] = []
-            best_pos_score = 0
-
-            if next_data is not None:
-                for obj in _deep_iter(next_data):
-                    if isinstance(obj, list) and 1 <= len(obj) <= 500 and all(isinstance(x, dict) for x in obj):
-                        sc = _score_positions_list(obj)  # type: ignore
-                        if sc > best_pos_score:
-                            best_pos_score = sc
-                            best_pos = obj  # type: ignore
-
-            # positions normalize
-            if (not out.get("positions")) and best_pos and best_pos_score >= 20:
-                tmp_pos = []
-                for it in best_pos:
-                    try:
-                        if not isinstance(it, dict):
-                            continue
-                        code = _pick_str(it, ["code","symbol","ticker","sembol","stockCode","assetCode"]) or _pick_str(it, ["name","title"])
-                        code = _norm_code(code)
-                        ratio = _pick_num(it, ["ratio","weight","pct","percentage","oran","share","portfolioShare"])
-                        if ratio is None:
-                            ratio = _pick_num(it, ["value"])
-                        if not code or ratio is None:
-                            continue
-                        ratio_f = float(ratio)
-                        if ratio_f <= 0:
-                            continue
-                        item: Dict[str, Any] = {"code": code, "ratio": ratio_f}
-
-                        # delta / değişim
-                        delta = _pick_num(it, ["delta","change","diff","degisim","changePct","change_pct"])
-                        if delta is not None and abs(float(delta)) > 1e-9:
-                            item["delta"] = float(delta)
-
-                        tmp_pos.append(item)
-                    except Exception:
-                        continue
-
-                # dedup + sort
-                uniq: Dict[str, Dict[str, Any]] = {}
-                for it in tmp_pos:
-                    c = it.get("code")
-                    if not c:
-                        continue
-                    prev = uniq.get(c)
-                    if (prev is None) or (float(it.get("ratio", 0.0) or 0.0) > float(prev.get("ratio", 0.0) or 0.0)):
-                        uniq[c] = it
-                tmp_pos = list(uniq.values())
-                tmp_pos.sort(key=lambda x: float(x.get("ratio", 0.0) or 0.0), reverse=True)
-                out["positions"] = tmp_pos[:20]
-
-                # increased / decreased (delta varsa)
-                inc = [x for x in out["positions"] if isinstance(x, dict) and float(x.get("delta", 0.0) or 0.0) > 0]
-                dec = [x for x in out["positions"] if isinstance(x, dict) and float(x.get("delta", 0.0) or 0.0) < 0]
-                inc.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0), reverse=True)
-                dec.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0))
-                out["increased"] = inc[:10]
-                out["decreased"] = dec[:10]
-
-            # risk/founder/fees (best-effort) - sadece boşsa doldur
-            if next_data is not None:
-                if out.get("risk_value") is None:
-                    try:
-                        for obj in _deep_iter(next_data):
-                            if isinstance(obj, dict):
-                                for k, v in obj.items():
-                                    kk = str(k).lower()
-                                    if "risk" in kk:
-                                        if isinstance(v, (int, float)) and 1 <= int(v) <= 7:
-                                            out["risk_value"] = int(v)
-                                            raise StopIteration
-                    except StopIteration:
-                        pass
-                    except Exception:
-                        pass
-
-                if not out.get("founder"):
-                    try:
-                        for obj in _deep_iter(next_data):
-                            if isinstance(obj, dict):
-                                for k, v in obj.items():
-                                    kk = str(k).lower()
-                                    if kk in ("founder","kurucu","kurucu_unvan","kurucuunvan","foundertitle","founder_name","foundername"):
-                                        if isinstance(v, str) and v.strip():
-                                            out["founder"] = v.strip()
-                                            raise StopIteration
-                    except StopIteration:
-                        pass
-                    except Exception:
-                        pass
-
-                # allocation fallback (name/value list)
-                if not out.get("allocation"):
-                    try:
-                        best_alloc = None
-                        best_alloc_score = 0
-
-                        def _score_alloc_list(lst):
-                            score = 0
-                            ssum = 0.0
-                            for it in lst:
-                                if not isinstance(it, dict):
-                                    continue
-                                nm = it.get("name") or it.get("label") or it.get("type")
-                                val = it.get("value") if "value" in it else it.get("ratio") if "ratio" in it else it.get("pct")
-                                if nm is None or val is None:
-                                    continue
-                                nm_s = str(nm).strip()
-                                vv = _parse_turkish_float(str(val))
-                                if nm_s and vv >= 0:
-                                    score += 1
-                                    ssum += vv
-                            if 70 <= ssum <= 130:
-                                score += 5
-                            return score
-
-                        for obj in _deep_iter(next_data):
-                            if isinstance(obj, list) and 1 <= len(obj) <= 200 and all(isinstance(x, dict) for x in obj):
-                                sc = _score_alloc_list(obj)
-                                if sc > best_alloc_score:
-                                    best_alloc_score = sc
-                                    best_alloc = obj
-
-                        if best_alloc and best_alloc_score >= 5:
-                            alloc_out = []
-                            for it in best_alloc:
-                                try:
-                                    nm = it.get("name") or it.get("label") or it.get("type")
-                                    val = it.get("value") if "value" in it else it.get("ratio") if "ratio" in it else it.get("pct")
-                                    if nm is None or val is None:
-                                        continue
-                                    nm_s = str(nm).strip()
-                                    vv = _parse_turkish_float(str(val))
-                                    if nm_s and vv > 0:
-                                        alloc_out.append({"name": nm_s, "value": float(vv)})
-                                except Exception:
-                                    continue
-                            alloc_out.sort(key=lambda x: float(x.get("value", 0.0) or 0.0), reverse=True)
-                            out["allocation"] = alloc_out
-                    except Exception:
-                        pass
-
-        except Exception:
-            # NEXT_DATA parse başarısızsa sorun değil; HTML fallback devam eder
-            pass
-
-        # ------------------------------------------------------------
         # 1) META: Kurucu / Risk / Ücret / Stopaj
         # ------------------------------------------------------------
         try:
@@ -1022,9 +788,159 @@ def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
         return None
 
 
+
 # ============================================================
 # 🔥 YENİ: KAP (RESMİ) FON BİLDİRİMLERİNDEN PORTFÖY RAPORU (EXCEL) OKUMA
 # ============================================================
+
+def _kap_api_list_portfolio_disclosures(fund_code: str, max_items: int = 40) -> List[str]:
+    """
+    KAP fon bildirimleri sayfası JS ile dolduğu için HTML'den <tr> yakalamak çoğu zaman boş döner.
+    Bu yüzden KAP'ın JSON disclosure endpoint'ini deniyoruz.
+
+    Başarısız olursa [] döner (sistem çökmez).
+    """
+    code = (fund_code or "").strip().upper()
+    if not code:
+        return []
+
+    # Son ~18 ay yeterli (raporlar burada)
+    end = datetime.now()
+    start = end - timedelta(days=550)
+    from_date = start.strftime("%Y-%m-%d")
+    to_date = end.strftime("%Y-%m-%d")
+
+    url_candidates = [
+        "https://www.kap.org.tr/tr/api/disclosures",
+        "https://www.kap.org.tr/en/api/disclosures",
+    ]
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Connection": "keep-alive",
+    }
+
+    def _extract_items(j: Any) -> List[Dict[str, Any]]:
+        if isinstance(j, list):
+            return [x for x in j if isinstance(x, dict)]
+        if isinstance(j, dict):
+            # yaygın liste alanları
+            for k in ("disclosures", "data", "content", "items", "list", "results", "result"):
+                v = j.get(k)
+                if isinstance(v, list):
+                    return [x for x in v if isinstance(x, dict)]
+            # bazen data içinde liste olur
+            if isinstance(j.get("data"), dict):
+                dd = j["data"]
+                for k in ("disclosures", "content", "items", "list", "results", "result"):
+                    v = dd.get(k)
+                    if isinstance(v, list):
+                        return [x for x in v if isinstance(x, dict)]
+        return []
+
+    def _get_id(it: Dict[str, Any]) -> Optional[int]:
+        for k in ("disclosureIndex", "disclosureId", "notificationId", "id", "notificationIndex"):
+            v = it.get(k)
+            if v is None:
+                continue
+            try:
+                return int(str(v).strip())
+            except:
+                continue
+        return None
+
+    def _get_subject_text(it: Dict[str, Any]) -> str:
+        parts = []
+        for k in ("title", "subject", "disclosureSubject", "topic", "summary", "disclosureTitle"):
+            v = it.get(k)
+            if v:
+                parts.append(str(v))
+        return " ".join(parts)
+
+    # farklı payload ihtimallerini dene (KAP bazen alan adlarını değiştiriyor)
+    payload_variants = [
+        # Variant 1
+        {
+            "fromDate": from_date,
+            "toDate": to_date,
+            "memberType": "FON",
+            "memberCodes": [code],
+            "pageIndex": 0,
+            "pageSize": max_items,
+        },
+        # Variant 2
+        {
+            "fromDate": from_date,
+            "toDate": to_date,
+            "stockCodes": [code],
+            "pageIndex": 0,
+            "pageSize": max_items,
+        },
+        # Variant 3 (keyword fallback)
+        {
+            "fromDate": from_date,
+            "toDate": to_date,
+            "keyword": code,
+            "pageIndex": 0,
+            "pageSize": max_items,
+        },
+    ]
+
+    for api_url in url_candidates:
+        for payload in payload_variants:
+            try:
+                r = requests.post(api_url, json=payload, headers=headers, timeout=15, verify=False)
+                if r.status_code != 200:
+                    continue
+                try:
+                    j = r.json()
+                except:
+                    continue
+
+                items = _extract_items(j)
+                if not items:
+                    continue
+
+                # "Portföy Dağılım Raporu" filtrele (varsa)
+                portfolio_ids: List[int] = []
+                for it in items:
+                    subj = _get_subject_text(it).lower()
+                    if (("portföy" in subj) or ("portfoy" in subj)) and (("dağılım" in subj) or ("dagilim" in subj)):
+                        did = _get_id(it)
+                        if did:
+                            portfolio_ids.append(did)
+
+                # Subject alanları gelmiyorsa hiç filtreleme yapmadan ID topla (sonra sayfa içinden ayıklarız)
+                if not portfolio_ids:
+                    for it in items:
+                        did = _get_id(it)
+                        if did:
+                            portfolio_ids.append(did)
+
+                # uniq + limit
+                out = []
+                seen = set()
+                for did in portfolio_ids:
+                    if did in seen:
+                        continue
+                    seen.add(did)
+                    out.append(f"https://www.kap.org.tr/tr/Bildirim/{did}")
+                    if len(out) >= max_items:
+                        break
+
+                if out:
+                    print(f"✅ KAP API disclosures bulundu: {code} adet={len(out)}")
+                    return out
+
+            except Exception as e:
+                continue
+
+    return []
+
 
 def _kap_find_fund_notifications_url(fund_code: str) -> Optional[str]:
     """KAP üzerinde ilgili fonun /tr/fon-bildirimleri/... sayfasını bulur.
@@ -1046,25 +962,6 @@ def _kap_find_fund_notifications_url(fund_code: str) -> Optional[str]:
             "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
             "Connection": "keep-alive",
         }
-        
-        # ✅ HIZLI DENEME: Doğrudan fon-bildirimleri/{code} URL'i
-        # KAP arama sayfası bazı ortamlarda dinamik döndüğü için link yakalanamayabiliyor.
-        # Bu yüzden önce direkt rota denenir; olmazsa arama fallback'i çalışır.
-        direct_candidates = [
-            f"https://www.kap.org.tr/tr/fon-bildirimleri/{code.lower()}",
-            f"https://www.kap.org.tr/tr/fon-bildirimleri/{code.upper()}",
-        ]
-        for u in direct_candidates:
-            try:
-                rr = requests.get(u, headers=headers, timeout=12)
-                rr.encoding = "utf-8"
-                if rr.status_code == 200 and (rr.text or "").strip():
-                    low = rr.text.lower()
-                    if ("fon bildirimleri" in low) or ("/tr/bildirim/" in low):
-                        return u
-            except Exception:
-                continue
-
         r = requests.get(search_url, headers=headers, timeout=12)
         r.encoding = "utf-8"
         if r.status_code != 200:
@@ -1431,9 +1328,16 @@ def _fetch_kap_portfolio_from_kap(fund_code: str) -> Optional[Dict[str, Any]]:
         if not notif_url:
             return None
 
-        disclosures = _kap_list_portfolio_disclosures(notif_url, fund_code, max_items=40)
+        # ✅ Önce KAP JSON API ile dene (JS tablo yüzünden HTML boş geliyor)
+        disclosures = _kap_api_list_portfolio_disclosures(fund_code, max_items=40)
+
+        # ✅ API boş dönerse eski HTML yöntemini yine dene
+        if not disclosures and notif_url:
+            disclosures = _kap_list_portfolio_disclosures(notif_url, fund_code, max_items=40)
+
         if not disclosures:
             return None
+
 
         excels: List[bytes] = []
         for durl in disclosures[:12]:
@@ -1728,9 +1632,11 @@ def get_fund_data_safe(fund_code: str):
     
     has_details = False
     if cached and "details" in cached:
-        d = cached["details"]
-        if d.get("positions") or d.get("allocation") or d.get("comparison_1000tl"):
+        d = cached["details"] or {}
+        # ✅ POZİSYON YOKSA "DETAY VAR" SAYMA → yoksa bir kere boş cache yazıp gün boyu denemiyor
+        if d.get("positions"):
             has_details = True
+
 
     is_new_fund = not cached
     force_fetch = False
@@ -1756,8 +1662,10 @@ def get_fund_data_safe(fund_code: str):
         
         has_details_inner = False
         if cached and "details" in cached:
-             if cached["details"].get("positions") or cached["details"].get("allocation") or cached["details"].get("comparison_1000tl"):
-                 has_details_inner = True
+            dd = cached["details"] or {}
+            if dd.get("positions"):
+                has_details_inner = True
+
 
         if cached and cached.get("asof_day") == effective_day and has_details_inner:
             return cached
@@ -1843,14 +1751,22 @@ def get_fund_data_safe(fund_code: str):
                 if fintables.get("comparison_1000tl"):
                     details["comparison_1000tl"] = fintables.get("comparison_1000tl", [])
 
-                # Allocation (Pasta) fallback (TEFAS boşsa Fintables'tan doldur)
-                try:
-                    if (not details.get("allocation")) and fintables.get("allocation"):
-                        details["allocation"] = fintables.get("allocation", [])
-                    elif isinstance(details.get("allocation"), list) and len(details.get("allocation", [])) == 0 and fintables.get("allocation"):
-                        details["allocation"] = fintables.get("allocation", [])
-                except Exception:
-                    pass
+            # 🔥 SERVER CACHE FALLBACK (is_equity_based'E BAKMADAN)
+            # Amaç: Bu ay KAP / Fintables boşsa, en son geçerli pozisyonu göstermek
+            try:
+                if not details.get("positions"):
+                    prev = (cached or {}).get("details", {}) if cached else {}
+                    if isinstance(prev, dict) and prev.get("positions"):
+                        details["positions"] = prev.get("positions", [])
+                        details["increased"] = prev.get("increased", [])
+                        details["decreased"] = prev.get("decreased", [])
+                        details["note"] = (
+                            "Bu ay KAP portföy raporu yayınlanmamıştır. "
+                            "Son mevcut veri gösterilmektedir."
+                        )
+            except Exception as e:
+                print(f"❌ Cache fallback hatası ({fund_code}): {e}")
+
 
 # === SEÇENEK A (FINTABLES LOGIC): HİSSE BAZLI MI? ===
 
