@@ -26,12 +26,22 @@ except Exception:
 from fastapi import APIRouter
 
 # ✅ EKLENDİ: Premium AI araçları (summary için)
-from api.premium_ai import (
-    build_premium_prediction as premium_build_prediction,
-    load_funds_master_map,
-    read_market_snapshot,
-    market_change_pct,
-)
+# Eğer bu dosya yoksa hata vermemesi için try-except bloğu eklendi
+try:
+    from api.premium_ai import (
+        build_premium_prediction as premium_build_prediction,
+        load_funds_master_map,
+        read_market_snapshot,
+        market_change_pct,
+    )
+    PREMIUM_AI_AVAILABLE = True
+except ImportError:
+    PREMIUM_AI_AVAILABLE = False
+    # Dummy fonksiyonlar (Import hatası durumunda kodun çökmemesi için)
+    def premium_build_prediction(*args, **kwargs): return {}
+    def load_funds_master_map(*args, **kwargs): return {}
+    def read_market_snapshot(*args, **kwargs): return {}
+    def market_change_pct(*args, **kwargs): return 0.0
 
 
 # ============================================================
@@ -361,6 +371,9 @@ def _atomic_write_json(path: str, obj: Any):
 # ✅ EKLENDİ: master map'i cacheli oku
 def _get_master_map_cached() -> Dict[str, Dict[str, Any]]:
     global _MASTER_MAP, _MASTER_MAP_TS
+    if not PREMIUM_AI_AVAILABLE:
+        return {}
+
     ts = time.time()
     if _MASTER_MAP and (ts - _MASTER_MAP_TS) < _MASTER_TTL_SEC:
         return _MASTER_MAP
