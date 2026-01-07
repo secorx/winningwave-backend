@@ -1,6 +1,5 @@
-# api/funds.py
-# FINTABLES KALİTESİNDE FON DETAY SCRAPER (KAP + TEFAS)
-# %100 ÇALIŞAN VERSİYON - FULL FILE - FINAL FIX
+# Fon Otomatik Güncelleme Sistemi
+# Bu kodu mevcut funds.py dosyanızın yerine koyun
 
 from __future__ import annotations
 
@@ -12,17 +11,14 @@ import math
 import re
 import requests
 import urllib3
+import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
-from bs4 import BeautifulSoup  # HTML Parsing için
-
-# 🔥 KRİTİK EKSİK GİDERİLDİ
-import yfinance as yf 
-
 try:
     from zoneinfo import ZoneInfo
 except Exception:
     ZoneInfo = None
+  # ✅ EKLENDİ: Haftasonu ve saat düzeltmesi için
 
 from fastapi import APIRouter
 
@@ -33,6 +29,27 @@ from api.premium_ai import (
     read_market_snapshot,
     market_change_pct,
 )
+
+
+# ============================================================
+# CACHE BASE DIR (LOCAL vs RENDER SAFE)
+# ============================================================
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+CACHE_ROOT = os.getenv(
+    "CACHE_ROOT",
+    BASE_DIR  # local default
+)
+
+CACHE_DIR = os.path.join(CACHE_ROOT, "funds_cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+# ✅ DATA DIR (HER ZAMAN PROJE İÇİNDE)
+DATA_DIR = os.path.join(BASE_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+
 
 # SSL Uyarılarını Kapat
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -60,25 +77,8 @@ def _detect_project_root() -> str:
     # fallback
     return candidates[0]
 
-BASE_DIR = _detect_project_root()
-
-CACHE_ROOT = os.getenv(
-    "CACHE_ROOT",
-    BASE_DIR  # local default
-)
-
-CACHE_DIR = os.path.join(CACHE_ROOT, "funds_cache")
-os.makedirs(CACHE_DIR, exist_ok=True)
-
-# ✅ DATA DIR (HER ZAMAN PROJE İÇİNDE)
-DATA_DIR = os.path.join(BASE_DIR, "data")
-os.makedirs(DATA_DIR, exist_ok=True)
-
 FUNDS_MASTER_PATH = os.path.join(DATA_DIR, "funds_master.json")
 LIVE_PRICES_PATH = os.path.join(CACHE_DIR, "live_prices.json")
-# ✅ HİSSE FİYATLARI İÇİN (AI HESAPLAMASINDA KULLANILACAK)
-STOCKS_LIVE_PRICES_PATH = os.path.join(DATA_DIR, "live_prices.json") 
-
 PORTFOLIO_PATH = os.path.join(CACHE_DIR, "portfolio.json")
 MARKET_CACHE_PATH = os.path.join(CACHE_DIR, "market_cache.json")
 PREDICTION_CACHE_PATH = os.path.join(CACHE_DIR, "prediction_cache.json")
@@ -131,6 +131,7 @@ _BG_LOCK = threading.Lock()
 # ================================
 # GÜNLİK PORTFÖY & CANLI LİSTE UPDATE KİLİDİ
 # ================================
+# Not: Artık global değişken yerine diskten okuyoruz, sadece Lock kaldı.
 _PORTFOLIO_UPDATE_LOCK = threading.Lock()
 _LIVE_LIST_UPDATE_LOCK = threading.Lock()
 
@@ -187,7 +188,7 @@ def tefas_effective_date() -> str:
 
     return d.strftime("%Y-%m-%d")
 
-# ✅ YENİ: Portföy güncelleme durumu için dosya yolu
+# ✅ YENİ: Portföy güncelleme durumunu diskten oku (Optional ile uyumlu)
 def _load_portfolio_update_day() -> Optional[str]:
     if os.path.exists(PORTFOLIO_UPDATE_STATE_PATH):
         try:
@@ -198,7 +199,7 @@ def _load_portfolio_update_day() -> Optional[str]:
             pass
     return None
 
-# ✅ YENİ: Portföy güncelleme durumu diske yaz
+# ✅ YENİ: Portföy güncelleme durumunu diske yaz
 def _save_portfolio_update_day(day: str):
     try:
         with open(PORTFOLIO_UPDATE_STATE_PATH, "w", encoding="utf-8") as f:
@@ -206,7 +207,7 @@ def _save_portfolio_update_day(day: str):
     except:
         pass
 
-# ✅ YENİ: Canlı liste güncelleme durumu diskten oku (Optional ile uyumlu)
+# ✅ YENİ: Canlı liste güncelleme durumunu diskten oku (Optional ile uyumlu)
 def _load_live_list_update_day() -> Optional[str]:
     if os.path.exists(LIVE_LIST_UPDATE_STATE_PATH):
         try:
@@ -217,7 +218,7 @@ def _load_live_list_update_day() -> Optional[str]:
             pass
     return None
 
-# ✅ YENİ: Canlı liste güncelleme durumu diske yaz
+# ✅ YENİ: Canlı liste güncelleme durumunu diske yaz
 def _save_live_list_update_day(day: str):
     try:
         with open(LIVE_LIST_UPDATE_STATE_PATH, "w", encoding="utf-8") as f:
@@ -225,7 +226,7 @@ def _save_live_list_update_day(day: str):
     except:
         pass
 
-# ✅ YENİ: FETCH TRACKING HELPER'LARI
+# ✅ YENİ: FETCH TRACKING HELPER'LARI (Artık aktif kullanılmıyor ama dosya tanımı kalsın)
 def _load_fetch_tracking() -> Dict[str, str]:
     if os.path.exists(FETCH_TRACKING_PATH):
         try:
@@ -331,18 +332,10 @@ def _get_newly_added_funds(previous_codes: List[str], current_codes: List[str]) 
 # 📌 DÜZELTME 1: Unicode eksi işareti ve temizleme mantığı güncellendi
 def _parse_turkish_float(text: str) -> float:
     try:
-        s = str(text).strip()
-        s = s.replace("−", "-")  # unicode minus
-        s = s.replace("%", "")
-        # Örn: 1.234,56 -> önce noktayı sil, virgülü nokta yap
-        if "," in s and "." in s:
-            s = s.replace(".", "").replace(",", ".")
-        elif "," in s:
-            s = s.replace(",", ".")
-        
-        # Sadece sayı, nokta ve eksi kalsın
-        s = re.sub(r"[^0-9.-]", "", s)
-        return float(s)
+        s = str(text)
+        s = s.replace("−", "-")  # 🔴 KRİTİK: unicode minus normalize
+        s = re.sub(r"[^0-9,.-]", "", s)
+        return float(s.replace(",", "."))
     except:
         return 0.0
 
@@ -419,436 +412,403 @@ def _get_master_map_cached() -> Dict[str, Dict[str, Any]]:
         return _MASTER_MAP
 
 # ============================================================
-# 3. VERİ ÇEKME MOTORU (TEFAS & KAP - İŞ YATIRIM)
+# 3. VERİ ÇEKME MOTORU (TEFAS)
 # ============================================================
 
-def _fetch_html_tefas(fund_code: str):
-    """TEFAS Ana Sayfasından Fiyat ve Getiri Verisi"""
+def _fetch_html(fund_code: str):
     print(f"🌐 TEFAS HTML deniyorum: {fund_code}")
     url = f"https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={fund_code.upper()}"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+    
+    # 🔧 ACİL ÇÖZÜM: Daha güçlü headers ve timeout
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none"
+    }
     
     try:
-        r = requests.get(url, headers=headers, timeout=10, verify=False)
-        r.encoding = 'utf-8' # ENCODING FIX
-        if r.status_code == 200:
-            price, daily, yearly = 0.0, 0.0, 0.0
+        # 🔧 ACİL ÇÖZÜM: Timeout'u 15 saniyeye çıkar
+        session = requests.Session()
+        r = session.get(url, headers=headers, timeout=15, verify=False)
+        print(f"📊 TEFAS HTML Response: {r.status_code} | Content-Length: {len(r.text)}")
+        
+        if r.status_code == 200 and len(r.text) > 1000:  # Minimum içerik kontrolü
+            html = r.text
             
-            # Fiyat
-            m = re.search(r"Son Fiyat.*?<span>([\d,\.]+)</span>", r.text, re.DOTALL)
-            if m: price = _parse_turkish_float(m.group(1))
+            # 🔧 ACİL ÇÖZÜM: Daha esnek regex pattern'leri
+            # Fiyat için birden fazla pattern dene
+            price_patterns = [
+                r"Son Fiyat.*?<span>([\d,\.]+)</span>",
+                r"NAV.*?<span>([\d,\.]+)</span>", 
+                r"Fiyat.*?<span>([\d,\.]+)</span>",
+                r"<span.*?class.*?fiyat.*?>([\d,\.]+)</span>",
+                r"(\d+,\d{4})"  # Genel sayı formatı
+            ]
             
-            # Günlük
-            m = re.search(r"Günlük Getiri.*?<span>(.*?)</span>", r.text, re.DOTALL)
-            if m: daily = _parse_turkish_float(m.group(1))
+            price = 0.0
+            for pattern in price_patterns:
+                match = re.search(pattern, html, re.DOTALL)
+                if match:
+                    price = _parse_turkish_float(match.group(1))
+                    if price > 0:
+                        print(f"✅ Fiyat bulundu ({pattern}): {price}")
+                        break
             
-            # Yıllık
-            m = re.search(r"Son 1 Yıl.*?<span>(.*?)</span>", r.text, re.DOTALL)
-            if m: yearly = _parse_turkish_float(m.group(1))
+            # Günlük getiri için birden fazla pattern
+            daily_patterns = [
+                r"Günlük Getiri.*?<span>(.*?)</span>",
+                r"Günlük.*?<span>(.*?)</span>",
+                r"Daily.*?<span>(.*?)</span>",
+                r"<span.*?günlük.*?>(.*?)</span>",
+            ]
+            
+            daily = 0.0
+            for pattern in daily_patterns:
+                match = re.search(pattern, html, re.DOTALL)
+                if match:
+                    daily = _parse_turkish_float(match.group(1))
+                    if daily != 0.0:
+                        print(f"✅ Günlük getiri bulundu ({pattern}): {daily}%")
+                        break
+            
+            # Yıllık getiri için pattern
+            yearly = 0.0
+            yearly_match = re.search(r"Son 1 Yıl.*?<span>(.*?)</span>", html, re.DOTALL)
+            if yearly_match:
+                yearly = _parse_turkish_float(yearly_match.group(1))
             
             if price > 0:
+                print(f"🎯 TEFAS HTML BAŞARILI: {fund_code} - Fiyat: {price}, Günlük: {daily}%, Yıllık: {yearly}%")
                 return {"price": price, "daily_pct": daily, "yearly_pct": yearly, "source": "HTML"}
+            else:
+                print(f"❌ TEFAS HTML FİYAT BULUNAMADI: {fund_code}")
+                # HTML içeriğini debug için kaydet
+                debug_path = f"debug_{fund_code}.html"
+                with open(debug_path, "w", encoding="utf-8") as f:
+                    f.write(html)
+                print(f"💾 HTML içeriği kaydedildi: {debug_path}")
+                
+        else:
+            print(f"❌ TEFAS HTML HTTP HATA: {fund_code} - Status: {r.status_code}, Length: {len(r.text)}")
+            
+    except requests.exceptions.Timeout:
+        print(f"⏰ TEFAS HTML TIMEOUT: {fund_code} - 15 saniye aşıldı")
+    except requests.exceptions.ConnectionError:
+        print(f"🔌 TEFAS HTML BAĞLANTI HATASI: {fund_code} - İnternet bağlantısı kontrol edilmeli")
     except Exception as e:
-        print(f"❌ TEFAS HTML Hata: {e}")
+        print(f"❌ TEFAS HTML GENEL HATA: {fund_code} - {str(e)}")
+    
     return None
 
-def _fetch_api_tefas(fund_code: str):
-    """TEFAS API Yedek (Fiyat için)"""
-    url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
+# ✅ EKLENDİ: TEFAS tarih parse yardımcısı
+def _parse_tefas_date(s: str) -> Optional[datetime]:
+    s = (s or "").strip()
+    if not s:
+        return None
+
+    # sık gelen formatlar
+    fmts = (
+        "%d.%m.%Y",
+        "%d/%m/%Y",
+        "%Y-%m-%d",
+        "%d.%m.%Y %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S",
+    )
+
+    for fmt in fmts:
+        try:
+            return datetime.strptime(s, fmt)
+        except:
+            pass
+
+    # bazen "25.12.2025 00:00:00.000" gibi geliyor -> noktadan sonrası kırp
     try:
-        end = datetime.now()
-        start = end - timedelta(days=7)
+        s2 = s.split(".000")[0]
+        return datetime.strptime(s2, "%d.%m.%Y %H:%M:%S")
+    except:
+        return None
+
+def _fetch_api(fund_code: str):
+    print(f"🌐 TEFAS API deniyorum: {fund_code}")
+    url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
+    
+    # 🔧 ACİL ÇÖZÜM: Daha güçlü headers
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+        "Origin": "https://www.tefas.gov.tr",
+        "Referer": "https://www.tefas.gov.tr/",
+        "Connection": "keep-alive"
+    }
+    
+    try:
+        # ✅ GÜNCELLENDİ: `end` tarihi İstanbul saatine göre
+        try:
+            end = datetime.now(ZoneInfo("Europe/Istanbul"))
+        except:
+            end = datetime.now()
+        start = end - timedelta(days=7)  # 5 gün yerine 7 gün yap
+        
         payload = {
             "fontip": "YAT",
             "fonkod": fund_code.upper(),
             "bastarih": start.strftime("%d.%m.%Y"),
             "bittarih": end.strftime("%d.%m.%Y"),
         }
-        r = requests.post(url, data=payload, timeout=10, verify=False)
+        
+        print(f"📡 TEFAS API Request: {fund_code} - {start.strftime('%d.%m.%Y')} to {end.strftime('%d.%m.%Y')}")
+        
+        # 🔧 ACİL ÇÖZÜM: Timeout'u 15 saniyeye çıkar
+        r = requests.post(url, data=payload, headers=headers, timeout=15, verify=False)
+        print(f"📊 TEFAS API Response: {r.status_code} | Content-Length: {len(r.text)}")
+        
         if r.status_code == 200:
-            data = r.json().get("data", [])
-            if data:
-                # En son tarihi bul
-                valid = []
-                for i in data:
-                    ts = i.get("TARIH", 0)
-                    if ts: valid.append(i)
+            try:
+                response_data = r.json()
+                data = response_data.get("data", [])
+                print(f"📈 TEFAS API Data Count: {len(data) if data else 0} records")
                 
-                if valid:
-                    # Tarihe göre sırala
-                    valid.sort(key=lambda x: x.get("TARIH", 0), reverse=True)
-                    last = valid[0] 
-                    price = _parse_turkish_float(last.get("FIYAT", 0))
-                    if price > 0:
-                        return {"price": price, "daily_pct": None, "yearly_pct": 0.0, "source": "API", "asof_day": datetime.fromtimestamp(last.get("TARIH", 0)/1000).strftime("%Y-%m-%d")}
-    except:
-        pass
+                if data and len(data) > 0:
+                    # En güncel veriyi bul
+                    valid_data = []
+                    for item in data:
+                        # Key isimleri TEFAS tarafında bazen değişebiliyor
+                        dt = _parse_tefas_date(
+                            item.get("TARIH") or item.get("Tarih") or item.get("tarih") or ""
+                        )
+                        if dt:
+                            valid_data.append((dt, item))
+                    
+                    if valid_data:
+                        valid_data.sort(key=lambda x: x[0], reverse=True)  # En yeni tarih en başta
+                        last_date, last_item = valid_data[0]
+                        # Güvenli fiyat parse
+                        price = _parse_turkish_float(last_item.get("FIYAT") or last_item.get("Fiyat") or last_item.get("fiyat") or 0)
+                        
+                        print(f"💰 TEFAS API Son Tarih: {last_date.strftime('%d.%m.%Y')} - Fiyat: {price}")
+                        
+                        if price > 0:
+                            print(f"🎯 TEFAS API BAŞARILI: {fund_code} - Fiyat: {price}")
+                            return {
+                                "price": price,
+                                "daily_pct": None,   # 🔴 API'den günlük getiri hesaplanmaz
+                                "yearly_pct": 0.0,
+                                "source": "API",
+                                "asof_day": last_date.strftime("%Y-%m-%d"),  # ✅ KRİTİK: API'den gelen gerçek tarih
+                            }
+                        else:
+                            print(f"❌ TEFAS API GEÇERSİZ FİYAT: {fund_code} - {price}")
+                    else:
+                        print(f"❌ TEFAS API GEÇERLI TARİH BULUNAMADI: {fund_code}")
+                else:
+                    print(f"❌ TEFAS API VERI YOK: {fund_code} - Boş response")
+                    
+            except ValueError as e:
+                print(f"❌ TEFAS API JSON HATA: {fund_code} - {str(e)}")
+                print(f"Raw Response: {r.text[:200]}...")
+        else:
+            print(f"❌ TEFAS API HTTP HATA: {fund_code} - Status: {r.status_code}")
+            
+    except requests.exceptions.Timeout:
+        print(f"⏰ TEFAS API TIMEOUT: {fund_code} - 15 saniye aşıldı")
+    except requests.exceptions.ConnectionError:
+        print(f"🔌 TEFAS API BAĞLANTI HATASI: {fund_code} - İnternet bağlantısı kontrol edilmeli")
+    except Exception as e:
+        print(f"❌ TEFAS API GENEL HATA: {fund_code} - {str(e)}")
+    
     return None
 
 def fetch_fund_live(fund_code: str):
-    html = _fetch_html_tefas(fund_code)
-    if html: return html
-    api = _fetch_api_tefas(fund_code)
-    if api: return api
+    html = _fetch_html(fund_code)
+    if html:
+        return html   # ✅ TEFAS sitesindeki % neyse O
+
+    api = _fetch_api(fund_code)
+    if api:
+        # daily_pct API'den gelmez → dokunma (ASLA 0.0 yapma)
+        return api
+
     return None
 
-# ============================================================
-# 🔥 YENİ: KAP (İŞ YATIRIM) & TEFAS (PASTA) SCRAPER
-# ============================================================
-
-def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
-    """TEFAS'tan Varlık Dağılımını (Pasta Grafik) çeker"""
-    print(f"🥧 TEFAS Allocation deniyorum: {fund_code}")
-    url = f"https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={fund_code.upper()}"
-    headers = {"User-Agent": "Mozilla/5.0"}
-
-    try:
-        r = requests.get(url, headers=headers, timeout=10, verify=False)
-        r.encoding = 'utf-8'
-        if r.status_code == 200:
-            # Regex ile Highcharts verisini bul: data: [['Hisse', 20], ['Mevduat', 80]]
-            match = re.search(r"data\s*:\s*(\[\[.*?\]\])", r.text, re.DOTALL)
-            if match:
-                raw = match.group(1).replace("'", '"')
-                try:
-                    data = json.loads(raw)
-                    # [["Hisse", 20], ["Mevduat", 80]] -> [{"name":"Hisse","value":20}, ...]
-                    return [{"name": i[0], "value": float(i[1])} for i in data if len(i) == 2 and float(i[1]) > 0]
-                except:
-                    pass
-    except Exception as e:
-        print(f"❌ TEFAS Allocation Hatası: {e}")
-    
-    return None
-
-def _fetch_kap_portfolio_from_isyatirim(fund_code: str) -> Optional[Dict[str, Any]]:
-    """
-    İş Yatırım Fon Detay Sayfasından KAP Verilerini Çeker (Resmi Kaynak Scraper)
-    CERRAH MODU: AFT gibi fon sepetleri veya karmaşık tablolar için iyileştirildi.
-    """
-    print(f"🏛️ İş Yatırım (KAP) Verisi Çekiliyor: {fund_code}")
-    
-    url = f"https://www.isyatirim.com.tr/tr-tr/analiz/fonlar/Sayfalar/Fon-Detay.aspx?FonKodu={fund_code.upper()}"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
-    }
-    
-    try:
-        r = requests.get(url, headers=headers, timeout=12)
-        r.encoding = 'utf-8' # Encoding fix
-        if r.status_code != 200: return None
-        
-        soup = BeautifulSoup(r.text, "html.parser")
-        details = {
-            "positions": [],
-            "increased": [], # Flutter null check hatası vermesin diye boş liste
-            "decreased": [], # Flutter null check hatası vermesin diye boş liste
-            "info": {"risk_value": 4, "founder": ""},
-            "allocation": [] 
-        }
-        
-        # 1. KURUCU BİLGİSİ
-        h1 = soup.find("div", {"class": "page-title"})
-        if h1:
-            raw_title = h1.get_text(strip=True)
-            if fund_code.upper() in raw_title:
-                parts = raw_title.split(fund_code.upper())
-                if len(parts) > 1:
-                    details["info"]["founder"] = parts[1].strip(" -")
-        
-        # 2. RİSK DEĞERİ
-        risk_elem = soup.find(string=re.compile("Risk Değeri"))
-        if risk_elem:
-            try:
-                parent = risk_elem.find_parent("tr") or risk_elem.find_parent("div")
-                if parent:
-                    txt = parent.get_text(strip=True)
-                    match = re.search(r"Risk Değeri.*?(\d)", txt)
-                    if match:
-                        details["info"]["risk_value"] = int(match.group(1))
-            except:
-                pass
-
-        # 3. EN BÜYÜK POZİSYONLAR (Gelişmiş Tablo Bulma - VAKUM MODU)
-        tables = soup.find_all("table")
-        candidates = []
-
-        for table in tables:
-            rows = table.find_all("tr")
-            if len(rows) < 2: continue # Başlık + en az 1 veri
-            
-            temp_list = []
-            
-            # Satırları gez (Header hariç)
-            for row in rows[1:]:
-                cols = row.find_all("td")
-                if len(cols) >= 2:
-                    # İlk kolon isim, ikinci kolon oran olma ihtimali yüksek
-                    col0_txt = cols[0].get_text(strip=True)
-                    col1_txt = cols[1].get_text(strip=True)
-                    
-                    if not col1_txt: continue
-                    
-                    # Oran parse etmeye çalış
-                    try:
-                        ratio = _parse_turkish_float(col1_txt)
-                        # Mantık kontrolü: 
-                        # 1. İsim çok kısa olmamalı (>2)
-                        # 2. Oran sayı olmalı
-                        # 3. "TOPLAM" satırı olmamalı
-                        
-                        if len(col0_txt) > 2 and "TOPLAM" not in col0_txt.upper():
-                            # Kod temizle (Parantezleri at)
-                            clean_code = col0_txt.split("(")[0].strip().upper()
-                            temp_list.append({"code": clean_code, "ratio": ratio})
-                    except:
-                        continue
-            
-            # Eğer bu tablodan anlamlı veri çıktıysa listeye ekle
-            if len(temp_list) > 0:
-                candidates.append(temp_list)
-
-        # En iyi adayı seç: En çok satırı olan tablo muhtemelen portföy tablosudur.
-        if candidates:
-            # Satır sayısına göre sırala (En çok satır en başa)
-            candidates.sort(key=len, reverse=True)
-            details["positions"] = candidates[0]
-            # Kendi içinde orana göre sırala
-            details["positions"].sort(key=lambda x: x["ratio"], reverse=True)
-
-        print(f"✅ İş Yatırım Data: {len(details['positions'])} pozisyon, Risk: {details['info']['risk_value']}")
-        return details
-
-    except Exception as e:
-        print(f"❌ İş Yatırım Scraping Error: {e}")
-        return None
-
-# ============================================================
-# 🔥 YENİ: HİSSE BAZLI AI SKORLAMA (LIVE STOCK DATA ILE)
-# ============================================================
-def _load_live_stocks() -> Dict[str, float]:
-    """Services.py tarafından üretilen hisse fiyatlarını okur"""
-    prices = {}
-    if os.path.exists(STOCKS_LIVE_PRICES_PATH):
-        try:
-            with open(STOCKS_LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if isinstance(data, list):
-                    for item in data:
-                        sym = item.get("symbol", "").replace(".IS", "")
-                        chg = item.get("chgPct", 0.0)
-                        prices[sym] = float(chg)
-                elif isinstance(data, dict) and "data" in data:
-                     for item in data["data"]:
-                        sym = item.get("symbol", "").replace(".IS", "")
-                        chg = item.get("chgPct", 0.0)
-                        prices[sym] = float(chg)
-        except:
-            pass
-    return prices
-
-def calculate_ai_prediction(yearly: float, daily: float, holdings: List[Dict[str, Any]] = None):
-    """
-    YENİ NESİL AI TAHMİNİ:
-    Fonun içindeki hisselerin anlık (Live) verilerine göre ağırlıklı tahmin üretir.
-    """
-    # 1. Klasik (Baz) Skor (Geçmiş performans)
+def calculate_ai_prediction(yearly: float, daily: float):
+    # Eğer daily None gelirse (API fallback ve cache yoksa) hata almamak için 0.0 kabul et
     d_val = daily if daily is not None else 0.0
     
     direction = "NÖTR"
     confidence = 50
-    
-    # Baz Yön Belirleme
     if yearly > 40:
         confidence += 20
         direction = "POZİTİF"
     elif yearly < 0:
         confidence += 10
         direction = "NEGATİF"
-
-    # 2. HİSSE BAZLI CANLI SKOR (Kritik Bölüm)
-    stock_impact = 0.0
-    
-    if holdings:
-        live_stocks = _load_live_stocks()
-        if live_stocks:
-            total_w = 0.0
-            weighted_change = 0.0
-            
-            for h in holdings:
-                code = h.get("code", "")
-                ratio = h.get("ratio", 0.0)
-                
-                # Kod temizliği (TEFAS bazen "AKBNK" bazen "AKBNK.E" döner)
-                clean_code = code.replace(".E", "").strip()
-                
-                live_chg = live_stocks.get(clean_code)
-                
-                # Yahoo finance için .IS eklemeyi dene
-                if live_chg is None:
-                     live_chg = live_stocks.get(clean_code + ".IS")
-
-                if live_chg is not None:
-                    weighted_change += (live_chg * ratio)
-                    total_w += ratio
-            
-            # Etki hesabı: (Ağırlıklı Değişim / 100) çünkü oranlar %100 üzerinden
-            stock_impact = weighted_change / 100.0
-            
-            # Yönü canlı veriye göre revize et
-            if stock_impact > 0.15:
-                direction = "POZİTİF"
-                confidence = min(95, confidence + 25)
-            elif stock_impact < -0.15:
-                direction = "NEGATİF"
-                confidence = min(95, confidence + 25)
-
-    # Final Tahmin
-    estimated_return = stock_impact
-    
-    # Eğer hisse verisi yoksa veya çok azsa, eski usul daily'ye dön
-    if not holdings or stock_impact == 0.0:
-        estimated_return = d_val
-        
-    # Yön Text Revize
-    if estimated_return > 0.10:
-        direction = "POZİTİF"
-    elif estimated_return < -0.10:
-        direction = "NEGATİF"
-    else:
-        direction = "NÖTR"
-
-    return direction, confidence, estimated_return
+    if d_val > 0.1:
+        if direction == "POZİTİF":
+            confidence += 10
+        elif direction == "NÖTR":
+            direction = "POZİTİF"
+    elif d_val < -0.1:
+        if direction == "NEGATİF":
+            confidence += 10
+        elif direction == "POZİTİF":
+            confidence -= 15
+    return direction, min(95, max(10, confidence))
 
 def get_fund_data_safe(fund_code: str):
     """
-    GÜNDE 1 KEZ TEFAS + KAP ENTEGRASYONLU VERİ ÇEKER
+    GÜNDE 1 KEZ TEFAS:
+    - Aynı gün içinde aynı fonu tekrar çekmez.
+    - RAM cache + disk persist.
     """
     fund_code = fund_code.upper()
+    
+    # ✅ ÇÖZÜM 1: EFFECTIVE DAY KULLANIMI
     effective_day = tefas_effective_date()
 
+    # 🔴 2. KRİTİK HATA DÜZELTİLDİ: Sadece flag olarak kullan, return etme
     try:
         now = datetime.now(ZoneInfo("Europe/Istanbul"))
     except:
         now = datetime.now()
     before_open = now.hour < 9 or (now.hour == 9 and now.minute < 30)
+    # ✅ Hafta sonu kontrolü
     is_weekend = now.weekday() >= 5
+
 
     cached = _PRICE_CACHE.get(fund_code)
 
-    # Diskten Yükleme
+    # 🔴 FALLBACK: Batch scrape ile gelen ama RAM'e girmemiş fonlar
     if not cached:
         if os.path.exists(LIVE_PRICES_PATH):
             try:
                 with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
                     disk_raw = json.load(f)
-                disk_data = disk_raw.get("data", {}) if isinstance(disk_raw, dict) else {}
-                if disk_data.get(fund_code):
-                    cached = disk_data[fund_code]
-                    _PRICE_CACHE[fund_code] = cached
+
+                disk_data = disk_raw.get("data", {})
+                disk_rec = disk_data.get(fund_code)
+
+                if disk_rec and disk_rec.get("nav", 0) > 0:
+                    _PRICE_CACHE[fund_code] = disk_rec
+                    cached = disk_rec # cached'i güncelle
             except:
                 pass
 
+    # ✅ GÜNCELLENDİ: Freshness kontrolü asof_day ile yapılır
     cached_asof = (cached.get("asof_day") or "").strip() if cached else ""
-    
-    # Detay verisi var mı kontrol et
-    has_details = False
-    if cached and "details" in cached:
-        d = cached["details"]
-        if d.get("positions") or d.get("info", {}).get("risk_value"):
-            has_details = True
-
     is_new_fund = not cached
-    force_fetch = False
-    
+
     if is_new_fund:
         force_fetch = True
-    elif not has_details: 
-        force_fetch = True 
-    elif cached_asof != effective_day:
-        force_fetch = True
+        print(f"🆕 YENİ FON TESPİT EDİLDİ: {fund_code} - Piyasa saati kontrolü atlaniyor!")
+    else:
+        # ✅ asof_day varsa onu esas al
+        if cached_asof:
+            force_fetch = (cached_asof != effective_day)
+        else:
+            # ✅ asof_day yoksa bu kayıt “şüpheli” (legacy) → 1 kez zorla
+            force_fetch = True
 
-    # Piyasalar kapalıysa ve eski veri varsa zorlama (Cache'i koru)
-    if (not is_weekend) and before_open and not is_new_fund and has_details:
+    # ⛔ Piyasa açılmadan fetch etme (SADECE HAFTA İÇİ & ESKİ FONLAR)
+    if (not is_weekend) and before_open and not is_new_fund:
         force_fetch = False
+        print(f"⏰ Piyasa kapalı, eski fon güncellenmiyor: {fund_code}")
 
+
+    # Cache geçerliyse ve fetch gerekmiyorsa döndür
     if not force_fetch and cached:
         return cached
 
-    # Eğer cache yok ve fetch de kapalıysa boş dön
+    # Hiç cache yok ve piyasa kapalıysa boş dön
     if not cached and not force_fetch:
         return {"nav": 0.0, "daily_return_pct": 0.0}
 
     with _TEFAS_LOCK:
-        # Double check inside lock
+        # Lock içinde tekrar kontrol (Race condition önlemi)
         cached = _PRICE_CACHE.get(fund_code)
-        
-        has_details_inner = False
-        if cached and "details" in cached:
-             if cached["details"].get("positions") or cached["details"].get("info", {}).get("risk_value"):
-                 has_details_inner = True
+        if cached:
+            cached_asof = (cached.get("asof_day") or "").strip()
+            if cached_asof == effective_day:
+                return cached
 
-        if cached and cached.get("asof_day") == effective_day and has_details_inner:
-            return cached
-
-        print(f"🚀 FORCE FETCH (X-RAY): {fund_code}")
+        # ✅ 4. ZORUNLU LOG
+        print(f"🚀 FORCE FETCH: {fund_code} | cached_asof={cached.get('asof_day') if cached else None} | effective_day={effective_day}")
 
         data = None
         if force_fetch:
             data = fetch_fund_live(fund_code)
 
         if data and data.get("price", 0) > 0:
+            # ✅ asof_day: API varsa onu kullan, yoksa effective_day’e düş
             asof_day = (data.get("asof_day") or "").strip()
             if not asof_day:
-                api_meta = _fetch_api_tefas(fund_code)
-                asof_day = api_meta["asof_day"] if api_meta and "asof_day" in api_meta else effective_day
+                # HTML geldi ama tarih yok → API ile asof_day yakala (fiyatı değiştirmeden)
+                api_meta = _fetch_api(fund_code)
+                if api_meta and api_meta.get("asof_day"):
+                    asof_day = api_meta["asof_day"]
+                else:
+                    asof_day = effective_day  # en kötü fallback
 
-            safe_daily = data["daily_pct"] if data["daily_pct"] is not None else 0.0
-
-            # 🔥 YENİ: DETAYLARI ÇEK (İŞ YATIRIM / KAP)
-            details = _fetch_kap_portfolio_from_isyatirim(fund_code)
-            
-            # TEFAS'tan Allocation (Pasta Grafik) al
-            allocation = _fetch_tefas_allocation(fund_code)
-            
-            if details:
-                if allocation:
-                     details["allocation"] = allocation 
+            # 🔒 GÜNLÜK GETİRİ MUTLAK KİLİT
+            if cached and cached.get("source") == "HTML":
+                cached_day = cached.get("asof_day", "")
+                if cached_day == effective_day:
+                    # ❗ Günlük getiri KİLİTLİ → HTML ne getirirse getirsin kullanma
+                    safe_daily = cached.get("daily_return_pct", 0.0)
+                else:
+                    safe_daily = data["daily_pct"] if data["daily_pct"] is not None else 0.0
             else:
-                # Başarısızsa boş obje ama allocation varsa ekle
-                details = {
-                    "positions": [],
-                    "increased": [],
-                    "decreased": [],
-                    "info": {},
-                    "allocation": allocation if allocation else []
-                }
+                safe_daily = data["daily_pct"] if data["daily_pct"] is not None else 0.0
 
-            # 🔥 YENİ: AI Hesapla (Pozisyon verisiyle)
-            holdings = details.get("positions", [])
-            dir_str, conf, est_ret = calculate_ai_prediction(data["yearly_pct"], safe_daily, holdings)
+            # ✅ FIX 2: AI prediction'a safe_daily gönder
+            dir_str, conf = calculate_ai_prediction(data["yearly_pct"], safe_daily)
 
+            # ✅ 4️⃣ & 5️⃣ DEĞİŞİKLİK: daily_return_pct ASLA None OLMAZ
+            # last_update artık asof_day'e göre belirlenir
             new_data = {
                 "nav": data["price"],
-                "daily_return_pct": safe_daily,
-                "asof_day": asof_day,
-                "last_update": asof_day + " 18:30:00",
-                "source": data.get("source", "HTML"),
-                "details": details, # ✅ ZENGİN VERİ EKLENDİ
+                "daily_return_pct": safe_daily,  # FIXED: safe_daily kullan
+                "asof_day": asof_day,  # ✅ KRİTİK
+                "last_update": asof_day + " 18:30:00", # ✅ ARTIK effective_day DEĞİL
+                "source": data.get("source", "HTML"), # Kaynağı kaydet
                 "ai_prediction": {
                     "direction": dir_str,
                     "confidence": conf,
                     "score": round(data["yearly_pct"] / 12, 2),
-                    "estimated_return": round(est_ret, 2) # ✅ YENİ
                 },
             }
 
+            # 🔧 ÇÖZÜM 2: HER DURUMDA YAZ (OVERWRITE)
             _PRICE_CACHE[fund_code] = new_data
             save_memory_to_disk()
             return new_data
         
-        elif force_fetch and cached:
-             pass
+        elif force_fetch:
+            # 🔥 TEFAS denendi ama HTML başarısız → API fiyatını cache'e yaz
+            if data is None:
+                api = _fetch_api(fund_code)
+                if api and api.get("price", 0) > 0:
+                    asof_day = api.get("asof_day", effective_day)
+                    new_data = {
+                        "nav": api["price"],
+                        "daily_return_pct": cached.get("daily_return_pct", 0.0) if cached else 0.0,
+                        "asof_day": asof_day,
+                        "last_update": asof_day + " 18:30:00",
+                        "source": "API",
+                        "ai_prediction": cached.get("ai_prediction", {}) if cached else {},
+                    }
+                    
+                    _PRICE_CACHE[fund_code] = new_data
+                    save_memory_to_disk()
+                    return new_data
 
     return cached if cached else {"nav": 0.0, "daily_return_pct": 0.0}
 
@@ -871,6 +831,7 @@ def update_market_data():
         except:
             items.append({"code": c, "value": 0.0, "change_pct": 0.0})
 
+    # ✅ PATCH 2: Atomik yazma
     try:
         _atomic_write_json(MARKET_CACHE_PATH, {"asof": now_str(), "items": items})
         print(f"🔄 Market Updated: {now_str()}")
@@ -922,10 +883,6 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
 
     with _AI_LOCK:
         cached = _AI_CACHE.get(fund_code)
-        
-        # Eğer cached veri varsa ve "predicted_return_pct" yoksa (eski cache), yenile
-        if cached and "predicted_return_pct" not in cached:
-             cached = None
 
         # ⛔ PİYASA KAPALIYSA → CANLI AI KİLİTLENİR
         if not market_open and cached:
@@ -976,6 +933,7 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         # ===============================
         # GÜN İÇİ DRIFT (KAPANIŞA SIFIRLANIR)
         # ===============================
+        # ✅ GÜNCELLENDİ: dt İstanbul saatine göre
         try:
             dt = datetime.now(ZoneInfo("Europe/Istanbul"))
         except:
@@ -987,18 +945,10 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         # ===============================
         # 🎯 FİNAL TAHMİN (AĞIRLIKLI)
         # ===============================
-        # Eğer cached veride hisse bazlı tahmin varsa (estimated_return), onu da kat
-        fund_data = _PRICE_CACHE.get(fund_code, {})
-        holdings_impact = 0.0
-        if "ai_prediction" in fund_data:
-             holdings_impact = fund_data["ai_prediction"].get("estimated_return", 0.0)
-
-        # Formül: Premium Base %50 + Holdings %40 + Daily %10
         predicted = (
-            premium_base * 0.50 +
-            holdings_impact * 0.40 +
-            daily_real * 0.10 +
-            drift * 0.05 +
+            premium_base * 0.70 +
+            daily_real * 0.20 +
+            drift * 0.07 +
             jitter
         )
         predicted = round(predicted, 2)
@@ -1078,7 +1028,7 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
     """
     scope:
       - "portfolio": sadece portföydeki fonlar
-      - "all": funds_master içindeki tüm fonlar
+      - "all": funds_master içindeki tüm fonlar (1269 fon olabilir)
     """
     # market snapshot (premium_ai yardımcıları ile)
     snap = read_market_snapshot(MARKET_CACHE_PATH)
@@ -1105,6 +1055,7 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
                         codes.append(c)
             except:
                 codes = []
+        # fallback: boşsa, yine de birkaç örnek döndürme yerine boş dönecek
 
     # compute predictions
     items: List[Dict[str, Any]] = []
@@ -1115,10 +1066,11 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
         fund_name = str(rec.get("name") or "")
         fund_type = str(rec.get("type") or "")
 
-        # 📌 RAM cache yoksa Disk cache'ten oku
+        # 📌 DÜZELME 2: RAM cache yoksa Disk cache'ten oku (persistence)
         info = _PRICE_CACHE.get(code)
         
         if not info:
+            # 🔴 RAM boşsa disk cache'ten oku
             if os.path.exists(LIVE_PRICES_PATH):
                 try:
                     with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
@@ -1266,6 +1218,9 @@ def maybe_update_portfolio_funds():
         except Exception as e:
             print(f"❌ Portföy okuma hata: {e}")
             return
+
+        # ✅ DEBUG PRINT (İSTENİLEN)
+        print(f"🧪 Portfolio codes={len(codes)} | state_day={_load_portfolio_update_day()} | today={today} | effective_day={effective_day}")
 
         # Eksikleri bul (RAM + disk üzerinden)
         missing = _missing_codes_for_day(codes, effective_day)
@@ -1590,20 +1545,12 @@ def api_detail(code: str):
     if info.get("nav", 0) > 0:
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
         ai = get_ai_prediction_live(code.upper(), daily_real)
-        
-        # Eğer Fintables'tan gelen detaylı AI skoru varsa (hisse bazlı), onu da ekle
-        predicted_return = ai.get("predicted_return_pct", daily_real)
-        if "ai_prediction" in info and "estimated_return" in info["ai_prediction"]:
-             # Cache'teki hisse bazlı skoru kullanabiliriz, ama live market data daha taze
-             # O yüzden get_ai_prediction_live fonksiyonu zaten bunu birleştiriyor.
-             pass
-
         return {
             "status": "success",
             "data": {
                 **info,
                 # 🎯 ÇÖZÜM: Mobil kolay kullansın diye düz alanlar (Fix 2)
-                "predicted_return_pct": predicted_return,
+                "predicted_return_pct": ai.get("predicted_return_pct", daily_real),
                 "confidence_score": ai.get("confidence_score", 50),
                 "direction": ai.get("direction", "NÖTR"),
             }
