@@ -1237,15 +1237,38 @@ def get_fund_data_safe(fund_code: str):
                     "allocation": allocation if allocation else []
                 }
 
-            # === SEÇENEK A: HİSSE BAZLI MI? ===
+            # === SEÇENEK A (FINTABLES LOGIC): HİSSE BAZLI MI? ===
+
+            # 1️⃣ Önce KAP / positions'tan bak
             is_equity = _detect_equity_based_from_positions(details.get("positions"))
+
+            # 2️⃣ Eğer positions boşsa → MASTER MAP'ten fon türüne bak
+            if not is_equity:
+                master = _get_master_map_cached()
+                rec = master.get(fund_code, {}) if isinstance(master, dict) else {}
+                fund_type = str(rec.get("type") or "").lower()
+
+                # Hisse senedi fonuysa ZORLA TRUE
+                if "hisse" in fund_type:
+                    is_equity = True
 
             details["is_equity_based"] = is_equity
 
-            if not is_equity:
-                details["note"] = "Bu fon hisse bazlı değildir. Hisse pozisyonları gösterilmez."
+            # 3️⃣ NOTE MANTIĞI
+            if is_equity:
+                if not details.get("positions"):
+                    details["note"] = (
+                        "Bu ay için KAP portföy raporu yayınlanmamıştır. "
+                        "Son mevcut veri gösterilir."
+                    )
+                else:
+                    details["note"] = None
             else:
-                details["note"] = None
+                details["note"] = (
+                    "Bu fon hisse bazlı değildir. "
+                    "Hisse pozisyonları gösterilmez."
+                )
+
                 
 
             # 4. TEFAS BACKUP (Eğer İş Yatırım boş döndüyse ve TEFAS allocation varsa)
