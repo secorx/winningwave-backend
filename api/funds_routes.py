@@ -1955,7 +1955,24 @@ def get_fund_data_safe(fund_code: str):
         elif force_fetch and cached:
              pass
 
-    return cached if cached else {"nav": 0.0, "daily_return_pct": 0.0}
+        return cached if cached else {
+        "nav": 0.0,
+        "daily_return_pct": 0.0,
+        "asof_day": tefas_effective_date(),
+        "last_update": datetime.now().isoformat(timespec="seconds"),
+        "source": "N/A",
+        "details": {
+            "positions": [],
+            "increased": [],
+            "decreased": [],
+            "allocation": [],
+            "comparison_1000tl": [],
+            "info": {},
+            "is_equity_based": False,
+            "note": None,
+        },
+        "ai_prediction": {"direction": "NÖTR", "confidence_score": 50, "predicted_return_pct": 0.0},
+    }
 
 # ============================================================
 # 4. MARKET DATA (BIST / USD) – 15 DK
@@ -2545,7 +2562,7 @@ def api_portfolio():
         qty = float(pos.get("quantity", 0) or 0)
 
         # TEFAŞ cacheli gerçek veri (günde 1 kere)
-        info = get_fund_data_safe(code)
+        info = get_fund_price_safe(code)
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
 
         # AI tahmin (sadece yön için)
@@ -2641,7 +2658,7 @@ def api_live_list():
             continue
 
         # TEFAŞ cacheli gerçek veri (günde 1 kere)
-        info = get_fund_data_safe(code)
+        info = get_fund_price_safe(code)
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
 
         # AI tahmin
@@ -2702,6 +2719,19 @@ def api_detail(code: str):
         
         # Eğer Fintables'tan gelen detaylı AI skoru varsa (hisse bazlı), onu da ekle
         predicted_return = ai.get("predicted_return_pct", daily_real)
+        # ✅ FIX: Flutter tarafında Map<String,dynamic> cast hatası olmaması için ai_prediction her zaman dict olmalı
+        try:
+            _ai_raw = info.get("ai_prediction")
+            _ai_map = _ai_raw if isinstance(_ai_raw, dict) else {}
+            # Canlı tahmin çıktısını da ai_prediction içine enjekte et (UI bunu okuyabiliyor)
+            _ai_map = {**_ai_map,
+                      "predicted_return_pct": float(predicted_return or 0.0),
+                      "confidence_score": float(ai.get("confidence_score", 50) or 50),
+                      "direction": str(ai.get("direction", "NÖTR")),
+                      "asof": str(ai.get("asof", ""))}
+            info["ai_prediction"] = _ai_map
+        except Exception:
+            info["ai_prediction"] = {"predicted_return_pct": float(predicted_return or 0.0), "confidence_score": 50, "direction": "NÖTR"}
         if "ai_prediction" in info and "estimated_return" in info["ai_prediction"]:
              # Cache'teki hisse bazlı skoru kullanabiliriz, ama live market data daha taze
              # O yüzden get_ai_prediction_live fonksiyonu zaten bunu birleştiriyor.
@@ -2941,3 +2971,169 @@ def get_fund_data_safe(fund_code: str):
 
     return info
 
+
+
+# ============================================================
+# FAST PATH: price-only fetch for portfolio/live list
+# Avoids heavy KAP/Fintables work on frequently-called endpoints.
+# ============================================================
+
+def get_fund_price_safe(code: str) -> dict:
+    """Return fast, cached price + daily return for a fund.
+
+    This function is designed for high-traffic endpoints (portfolio/live list).
+    It will NOT force heavy detail fetching (KAP, fintables, allocations)."""
+
+    code = (code or "").strip().upper()
+    if not code:
+        return {
+            "nav": 0.0,
+            "daily_return_pct": 0.0,
+            "asof_day": tefas_effective_date(),
+            "last_update": datetime.now().isoformat(timespec="seconds"),
+            "source": "N/A",
+            "details": {
+                "positions": [],
+                "increased": [],
+                "decreased": [],
+                "allocation": [],
+                "comparison_1000tl": [],
+                "info": {},
+                "is_equity_based": False,
+                "note": None,
+            },
+            "ai_prediction": {"direction": "NÖTR", "confidence_score": 50, "predicted_return_pct": 0.0},
+        }
+
+    effective_day = tefas_effective_date()
+
+    # Use in-memory cache if valid for today
+    cached = _PRICE_CACHE.get(code)
+    if isinstance(cached, dict):
+        try:
+            cached_nav = float(cached.get("nav", 0.0) or 0.0)
+        except Exception:
+            cached_nav = 0.0
+        cached_asof = str(cached.get("asof_day") or "")
+        if cached_nav > 0.0 and cached_asof == effective_day:
+            # Guarantee schema for Flutter
+            if not isinstance(cached.get("details"), dict):
+                cached["details"] = {
+                    "positions": [],
+                    "increased": [],
+                    "decreased": [],
+                    "allocation": [],
+                    "comparison_1000tl": [],
+                    "info": {},
+                    "is_equity_based": False,
+                    "note": None,
+                }
+            if not isinstance(cached.get("ai_prediction"), dict):
+                cached["ai_prediction"] = {}
+            return cached
+
+    # Fetch live price (HTML/API) but keep existing details (if any)
+    with _TEFAS_LOCK:
+        cached = _PRICE_CACHE.get(code)
+        if isinstance(cached, dict):
+            try:
+                cached_nav = float(cached.get("nav", 0.0) or 0.0)
+            except Exception:
+                cached_nav = 0.0
+            cached_asof = str(cached.get("asof_day") or "")
+            if cached_nav > 0.0 and cached_asof == effective_day:
+                if not isinstance(cached.get("details"), dict):
+                    cached["details"] = {
+                        "positions": [],
+                        "increased": [],
+                        "decreased": [],
+                        "allocation": [],
+                        "comparison_1000tl": [],
+                        "info": {},
+                        "is_equity_based": False,
+                        "note": None,
+                    }
+                if not isinstance(cached.get("ai_prediction"), dict):
+                    cached["ai_prediction"] = {}
+                return cached
+
+        live = fetch_fund_live(code)
+        if live and float(live.get("price", 0.0) or 0.0) > 0.0:
+            asof_day = (live.get("asof_day") or effective_day)
+            daily_pct = float(live.get("daily_pct", 0.0) or 0.0)
+
+            # Preserve details/ai_prediction from existing cache if any
+            prev_details = {}
+            prev_ai = {}
+            if isinstance(cached, dict):
+                if isinstance(cached.get("details"), dict):
+                    prev_details = cached.get("details") or {}
+                if isinstance(cached.get("ai_prediction"), dict):
+                    prev_ai = cached.get("ai_prediction") or {}
+
+            new_obj = {
+                "nav": float(live.get("price", 0.0) or 0.0),
+                "daily_return_pct": daily_pct,
+                "asof_day": asof_day,
+                "last_update": f"{asof_day} 18:30:00",
+                "source": live.get("source") or "LIVE",
+                "details": prev_details if isinstance(prev_details, dict) else {},
+                "ai_prediction": prev_ai if isinstance(prev_ai, dict) else {},
+            }
+
+            # Guarantee schema for Flutter
+            if not isinstance(new_obj["details"], dict):
+                new_obj["details"] = {
+                    "positions": [],
+                    "increased": [],
+                    "decreased": [],
+                    "allocation": [],
+                    "comparison_1000tl": [],
+                    "info": {},
+                    "is_equity_based": False,
+                    "note": None,
+                }
+            if not isinstance(new_obj["ai_prediction"], dict):
+                new_obj["ai_prediction"] = {}
+
+            _PRICE_CACHE[code] = new_obj
+            save_memory_to_disk()
+            return new_obj
+
+    # Final fallback
+    fallback = cached if isinstance(cached, dict) else None
+    if not isinstance(fallback, dict):
+        fallback = {
+            "nav": 0.0,
+            "daily_return_pct": 0.0,
+            "asof_day": effective_day,
+            "last_update": datetime.now().isoformat(timespec="seconds"),
+            "source": "N/A",
+            "details": {
+                "positions": [],
+                "increased": [],
+                "decreased": [],
+                "allocation": [],
+                "comparison_1000tl": [],
+                "info": {},
+                "is_equity_based": False,
+                "note": None,
+            },
+            "ai_prediction": {"direction": "NÖTR", "confidence_score": 50, "predicted_return_pct": 0.0},
+        }
+
+    if not isinstance(fallback.get("details"), dict):
+        fallback["details"] = {
+            "positions": [],
+            "increased": [],
+            "decreased": [],
+            "allocation": [],
+            "comparison_1000tl": [],
+            "info": {},
+            "is_equity_based": False,
+            "note": None,
+        }
+    if not isinstance(fallback.get("ai_prediction"), dict):
+        fallback["ai_prediction"] = {}
+
+    return fallback
