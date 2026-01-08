@@ -1,5 +1,5 @@
-# api/funds_routes.py
-# FINTABLES KALİTESİNDE - KAP VAKUM MODU - %100 FIX - FULL FILE (TEK SATIR EKSİK YOK)
+# Fon Otomatik Güncelleme Sistemi
+# Bu kodu mevcut funds.py dosyanızın yerine koyun
 
 from __future__ import annotations
 
@@ -11,45 +11,53 @@ import math
 import re
 import requests
 import urllib3
-import io
-import zipfile
-import xml.etree.ElementTree as ET
-from urllib.parse import quote_plus, urljoin
+import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
-from bs4 import BeautifulSoup  # HTML Parsing için
-
-# 🔥 KRİTİK IMPORT: YFINANCE EKLENDİ
-import yfinance as yf
-
 try:
     from zoneinfo import ZoneInfo
 except Exception:
     ZoneInfo = None
+  # ✅ EKLENDİ: Haftasonu ve saat düzeltmesi için
 
 from fastapi import APIRouter
 
 # ✅ EKLENDİ: Premium AI araçları (summary için)
-# Eğer bu dosya yoksa hata vermemesi için try-except bloğu eklendi
-try:
-    from api.premium_ai import (
-        build_premium_prediction as premium_build_prediction,
-        load_funds_master_map,
-        read_market_snapshot,
-        market_change_pct,
-    )
-    PREMIUM_AI_AVAILABLE = True
-except ImportError:
-    PREMIUM_AI_AVAILABLE = False
-    # Dummy fonksiyonlar (Import hatası durumunda kodun çökmemesi için)
-    def premium_build_prediction(*args, **kwargs): return {}
-    def load_funds_master_map(*args, **kwargs): return {}
-    def read_market_snapshot(*args, **kwargs): return {}
-    def market_change_pct(*args, **kwargs): return 0.0
+from api.premium_ai import (
+    build_premium_prediction as premium_build_prediction,
+    load_funds_master_map,
+    read_market_snapshot,
+    market_change_pct,
+)
 
 
 # ============================================================
 # CACHE BASE DIR (LOCAL vs RENDER SAFE)
+# ============================================================
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+CACHE_ROOT = os.getenv(
+    "CACHE_ROOT",
+    BASE_DIR  # local default
+)
+
+CACHE_DIR = os.path.join(CACHE_ROOT, "funds_cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+# ✅ DATA DIR (HER ZAMAN PROJE İÇİNDE)
+DATA_DIR = os.path.join(BASE_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+
+
+# SSL Uyarılarını Kapat
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+router = APIRouter(tags=["funds"])
+
+# ============================================================
+# 1. AYARLAR & GLOBAL HAFIZA (OTOMATİK ROOT TESPİTİ)
 # ============================================================
 
 def _detect_project_root() -> str:
@@ -69,35 +77,8 @@ def _detect_project_root() -> str:
     # fallback
     return candidates[0]
 
-BASE_DIR = _detect_project_root()
-
-CACHE_ROOT = os.getenv(
-    "CACHE_ROOT",
-    BASE_DIR  # local default
-)
-
-CACHE_DIR = os.path.join(CACHE_ROOT, "funds_cache")
-os.makedirs(CACHE_DIR, exist_ok=True)
-
-# ✅ DATA DIR (HER ZAMAN PROJE İÇİNDE)
-DATA_DIR = os.path.join(BASE_DIR, "data")
-os.makedirs(DATA_DIR, exist_ok=True)
-
-
-# SSL Uyarılarını Kapat
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-router = APIRouter(tags=["funds"])
-
-# ============================================================
-# 1. AYARLAR & GLOBAL HAFIZA
-# ============================================================
-
 FUNDS_MASTER_PATH = os.path.join(DATA_DIR, "funds_master.json")
 LIVE_PRICES_PATH = os.path.join(CACHE_DIR, "live_prices.json")
-# ✅ HİSSE FİYATLARI İÇİN (AI HESAPLAMASINDA KULLANILACAK)
-STOCKS_LIVE_PRICES_PATH = os.path.join(DATA_DIR, "live_prices.json") 
-
 PORTFOLIO_PATH = os.path.join(CACHE_DIR, "portfolio.json")
 MARKET_CACHE_PATH = os.path.join(CACHE_DIR, "market_cache.json")
 PREDICTION_CACHE_PATH = os.path.join(CACHE_DIR, "prediction_cache.json")
@@ -110,27 +91,49 @@ PORTFOLIO_UPDATE_STATE_PATH = os.path.join(CACHE_DIR, "portfolio_update_state.js
 # ✅ YENİ: Canlı liste güncelleme durumu için dosya yolu
 LIVE_LIST_UPDATE_STATE_PATH = os.path.join(CACHE_DIR, "live_list_update_state.json")
 
-# ✅ YENİ: Fetch Tracking Path (Tekrar çekimi önlemek için)
+# ✅ YENİ: Fetch Tracking Path (Tekrar çekimi önlemek için - Artık logic içinde kullanılmıyor ama dosya tanımı kalsın)
 FETCH_TRACKING_PATH = os.path.join(CACHE_DIR, "fetch_tracking.json")
 
-# GLOBAL DEĞİŞKENLER & LOCKLAR
+os.makedirs(CACHE_DIR, exist_ok=True)
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# RAM CACHE (TEFAS için)
 _PRICE_CACHE: Dict[str, Dict] = {}
 _TEFAS_LOCK = threading.Lock()
+
+# AI TAHMİN CACHE (TEFAS'SIZ, 5 sn)
 _AI_CACHE: Dict[str, Dict[str, Any]] = {}
 _AI_LOCK = threading.Lock()
+
+# 🔒 Direction Lock Cache
 _AI_DIRECTION_LOCK: Dict[str, Dict[str, Any]] = {}
+
+# ✅ EKLENDİ: funds_master map cache (type/name için)
 _MASTER_MAP: Dict[str, Dict[str, Any]] = {}
 _MASTER_MAP_TS: float = 0.0
 _MASTER_LOCK = threading.Lock()
-_MASTER_TTL_SEC = 3600
+_MASTER_TTL_SEC = 3600  # 1 saat
+
+# ✅ EKLENDİ: Predictions Summary cache (çok hızlı UI için)
 _PRED_SUMMARY_CACHE: Dict[str, Any] = {}
+# ✅ PATCH 3.1 & 3.2: Timestamp artık dict (scope bazlı)
 _PRED_SUMMARY_TS: Dict[str, float] = {}
 _PRED_SUMMARY_LOCK = threading.Lock()
-_PRED_SUMMARY_TTL_SEC = 15
-_PORTFOLIO_UPDATE_LOCK = threading.Lock()
-_LIVE_LIST_UPDATE_LOCK = threading.Lock()
+_PRED_SUMMARY_TTL_SEC = 15  # 15 sn cache (UI refresh için yeterli)
+
+# ================================
+# 🔒 Background jobs start guard (uvicorn --reload safe)
+# ================================
+# ✅ PATCH 0.1: Tek seferlik başlatma kilidi
 _BG_STARTED = False
 _BG_LOCK = threading.Lock()
+
+# ================================
+# GÜNLİK PORTFÖY & CANLI LİSTE UPDATE KİLİDİ
+# ================================
+# Not: Artık global değişken yerine diskten okuyoruz, sadece Lock kaldı.
+_PORTFOLIO_UPDATE_LOCK = threading.Lock()
+_LIVE_LIST_UPDATE_LOCK = threading.Lock()
 
 # ============================================================
 # 2. YARDIMCI FONKSİYONLAR
@@ -185,7 +188,7 @@ def tefas_effective_date() -> str:
 
     return d.strftime("%Y-%m-%d")
 
-# ✅ YENİ: Portföy güncelleme durumu için dosya yolu
+# ✅ YENİ: Portföy güncelleme durumunu diskten oku (Optional ile uyumlu)
 def _load_portfolio_update_day() -> Optional[str]:
     if os.path.exists(PORTFOLIO_UPDATE_STATE_PATH):
         try:
@@ -196,7 +199,7 @@ def _load_portfolio_update_day() -> Optional[str]:
             pass
     return None
 
-# ✅ YENİ: Portföy güncelleme durumu diske yaz
+# ✅ YENİ: Portföy güncelleme durumunu diske yaz
 def _save_portfolio_update_day(day: str):
     try:
         with open(PORTFOLIO_UPDATE_STATE_PATH, "w", encoding="utf-8") as f:
@@ -204,7 +207,7 @@ def _save_portfolio_update_day(day: str):
     except:
         pass
 
-# ✅ YENİ: Canlı liste güncelleme durumu diskten oku (Optional ile uyumlu)
+# ✅ YENİ: Canlı liste güncelleme durumunu diskten oku (Optional ile uyumlu)
 def _load_live_list_update_day() -> Optional[str]:
     if os.path.exists(LIVE_LIST_UPDATE_STATE_PATH):
         try:
@@ -215,7 +218,7 @@ def _load_live_list_update_day() -> Optional[str]:
             pass
     return None
 
-# ✅ YENİ: Canlı liste güncelleme durumu diske yaz
+# ✅ YENİ: Canlı liste güncelleme durumunu diske yaz
 def _save_live_list_update_day(day: str):
     try:
         with open(LIVE_LIST_UPDATE_STATE_PATH, "w", encoding="utf-8") as f:
@@ -223,7 +226,7 @@ def _save_live_list_update_day(day: str):
     except:
         pass
 
-# ✅ YENİ: FETCH TRACKING HELPER'LARI
+# ✅ YENİ: FETCH TRACKING HELPER'LARI (Artık aktif kullanılmıyor ama dosya tanımı kalsın)
 def _load_fetch_tracking() -> Dict[str, str]:
     if os.path.exists(FETCH_TRACKING_PATH):
         try:
@@ -240,23 +243,32 @@ def _save_fetch_tracking(data: Dict[str, str]):
     except:
         pass
 
-# ✅ GÜNCELLENDİ: RAM CACHE İÇİNDE GÜNCEL VERİ KONTROLÜ
+# ✅ GÜNCELLENDİ: RAM CACHE İÇİNDE GÜNCEL VERİ KONTROLÜ (asof_day bazlı)
 def _is_code_fresh(code: str, effective_day: str) -> bool:
+    """
+    Bir fon kodu effective_day için güncel mi?
+    - asof_day kontrol edilir.
+    - RAM cache'e bakar, yoksa disk cache'ten bakar.
+    """
     code = code.upper().strip()
 
     def check_rec(r: Dict) -> bool:
         if not r or r.get("nav", 0) <= 0:
             return False
+        # ✅ Öncelik asof_day
         rec_asof = str(r.get("asof_day") or "").strip()
         if rec_asof == effective_day:
             return True
+        # asof_day yoksa (eski veri) ama last_update tutuyorsa (legacy)
         if not rec_asof and str(r.get("last_update", "")).startswith(effective_day):
             return True
         return False
 
+    # 1) RAM check
     if check_rec(_PRICE_CACHE.get(code)):
         return True
 
+    # 2) Disk check
     if os.path.exists(LIVE_PRICES_PATH):
         try:
             with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
@@ -270,6 +282,7 @@ def _is_code_fresh(code: str, effective_day: str) -> bool:
     return False
 
 def _missing_codes_for_day(codes: List[str], effective_day: str) -> List[str]:
+    """codes içinden effective_day için güncel olmayanları döndürür."""
     out = []
     for c in codes:
         c2 = (c or "").upper().strip()
@@ -279,6 +292,7 @@ def _missing_codes_for_day(codes: List[str], effective_day: str) -> List[str]:
 
 # ✅ YENİ: Canlı listeden fon kodlarını oku
 def _get_live_list_codes() -> List[str]:
+    """Canlı listedeki fon kodlarını döndür"""
     codes = []
     if os.path.exists(LIVE_LIST_PATH):
         try:
@@ -294,6 +308,7 @@ def _get_live_list_codes() -> List[str]:
 
 # ✅ YENİ: Portföyden fon kodlarını oku
 def _get_portfolio_codes() -> List[str]:
+    """Portföydeki fon kodlarını döndür"""
     codes = []
     if os.path.exists(PORTFOLIO_PATH):
         try:
@@ -309,86 +324,54 @@ def _get_portfolio_codes() -> List[str]:
 
 # ✅ YENİ: İlk defa eklenen fonları tespit et
 def _get_newly_added_funds(previous_codes: List[str], current_codes: List[str]) -> List[str]:
+    """Yeni eklenen fon kodlarını döndür"""
     prev_set = set(previous_codes)
     new_codes = [code for code in current_codes if code not in prev_set]
     return new_codes
 
-# 📌 DÜZELTME 1: Unicode eksi işareti ve temizleme mantığı
+# 📌 DÜZELTME 1: Unicode eksi işareti ve temizleme mantığı güncellendi
 def _parse_turkish_float(text: str) -> float:
     try:
-        s = str(text).strip()
-        s = s.replace("−", "-")
-        s = s.replace("%", "")
-        # 1.234,56 -> 1234.56
-        if "," in s and "." in s:
-            s = s.replace(".", "").replace(",", ".")
-        elif "," in s:
-            s = s.replace(",", ".")
-        s = re.sub(r"[^0-9.-]", "", s)
-        return float(s)
+        s = str(text)
+        s = s.replace("−", "-")  # 🔴 KRİTİK: unicode minus normalize
+        s = re.sub(r"[^0-9,.-]", "", s)
+        return float(s.replace(",", "."))
     except:
         return 0.0
-    
-def _detect_equity_based_from_positions(positions: Optional[List[Dict[str, Any]]]) -> bool:
-    """
-    Seçenek A mantığı:
-    - 'positions' içinde gerçek hisse kodları (ASELS, THYAO gibi) varsa True
-    - Sadece kategori/varlık sınıfı (Hisse Senedi, Mevduat, DİBS vb.) varsa False
-    """
-    if not positions:
-        return False
 
-    # TEFAS allocation fallback'ında gelen kategori adları vb.
-    non_equity_keywords = [
-        "HİSSE SENEDİ", "HISSE SENEDI", "MEVDUAT", "DİBS", "DIBS",
-        "TAHVİL", "TAHVIL", "BONO", "EUROBOND", "KATILIM",
-        "ALTIN", "GÜMÜŞ", "GUMUS", "DÖVİZ", "DOVIZ",
-        "REPO", "FON", "KAMU", "ÖZEL", "OZEL", "KİRA", "KIRA",
-        "BORÇLANMA", "BORCLANMA", "VADELİ", "VADELI", "BPP",
-        "TERS REPO", "EMTİA", "EMTIA", "PAY", "HİSSE"
-    ]
-
-    for it in positions:
-        code = str(it.get("code") or "").strip().upper()
-
-        if not code:
-            continue
-
-        # Kategori gibi duranlar (TEFAS allocation'dan gelen "Hisse Senedi" vb.)
-        if any(k in code for k in non_equity_keywords):
-            continue
-
-        # Çok uzun/garip stringler kategori olabilir
-        if len(code) > 12:
-            continue
-
-        # Gerçek hisse kodu için basit kural: 3-6 harf/rakam, boşluk yok
-        if re.fullmatch(r"[A-Z0-9]{3,6}", code):
-            return True
-
-    return False
-
-
-# ✅ DÜZELTİLDİ: load_cache_to_memory
+# ✅ DÜZELTİLDİ: 1️⃣ load_cache_to_memory()
 def load_cache_to_memory():
+    """Server açılınca diskteki veriyi RAM'e yükler"""
     global _PRICE_CACHE
+    
     if not os.path.exists(LIVE_PRICES_PATH):
         _PRICE_CACHE = {}
     else:
         try:
             with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
                 raw = json.load(f)
+
+            # ✅ KRİTİK: batch output içinden SADECE data'yı al
             if isinstance(raw, dict) and "data" in raw:
                 _PRICE_CACHE = raw["data"]
             else:
                 _PRICE_CACHE = raw
+
             print(f"✅ RAM cache yüklendi: {len(_PRICE_CACHE)} fon")
+
         except Exception as e:
             print(f"❌ Cache yüklenedi: {e}")
             _PRICE_CACHE = {}
 
-# ✅ ADIM 3: KAYIT FORMATI DÜZELTİLDİ
+    # ✅ DEBUG PRINTS (İSTENİLEN)
+    print(f"🧭 BASE_DIR={BASE_DIR}")
+    print(f"🧭 PORTFOLIO_PATH={PORTFOLIO_PATH} exists={os.path.exists(PORTFOLIO_PATH)}")
+    print(f"🧭 LIVE_LIST_PATH={LIVE_LIST_PATH} exists={os.path.exists(LIVE_LIST_PATH)}")
+    print(f"🧭 LIVE_PRICES_PATH={LIVE_PRICES_PATH} exists={os.path.exists(LIVE_PRICES_PATH)}")
+
+# ✅ ADIM 3: KAYIT FORMATI DÜZELTİLDİ (Batch scraper uyumlu)
 def save_memory_to_disk():
+    """RAM cache'i diske atomik yaz"""
     try:
         tmp = LIVE_PRICES_PATH + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
@@ -404,6 +387,7 @@ def save_memory_to_disk():
 
 # ✅ PATCH 1.1: Atomik JSON yazma helper'ı
 def _atomic_write_json(path: str, obj: Any):
+    """JSON'u atomik yaz (yarım dosya / bozuk JSON riskini azaltır)."""
     try:
         tmp = path + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
@@ -412,12 +396,9 @@ def _atomic_write_json(path: str, obj: Any):
     except Exception as e:
         print(f"❌ _atomic_write_json({path}): {e}")
 
-# ✅ EKLENDİ: master map'i cacheli oku
+# ✅ EKLENDİ: master map'i cacheli oku (type/name için)
 def _get_master_map_cached() -> Dict[str, Dict[str, Any]]:
     global _MASTER_MAP, _MASTER_MAP_TS
-    if not PREMIUM_AI_AVAILABLE:
-        return {}
-
     ts = time.time()
     if _MASTER_MAP and (ts - _MASTER_MAP_TS) < _MASTER_TTL_SEC:
         return _MASTER_MAP
@@ -431,1548 +412,405 @@ def _get_master_map_cached() -> Dict[str, Dict[str, Any]]:
         return _MASTER_MAP
 
 # ============================================================
-# 3. VERİ ÇEKME MOTORU (TEFAS & KAP - İŞ YATIRIM)
+# 3. VERİ ÇEKME MOTORU (TEFAS)
 # ============================================================
 
-def _fetch_html_tefas(fund_code: str):
+def _fetch_html(fund_code: str):
     print(f"🌐 TEFAS HTML deniyorum: {fund_code}")
     url = f"https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={fund_code.upper()}"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+    
+    # 🔧 ACİL ÇÖZÜM: Daha güçlü headers ve timeout
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none"
+    }
     
     try:
-        r = requests.get(url, headers=headers, timeout=10, verify=False)
-        r.encoding = 'utf-8' # ENCODING FIX
-        if r.status_code == 200:
-            price, daily, yearly = 0.0, 0.0, 0.0
+        # 🔧 ACİL ÇÖZÜM: Timeout'u 15 saniyeye çıkar
+        session = requests.Session()
+        r = session.get(url, headers=headers, timeout=15, verify=False)
+        print(f"📊 TEFAS HTML Response: {r.status_code} | Content-Length: {len(r.text)}")
+        
+        if r.status_code == 200 and len(r.text) > 1000:  # Minimum içerik kontrolü
+            html = r.text
             
-            m = re.search(r"Son Fiyat.*?<span>([\d,\.]+)</span>", r.text, re.DOTALL)
-            if m: price = _parse_turkish_float(m.group(1))
+            # 🔧 ACİL ÇÖZÜM: Daha esnek regex pattern'leri
+            # Fiyat için birden fazla pattern dene
+            price_patterns = [
+                r"Son Fiyat.*?<span>([\d,\.]+)</span>",
+                r"NAV.*?<span>([\d,\.]+)</span>", 
+                r"Fiyat.*?<span>([\d,\.]+)</span>",
+                r"<span.*?class.*?fiyat.*?>([\d,\.]+)</span>",
+                r"(\d+,\d{4})"  # Genel sayı formatı
+            ]
             
-            m = re.search(r"Günlük Getiri.*?<span>(.*?)</span>", r.text, re.DOTALL)
-            if m: daily = _parse_turkish_float(m.group(1))
+            price = 0.0
+            for pattern in price_patterns:
+                match = re.search(pattern, html, re.DOTALL)
+                if match:
+                    price = _parse_turkish_float(match.group(1))
+                    if price > 0:
+                        print(f"✅ Fiyat bulundu ({pattern}): {price}")
+                        break
             
-            m = re.search(r"Son 1 Yıl.*?<span>(.*?)</span>", r.text, re.DOTALL)
-            if m: yearly = _parse_turkish_float(m.group(1))
+            # Günlük getiri için birden fazla pattern
+            daily_patterns = [
+                r"Günlük Getiri.*?<span>(.*?)</span>",
+                r"Günlük.*?<span>(.*?)</span>",
+                r"Daily.*?<span>(.*?)</span>",
+                r"<span.*?günlük.*?>(.*?)</span>",
+            ]
+            
+            daily = 0.0
+            for pattern in daily_patterns:
+                match = re.search(pattern, html, re.DOTALL)
+                if match:
+                    daily = _parse_turkish_float(match.group(1))
+                    if daily != 0.0:
+                        print(f"✅ Günlük getiri bulundu ({pattern}): {daily}%")
+                        break
+            
+            # Yıllık getiri için pattern
+            yearly = 0.0
+            yearly_match = re.search(r"Son 1 Yıl.*?<span>(.*?)</span>", html, re.DOTALL)
+            if yearly_match:
+                yearly = _parse_turkish_float(yearly_match.group(1))
             
             if price > 0:
+                print(f"🎯 TEFAS HTML BAŞARILI: {fund_code} - Fiyat: {price}, Günlük: {daily}%, Yıllık: {yearly}%")
                 return {"price": price, "daily_pct": daily, "yearly_pct": yearly, "source": "HTML"}
+            else:
+                print(f"❌ TEFAS HTML FİYAT BULUNAMADI: {fund_code}")
+                # HTML içeriğini debug için kaydet
+                debug_path = f"debug_{fund_code}.html"
+                with open(debug_path, "w", encoding="utf-8") as f:
+                    f.write(html)
+                print(f"💾 HTML içeriği kaydedildi: {debug_path}")
+                
+        else:
+            print(f"❌ TEFAS HTML HTTP HATA: {fund_code} - Status: {r.status_code}, Length: {len(r.text)}")
+            
+    except requests.exceptions.Timeout:
+        print(f"⏰ TEFAS HTML TIMEOUT: {fund_code} - 15 saniye aşıldı")
+    except requests.exceptions.ConnectionError:
+        print(f"🔌 TEFAS HTML BAĞLANTI HATASI: {fund_code} - İnternet bağlantısı kontrol edilmeli")
     except Exception as e:
-        print(f"❌ TEFAS HTML Hata: {e}")
+        print(f"❌ TEFAS HTML GENEL HATA: {fund_code} - {str(e)}")
+    
     return None
 
-def _fetch_api_tefas(fund_code: str):
-    """TEFAS API Yedek"""
-    url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
+# ✅ EKLENDİ: TEFAS tarih parse yardımcısı
+def _parse_tefas_date(s: str) -> Optional[datetime]:
+    s = (s or "").strip()
+    if not s:
+        return None
+
+    # sık gelen formatlar
+    fmts = (
+        "%d.%m.%Y",
+        "%d/%m/%Y",
+        "%Y-%m-%d",
+        "%d.%m.%Y %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S",
+    )
+
+    for fmt in fmts:
+        try:
+            return datetime.strptime(s, fmt)
+        except:
+            pass
+
+    # bazen "25.12.2025 00:00:00.000" gibi geliyor -> noktadan sonrası kırp
     try:
-        end = datetime.now()
-        start = end - timedelta(days=7)
+        s2 = s.split(".000")[0]
+        return datetime.strptime(s2, "%d.%m.%Y %H:%M:%S")
+    except:
+        return None
+
+def _fetch_api(fund_code: str):
+    print(f"🌐 TEFAS API deniyorum: {fund_code}")
+    url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
+    
+    # 🔧 ACİL ÇÖZÜM: Daha güçlü headers
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+        "Origin": "https://www.tefas.gov.tr",
+        "Referer": "https://www.tefas.gov.tr/",
+        "Connection": "keep-alive"
+    }
+    
+    try:
+        # ✅ GÜNCELLENDİ: `end` tarihi İstanbul saatine göre
+        try:
+            end = datetime.now(ZoneInfo("Europe/Istanbul"))
+        except:
+            end = datetime.now()
+        start = end - timedelta(days=7)  # 5 gün yerine 7 gün yap
+        
         payload = {
             "fontip": "YAT",
             "fonkod": fund_code.upper(),
             "bastarih": start.strftime("%d.%m.%Y"),
             "bittarih": end.strftime("%d.%m.%Y"),
         }
-        r = requests.post(url, data=payload, timeout=10, verify=False)
+        
+        print(f"📡 TEFAS API Request: {fund_code} - {start.strftime('%d.%m.%Y')} to {end.strftime('%d.%m.%Y')}")
+        
+        # 🔧 ACİL ÇÖZÜM: Timeout'u 15 saniyeye çıkar
+        r = requests.post(url, data=payload, headers=headers, timeout=15, verify=False)
+        print(f"📊 TEFAS API Response: {r.status_code} | Content-Length: {len(r.text)}")
+        
         if r.status_code == 200:
-            data = r.json().get("data", [])
-            if data:
-                valid = []
-                for i in data:
-                    ts = i.get("TARIH", 0)
-                    if ts: valid.append(i)
+            try:
+                response_data = r.json()
+                data = response_data.get("data", [])
+                print(f"📈 TEFAS API Data Count: {len(data) if data else 0} records")
                 
-                if valid:
-                    valid.sort(key=lambda x: x.get("TARIH", 0), reverse=True)
-                    last = valid[0] 
-                    price = _parse_turkish_float(last.get("FIYAT", 0))
-                    if price > 0:
-                        return {"price": price, "daily_pct": None, "yearly_pct": 0.0, "source": "API", "asof_day": datetime.fromtimestamp(last.get("TARIH", 0)/1000).strftime("%Y-%m-%d")}
-    except:
-        pass
+                if data and len(data) > 0:
+                    # En güncel veriyi bul
+                    valid_data = []
+                    for item in data:
+                        # Key isimleri TEFAS tarafında bazen değişebiliyor
+                        dt = _parse_tefas_date(
+                            item.get("TARIH") or item.get("Tarih") or item.get("tarih") or ""
+                        )
+                        if dt:
+                            valid_data.append((dt, item))
+                    
+                    if valid_data:
+                        valid_data.sort(key=lambda x: x[0], reverse=True)  # En yeni tarih en başta
+                        last_date, last_item = valid_data[0]
+                        # Güvenli fiyat parse
+                        price = _parse_turkish_float(last_item.get("FIYAT") or last_item.get("Fiyat") or last_item.get("fiyat") or 0)
+                        
+                        print(f"💰 TEFAS API Son Tarih: {last_date.strftime('%d.%m.%Y')} - Fiyat: {price}")
+                        
+                        if price > 0:
+                            print(f"🎯 TEFAS API BAŞARILI: {fund_code} - Fiyat: {price}")
+                            return {
+                                "price": price,
+                                "daily_pct": None,   # 🔴 API'den günlük getiri hesaplanmaz
+                                "yearly_pct": 0.0,
+                                "source": "API",
+                                "asof_day": last_date.strftime("%Y-%m-%d"),  # ✅ KRİTİK: API'den gelen gerçek tarih
+                            }
+                        else:
+                            print(f"❌ TEFAS API GEÇERSİZ FİYAT: {fund_code} - {price}")
+                    else:
+                        print(f"❌ TEFAS API GEÇERLI TARİH BULUNAMADI: {fund_code}")
+                else:
+                    print(f"❌ TEFAS API VERI YOK: {fund_code} - Boş response")
+                    
+            except ValueError as e:
+                print(f"❌ TEFAS API JSON HATA: {fund_code} - {str(e)}")
+                print(f"Raw Response: {r.text[:200]}...")
+        else:
+            print(f"❌ TEFAS API HTTP HATA: {fund_code} - Status: {r.status_code}")
+            
+    except requests.exceptions.Timeout:
+        print(f"⏰ TEFAS API TIMEOUT: {fund_code} - 15 saniye aşıldı")
+    except requests.exceptions.ConnectionError:
+        print(f"🔌 TEFAS API BAĞLANTI HATASI: {fund_code} - İnternet bağlantısı kontrol edilmeli")
+    except Exception as e:
+        print(f"❌ TEFAS API GENEL HATA: {fund_code} - {str(e)}")
+    
     return None
 
 def fetch_fund_live(fund_code: str):
-    html = _fetch_html_tefas(fund_code)
-    if html: return html
-    api = _fetch_api_tefas(fund_code)
-    if api: return api
+    html = _fetch_html(fund_code)
+    if html:
+        return html   # ✅ TEFAS sitesindeki % neyse O
+
+    api = _fetch_api(fund_code)
+    if api:
+        # daily_pct API'den gelmez → dokunma (ASLA 0.0 yapma)
+        return api
+
     return None
 
-# ============================================================
-# 🔥 YENİ: KAP (İŞ YATIRIM) & TEFAS (PASTA) SCRAPER
-# ============================================================
-
-def _fetch_tefas_allocation(fund_code: str) -> Optional[List[Dict[str, Any]]]:
-    """TEFAS'tan Varlık Dağılımını (Pasta Grafik) çeker"""
-    print(f"🥧 TEFAS Allocation deniyorum: {fund_code}")
-    url = f"https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={fund_code.upper()}"
-    headers = {"User-Agent": "Mozilla/5.0"}
-
-    try:
-        r = requests.get(url, headers=headers, timeout=10, verify=False)
-        r.encoding = 'utf-8'
-        if r.status_code == 200:
-            match = re.search(r"data\s*:\s*(\[\[.*?\]\])", r.text, re.DOTALL)
-            if match:
-                raw = match.group(1).replace("'", '"')
-                try:
-                    data = json.loads(raw)
-                    return [{"name": i[0], "value": float(i[1])} for i in data if len(i) == 2 and float(i[1]) > 0]
-                except:
-                    pass
-    except Exception as e:
-        print(f"❌ TEFAS Allocation Hatası: {e}")
-    
-    return None
-
-
-# ============================================================
-# 🔥 YENİ (ZORUNLU): FINTABLES FULL DETAILS SCRAPER (HTML + BeautifulSoup)
-# ============================================================
-
-def _fetch_fintables_full_details(fund_code: str) -> Optional[Dict[str, Any]]:
-    """
-    Fintables fon detay sayfasını (HTML) parse ederek aşağıdaki verileri döndürür:
-
-    {
-      "positions": [{ "code": "GARAN", "ratio": 12.3 }],
-      "increased": [{ "code": "THYAO", "ratio": 3.1, "delta": 0.8 }],
-      "decreased": [{ "code": "ASELS", "ratio": 2.2, "delta": -1.1 }],
-      "risk_value": 1-7,
-      "yearly_management_fee": "%2.90",
-      "withholding_tax": "%17.5",
-      "founder": "...",
-      "comparison_1000tl": [
-        { "label": "Fon", "value": 1093, "pct": 9.3 },
-        { "label": "BIST100", "value": 1097, "pct": 9.7 }
-      ]
-    }
-
-    ❗ Hata olursa None döner; sistem asla çökmez.
-    """
-    try:
-        code = (fund_code or "").strip().upper()
-        if not code:
-            return None
-
-        # Fintables URL'leri (redirect ihtimaline karşı birkaç aday)
-        # Not: Fintables bazen rotaları değiştiriyor; bu yüzden çoklu deneme var.
-        url_candidates = [
-            f"https://fintables.com/fon/{code}",
-            f"https://fintables.com/fon/{code.lower()}",
-            f"https://fintables.com/tefas/fon/{code}",
-            f"https://fintables.com/tefas/{code}",
-        ]
-
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Connection": "keep-alive",
-        }
-
-        html = None
-        for url in url_candidates:
-            try:
-                r = requests.get(url, headers=headers, timeout=12)
-                if r.status_code == 200 and (r.text or "").strip():
-                    html = r.text
-                    break
-            except Exception:
-                continue
-
-        if not html:
-            return None
-
-        soup = BeautifulSoup(html, "html.parser")
-
-        out: Dict[str, Any] = {
-            "positions": [],
-            "increased": [],
-            "decreased": [],
-            "risk_value": None,
-            "yearly_management_fee": None,
-            "withholding_tax": None,
-            "founder": None,
-            "comparison_1000tl": [],
-        }
-
-        # ------------------------------------------------------------
-        # 0) NEXT.JS DATA EXTRACTION (FINTABLES SSR JSON)
-        # ------------------------------------------------------------
-        # Fintables sayfaları çoğu zaman veriyi tablo HTML'ine basmak yerine
-        # Next.js __NEXT_DATA__ içine gömüyor. Render ortamında JS çalışmadığı için
-        # burada SSR JSON'u parse edip gerçek pozisyonları yakalıyoruz.
-        try:
-            next_data = None
-            script = soup.find("script", id="__NEXT_DATA__")
-            if script:
-                raw_json = script.string if script.string else script.get_text()
-                if raw_json and raw_json.strip().startswith("{"):
-                    next_data = json.loads(raw_json)
-
-            def _deep_iter(o):
-                if isinstance(o, dict):
-                    yield o
-                    for v in o.values():
-                        yield from _deep_iter(v)
-                elif isinstance(o, list):
-                    for it in o:
-                        yield from _deep_iter(it)
-
-            def _norm_code(v: Any) -> str:
-                s = (str(v) if v is not None else "").strip().upper()
-                if "(" in s:
-                    s = s.split("(")[0].strip()
-                s = re.sub(r"[^A-Z0-9]", "", s)
-                return s
-
-            def _looks_like_code(s: str) -> bool:
-                if not s:
-                    return False
-                if len(s) > 12:
-                    return False
-                return re.fullmatch(r"[A-Z0-9]{3,6}", s) is not None
-
-            def _pick_str(d: Dict[str, Any], keys: List[str]) -> Optional[str]:
-                for k in keys:
-                    v = d.get(k)
-                    if isinstance(v, str) and v.strip():
-                        return v.strip()
-                    if isinstance(v, dict):
-                        for kk in keys:
-                            vv = v.get(kk)
-                            if isinstance(vv, str) and vv.strip():
-                                return vv.strip()
-                return None
-
-            def _pick_num(d: Dict[str, Any], keys: List[str]) -> Optional[float]:
-                for k in keys:
-                    v = d.get(k)
-                    if isinstance(v, (int, float)):
-                        return float(v)
-                    if isinstance(v, str) and v.strip():
-                        fv = _parse_turkish_float(v)
-                        if fv != 0.0 or "0" in v:
-                            return float(fv)
-                    if isinstance(v, dict):
-                        for kk in keys:
-                            vv = v.get(kk)
-                            if isinstance(vv, (int, float)):
-                                return float(vv)
-                            if isinstance(vv, str) and vv.strip():
-                                fv = _parse_turkish_float(vv)
-                                if fv != 0.0 or "0" in vv:
-                                    return float(fv)
-                return None
-
-            def _score_positions_list(lst: List[Dict[str, Any]]) -> int:
-                score = 0
-                hit = 0
-                for it in lst:
-                    if not isinstance(it, dict):
-                        continue
-                    code = _pick_str(it, ["code","symbol","ticker","sembol","stockCode","assetCode"]) or _pick_str(it, ["name","title"])
-                    code = _norm_code(code)
-                    ratio = _pick_num(it, ["ratio","weight","pct","percentage","oran","share","portfolioShare","value"])
-                    if code and ratio is not None:
-                        score += 1
-                        try:
-                            if _looks_like_code(code) and 0 < float(ratio) <= 100:
-                                hit += 1
-                        except:
-                            pass
-                return hit * 20 + score
-
-            best_pos: List[Dict[str, Any]] = []
-            best_pos_score = 0
-
-            if next_data is not None:
-                for obj in _deep_iter(next_data):
-                    if isinstance(obj, list) and 1 <= len(obj) <= 500 and all(isinstance(x, dict) for x in obj):
-                        sc = _score_positions_list(obj)  # type: ignore
-                        if sc > best_pos_score:
-                            best_pos_score = sc
-                            best_pos = obj  # type: ignore
-
-            # positions normalize
-            if (not out.get("positions")) and best_pos and best_pos_score >= 20:
-                tmp_pos = []
-                for it in best_pos:
-                    try:
-                        if not isinstance(it, dict):
-                            continue
-                        code = _pick_str(it, ["code","symbol","ticker","sembol","stockCode","assetCode"]) or _pick_str(it, ["name","title"])
-                        code = _norm_code(code)
-                        ratio = _pick_num(it, ["ratio","weight","pct","percentage","oran","share","portfolioShare"])
-                        if ratio is None:
-                            ratio = _pick_num(it, ["value"])
-                        if not code or ratio is None:
-                            continue
-                        ratio_f = float(ratio)
-                        if ratio_f <= 0:
-                            continue
-                        item: Dict[str, Any] = {"code": code, "ratio": ratio_f}
-
-                        # delta / değişim
-                        delta = _pick_num(it, ["delta","change","diff","degisim","changePct","change_pct"])
-                        if delta is not None and abs(float(delta)) > 1e-9:
-                            item["delta"] = float(delta)
-
-                        tmp_pos.append(item)
-                    except Exception:
-                        continue
-
-                # dedup + sort
-                uniq: Dict[str, Dict[str, Any]] = {}
-                for it in tmp_pos:
-                    c = it.get("code")
-                    if not c:
-                        continue
-                    prev = uniq.get(c)
-                    if (prev is None) or (float(it.get("ratio", 0.0) or 0.0) > float(prev.get("ratio", 0.0) or 0.0)):
-                        uniq[c] = it
-                tmp_pos = list(uniq.values())
-                tmp_pos.sort(key=lambda x: float(x.get("ratio", 0.0) or 0.0), reverse=True)
-                out["positions"] = tmp_pos[:20]
-
-                # increased / decreased (delta varsa)
-                inc = [x for x in out["positions"] if isinstance(x, dict) and float(x.get("delta", 0.0) or 0.0) > 0]
-                dec = [x for x in out["positions"] if isinstance(x, dict) and float(x.get("delta", 0.0) or 0.0) < 0]
-                inc.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0), reverse=True)
-                dec.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0))
-                out["increased"] = inc[:10]
-                out["decreased"] = dec[:10]
-
-            # risk/founder/fees (best-effort) - sadece boşsa doldur
-            if next_data is not None:
-                if out.get("risk_value") is None:
-                    try:
-                        for obj in _deep_iter(next_data):
-                            if isinstance(obj, dict):
-                                for k, v in obj.items():
-                                    kk = str(k).lower()
-                                    if "risk" in kk:
-                                        if isinstance(v, (int, float)) and 1 <= int(v) <= 7:
-                                            out["risk_value"] = int(v)
-                                            raise StopIteration
-                    except StopIteration:
-                        pass
-                    except Exception:
-                        pass
-
-                if not out.get("founder"):
-                    try:
-                        for obj in _deep_iter(next_data):
-                            if isinstance(obj, dict):
-                                for k, v in obj.items():
-                                    kk = str(k).lower()
-                                    if kk in ("founder","kurucu","kurucu_unvan","kurucuunvan","foundertitle","founder_name","foundername"):
-                                        if isinstance(v, str) and v.strip():
-                                            out["founder"] = v.strip()
-                                            raise StopIteration
-                    except StopIteration:
-                        pass
-                    except Exception:
-                        pass
-
-                # allocation fallback (name/value list)
-                if not out.get("allocation"):
-                    try:
-                        best_alloc = None
-                        best_alloc_score = 0
-
-                        def _score_alloc_list(lst):
-                            score = 0
-                            ssum = 0.0
-                            for it in lst:
-                                if not isinstance(it, dict):
-                                    continue
-                                nm = it.get("name") or it.get("label") or it.get("type")
-                                val = it.get("value") if "value" in it else it.get("ratio") if "ratio" in it else it.get("pct")
-                                if nm is None or val is None:
-                                    continue
-                                nm_s = str(nm).strip()
-                                vv = _parse_turkish_float(str(val))
-                                if nm_s and vv >= 0:
-                                    score += 1
-                                    ssum += vv
-                            if 70 <= ssum <= 130:
-                                score += 5
-                            return score
-
-                        for obj in _deep_iter(next_data):
-                            if isinstance(obj, list) and 1 <= len(obj) <= 200 and all(isinstance(x, dict) for x in obj):
-                                sc = _score_alloc_list(obj)
-                                if sc > best_alloc_score:
-                                    best_alloc_score = sc
-                                    best_alloc = obj
-
-                        if best_alloc and best_alloc_score >= 5:
-                            alloc_out = []
-                            for it in best_alloc:
-                                try:
-                                    nm = it.get("name") or it.get("label") or it.get("type")
-                                    val = it.get("value") if "value" in it else it.get("ratio") if "ratio" in it else it.get("pct")
-                                    if nm is None or val is None:
-                                        continue
-                                    nm_s = str(nm).strip()
-                                    vv = _parse_turkish_float(str(val))
-                                    if nm_s and vv > 0:
-                                        alloc_out.append({"name": nm_s, "value": float(vv)})
-                                except Exception:
-                                    continue
-                            alloc_out.sort(key=lambda x: float(x.get("value", 0.0) or 0.0), reverse=True)
-                            out["allocation"] = alloc_out
-                    except Exception:
-                        pass
-
-        except Exception:
-            # NEXT_DATA parse başarısızsa sorun değil; HTML fallback devam eder
-            pass
-
-        # ------------------------------------------------------------
-        # 1) META: Kurucu / Risk / Ücret / Stopaj
-        # ------------------------------------------------------------
-        try:
-            text_all = soup.get_text(" ", strip=True)
-        except Exception:
-            text_all = str(html)
-
-        def _extract_pct(label_regex: str) -> Optional[str]:
-            try:
-                m = re.search(label_regex + r".{0,60}?%?\s*([0-9]{1,2}(?:[.,][0-9]{1,2})?)", text_all, re.IGNORECASE)
-                if not m:
-                    return None
-                v = m.group(1)
-                v = v.replace(",", ".")
-                # format: "%2.00"
-                return f"%{v}"
-            except Exception:
-                return None
-
-        # Risk Değeri: 1-7
-        try:
-            m = re.search(r"Risk\s*Değeri.{0,40}?([1-7])", text_all, re.IGNORECASE)
-            if m:
-                out["risk_value"] = int(m.group(1))
-        except Exception:
-            pass
-
-        # Yıllık Yönetim Ücreti
-        out["yearly_management_fee"] = _extract_pct(r"Yıllık\s*Yönetim\s*Ücreti")
-
-        # Stopaj Oranı
-        out["withholding_tax"] = _extract_pct(r"Stopaj\s*(Oranı|Orani)?")
-
-        # Kurucu
-        try:
-            # "Kurucu  ATLAS PORTFÖY YÖNETİMİ A.Ş." gibi
-            m = re.search(r"Kurucu\s+(.{2,80}?)(?=(Yıllık\s*Yönetim\s*Ücreti|Stopaj|Risk\s*Değeri|Fon\s*Kodu|$))", text_all, re.IGNORECASE)
-            if m:
-                founder = m.group(1).strip(" :|-")
-                # çok uzunsa kırp (yanlış capture)
-                if 2 <= len(founder) <= 80:
-                    out["founder"] = founder
-        except Exception:
-            pass
-
-        # ------------------------------------------------------------
-        # 2) TABLO PARSE: Pozisyonlar / Artırılan / Azaltılan
-        # ------------------------------------------------------------
-        def _looks_like_stock_code(s: str) -> bool:
-            s = (s or "").strip().upper()
-            if not s:
-                return False
-            if len(s) > 12:
-                return False
-            if any(k in s for k in ["TOPLAM", "DİĞER", "DIGER", "BİLİNMEYEN", "BILINMEYEN"]):
-                return False
-            return re.fullmatch(r"[A-Z0-9]{3,6}", s) is not None
-
-        def _parse_rows_from_table(table) -> List[Dict[str, Any]]:
-            items: List[Dict[str, Any]] = []
-            try:
-                rows = table.find_all("tr")
-                for row in rows:
-                    cols = row.find_all(["td", "th"])
-                    if len(cols) < 2:
-                        continue
-
-                    c0 = cols[0].get_text(" ", strip=True)
-                    c1 = cols[1].get_text(" ", strip=True)
-
-                    # code temizle
-                    code_txt = (c0 or "").strip().upper()
-                    # icon/extra metinleri temizleme (parantez vs)
-                    if "(" in code_txt:
-                        code_txt = code_txt.split("(")[0].strip()
-                    code_txt = re.sub(r"[^A-Z0-9]", "", code_txt)
-
-                    if not _looks_like_stock_code(code_txt):
-                        continue
-
-                    # satırdaki tüm sayıları yakala (oran + değişim olabilir)
-                    nums = []
-                    for col in cols[1:]:
-                        t = col.get_text(" ", strip=True)
-                        if not t:
-                            continue
-                        # "%51,25" gibi değerler
-                        val = _parse_turkish_float(t)
-                        if val != 0.0 or ("0" in str(t)):
-                            nums.append(val)
-
-                    if not nums:
-                        continue
-
-                    ratio = float(nums[0])
-                    delta = float(nums[1]) if len(nums) >= 2 else None
-
-                    item = {"code": code_txt, "ratio": ratio}
-                    if delta is not None:
-                        item["delta"] = delta
-                    items.append(item)
-            except Exception:
-                return items
-            return items
-
-        # Bütün tablolardan adayları topla
-        all_items: List[Dict[str, Any]] = []
-        try:
-            for tbl in soup.find_all("table"):
-                all_items.extend(_parse_rows_from_table(tbl))
-        except Exception:
-            pass
-
-        # Deduplicate (en yüksek ratio'yu tut)
-        uniq: Dict[str, Dict[str, Any]] = {}
-        for it in all_items:
-            c = it.get("code")
-            if not c:
-                continue
-            prev = uniq.get(c)
-            if (prev is None) or (float(it.get("ratio", 0.0) or 0.0) > float(prev.get("ratio", 0.0) or 0.0)):
-                uniq[c] = it
-
-        positions = list(uniq.values())
-        positions.sort(key=lambda x: float(x.get("ratio", 0.0) or 0.0), reverse=True)
-        out["positions"] = positions[:20]  # güvenli limit
-
-        # Increased / Decreased: delta varsa işaretine göre ayır
-        inc: List[Dict[str, Any]] = []
-        dec: List[Dict[str, Any]] = []
-        for it in positions:
-            d = it.get("delta")
-            if d is None:
-                continue
-            try:
-                dval = float(d)
-                if dval > 0:
-                    inc.append(it)
-                elif dval < 0:
-                    dec.append(it)
-            except Exception:
-                continue
-
-        inc.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0), reverse=True)
-        dec.sort(key=lambda x: float(x.get("delta", 0.0) or 0.0))
-
-        out["increased"] = inc[:10]
-        out["decreased"] = dec[:10]
-
-        # ------------------------------------------------------------
-        # 3) 1000 TL Ne Oldu? (best-effort; bulunamazsa boş)
-        # ------------------------------------------------------------
-        try:
-            # Bölüm başlığını bulup yakınındaki metni tarayalım.
-            # Fintables bu veriyi bazen grafik datası olarak HTML içine gömüyor.
-            idx = (html or "").lower().find("1.000")
-            if idx == -1:
-                idx = (html or "").lower().find("1000")
-            snippet = (html or "")[idx: idx + 6000] if idx != -1 else (html or "")[:6000]
-
-            # Örnek hedef: label + TL + % değerleri
-            # Tam garanti değil, ama yakalarsa güzel.
-            # label: harf/rakam, value: TL (tam sayı), pct: yüzde
-            pat = re.compile(r"([A-Z0-9]{2,10})[^0-9]{0,40}([0-9]{1,3}(?:\.[0-9]{3})*)(?:\s*TL)?[^0-9%-]{0,40}%\s*([0-9]{1,2}(?:[.,][0-9]{1,2})?)", re.IGNORECASE)
-            matches = pat.findall(snippet)
-            tmp = []
-            for (lbl, val_s, pct_s) in matches:
-                try:
-                    val = int(val_s.replace(".", ""))
-                    pct = float(pct_s.replace(",", "."))
-                    tmp.append({"label": lbl.upper(), "value": val, "pct": pct})
-                except Exception:
-                    continue
-
-            # Çok fazla şey yakalanırsa en anlamlı ilk 6'yı al
-            if tmp:
-                out["comparison_1000tl"] = tmp[:6]
-        except Exception:
-            pass
-
-        # Hiçbir şey yakalanmadıysa None döndürmek yerine boş içerik dönebiliriz.
-        # Ancak KAP/TEFAS merge mantığında "None" daha net; burada minimal kontrol:
-        has_any = bool(out["positions"]) or bool(out["risk_value"]) or bool(out["founder"])
-        return out if has_any else None
-
-    except Exception as e:
-        print(f"❌ Fintables Scraper Error ({fund_code}): {e}")
-        return None
-
-
-# ============================================================
-# 🔥 YENİ: KAP (RESMİ) FON BİLDİRİMLERİNDEN PORTFÖY RAPORU (EXCEL) OKUMA
-# ============================================================
-
-def _kap_find_fund_notifications_url(fund_code: str) -> Optional[str]:
-    """KAP üzerinde ilgili fonun /tr/fon-bildirimleri/... sayfasını bulur.
-
-    Strateji:
-      1) KAP arama sayfasında fon kodu ile arama yap
-      2) Sonuçlardan ilk /tr/fon-bildirimleri/ linkini yakala
-
-    Bulamazsa None döner.
-    """
-    try:
-        code = (fund_code or "").strip().upper()
-        if not code:
-            return None
-        search_url = f"https://www.kap.org.tr/tr/arama?q={quote_plus(code)}"
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Connection": "keep-alive",
-        }
-        
-        # ✅ HIZLI DENEME: Doğrudan fon-bildirimleri/{code} URL'i
-        # KAP arama sayfası bazı ortamlarda dinamik döndüğü için link yakalanamayabiliyor.
-        # Bu yüzden önce direkt rota denenir; olmazsa arama fallback'i çalışır.
-        direct_candidates = [
-            f"https://www.kap.org.tr/tr/fon-bildirimleri/{code.lower()}",
-            f"https://www.kap.org.tr/tr/fon-bildirimleri/{code.upper()}",
-        ]
-        for u in direct_candidates:
-            try:
-                rr = requests.get(u, headers=headers, timeout=12)
-                rr.encoding = "utf-8"
-                if rr.status_code == 200 and (rr.text or "").strip():
-                    low = rr.text.lower()
-                    if ("fon bildirimleri" in low) or ("/tr/bildirim/" in low):
-                        return u
-            except Exception:
-                continue
-
-        r = requests.get(search_url, headers=headers, timeout=12)
-        r.encoding = "utf-8"
-        if r.status_code != 200:
-            return None
-        soup = BeautifulSoup(r.text or "", "html.parser")
-        for a in soup.find_all("a", href=True):
-            href = a.get("href") or ""
-            if "/tr/fon-bildirimleri/" in href:
-                if f"/{code.lower()}-" in href.lower() or href.lower().endswith(f"/{code.lower()}") or f" {code} " in (a.get_text(" ", strip=True) + " "):
-                    return urljoin("https://www.kap.org.tr", href)
-        for a in soup.find_all("a", href=True):
-            href = a.get("href") or ""
-            if "/tr/fon-bildirimleri/" in href:
-                return urljoin("https://www.kap.org.tr", href)
-    except:
-        return None
-    return None
-
-
-
-def _kap_list_portfolio_disclosures(notif_url: str, fund_code: str, max_items: int = 30) -> List[str]:
-    """Fon bildirimleri sayfasından 'Portföy Dağılım Raporu' bildirim linklerini listeler.
-
-    ✅ Kritiklik:
-      - KAP'ta bazı aylarda ilgili rapor olmayabilir. Biz "en güncel bulunan" raporu seçmek isteriz.
-      - Bu yüzden tarih yakalayıp (varsa) en yeni -> eski sıralarız.
-      - Eğer tarih yakalanamazsa sayfadaki doğal sıra korunur.
-    """
-    out: List[str] = []
-    try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Connection": "keep-alive",
-        }
-        r = requests.get(notif_url, headers=headers, timeout=12)
-        r.encoding = "utf-8"
-        if r.status_code != 200:
-            return out
-        soup = BeautifulSoup(r.text or "", "html.parser")
-
-        # Row bazlı tarama (tarih + link + başlık)
-        items: List[Dict[str, Any]] = []
-
-        def _parse_date_from_text(t: str) -> Optional[datetime]:
-            t = (t or "").strip()
-            # dd.mm.yyyy
-            mm = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", t)
-            if mm:
-                try:
-                    return datetime(int(mm.group(3)), int(mm.group(2)), int(mm.group(1)))
-                except:
-                    return None
-            # yyyy-mm-dd
-            mm = re.search(r"(\d{4})-(\d{2})-(\d{2})", t)
-            if mm:
-                try:
-                    return datetime(int(mm.group(1)), int(mm.group(2)), int(mm.group(3)))
-                except:
-                    return None
-            return None
-
-        for row in soup.find_all("tr"):
-            row_txt = (row.get_text(" ", strip=True) or "").lower()
-            if ("portföy" in row_txt and "dağılım" in row_txt) or ("portfoy" in row_txt and "dagilim" in row_txt):
-                a = row.find("a", href=True)
-                if not a:
-                    continue
-                href = a.get("href") or ""
-                if "/tr/Bildirim/" not in href and "/tr/bildirim/" not in href:
-                    continue
-                full = urljoin("https://www.kap.org.tr", href)
-
-                # Tarih yakala (satır metninden)
-                dt = _parse_date_from_text(row.get_text(" ", strip=True))
-
-                items.append({"url": full, "dt": dt})
-
-        # Eğer tablolu yapı yakalanamadıysa, link metinlerinden ara (fallback)
-        if not items:
-            for a in soup.find_all("a", href=True):
-                href = a.get("href") or ""
-                txt2 = (a.get_text(" ", strip=True) or "").lower()
-                if ("portföy" in txt2 and "dağılım" in txt2) or ("portfoy" in txt2 and "dagilim" in txt2):
-                    if "/tr/Bildirim/" in href or "/tr/bildirim/" in href:
-                        full = urljoin("https://www.kap.org.tr", href)
-                        items.append({"url": full, "dt": None})
-
-        # Sırala: tarih varsa yeni -> eski
-        if any(it.get("dt") for it in items):
-            items.sort(key=lambda x: (x.get("dt") is not None, x.get("dt") or datetime(1970, 1, 1)), reverse=True)
-
-        seen = set()
-        for it in items:
-            u = it.get("url")
-            if not u or u in seen:
-                continue
-            seen.add(u)
-            out.append(u)
-            if len(out) >= max_items:
-                break
-
-    except:
-        return out
-    return out
-
-
-def _kap_download_first_excel_attachment(disclosure_url: str) -> Optional[bytes]:
-    """Bir bildirim sayfasından ilk Excel ekini indirir (xlsx/xls)."""
-    try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Connection": "keep-alive",
-        }
-        r = requests.get(disclosure_url, headers=headers, timeout=12)
-        r.encoding = "utf-8"
-        if r.status_code != 200:
-            return None
-
-        soup = BeautifulSoup(r.text or "", "html.parser")
-
-        candidates: List[str] = []
-        for a in soup.find_all("a", href=True):
-            href = a.get("href") or ""
-            text = (a.get_text(" ", strip=True) or "").lower()
-            if "/api/file/download/" in href:
-                full = urljoin("https://www.kap.org.tr", href)
-                if ("excel" in text) or ("xlsx" in href.lower()) or ("xls" in href.lower()):
-                    candidates.append(full)
-
-        if not candidates:
-            for a in soup.find_all("a", href=True):
-                href = a.get("href") or ""
-                if "/api/file/download/" in href:
-                    candidates.append(urljoin("https://www.kap.org.tr", href))
-
-        if not candidates:
-            return None
-
-        dl = candidates[0]
-        rr = requests.get(dl, headers=headers, timeout=20)
-        if rr.status_code != 200:
-            return None
-        if not rr.content or len(rr.content) < 2000:
-            return None
-        return rr.content
-
-    except:
-        return None
-
-
-def _xlsx_table_rows_from_bytes(xlsx_bytes: bytes) -> List[List[str]]:
-    """XLSX dosyasını (bytes) minimum bağımlılıkla satır listesine çevirir."""
-    rows_out: List[List[str]] = []
-
-    try:
-        import openpyxl  # type: ignore
-        from io import BytesIO
-        wb = openpyxl.load_workbook(BytesIO(xlsx_bytes), data_only=True, read_only=True)
-        for ws in wb.worksheets:
-            for row in ws.iter_rows(values_only=True):
-                if row is None:
-                    continue
-                rows_out.append(["" if v is None else str(v).strip() for v in row])
-            if rows_out:
-                break
-        if rows_out:
-            return rows_out
-    except:
-        pass
-
-    try:
-        zf = zipfile.ZipFile(io.BytesIO(xlsx_bytes))
-        shared_strings: List[str] = []
-        if "xl/sharedStrings.xml" in zf.namelist():
-            ss_xml = zf.read("xl/sharedStrings.xml")
-            root = ET.fromstring(ss_xml)
-            ns = ""
-            if root.tag.startswith("{"):
-                ns = root.tag.split("}")[0] + "}"
-            for si in root.findall(f"{ns}si"):
-                texts = []
-                for t in si.findall(f".//{ns}t"):
-                    if t.text:
-                        texts.append(t.text)
-                shared_strings.append("".join(texts).strip())
-
-        sheet_name = None
-        for name in zf.namelist():
-            if name.startswith("xl/worksheets/sheet") and name.endswith(".xml"):
-                sheet_name = name
-                break
-        if not sheet_name:
-            return rows_out
-
-        sh_xml = zf.read(sheet_name)
-        root = ET.fromstring(sh_xml)
-        ns = ""
-        if root.tag.startswith("{"):
-            ns = root.tag.split("}")[0] + "}"
-
-        for row in root.findall(f".//{ns}row"):
-            row_vals: List[str] = []
-            for c in row.findall(f"{ns}c"):
-                t = c.get("t")
-                v = c.find(f"{ns}v")
-                val = ""
-                if v is not None and v.text is not None:
-                    if t == "s":
-                        try:
-                            idx = int(v.text)
-                            val = shared_strings[idx] if 0 <= idx < len(shared_strings) else ""
-                        except:
-                            val = ""
-                    else:
-                        val = v.text
-                row_vals.append(str(val).strip())
-            if any(x for x in row_vals):
-                rows_out.append(row_vals)
-    except:
-        return rows_out
-
-    return rows_out
-
-
-def _parse_kap_portfolio_positions_from_xlsx(xlsx_bytes: bytes) -> List[Dict[str, Any]]:
-    """KAP Portföy Dağılım Raporu excelinden hisse kodu ve portföy oranı yakalar."""
-    rows = _xlsx_table_rows_from_bytes(xlsx_bytes)
-    if not rows:
-        return []
-
-    header_idx = -1
-    code_col = None
-    ratio_col = None
-
-    for i in range(min(60, len(rows))):
-        r = rows[i]
-        joined = " | ".join([str(x).lower() for x in r if x is not None])
-        if any(k in joined for k in ["portföy", "portfoy"]) and any(k in joined for k in ["oran", "%"]):
-            for j, cell in enumerate(r):
-                c = (cell or "").lower()
-                if code_col is None and any(k in c for k in ["kod", "hisse", "borsa", "menkul", "sembol", "symbol"]):
-                    code_col = j
-                if ratio_col is None and any(k in c for k in ["oran", "%", "pay"]):
-                    ratio_col = j
-            header_idx = i
-            break
-
-    if header_idx == -1:
-        for i in range(min(60, len(rows))):
-            r = rows[i]
-            joined = " ".join([str(x).lower() for x in r])
-            if ("kod" in joined or "hisse" in joined) and ("oran" in joined or "%" in joined):
-                header_idx = i
-                code_col = 0
-                ratio_col = max(0, len(r) - 1)
-                break
-
-    if header_idx == -1:
-        return []
-
-    if code_col is None:
-        code_col = 0
-    if ratio_col is None:
-        ratio_col = max(0, len(rows[header_idx]) - 1)
-
-    out: List[Dict[str, Any]] = []
-    blank_run = 0
-
-    for r in rows[header_idx + 1:]:
-        if not any((x or "").strip() for x in r):
-            blank_run += 1
-            if blank_run >= 10:
-                break
-            continue
-        blank_run = 0
-
-        raw_code = ""
-        if code_col < len(r):
-            raw_code = (r[code_col] or "").strip()
-
-        if not raw_code:
-            for cell in r:
-                s = (cell or "").strip().upper()
-                mm = re.search(r"\b[A-Z0-9]{3,6}\b", s)
-                if mm:
-                    raw_code = mm.group(0)
-                    break
-
-        raw_ratio = ""
-        if ratio_col < len(r):
-            raw_ratio = (r[ratio_col] or "").strip()
-
-        if not raw_ratio:
-            for cell in reversed(r):
-                s = (cell or "").strip()
-                if any(ch.isdigit() for ch in s) and ("%" in s or "," in s or "." in s):
-                    raw_ratio = s
-                    break
-
-        if not raw_code or not raw_ratio:
-            continue
-
-        code = raw_code.upper().replace(".IS", "").replace(".E", "").strip()
-        if len(code) > 10:
-            continue
-
-        ratio = _parse_turkish_float(raw_ratio)
-        if ratio <= 0:
-            continue
-
-        out.append({"code": code, "ratio": float(ratio)})
-
-    merged: Dict[str, float] = {}
-    for it in out:
-        c = it.get("code")
-        r = float(it.get("ratio", 0.0) or 0.0)
-        if not c:
-            continue
-        merged[c] = merged.get(c, 0.0) + r
-
-    final = [{"code": k, "ratio": v} for k, v in merged.items()]
-    final.sort(key=lambda x: x.get("ratio", 0.0), reverse=True)
-    return final
-
-
-def _compute_increased_decreased(curr: List[Dict[str, Any]], prev: List[Dict[str, Any]], top_n: int = 10):
-    """İki portföy arasında artan/azalan pozisyonları çıkarır."""
-    try:
-        curr_map = {str(x.get("code") or "").upper(): float(x.get("ratio", 0.0) or 0.0) for x in (curr or [])}
-        prev_map = {str(x.get("code") or "").upper(): float(x.get("ratio", 0.0) or 0.0) for x in (prev or [])}
-
-        inc = []
-        dec = []
-        all_codes = set(curr_map.keys()) | set(prev_map.keys())
-        for c in all_codes:
-            if not c:
-                continue
-            d = curr_map.get(c, 0.0) - prev_map.get(c, 0.0)
-            if abs(d) < 1e-9:
-                continue
-            item = {"code": c, "ratio": curr_map.get(c, 0.0), "delta": d}
-            if d > 0:
-                inc.append(item)
-            else:
-                dec.append(item)
-
-        inc.sort(key=lambda x: x.get("delta", 0.0), reverse=True)
-        dec.sort(key=lambda x: x.get("delta", 0.0))
-
-        return inc[:top_n], dec[:top_n]
-    except:
-        return [], []
-
-
-def _fetch_kap_portfolio_from_kap(fund_code: str) -> Optional[Dict[str, Any]]:
-    """KAP resmi fon bildirimlerinden 'Portföy Dağılım Raporu' eklerini indirip okur."""
-    print(f"🏛️ KAP (Fon Bildirimleri) Verisi Çekiliyor: {fund_code}")
-    try:
-        notif_url = _kap_find_fund_notifications_url(fund_code)
-        if not notif_url:
-            return None
-
-        disclosures = _kap_list_portfolio_disclosures(notif_url, fund_code, max_items=40)
-        if not disclosures:
-            return None
-
-        excels: List[bytes] = []
-        for durl in disclosures[:12]:
-            b = _kap_download_first_excel_attachment(durl)
-            if b:
-                excels.append(b)
-            if len(excels) >= 2:
-                break
-
-        if not excels:
-            return None
-
-        current_positions = _parse_kap_portfolio_positions_from_xlsx(excels[0])
-        prev_positions = _parse_kap_portfolio_positions_from_xlsx(excels[1]) if len(excels) > 1 else []
-
-        if not current_positions:
-            return None
-
-        increased, decreased = _compute_increased_decreased(current_positions, prev_positions, top_n=10)
-
-        details = {
-            "positions": current_positions,
-            "increased": increased,
-            "decreased": decreased,
-            "info": {"risk_value": 4, "founder": ""},
-            "allocation": [],
-        }
-        print(f"✅ KAP Portfolio: {fund_code} positions={len(current_positions)} inc={len(increased)} dec={len(decreased)}")
-        return details
-
-    except Exception as e:
-        print(f"❌ KAP Portfolio Error: {e}")
-        return None
-
-def _fetch_kap_portfolio_from_isyatirim(fund_code: str) -> Optional[Dict[str, Any]]:
-    """
-    İş Yatırım Fon Detay Sayfasından KAP Verilerini Çeker (Resmi Kaynak Scraper)
-    CERRAH MODU: AFT gibi fon sepetleri veya karmaşık tablolar için iyileştirildi.
-    """
-    print(f"🏛️ İş Yatırım (KAP) Verisi Çekiliyor: {fund_code}")
-
-    # ✅ ÖNCELİK 1: KAP resmi fon bildirimleri (Portföy Dağılım Raporu - Excel)
-    try:
-        kap_details = _fetch_kap_portfolio_from_kap(fund_code)
-        if kap_details and kap_details.get("positions"):
-            return kap_details
-    except Exception as e:
-        print(f"❌ KAP (fon-bildirimleri) Hata: {e}")
-
-    
-    url = f"https://www.isyatirim.com.tr/tr-tr/analiz/fonlar/Sayfalar/Fon-Detay.aspx?FonKodu={fund_code.upper()}"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
-    }
-    
-    try:
-        r = requests.get(url, headers=headers, timeout=12)
-        r.encoding = 'utf-8' # Encoding fix
-        if r.status_code != 200: return None
-        
-        soup = BeautifulSoup(r.text, "html.parser")
-        details = {
-            "positions": [],
-            "increased": [], # Flutter null check hatası vermesin diye boş liste
-            "decreased": [], # Flutter null check hatası vermesin diye boş liste
-            "info": {"risk_value": 4, "founder": ""},
-            "allocation": [] 
-        }
-        
-        # 1. KURUCU BİLGİSİ
-        h1 = soup.find("div", {"class": "page-title"})
-        if h1:
-            raw_title = h1.get_text(strip=True)
-            if fund_code.upper() in raw_title:
-                parts = raw_title.split(fund_code.upper())
-                if len(parts) > 1:
-                    details["info"]["founder"] = parts[1].strip(" -")
-        
-        # 2. RİSK DEĞERİ
-        risk_elem = soup.find(string=re.compile("Risk Değeri"))
-        if risk_elem:
-            try:
-                parent = risk_elem.find_parent("tr") or risk_elem.find_parent("div")
-                if parent:
-                    txt = parent.get_text(strip=True)
-                    match = re.search(r"Risk Değeri.*?(\d)", txt)
-                    if match:
-                        details["info"]["risk_value"] = int(match.group(1))
-            except:
-                pass
-
-        # 3. EN BÜYÜK POZİSYONLAR (Gelişmiş Tablo Bulma - VAKUM MODU)
-        tables = soup.find_all("table")
-        candidates = [] # Olası tablolar
-
-        for table in tables:
-            rows = table.find_all("tr")
-            if len(rows) < 2: continue # Başlık + en az 1 veri olmalı
-            
-            temp_list = []
-            
-            for row in rows[1:]:
-                cols = row.find_all("td")
-                if len(cols) >= 2:
-                    name_code = cols[0].get_text(strip=True)
-                    ratio_str = cols[1].get_text(strip=True)
-                    
-                    if not ratio_str: continue
-
-                    try:
-                        ratio = _parse_turkish_float(ratio_str)
-                        clean_code = name_code.strip().upper()
-                        
-                        if len(clean_code) > 2 and "TOPLAM" not in clean_code:
-                            if "(" in clean_code:
-                                clean_code = clean_code.split("(")[0].strip()
-                            
-                            if ratio > 0.01: # %0.01 üstü
-                                temp_list.append({"code": clean_code, "ratio": ratio})
-                    except:
-                        continue
-            
-            if len(temp_list) > 0:
-                candidates.append(temp_list)
-
-        # En iyi adayı seç
-        if candidates:
-            candidates.sort(key=len, reverse=True)
-            details["positions"] = candidates[0]
-            details["positions"].sort(key=lambda x: x["ratio"], reverse=True)
-
-        print(f"✅ İş Yatırım Data: {len(details['positions'])} pozisyon, Risk: {details['info']['risk_value']}")
-        return details
-
-    except Exception as e:
-        print(f"❌ İş Yatırım Scraping Error: {e}")
-        return None
-
-# ============================================================
-# 🔥 YENİ: HİSSE BAZLI AI SKORLAMA (LIVE STOCK DATA ILE)
-# ============================================================
-def _load_live_stocks() -> Dict[str, float]:
-    prices = {}
-    if os.path.exists(STOCKS_LIVE_PRICES_PATH):
-        try:
-            with open(STOCKS_LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if isinstance(data, list):
-                    for item in data:
-                        sym = item.get("symbol", "").replace(".IS", "")
-                        chg = item.get("chgPct", 0.0)
-                        prices[sym] = float(chg)
-                elif isinstance(data, dict) and "data" in data:
-                     for item in data["data"]:
-                        sym = item.get("symbol", "").replace(".IS", "")
-                        chg = item.get("chgPct", 0.0)
-                        prices[sym] = float(chg)
-        except:
-            pass
-    return prices
-
-def calculate_ai_prediction(yearly: float, daily: float, holdings: List[Dict[str, Any]] = None):
-    """
-    ✅ GÜNCEL (İstenen Mantık):
-      (Bilinen hisseler * canlı borsa) + (Bilinmeyen kısım * endeks)
-
-    - holdings: [{"code":"GARAN","ratio":12.3}, ...]  -> ratio portföy ağırlığı (%)
-    - canlı hisse verisi: api/data/live_prices.json (services.py'nin ürettiği)
-    - endeks: market_cache.json içindeki BIST100 değişimi (yoksa fallback)
-    """
-    # 1) Baz skor / varsayılanlar
+def calculate_ai_prediction(yearly: float, daily: float):
+    # Eğer daily None gelirse (API fallback ve cache yoksa) hata almamak için 0.0 kabul et
     d_val = daily if daily is not None else 0.0
-
+    
     direction = "NÖTR"
     confidence = 50
-
-    try:
-        if yearly > 40:
-            confidence += 20
-        elif yearly < 0:
-            confidence += 10
-    except Exception:
-        pass
-
-    # 2) Bilinen hisse katkısı (canlı borsa)
-    known_return = 0.0              # % cinsinden toplam katkı (ör: 0.18)
-    known_ratio_sum = 0.0           # % (ör: 65.4)
-    matched_cnt = 0
-
-    live_stocks = _load_live_stocks() if holdings else {}
-
-    if holdings and live_stocks:
-        for h in holdings:
-            try:
-                code = (h.get("code") or "").strip().upper()
-                ratio = float(h.get("ratio", 0.0) or 0.0)
-
-                if ratio <= 0:
-                    continue
-
-                clean_code = code.replace(".E", "").replace(".IS", "").strip()
-
-                # canlı fiyat JSON'unda genelde GARAN / THYAO gibi gelir
-                live_chg = live_stocks.get(clean_code)
-                if live_chg is None:
-                    live_chg = live_stocks.get(clean_code + ".IS")
-
-                if live_chg is None:
-                    continue
-
-                live_chg = float(live_chg)
-
-                # katkı: ratio% * live_chg% / 100  -> sonuç yüzde puan (0.18 gibi)
-                known_return += (ratio * live_chg) / 100.0
-                known_ratio_sum += ratio
-                matched_cnt += 1
-            except Exception:
-                continue
-
-    # 3) Bilinmeyen kısım (endeks)
-    # BIST100 yoksa BIST30 -> yoksa 0
-    index_pct = 0.0
-    try:
-        index_pct = float(_get_market_change_pct("BIST100") or 0.0)
-        if index_pct == 0.0:
-            index_pct = float(_get_market_change_pct("BIST30") or 0.0)
-    except Exception:
-        index_pct = 0.0
-
-    unknown_ratio = max(0.0, 100.0 - known_ratio_sum)
-    unknown_return = (unknown_ratio * index_pct) / 100.0
-
-    estimated_return = known_return + unknown_return
-
-    # 4) Fallback (endeks yoksa veya hiç eşleşme yoksa)
-    # - Endeks verisi 0 gelirse, en azından TEFAS günlük getiriyi referans al (mevcut akışı bozma)
-    if (index_pct == 0.0) and (estimated_return == 0.0):
-        estimated_return = d_val
-
-    # 5) Direction / Confidence
-    # (eşikler UI'daki "Tahmini Etki" mantığıyla uyumlu; 0.10 = %0.10)
-    if estimated_return > 0.10:
+    if yearly > 40:
+        confidence += 20
         direction = "POZİTİF"
-    elif estimated_return < -0.10:
+    elif yearly < 0:
+        confidence += 10
         direction = "NEGATİF"
-    else:
-        direction = "NÖTR"
-
-    # Eşleşen hisse sayısı + bilinen ağırlık arttıkça güveni yükselt
-    try:
-        if matched_cnt >= 3 and known_ratio_sum >= 25:
-            confidence = min(95, confidence + 15)
-        if matched_cnt >= 6 and known_ratio_sum >= 50:
-            confidence = min(95, confidence + 15)
-        if abs(estimated_return) >= 0.50:
-            confidence = min(95, confidence + 10)
-    except Exception:
-        pass
-
-    return direction, confidence, estimated_return
-
+    if d_val > 0.1:
+        if direction == "POZİTİF":
+            confidence += 10
+        elif direction == "NÖTR":
+            direction = "POZİTİF"
+    elif d_val < -0.1:
+        if direction == "NEGATİF":
+            confidence += 10
+        elif direction == "POZİTİF":
+            confidence -= 15
+    return direction, min(95, max(10, confidence))
 
 def get_fund_data_safe(fund_code: str):
     """
-    GÜNDE 1 KEZ TEFAS + KAP ENTEGRASYONLU VERİ ÇEKER
+    GÜNDE 1 KEZ TEFAS:
+    - Aynı gün içinde aynı fonu tekrar çekmez.
+    - RAM cache + disk persist.
     """
     fund_code = fund_code.upper()
+    
+    # ✅ ÇÖZÜM 1: EFFECTIVE DAY KULLANIMI
     effective_day = tefas_effective_date()
 
+    # 🔴 2. KRİTİK HATA DÜZELTİLDİ: Sadece flag olarak kullan, return etme
     try:
         now = datetime.now(ZoneInfo("Europe/Istanbul"))
     except:
         now = datetime.now()
     before_open = now.hour < 9 or (now.hour == 9 and now.minute < 30)
+    # ✅ Hafta sonu kontrolü
     is_weekend = now.weekday() >= 5
+
 
     cached = _PRICE_CACHE.get(fund_code)
 
+    # 🔴 FALLBACK: Batch scrape ile gelen ama RAM'e girmemiş fonlar
     if not cached:
         if os.path.exists(LIVE_PRICES_PATH):
             try:
                 with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
                     disk_raw = json.load(f)
-                disk_data = disk_raw.get("data", {}) if isinstance(disk_raw, dict) else {}
-                if disk_data.get(fund_code):
-                    cached = disk_data[fund_code]
-                    _PRICE_CACHE[fund_code] = cached
+
+                disk_data = disk_raw.get("data", {})
+                disk_rec = disk_data.get(fund_code)
+
+                if disk_rec and disk_rec.get("nav", 0) > 0:
+                    _PRICE_CACHE[fund_code] = disk_rec
+                    cached = disk_rec # cached'i güncelle
             except:
                 pass
 
+    # ✅ GÜNCELLENDİ: Freshness kontrolü asof_day ile yapılır
     cached_asof = (cached.get("asof_day") or "").strip() if cached else ""
-    
-    has_details = False
-    if cached and "details" in cached:
-        d = cached["details"]
-        if d.get("positions") or d.get("allocation") or d.get("comparison_1000tl"):
-            has_details = True
-
     is_new_fund = not cached
-    force_fetch = False
-    
+
     if is_new_fund:
         force_fetch = True
-    elif not has_details: 
-        force_fetch = True 
-    elif cached_asof != effective_day:
-        force_fetch = True
+        print(f"🆕 YENİ FON TESPİT EDİLDİ: {fund_code} - Piyasa saati kontrolü atlaniyor!")
+    else:
+        # ✅ asof_day varsa onu esas al
+        if cached_asof:
+            force_fetch = (cached_asof != effective_day)
+        else:
+            # ✅ asof_day yoksa bu kayıt “şüpheli” (legacy) → 1 kez zorla
+            force_fetch = True
 
-    if (not is_weekend) and before_open and not is_new_fund and has_details:
+    # ⛔ Piyasa açılmadan fetch etme (SADECE HAFTA İÇİ & ESKİ FONLAR)
+    if (not is_weekend) and before_open and not is_new_fund:
         force_fetch = False
+        print(f"⏰ Piyasa kapalı, eski fon güncellenmiyor: {fund_code}")
 
+
+    # Cache geçerliyse ve fetch gerekmiyorsa döndür
     if not force_fetch and cached:
         return cached
 
+    # Hiç cache yok ve piyasa kapalıysa boş dön
     if not cached and not force_fetch:
         return {"nav": 0.0, "daily_return_pct": 0.0}
 
     with _TEFAS_LOCK:
+        # Lock içinde tekrar kontrol (Race condition önlemi)
         cached = _PRICE_CACHE.get(fund_code)
-        
-        has_details_inner = False
-        if cached and "details" in cached:
-             if cached["details"].get("positions") or cached["details"].get("allocation") or cached["details"].get("comparison_1000tl"):
-                 has_details_inner = True
+        if cached:
+            cached_asof = (cached.get("asof_day") or "").strip()
+            if cached_asof == effective_day:
+                return cached
 
-        if cached and cached.get("asof_day") == effective_day and has_details_inner:
-            return cached
-
-        print(f"🚀 FORCE FETCH (X-RAY): {fund_code}")
+        # ✅ 4. ZORUNLU LOG
+        print(f"🚀 FORCE FETCH: {fund_code} | cached_asof={cached.get('asof_day') if cached else None} | effective_day={effective_day}")
 
         data = None
         if force_fetch:
             data = fetch_fund_live(fund_code)
 
         if data and data.get("price", 0) > 0:
+            # ✅ asof_day: API varsa onu kullan, yoksa effective_day’e düş
             asof_day = (data.get("asof_day") or "").strip()
             if not asof_day:
-                api_meta = _fetch_api_tefas(fund_code)
-                asof_day = api_meta["asof_day"] if api_meta and "asof_day" in api_meta else effective_day
-
-            safe_daily = data["daily_pct"] if data["daily_pct"] is not None else 0.0
-
-            # 🔥 YENİ: DETAYLARI ÇEK (İŞ YATIRIM / KAP)
-            details = _fetch_kap_portfolio_from_isyatirim(fund_code)
-            
-            # TEFAS'tan Allocation (Pasta Grafik) al
-            allocation = _fetch_tefas_allocation(fund_code)
-            
-            if details:
-                if allocation:
-                     details["allocation"] = allocation 
-            else:
-                details = {
-                    "positions": [],
-                    "increased": [],
-                    "decreased": [],
-                    "info": {},
-                    "allocation": allocation if allocation else []
-                }
-
-            
-            # 🔥 YENİ: FINTABLES FULL DETAILS BACKUP (KAP/İşYatırım boşsa)
-            # Amaç: KAP raporu gecikirse bile kullanıcı ekranda veri görsün.
-            fintables = None
-            try:
-                need_ft = False
-                if not details:
-                    need_ft = True
+                # HTML geldi ama tarih yok → API ile asof_day yakala (fiyatı değiştirmeden)
+                api_meta = _fetch_api(fund_code)
+                if api_meta and api_meta.get("asof_day"):
+                    asof_day = api_meta["asof_day"]
                 else:
-                    if not details.get("positions"):
-                        need_ft = True
-                    info_obj = details.get("info", {}) if isinstance(details.get("info"), dict) else {}
-                    if (not info_obj.get("risk_value")) and (not info_obj.get("founder")):
-                        need_ft = True
+                    asof_day = effective_day  # en kötü fallback
 
-                if need_ft:
-                    print(f"🌐 Fintables Full Details deniyorum: {fund_code}")
-                    fintables = _fetch_fintables_full_details(fund_code)
-            except Exception as e:
-                print(f"❌ Fintables deneme hatası ({fund_code}): {e}")
-                fintables = None
-
-            if fintables:
-                # LISTLER (KAP varsa KAP'ı bozma; sadece eksikleri doldur)
-                if not details.get("positions") and fintables.get("positions"):
-                    details["positions"] = fintables.get("positions", [])
-                if not details.get("increased") and fintables.get("increased"):
-                    details["increased"] = fintables.get("increased", [])
-                if not details.get("decreased") and fintables.get("decreased"):
-                    details["decreased"] = fintables.get("decreased", [])
-
-                # INFO alanı (Flutter meta chip'leri buradan okuyor)
-                if "info" not in details or not isinstance(details.get("info"), dict):
-                    details["info"] = {}
-                info_obj = details["info"]
-
-                if not info_obj.get("risk_value") and fintables.get("risk_value"):
-                    info_obj["risk_value"] = fintables.get("risk_value")
-                if not info_obj.get("yearly_management_fee") and fintables.get("yearly_management_fee"):
-                    info_obj["yearly_management_fee"] = fintables.get("yearly_management_fee")
-                if not info_obj.get("withholding_tax") and fintables.get("withholding_tax"):
-                    info_obj["withholding_tax"] = fintables.get("withholding_tax")
-                if not info_obj.get("founder") and fintables.get("founder"):
-                    info_obj["founder"] = fintables.get("founder")
-
-                # 1000 TL Ne Oldu? (varsa)
-                if fintables.get("comparison_1000tl"):
-                    details["comparison_1000tl"] = fintables.get("comparison_1000tl", [])
-
-                # Allocation (Pasta) fallback (TEFAS boşsa Fintables'tan doldur)
-                try:
-                    if (not details.get("allocation")) and fintables.get("allocation"):
-                        details["allocation"] = fintables.get("allocation", [])
-                    elif isinstance(details.get("allocation"), list) and len(details.get("allocation", [])) == 0 and fintables.get("allocation"):
-                        details["allocation"] = fintables.get("allocation", [])
-                except Exception:
-                    pass
-
-# === SEÇENEK A (FINTABLES LOGIC): HİSSE BAZLI MI? ===
-
-            # 1️⃣ Önce KAP / positions'tan bak
-            is_equity = _detect_equity_based_from_positions(details.get("positions"))
-
-            # 2️⃣ Eğer positions boşsa → MASTER MAP'ten fon türüne bak
-            if not is_equity:
-                master = _get_master_map_cached()
-                rec = master.get(fund_code, {}) if isinstance(master, dict) else {}
-                fund_type = str(rec.get("type") or "").lower()
-
-                # Hisse senedi fonuysa ZORLA TRUE
-                if "hisse" in fund_type:
-                    is_equity = True
-
-
-            # 2.5️⃣ Eğer master map net değilse ama TEFAS allocation içinde "Hisse/Pay" varsa equity kabul et
-            # (YANLIŞ POZİTİF "Bu fon hisse bazlı değildir" yazısını engeller)
-            if not is_equity:
-                try:
-                    alloc_list = details.get("allocation") or []
-                    for a in alloc_list:
-                        nm = str(a.get("name") or "").lower()
-                        val = float(a.get("value") or 0.0)
-                        if val > 0 and ("hisse" in nm or "pay" in nm):
-                            is_equity = True
-                            break
-                except:
-                    pass
-
-            details["is_equity_based"] = is_equity
-
-            # 3️⃣ NOTE MANTIĞI
-            if is_equity:
-                if not details.get("positions"):
-                    details["note"] = (
-                        "Bu ay için KAP portföy raporu yayınlanmamıştır. "
-                        "Son mevcut veri gösterilir."
-                    )
+            # 🔒 GÜNLÜK GETİRİ MUTLAK KİLİT
+            if cached and cached.get("source") == "HTML":
+                cached_day = cached.get("asof_day", "")
+                if cached_day == effective_day:
+                    # ❗ Günlük getiri KİLİTLİ → HTML ne getirirse getirsin kullanma
+                    safe_daily = cached.get("daily_return_pct", 0.0)
                 else:
-                    details["note"] = None
+                    safe_daily = data["daily_pct"] if data["daily_pct"] is not None else 0.0
             else:
-                details["note"] = (
-                    "Bu fon hisse bazlı değildir. "
-                    "Hisse pozisyonları gösterilmez."
-                )
+                safe_daily = data["daily_pct"] if data["daily_pct"] is not None else 0.0
 
-                
+            # ✅ FIX 2: AI prediction'a safe_daily gönder
+            dir_str, conf = calculate_ai_prediction(data["yearly_pct"], safe_daily)
 
-            
-            # 🔥 YENİ: Eğer bu ay KAP raporu yoksa ama server cache'te önceki pozisyon varsa,
-            # onu göster (Flutter cache'e ek olarak server-side güvence).
-            try:
-                if is_equity and not details.get("positions"):
-                    prev_det = (cached or {}).get("details", {}) if cached else {}
-                    if isinstance(prev_det, dict) and prev_det.get("positions"):
-                        details["positions"] = prev_det.get("positions", [])
-                        if not details.get("increased"):
-                            details["increased"] = prev_det.get("increased", [])
-                        if not details.get("decreased"):
-                            details["decreased"] = prev_det.get("decreased", [])
-                        # note zaten "KAP raporu yok" şeklinde set edilmiş olabilir; koruyoruz.
-            except:
-                pass
-
-# 4. TEFAS BACKUP (Eğer İş Yatırım boş döndüyse ve TEFAS allocation varsa)
-            # DFI gibi fonlarda KAP verisi olmayabilir, TEFAS'taki genel dağılımı kullan.
-            if not details["positions"] and details.get("allocation"):
-                for item in details["allocation"]:
-                    details["positions"].append({
-                        "code": item["name"],  # Örn: "Hisse Senedi", "Mevduat"
-                        "ratio": item["value"]
-                    })
-                details["positions"].sort(key=lambda x: x["ratio"], reverse=True)
-
-            
-
-            # 🔥 YENİ: AI Hesapla (Pozisyon verisiyle)
-            holdings = details.get("positions", []) if bool(details.get("is_equity_based")) else []
-            dir_str, conf, est_ret = calculate_ai_prediction(data["yearly_pct"], safe_daily, holdings)
-
+            # ✅ 4️⃣ & 5️⃣ DEĞİŞİKLİK: daily_return_pct ASLA None OLMAZ
+            # last_update artık asof_day'e göre belirlenir
             new_data = {
                 "nav": data["price"],
-                "daily_return_pct": safe_daily,
-                "asof_day": asof_day,
-                "last_update": asof_day + " 18:30:00",
-                "source": data.get("source", "HTML"),
-                "details": details, # ✅ ZENGİN VERİ EKLENDİ
+                "daily_return_pct": safe_daily,  # FIXED: safe_daily kullan
+                "asof_day": asof_day,  # ✅ KRİTİK
+                "last_update": asof_day + " 18:30:00", # ✅ ARTIK effective_day DEĞİL
+                "source": data.get("source", "HTML"), # Kaynağı kaydet
                 "ai_prediction": {
                     "direction": dir_str,
                     "confidence": conf,
                     "score": round(data["yearly_pct"] / 12, 2),
-                    "estimated_return": round(est_ret, 2) # ✅ YENİ
                 },
             }
 
+            # 🔧 ÇÖZÜM 2: HER DURUMDA YAZ (OVERWRITE)
             _PRICE_CACHE[fund_code] = new_data
             save_memory_to_disk()
             return new_data
         
-        elif force_fetch and cached:
-             pass
+        elif force_fetch:
+            # 🔥 TEFAS denendi ama HTML başarısız → API fiyatını cache'e yaz
+            if data is None:
+                api = _fetch_api(fund_code)
+                if api and api.get("price", 0) > 0:
+                    asof_day = api.get("asof_day", effective_day)
+                    new_data = {
+                        "nav": api["price"],
+                        "daily_return_pct": cached.get("daily_return_pct", 0.0) if cached else 0.0,
+                        "asof_day": asof_day,
+                        "last_update": asof_day + " 18:30:00",
+                        "source": "API",
+                        "ai_prediction": cached.get("ai_prediction", {}) if cached else {},
+                    }
+                    
+                    _PRICE_CACHE[fund_code] = new_data
+                    save_memory_to_disk()
+                    return new_data
 
-        return cached if cached else {
-        "nav": 0.0,
-        "daily_return_pct": 0.0,
-        "asof_day": tefas_effective_date(),
-        "last_update": datetime.now().isoformat(timespec="seconds"),
-        "source": "N/A",
-        "details": {
-            "positions": [],
-            "increased": [],
-            "decreased": [],
-            "allocation": [],
-            "comparison_1000tl": [],
-            "info": {},
-            "is_equity_based": False,
-            "note": None,
-        },
-        "ai_prediction": {"direction": "NÖTR", "confidence_score": 50, "predicted_return_pct": 0.0},
-    }
+    return cached if cached else {"nav": 0.0, "daily_return_pct": 0.0}
 
 # ============================================================
 # 4. MARKET DATA (BIST / USD) – 15 DK
@@ -1993,6 +831,7 @@ def update_market_data():
         except:
             items.append({"code": c, "value": 0.0, "change_pct": 0.0})
 
+    # ✅ PATCH 2: Atomik yazma
     try:
         _atomic_write_json(MARKET_CACHE_PATH, {"asof": now_str(), "items": items})
         print(f"🔄 Market Updated: {now_str()}")
@@ -2001,6 +840,7 @@ def update_market_data():
     return items
 
 def _get_market_change_pct(code: str) -> float:
+    """AI tahmin için market yüzdesini okur (TEFAS değil)"""
     try:
         if os.path.exists(MARKET_CACHE_PATH):
             with open(MARKET_CACHE_PATH, "r", encoding="utf-8") as f:
@@ -2043,10 +883,6 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
 
     with _AI_LOCK:
         cached = _AI_CACHE.get(fund_code)
-        
-        # Eğer cached veri varsa ve "predicted_return_pct" yoksa (eski cache), yenile
-        if cached and "predicted_return_pct" not in cached:
-             cached = None
 
         # ⛔ PİYASA KAPALIYSA → CANLI AI KİLİTLENİR
         if not market_open and cached:
@@ -2091,11 +927,13 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         # ===============================
         # 🌊 SOFT JITTER (ÇOK KÜÇÜK)
         # ===============================
-        jitter = math.sin(now_ts / 60.0) * 0.03
+        # deterministik (random yok)
+        jitter = math.sin(now_ts / 60.0) * 0.03  # max ±0.03
 
         # ===============================
         # GÜN İÇİ DRIFT (KAPANIŞA SIFIRLANIR)
         # ===============================
+        # ✅ GÜNCELLENDİ: dt İstanbul saatine göre
         try:
             dt = datetime.now(ZoneInfo("Europe/Istanbul"))
         except:
@@ -2107,17 +945,10 @@ def get_ai_prediction_live(fund_code: str, daily_real: float) -> Dict[str, Any]:
         # ===============================
         # 🎯 FİNAL TAHMİN (AĞIRLIKLI)
         # ===============================
-        # Eğer cached veride hisse bazlı tahmin varsa (estimated_return), onu da kat
-        fund_data = _PRICE_CACHE.get(fund_code, {})
-        holdings_impact = 0.0
-        if "ai_prediction" in fund_data:
-             holdings_impact = fund_data["ai_prediction"].get("estimated_return", 0.0)
-
         predicted = (
-            premium_base * 0.50 +
-            holdings_impact * 0.40 +
-            daily_real * 0.10 +
-            drift * 0.05 +
+            premium_base * 0.70 +
+            daily_real * 0.20 +
+            drift * 0.07 +
             jitter
         )
         predicted = round(predicted, 2)
@@ -2224,6 +1055,7 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
                         codes.append(c)
             except:
                 codes = []
+        # fallback: boşsa, yine de birkaç örnek döndürme yerine boş dönecek
 
     # compute predictions
     items: List[Dict[str, Any]] = []
@@ -2234,10 +1066,11 @@ def _build_predictions_summary(scope: str = "portfolio") -> Dict[str, Any]:
         fund_name = str(rec.get("name") or "")
         fund_type = str(rec.get("type") or "")
 
-        # 📌 RAM cache yoksa Disk cache'ten oku
+        # 📌 DÜZELME 2: RAM cache yoksa Disk cache'ten oku (persistence)
         info = _PRICE_CACHE.get(code)
         
         if not info:
+            # 🔴 RAM boşsa disk cache'ten oku
             if os.path.exists(LIVE_PRICES_PATH):
                 try:
                     with open(LIVE_PRICES_PATH, "r", encoding="utf-8") as f:
@@ -2385,6 +1218,9 @@ def maybe_update_portfolio_funds():
         except Exception as e:
             print(f"❌ Portföy okuma hata: {e}")
             return
+
+        # ✅ DEBUG PRINT (İSTENİLEN)
+        print(f"🧪 Portfolio codes={len(codes)} | state_day={_load_portfolio_update_day()} | today={today} | effective_day={effective_day}")
 
         # Eksikleri bul (RAM + disk üzerinden)
         missing = _missing_codes_for_day(codes, effective_day)
@@ -2562,7 +1398,7 @@ def api_portfolio():
         qty = float(pos.get("quantity", 0) or 0)
 
         # TEFAŞ cacheli gerçek veri (günde 1 kere)
-        info = get_fund_price_safe(code)
+        info = get_fund_data_safe(code)
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
 
         # AI tahmin (sadece yön için)
@@ -2584,10 +1420,6 @@ def api_portfolio():
 
             # ESKİ alanı koru (mevcut sistemle uyumlu)
             "prediction": info.get("ai_prediction", {}),
-
-            # ✅ UI için: hisse bazlı mı? (sekme göster/gizle)
-            "is_equity_based": bool((info.get("details", {}) or {}).get("is_equity_based", False)),
-            "note": (info.get("details", {}) or {}).get("note"),
         })
 
     return {"status": "success", "data": result_list}
@@ -2658,7 +1490,7 @@ def api_live_list():
             continue
 
         # TEFAŞ cacheli gerçek veri (günde 1 kere)
-        info = get_fund_price_safe(code)
+        info = get_fund_data_safe(code)
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
 
         # AI tahmin
@@ -2673,9 +1505,6 @@ def api_live_list():
             "confidence_score": ai.get("confidence_score", 50),
             "direction": ai.get("direction", "NÖTR"),
             "type": item.get("type", ""),
-            # ✅ UI için
-            "is_equity_based": bool((info.get("details", {}) or {}).get("is_equity_based", False)),
-            "note": (info.get("details", {}) or {}).get("note"),
         })
 
     return {"status": "success", "data": result_list}
@@ -2716,36 +1545,12 @@ def api_detail(code: str):
     if info.get("nav", 0) > 0:
         daily_real = float(info.get("daily_return_pct", 0.0) or 0.0)
         ai = get_ai_prediction_live(code.upper(), daily_real)
-        
-        # Eğer Fintables'tan gelen detaylı AI skoru varsa (hisse bazlı), onu da ekle
-        predicted_return = ai.get("predicted_return_pct", daily_real)
-        # ✅ FIX: Flutter tarafında Map<String,dynamic> cast hatası olmaması için ai_prediction her zaman dict olmalı
-        try:
-            _ai_raw = info.get("ai_prediction")
-            _ai_map = _ai_raw if isinstance(_ai_raw, dict) else {}
-            # Canlı tahmin çıktısını da ai_prediction içine enjekte et (UI bunu okuyabiliyor)
-            _ai_map = {**_ai_map,
-                      "predicted_return_pct": float(predicted_return or 0.0),
-                      "confidence_score": float(ai.get("confidence_score", 50) or 50),
-                      "direction": str(ai.get("direction", "NÖTR")),
-                      "asof": str(ai.get("asof", ""))}
-            info["ai_prediction"] = _ai_map
-        except Exception:
-            info["ai_prediction"] = {"predicted_return_pct": float(predicted_return or 0.0), "confidence_score": 50, "direction": "NÖTR"}
-        if "ai_prediction" in info and "estimated_return" in info["ai_prediction"]:
-             # Cache'teki hisse bazlı skoru kullanabiliriz, ama live market data daha taze
-             # O yüzden get_ai_prediction_live fonksiyonu zaten bunu birleştiriyor.
-             pass
-
         return {
             "status": "success",
             "data": {
                 **info,
-                # ✅ UI için
-                "is_equity_based": bool((info.get("details", {}) or {}).get("is_equity_based", False)),
-                "note": (info.get("details", {}) or {}).get("note"),
                 # 🎯 ÇÖZÜM: Mobil kolay kullansın diye düz alanlar (Fix 2)
-                "predicted_return_pct": predicted_return,
+                "predicted_return_pct": ai.get("predicted_return_pct", daily_real),
                 "confidence_score": ai.get("confidence_score", 50),
                 "direction": ai.get("direction", "NÖTR"),
             }
@@ -2803,337 +1608,3 @@ def _start_background_jobs_once():
 
 # ✅ Import olur olmaz çalıştır (ama tek sefer)
 _start_background_jobs_once()
-
-
-
-# ============================================================
-# 🔧 HOTFIX OVERRIDES (SAFE, NON-DESTRUCTIVE)
-# ============================================================
-# NOTE:
-# - These overrides do NOT delete existing code.
-# - They redefine specific functions to fix:
-#   * KAP portfolio fetching (API-based scan)
-#   * False 'hisse bazlı değildir' negatives
-#   * TEFAS daily % stuck at 0 in portfolio
-# ============================================================
-
-def _is_confident_non_equity(details: dict) -> bool:
-    try:
-        info = details.get("info", {}) if isinstance(details, dict) else {}
-        alloc = details.get("allocation") or []
-        master = _get_master_map_cached() or {}
-        ftype = str((master.get(details.get("code","")) or {}).get("type","")).lower()
-
-        non_equity_kw = [
-            "para piyasası","borçlanma","kısa vadeli","likit","kira","katılım","altın","emtia","tahvil","bono"
-        ]
-        if any(k in ftype for k in non_equity_kw):
-            return True
-
-        has_hisse = any(("hisse" in str(a.get("name","")).lower() or "pay" in str(a.get("name","")).lower())
-                         and float(a.get("value",0) or 0) > 0 for a in alloc)
-        if alloc and not has_hisse:
-            return True
-    except Exception:
-        pass
-    return False
-
-
-def _kap_api_scan_for_portfolio(fund_code: str, max_pages: int = 8):
-    base = "https://www.kap.org.tr/tr/api/disclosures"
-    headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json, text/plain, */*",
-        "X-Requested-With": "XMLHttpRequest",
-        "Referer": "https://www.kap.org.tr/tr/",
-    }
-
-    def extract_list(j):
-        if isinstance(j, list): return j
-        if isinstance(j, dict):
-            for k in ("data","items","content","result","results","disclosures"):
-                v = j.get(k)
-                if isinstance(v, list): return v
-        return []
-
-    def get_idx(it):
-        for k in ("disclosureIndex","id","notificationIndex"):
-            try:
-                v = it.get(k) or it.get("basic",{}).get(k)
-                if v is not None: return int(v)
-            except Exception:
-                pass
-        return None
-
-    def matches(it):
-        b = it.get("basic",{}) if isinstance(it,dict) else {}
-        title = (b.get("title") or "").lower()
-        codes = []
-        for k in ("stockCodes","relatedStocks","codes"):
-            v = b.get(k)
-            if isinstance(v, list): codes += [str(x).upper() for x in v]
-            elif isinstance(v, str): codes += [v.upper()]
-        return (
-            (fund_code.upper() in codes) or (fund_code.upper() in title)
-        ) and (
-            ("portföy" in title and "dağılım" in title) or
-            ("portfolio" in title and "allocation" in title)
-        )
-
-    seen = set()
-    cursor = None
-    mode = "after"
-    for _ in range(max_pages):
-        params = {}
-        if cursor is not None:
-            params[f"{mode}DisclosureIndex"] = cursor
-        try:
-            r = requests.get(base, headers=headers, params=params, timeout=15, verify=False)
-            if r.status_code != 200: break
-            j = r.json()
-        except Exception:
-            break
-
-        items = extract_list(j)
-        if not items: break
-
-        idxs = []
-        for it in items:
-            di = get_idx(it)
-            if di is not None:
-                idxs.append(di)
-            if matches(it) and di is not None and di not in seen:
-                seen.add(di)
-                return f"https://www.kap.org.tr/tr/Bildirim/{di}"
-
-        if not idxs: break
-        new_cursor = min(idxs)
-        if cursor is not None and new_cursor == cursor:
-            if mode == "after":
-                mode = "before"
-                continue
-            break
-        cursor = new_cursor
-
-    return None
-
-
-def _fetch_kap_portfolio_from_kap(fund_code: str):
-    print(f"🏛️ KAP (API) Portföy Dağılım Raporu aranıyor: {fund_code}")
-    try:
-        durl = _kap_api_scan_for_portfolio(fund_code)
-        if not durl:
-            return None
-        xls = _kap_download_first_excel_attachment(durl)
-        if not xls:
-            return None
-        curr = _parse_kap_portfolio_positions_from_xlsx(xls)
-        if not curr:
-            return None
-        return {
-            "positions": curr,
-            "increased": [],
-            "decreased": [],
-            "info": {},
-            "allocation": [],
-        }
-    except Exception as e:
-        print(f"❌ KAP API fetch error ({fund_code}): {e}")
-        return None
-
-
-_get_fund_data_safe_orig = get_fund_data_safe
-
-def get_fund_data_safe(fund_code: str):
-    info = _get_fund_data_safe_orig(fund_code)
-
-    try:
-        if info and info.get("nav",0) > 0:
-            d = info.get("daily_return_pct")
-            if d in (None, 0, 0.0):
-                t = fetch_fund_live(fund_code)
-                if t and t.get("daily_pct") is not None:
-                    info["daily_return_pct"] = float(t.get("daily_pct") or 0.0)
-    except Exception:
-        pass
-
-    try:
-        details = info.get("details",{}) if isinstance(info,dict) else {}
-        if details.get("is_equity_based") is False and not _is_confident_non_equity(details):
-            details["is_equity_based"] = True
-            details["note"] = (
-                "Bu ay için KAP portföy raporu yayınlanmamıştır. "
-                "Son mevcut veri gösterilir."
-            )
-            info["details"] = details
-    except Exception:
-        pass
-
-    return info
-
-
-
-# ============================================================
-# FAST PATH: price-only fetch for portfolio/live list
-# Avoids heavy KAP/Fintables work on frequently-called endpoints.
-# ============================================================
-
-def get_fund_price_safe(code: str) -> dict:
-    """Return fast, cached price + daily return for a fund.
-
-    This function is designed for high-traffic endpoints (portfolio/live list).
-    It will NOT force heavy detail fetching (KAP, fintables, allocations)."""
-
-    code = (code or "").strip().upper()
-    if not code:
-        return {
-            "nav": 0.0,
-            "daily_return_pct": 0.0,
-            "asof_day": tefas_effective_date(),
-            "last_update": datetime.now().isoformat(timespec="seconds"),
-            "source": "N/A",
-            "details": {
-                "positions": [],
-                "increased": [],
-                "decreased": [],
-                "allocation": [],
-                "comparison_1000tl": [],
-                "info": {},
-                "is_equity_based": False,
-                "note": None,
-            },
-            "ai_prediction": {"direction": "NÖTR", "confidence_score": 50, "predicted_return_pct": 0.0},
-        }
-
-    effective_day = tefas_effective_date()
-
-    # Use in-memory cache if valid for today
-    cached = _PRICE_CACHE.get(code)
-    if isinstance(cached, dict):
-        try:
-            cached_nav = float(cached.get("nav", 0.0) or 0.0)
-        except Exception:
-            cached_nav = 0.0
-        cached_asof = str(cached.get("asof_day") or "")
-        if cached_nav > 0.0 and cached_asof == effective_day:
-            # Guarantee schema for Flutter
-            if not isinstance(cached.get("details"), dict):
-                cached["details"] = {
-                    "positions": [],
-                    "increased": [],
-                    "decreased": [],
-                    "allocation": [],
-                    "comparison_1000tl": [],
-                    "info": {},
-                    "is_equity_based": False,
-                    "note": None,
-                }
-            if not isinstance(cached.get("ai_prediction"), dict):
-                cached["ai_prediction"] = {}
-            return cached
-
-    # Fetch live price (HTML/API) but keep existing details (if any)
-    with _TEFAS_LOCK:
-        cached = _PRICE_CACHE.get(code)
-        if isinstance(cached, dict):
-            try:
-                cached_nav = float(cached.get("nav", 0.0) or 0.0)
-            except Exception:
-                cached_nav = 0.0
-            cached_asof = str(cached.get("asof_day") or "")
-            if cached_nav > 0.0 and cached_asof == effective_day:
-                if not isinstance(cached.get("details"), dict):
-                    cached["details"] = {
-                        "positions": [],
-                        "increased": [],
-                        "decreased": [],
-                        "allocation": [],
-                        "comparison_1000tl": [],
-                        "info": {},
-                        "is_equity_based": False,
-                        "note": None,
-                    }
-                if not isinstance(cached.get("ai_prediction"), dict):
-                    cached["ai_prediction"] = {}
-                return cached
-
-        live = fetch_fund_live(code)
-        if live and float(live.get("price", 0.0) or 0.0) > 0.0:
-            asof_day = (live.get("asof_day") or effective_day)
-            daily_pct = float(live.get("daily_pct", 0.0) or 0.0)
-
-            # Preserve details/ai_prediction from existing cache if any
-            prev_details = {}
-            prev_ai = {}
-            if isinstance(cached, dict):
-                if isinstance(cached.get("details"), dict):
-                    prev_details = cached.get("details") or {}
-                if isinstance(cached.get("ai_prediction"), dict):
-                    prev_ai = cached.get("ai_prediction") or {}
-
-            new_obj = {
-                "nav": float(live.get("price", 0.0) or 0.0),
-                "daily_return_pct": daily_pct,
-                "asof_day": asof_day,
-                "last_update": f"{asof_day} 18:30:00",
-                "source": live.get("source") or "LIVE",
-                "details": prev_details if isinstance(prev_details, dict) else {},
-                "ai_prediction": prev_ai if isinstance(prev_ai, dict) else {},
-            }
-
-            # Guarantee schema for Flutter
-            if not isinstance(new_obj["details"], dict):
-                new_obj["details"] = {
-                    "positions": [],
-                    "increased": [],
-                    "decreased": [],
-                    "allocation": [],
-                    "comparison_1000tl": [],
-                    "info": {},
-                    "is_equity_based": False,
-                    "note": None,
-                }
-            if not isinstance(new_obj["ai_prediction"], dict):
-                new_obj["ai_prediction"] = {}
-
-            _PRICE_CACHE[code] = new_obj
-            save_memory_to_disk()
-            return new_obj
-
-    # Final fallback
-    fallback = cached if isinstance(cached, dict) else None
-    if not isinstance(fallback, dict):
-        fallback = {
-            "nav": 0.0,
-            "daily_return_pct": 0.0,
-            "asof_day": effective_day,
-            "last_update": datetime.now().isoformat(timespec="seconds"),
-            "source": "N/A",
-            "details": {
-                "positions": [],
-                "increased": [],
-                "decreased": [],
-                "allocation": [],
-                "comparison_1000tl": [],
-                "info": {},
-                "is_equity_based": False,
-                "note": None,
-            },
-            "ai_prediction": {"direction": "NÖTR", "confidence_score": 50, "predicted_return_pct": 0.0},
-        }
-
-    if not isinstance(fallback.get("details"), dict):
-        fallback["details"] = {
-            "positions": [],
-            "increased": [],
-            "decreased": [],
-            "allocation": [],
-            "comparison_1000tl": [],
-            "info": {},
-            "is_equity_based": False,
-            "note": None,
-        }
-    if not isinstance(fallback.get("ai_prediction"), dict):
-        fallback["ai_prediction"] = {}
-
-    return fallback
